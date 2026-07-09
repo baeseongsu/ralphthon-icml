@@ -76,6 +76,19 @@ Validation passed
 - command: /hello-ralphthon-icml
 ```
 
+## Continuation On Another Mac
+
+```bash
+mkdir -p ~/team-attention/code-repos
+git clone https://github.com/team-attention/ralphthon-icml.git ~/team-attention/code-repos/ralphthon-icml 2>/dev/null || \
+  git -C ~/team-attention/code-repos/ralphthon-icml pull --ff-only
+cd ~/team-attention/code-repos/ralphthon-icml
+python3 scripts/validate_plugin.py
+```
+
+Next work should add Track 1/Track 2 skills only after Ralphthon output formats
+are fixed in the ops SOT.
+
 ## Privacy
 
 This repository uses public event facts and planning-safe summaries only. Do not paste raw Fireflies transcripts, attendee private data, or unapproved sponsor notes into skills or commands.
