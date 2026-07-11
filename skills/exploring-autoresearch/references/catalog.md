@@ -35,12 +35,12 @@ Use this catalog for read-only discovery. Select 3-7 entries and verify mutable 
 - **Official/community status:** Official W&B repository.
 - **Resource type:** Weave hands-on implementation.
 - **Why it is relevant:** Demonstrates Weave trace annotation, prompt improvement, and offline-evaluation hands-on.
-- **Compute/platform assumptions:** Python and W&B/Weave services rather than a fixed training GPU.
-- **Cost/credential exposure:** W&B credentials and hosted-service data exposure may apply; inspect project visibility and upload scope.
+- **Compute/platform assumptions:** Python 3.11+, W&B/Weave, OpenAI model access, and the default Serper search backend; there is no fixed GPU requirement.
+- **Cost/credential exposure:** `WANDB_API_KEY`, `OPENAI_API_KEY`, and the default search backend's `SERPER_API_KEY` may be required; model and search API costs plus W&B/Weave hosted visibility and upload scope must be reviewed.
 - **Benchmark compatibility:** It is not Karpathy `train.py` optimization and should not be presented as a drop-in `val_bpb` benchmark loop.
 - **Mutable/pinned status:** Default-branch content is mutable; pin a reviewed revision for reproduction.
 - **License caveat:** Verify repository and dataset licenses at the selected revision.
-- **Safety caveat:** Do not upload traces, prompts, or evaluation data before reviewing the offline-first allowlist.
+- **Safety caveat:** Keep `--max-cost-usd` bounded and use `--dry-run` before paid execution; do not upload traces, prompts, or evaluation data before reviewing the offline-first allowlist.
 
 ### [W&B ARIA autoresearch](https://docs.wandb.ai/aria/autoresearch)
 

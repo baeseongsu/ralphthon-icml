@@ -125,8 +125,15 @@ def recorder_record_inputs(**overrides: object) -> dict[str, object]:
 class RepositoryContractTest(unittest.TestCase):
     def test_expected_skill_catalog_exists_without_commands(self) -> None:
         skills = {path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md")}
+        agent_skill_links = ROOT / ".agents" / "skills"
+        symlinks = {path.name: path for path in agent_skill_links.iterdir()}
 
         self.assertEqual(skills, EXPECTED_SKILLS)
+        self.assertEqual(set(symlinks), EXPECTED_SKILLS)
+        for name, path in symlinks.items():
+            with self.subTest(agent_skill_symlink=name):
+                self.assertTrue(path.is_symlink())
+                self.assertEqual(path.readlink(), Path("../../skills") / name)
         self.assertFalse((ROOT / "commands").exists())
         self.assertFalse((ROOT / "docs" / "superpowers").exists())
 
@@ -252,8 +259,19 @@ class RepositoryContractTest(unittest.TestCase):
 
     def test_manifest_advertises_full_workflow(self) -> None:
         manifest = json.loads((ROOT / ".codex-plugin" / "plugin.json").read_text())
-        default_prompt = manifest["interface"]["defaultPrompt"]
+        interface = manifest["interface"]
+        default_prompt = interface["defaultPrompt"]
         prompt_parts = default_prompt if isinstance(default_prompt, list) else [default_prompt]
+        self.assertEqual(
+            prompt_parts,
+            [
+                "Use exploring-autoresearch to compare directly linked autoresearch examples and recommend a starting point",
+                "Use auto-research for general Track 1, the pinned official VESSL cookbook on an approved A100 with local W&B tracking, or a Track 2 Review Agent plus result",
+                "Guide me through W&B onboarding with an offline-first run",
+                "Set up VESSL Cloud and review compute cost before creating a workspace",
+                "Turn a world-model idea into a falsifiable experiment",
+            ],
+        )
         searchable = " ".join(manifest["keywords"] + prompt_parts).lower()
 
         for phrase in (
@@ -267,6 +285,36 @@ class RepositoryContractTest(unittest.TestCase):
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, searchable)
+
+        field_claims = {
+            "description": (manifest["description"], ("examples", "catalog", "discovery")),
+            "shortDescription": (
+                interface["shortDescription"],
+                ("compare", "examples"),
+            ),
+            "longDescription": (
+                interface["longDescription"],
+                ("examples", "catalog", "discovery"),
+            ),
+            "defaultPrompt": (
+                " ".join(prompt_parts),
+                ("exploring-autoresearch", "compare", "examples", "starting point"),
+            ),
+        }
+        forbidden_claims = (
+            "hello-ralphthon-icml",
+            "attendee welcome",
+            "welcome-pack",
+            "welcome pack",
+            "qr/pop",
+        )
+        for field, (value, expected_claims) in field_claims.items():
+            normalized = value.lower()
+            with self.subTest(manifest_field=field):
+                for claim in expected_claims:
+                    self.assertIn(claim, normalized)
+                for claim in forbidden_claims:
+                    self.assertNotIn(claim, normalized)
 
     def test_readme_documents_full_catalog_and_privacy_boundary(self) -> None:
         text = (ROOT / "README.md").read_text()
@@ -411,6 +459,75 @@ class RepositoryContractTest(unittest.TestCase):
             {entry.group("url") for entry in catalog_entries},
             set(AUTORESEARCH_EXAMPLE_URLS),
         )
+        entries_by_url = {
+            entry.group("url"): entry.group("body") for entry in catalog_entries
+        }
+        expected_entry_claims = {
+            "https://docs.cloud.vessl.ai/examples/autoresearch": (
+                "Official VESSL documentation",
+                "Current workflow guide",
+                "H100",
+                "not A100 evidence",
+                "billable GPU",
+            ),
+            "https://github.com/vessl-ai/vessl-cloud-cookbook/tree/main/autoresearch": (
+                "Official VESSL repository",
+                "Executable recipe",
+                "mutable `main`",
+                "unbounded loops",
+            ),
+            "https://vessl.ai/ko/blog/dont-tie-gpu-to-agent-ko": (
+                "Conceptual/historical H100 case study",
+                "reported H100 runs",
+                "self-reported case study",
+            ),
+            "https://wandb.ai/byyoung3/autoresearch/reports/How-to-add-W-B-logging-to-Autoresearch-experiments---VmlldzoxNjE3Nzg2MQ": (
+                "Community/user-authored",
+                "mutable",
+                "unlicensed as code",
+                "offline-first allowlist",
+            ),
+            "https://github.com/wandb/discovery-forge": (
+                "Official W&B repository",
+                "not Karpathy `train.py` optimization",
+                "Python 3.11+",
+                "W&B/Weave",
+                "OpenAI model access",
+                "default Serper search backend",
+                "no fixed GPU",
+                "WANDB_API_KEY",
+                "OPENAI_API_KEY",
+                "SERPER_API_KEY",
+                "model and search API costs",
+                "hosted visibility",
+                "`--max-cost-usd`",
+                "`--dry-run`",
+            ),
+            "https://docs.wandb.ai/aria/autoresearch": (
+                "Preview",
+                "W&B Launch",
+                "different compute plane",
+            ),
+            "https://github.com/wandb/senpai": (
+                "Kubernetes/PR-based",
+                "write access",
+            ),
+            "https://github.com/karpathy/autoresearch": (
+                "repeat-forever",
+                "destructive Git",
+            ),
+            "https://github.com/leo-lilinxiao/codex-autoresearch": (
+                "sandbox bypass",
+            ),
+            "https://github.com/uditgoenka/autoresearch": (
+                "Bound iterations",
+            ),
+        }
+        for url, claims in expected_entry_claims.items():
+            body = entries_by_url[url]
+            for claim in claims:
+                with self.subTest(catalog_url=url, entry_claim=claim):
+                    self.assertIn(claim, body)
         comparison_labels = [
             "Official/community status",
             "Resource type",
