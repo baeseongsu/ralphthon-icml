@@ -39,6 +39,8 @@ Return a compact comparison with:
 1. A one-sentence recommendation tailored to the request.
 2. A table or short list of 3-7 examples. Repeat this complete entry template for every example:
 
+Template labels may be translated to the user's language and may be visually combined only when every required value remains explicit.
+
 - **Official/community status:** State the owning organization's status.
 - **Resource type:** State whether it is a guide, repository, post, report, or tool.
 - **Why it is relevant:** Connect it to the user's requested outcome.

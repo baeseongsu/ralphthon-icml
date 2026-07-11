@@ -361,6 +361,11 @@ class RepositoryContractTest(unittest.TestCase):
             with self.subTest(output_template_label=label):
                 self.assertRegex(skill, rf"(?m)^- \*\*{re.escape(label)}:\*\* \S")
 
+        output = skill.split("## Output", 1)[1].split("## Next Steps", 1)[0]
+        self.assertIn("translated to the user's language", output)
+        self.assertIn("visually combined", output)
+        self.assertIn("every required value remains explicit", output)
+
         self.assertIn(
             "Never group a community project under an official or authoritative "
             "heading, even when it is the original project.",
