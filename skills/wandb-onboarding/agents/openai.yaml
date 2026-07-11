@@ -1,0 +1,4 @@
+interface:
+  display_name: "W&B Onboarding"
+  short_description: "Set up W&B safely with an offline-first run"
+  default_prompt: "Use $wandb-onboarding to guide signup and verify a first safe W&B run."

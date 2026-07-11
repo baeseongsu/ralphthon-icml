@@ -4,25 +4,15 @@
 # dependencies = []
 # ///
 
-# --- How to run ---
-# python3 scripts/validate_plugin.py
-# uv run scripts/validate_plugin.py
-
 from __future__ import annotations
 
 import json
 import sys
 from pathlib import Path
-from typing import Final, NamedTuple, TypedDict
+from typing import Final, NamedTuple
 
 
 ROOT: Final = Path(__file__).resolve().parents[1]
-REQUIRED_FILES: Final = (
-    ".codex-plugin/plugin.json",
-    "skills/hello-ralphthon-icml/SKILL.md",
-    "commands/hello-ralphthon-icml.md",
-    "README.md",
-)
 PLUGIN_FIELDS: Final = (
     "name",
     "version",
@@ -34,23 +24,6 @@ PLUGIN_FIELDS: Final = (
     "skills",
     "interface",
 )
-SKILL_FIELDS: Final = ("name", "description", "metadata")
-SKILL_METADATA_FIELDS: Final = ("priority", "docs", "pathPatterns", "promptSignals")
-COMMAND_FIELDS: Final = ("description",)
-
-
-class PluginManifest(TypedDict):
-    name: str
-    version: str
-    description: str
-    homepage: str
-    repository: str
-    license: str
-    keywords: list[str]
-    skills: str
-    interface: dict[str, str | list[str]]
-
-
 class ValidationError(NamedTuple):
     path: Path
     message: str
@@ -60,155 +33,133 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def add_error(errors: list[ValidationError], relative_path: str, message: str) -> None:
-    errors.append(ValidationError(path=Path(relative_path), message=message))
-
-
 def frontmatter(text: str) -> list[str]:
     lines = text.splitlines()
     if len(lines) < 3 or lines[0].strip() != "---":
         return []
-
     for index, line in enumerate(lines[1:], start=1):
         if line.strip() == "---":
             return lines[1:index]
-
     return []
 
 
-def top_level_keys(lines: list[str]) -> set[str]:
-    keys: set[str] = set()
+def top_level_values(lines: list[str]) -> dict[str, str]:
+    values: dict[str, str] = {}
     for line in lines:
         if not line or line.startswith(" ") or ":" not in line:
             continue
-        key = line.split(":", maxsplit=1)[0].strip()
-        if key:
-            keys.add(key)
-    return keys
+        key, value = line.split(":", maxsplit=1)
+        values[key.strip()] = value.strip().strip("\"'")
+    return values
 
 
-def nested_keys(lines: list[str], parent: str) -> set[str]:
-    keys: set[str] = set()
-    in_parent = False
-    for line in lines:
-        if not line.strip():
-            continue
-        if not line.startswith(" "):
-            in_parent = line.strip() == f"{parent}:"
-            continue
-        if in_parent and line.startswith("  ") and not line.startswith("    ") and ":" in line:
-            key = line.split(":", maxsplit=1)[0].strip()
-            if key:
-                keys.add(key)
-    return keys
+def discover_skill_paths(root: Path) -> list[Path]:
+    return sorted((root / "skills").glob("*/SKILL.md"))
 
 
-def load_manifest(path: Path) -> PluginManifest | None:
+def add_error(
+    errors: list[ValidationError], root: Path, path: Path, message: str
+) -> None:
     try:
-        raw = json.loads(read_text(path))
-    except json.JSONDecodeError as error:
-        raise RuntimeError(f"invalid JSON: {error}") from error
-
-    return raw
-
-
-def validate_required_files(errors: list[ValidationError]) -> None:
-    for relative_path in REQUIRED_FILES:
-        if not (ROOT / relative_path).is_file():
-            add_error(errors, relative_path, "required file is missing")
+        relative = path.relative_to(root)
+    except ValueError:
+        relative = path
+    errors.append(ValidationError(relative, message))
 
 
-def validate_plugin_manifest(errors: list[ValidationError]) -> None:
-    relative_path = ".codex-plugin/plugin.json"
-    path = ROOT / relative_path
+def validate_manifest(root: Path, errors: list[ValidationError]) -> None:
+    path = root / ".codex-plugin" / "plugin.json"
     if not path.is_file():
+        add_error(errors, root, path, "required file is missing")
         return
-
     try:
-        manifest = load_manifest(path)
-    except RuntimeError as error:
-        add_error(errors, relative_path, str(error))
-        return
-
-    if manifest is None:
-        add_error(errors, relative_path, "manifest is empty")
+        manifest = json.loads(read_text(path))
+    except json.JSONDecodeError as error:
+        add_error(errors, root, path, f"invalid JSON: {error}")
         return
 
     for field in PLUGIN_FIELDS:
         if field not in manifest:
-            add_error(errors, relative_path, f"missing field: {field}")
-
+            add_error(errors, root, path, f"missing field: {field}")
     if manifest.get("name") != "ralphthon-icml":
-        add_error(errors, relative_path, "name must be ralphthon-icml")
+        add_error(errors, root, path, "name must be ralphthon-icml")
     if manifest.get("skills") != "./skills/":
-        add_error(errors, relative_path, "skills must point to ./skills/")
+        add_error(errors, root, path, "skills must point to ./skills/")
     if not manifest.get("keywords"):
-        add_error(errors, relative_path, "keywords must not be empty")
+        add_error(errors, root, path, "keywords must not be empty")
     if "commands" in manifest:
-        add_error(errors, relative_path, "commands should be discovered from commands/, not plugin.json")
+        add_error(errors, root, path, "commands are unsupported; use skills only")
 
 
-def validate_skill_frontmatter(errors: list[ValidationError]) -> None:
-    relative_path = "skills/hello-ralphthon-icml/SKILL.md"
-    path = ROOT / relative_path
-    if not path.is_file():
-        return
+def validate_skill_files(
+    root: Path, paths: list[Path], errors: list[ValidationError]
+) -> set[str]:
+    names: set[str] = set()
+    for path in paths:
+        lines = frontmatter(read_text(path))
+        if not lines:
+            add_error(errors, root, path, "frontmatter is missing")
+            continue
+        values = top_level_values(lines)
+        name = values.get("name", "")
+        description = values.get("description", "")
+        if not name:
+            add_error(errors, root, path, "missing frontmatter field: name")
+        if not description:
+            add_error(errors, root, path, "missing frontmatter field: description")
+        if name and name != path.parent.name:
+            add_error(
+                errors,
+                root,
+                path,
+                f"frontmatter name must match directory name: {path.parent.name}",
+            )
+        if name in names:
+            add_error(errors, root, path, f"duplicate skill name: {name}")
+        if name:
+            names.add(name)
+    return names
 
-    lines = frontmatter(read_text(path))
-    if not lines:
-        add_error(errors, relative_path, "frontmatter is missing")
-        return
 
-    keys = top_level_keys(lines)
-    metadata = nested_keys(lines, "metadata")
-    for field in SKILL_FIELDS:
-        if field not in keys:
-            add_error(errors, relative_path, f"missing frontmatter field: {field}")
-    for field in SKILL_METADATA_FIELDS:
-        if field not in metadata:
-            add_error(errors, relative_path, f"missing metadata field: {field}")
+def validate_repository(root: Path = ROOT) -> list[ValidationError]:
+    root = root.resolve()
+    errors: list[ValidationError] = []
+    readme = root / "README.md"
+    if not readme.is_file():
+        add_error(errors, root, readme, "required file is missing")
+
+    validate_manifest(root, errors)
+    skill_paths = discover_skill_paths(root)
+    if not skill_paths:
+        add_error(errors, root, root / "skills", "no skills discovered")
+    validate_skill_files(root, skill_paths, errors)
+    legacy_commands = root / "commands"
+    if legacy_commands.exists():
+        add_error(
+            errors,
+            root,
+            legacy_commands,
+            "commands/ is not supported; integrate behavior into skills",
+        )
+    return errors
 
 
-def validate_command_frontmatter(errors: list[ValidationError]) -> None:
-    relative_path = "commands/hello-ralphthon-icml.md"
-    path = ROOT / relative_path
-    if not path.is_file():
-        return
-
-    text = read_text(path)
-    lines = frontmatter(text)
-    if not lines:
-        add_error(errors, relative_path, "frontmatter is missing")
-        return
-
-    keys = top_level_keys(lines)
-    for field in COMMAND_FIELDS:
-        if field not in keys:
-            add_error(errors, relative_path, f"missing frontmatter field: {field}")
-
-    for heading in ("Preflight", "Plan", "Commands", "Verification", "Summary", "Next Steps"):
-        if f"## {heading}" not in text:
-            add_error(errors, relative_path, f"missing section: {heading}")
+def validate(root: Path = ROOT) -> list[ValidationError]:
+    return validate_repository(root)
 
 
 def main() -> int:
-    errors: list[ValidationError] = []
-    validate_required_files(errors)
-    validate_plugin_manifest(errors)
-    validate_skill_frontmatter(errors)
-    validate_command_frontmatter(errors)
-
+    errors = validate_repository(ROOT)
     if errors:
         print("Validation failed")
         for error in errors:
             print(f"- {error.path}: {error.message}")
         return 1
 
+    skill_names = [path.parent.name for path in discover_skill_paths(ROOT)]
     print("Validation passed")
     print(f"- plugin: {ROOT.name}")
-    print(f"- checked files: {len(REQUIRED_FILES)}")
-    print("- skill: hello-ralphthon-icml")
-    print("- command: /hello-ralphthon-icml")
+    print(f"- skills ({len(skill_names)}): {', '.join(skill_names)}")
     return 0
 
 

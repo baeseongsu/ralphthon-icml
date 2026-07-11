@@ -1,7 +1,7 @@
 {
   "name": "ralphthon-icml",
-  "version": "0.1.0",
-  "description": "Ralphthon @ICML event onboarding and research workflow skills for Codex",
+  "version": "0.4.0",
+  "description": "Ralphthon @ICML onboarding, bounded Karpathy A100-micro research, observability, compute, and world-model ideation skills for Codex",
   "author": {
     "name": "Team Attention",
     "url": "https://github.com/team-attention"
@@ -14,7 +14,15 @@
     "icml",
     "codex",
     "auto-research",
+    "karpathy",
+    "a100-micro-v1",
     "world-model",
+    "wandb",
+    "experiment-tracking",
+    "vessl",
+    "vessl-cloud",
+    "vesslctl",
+    "gpu-compute",
     "hackathon",
     "event-ops",
     "onboarding",
@@ -24,8 +32,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Ralphthon @ICML",
-    "shortDescription": "Brief attendees and operators for Ralphthon @ICML.",
-    "longDescription": "Codex skills and slash commands for turning Ralphthon @ICML into a reusable event surface: attendee welcome first, auto-research next, and world-model ideation after that.",
+    "shortDescription": "Run bounded A100-micro research workflows.",
+    "longDescription": "Five Codex skills for Ralphthon @ICML: attendee orientation, general or bounded Karpathy A100-micro-v1 research, Review Agent packaging, safe W&B/VESSL onboarding, and testable world-model ideation.",
     "developerName": "Team Attention",
     "category": "Productivity",
     "capabilities": [
@@ -36,8 +44,10 @@
     "websiteURL": "https://luma.com/hjuo7auc",
     "defaultPrompt": [
       "Create a Ralphthon @ICML attendee welcome pack",
-      "Draft QR and POP copy for Ralphthon @ICML",
-      "Brief me on Ralphthon @ICML orientation"
+      "Use auto-research for general Track 1, bounded Karpathy A100-micro-v1 training on an approved VESSL A100, or a Track 2 Review Agent plus result",
+      "Guide me through W&B onboarding with an offline-first run",
+      "Set up VESSL Cloud and review compute cost before creating a workspace",
+      "Turn a world-model idea into a falsifiable experiment"
     ],
     "brandColor": "#111111"
   }

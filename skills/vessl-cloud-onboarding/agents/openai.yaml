@@ -1,0 +1,4 @@
+interface:
+  display_name: "VESSL Cloud Onboarding"
+  short_description: "Set up vesslctl with explicit cost controls"
+  default_prompt: "Use $vessl-cloud-onboarding to set up VESSL Cloud safely before creating compute."
