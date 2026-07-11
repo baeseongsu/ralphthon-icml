@@ -36,7 +36,7 @@ Use this read-only discovery skill to compare credible autoresearch starting poi
 Return a compact comparison with:
 
 1. A one-sentence recommendation tailored to the request.
-2. A table or short list of 3-7 examples, each containing all nine comparison fields plus one safety caveat.
+2. A table or short list of 3-7 examples, each containing all required comparison fields, including the safety caveat.
 3. A clear separation between authoritative guides, conceptual material, and self-reported case studies.
 4. A short “best starting point” rationale and any evidence gaps.
 

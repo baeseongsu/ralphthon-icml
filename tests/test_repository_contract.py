@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import inspect
 import json
+import re
 import shutil
 import sys
 import tempfile
@@ -370,13 +371,99 @@ class RepositoryContractTest(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertIn(url, catalog)
 
+        catalog_entries = list(
+            re.finditer(
+                r"^### \[(?P<title>[^\]]+)\]\((?P<url>https://[^)\s]+)\)\n"
+                r"(?P<body>.*?)(?=^### |^## |\Z)",
+                catalog,
+                flags=re.MULTILINE | re.DOTALL,
+            )
+        )
+        self.assertEqual(len(catalog_entries), 14)
+        self.assertEqual(
+            {entry.group("url") for entry in catalog_entries},
+            set(AUTORESEARCH_EXAMPLE_URLS),
+        )
+        comparison_labels = [
+            "Official/community status",
+            "Resource type",
+            "Why it is relevant",
+            "Compute/platform assumptions",
+            "Cost/credential exposure",
+            "Benchmark compatibility",
+            "Mutable/pinned status",
+            "License caveat",
+            "Safety caveat",
+        ]
+        for entry in catalog_entries:
+            title = entry.group("title")
+            url = entry.group("url")
+            body = entry.group("body")
+            with self.subTest(catalog_entry=title):
+                self.assertIn(f"### [{title}]({url})", catalog)
+                fields = re.findall(
+                    r"^- \*\*(?P<label>[^*]+):\*\*\s+(?P<value>\S.*)$",
+                    body,
+                    flags=re.MULTILINE,
+                )
+                self.assertEqual([label for label, _ in fields], comparison_labels)
+                self.assertTrue(all(value.strip() for _, value in fields))
+
+        catalog_sections = (
+            "## Authoritative implementation guidance",
+            "## Official adjacent tooling and architecture",
+            "## Conceptual material",
+            "## Self-reported case studies",
+            "## Community implementations and indexes",
+        )
+        for heading in catalog_sections:
+            self.assertIn(heading, catalog)
+
+        authoritative = catalog.split(
+            "## Authoritative implementation guidance", 1
+        )[1].split("## Official adjacent tooling and architecture", 1)[0]
+        adjacent = catalog.split(
+            "## Official adjacent tooling and architecture", 1
+        )[1].split("## Conceptual material", 1)[0]
+        conceptual = catalog.split("## Conceptual material", 1)[1].split(
+            "## Self-reported case studies", 1
+        )[0]
+        case_studies = catalog.split("## Self-reported case studies", 1)[1].split(
+            "## Community implementations and indexes", 1
+        )[0]
+        community = catalog.split("## Community implementations and indexes", 1)[1]
+
+        def entry_titles(section: str) -> list[str]:
+            return re.findall(r"^### \[([^\]]+)\]\(https://", section, re.MULTILINE)
+
+        self.assertEqual(
+            entry_titles(authoritative),
+            [
+                "VESSL Cloud autoresearch guide",
+                "VESSL Cloud Cookbook autoresearch recipe",
+            ],
+        )
+        self.assertEqual(
+            entry_titles(adjacent),
+            ["W&B Discovery Forge", "W&B ARIA autoresearch", "W&B Senpai"],
+        )
+        self.assertEqual(
+            entry_titles(conceptual),
+            ["VESSL “Don't tie a GPU to an agent” post"],
+        )
+        self.assertEqual(
+            entry_titles(case_studies),
+            ["W&B logging report for Autoresearch"],
+        )
+        self.assertEqual(len(entry_titles(community)), 7)
+
         self.assertIn("directly linked", combined)
         self.assertEqual(
             ui.splitlines(),
             [
                 "interface:",
                 '  display_name: "Autoresearch Examples"',
-                '  short_description: "Compare trusted autoresearch starting points"',
+                '  short_description: "Compare linked autoresearch starting points"',
                 '  default_prompt: "Use $exploring-autoresearch to compare directly linked autoresearch examples for my constraints."',
             ],
         )

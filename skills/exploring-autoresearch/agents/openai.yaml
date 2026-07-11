@@ -1,4 +1,4 @@
 interface:
   display_name: "Autoresearch Examples"
-  short_description: "Compare trusted autoresearch starting points"
+  short_description: "Compare linked autoresearch starting points"
   default_prompt: "Use $exploring-autoresearch to compare directly linked autoresearch examples for my constraints."

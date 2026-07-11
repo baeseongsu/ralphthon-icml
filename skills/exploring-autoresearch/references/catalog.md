@@ -28,6 +28,8 @@ Use this catalog for read-only discovery. Select 3-7 entries and verify mutable 
 - **License caveat:** Verify the repository license and the licenses of benchmark data and dependencies at the chosen revision.
 - **Safety caveat:** Do not inherit unbounded loops, fan-out, destructive rollback, or timeout behavior; use `auto-research` for the bounded execution overlay.
 
+## Official adjacent tooling and architecture
+
 ### [W&B Discovery Forge](https://github.com/wandb/discovery-forge)
 
 - **Official/community status:** Official W&B repository.
@@ -64,7 +66,7 @@ Use this catalog for read-only discovery. Select 3-7 entries and verify mutable 
 - **License caveat:** Verify the repository license and third-party service terms before reuse.
 - **Safety caveat:** Do not grant cluster or repository write access merely to evaluate the design.
 
-## Conceptual and self-reported material
+## Conceptual material
 
 ### [VESSL “Don't tie a GPU to an agent” post](https://vessl.ai/ko/blog/dont-tie-gpu-to-agent-ko)
 
@@ -77,6 +79,8 @@ Use this catalog for read-only discovery. Select 3-7 entries and verify mutable 
 - **Mutable/pinned status:** Web post is mutable and should be cited with an access date.
 - **License caveat:** Treat prose and figures as copyrighted publication material, not reusable code.
 - **Safety caveat:** A self-reported case study is not independent validation and does not authorize cloud spend.
+
+## Self-reported case studies
 
 ### [W&B logging report for Autoresearch](https://wandb.ai/byyoung3/autoresearch/reports/How-to-add-W-B-logging-to-Autoresearch-experiments---VmlldzoxNjE3Nzg2MQ)
 
