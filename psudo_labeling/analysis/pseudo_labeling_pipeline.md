@@ -19,9 +19,9 @@ flowchart TB
         INPUT["<b>Per-paper input</b><br/>abstract · initial reviews · meta-review<br/><i>no rebuttal or final justification</i>"]
         DATA --> SAMPLE --> INPUT
     end
-    subgraph DISTILL["2 · Distill with parallel subagents"]
+    subgraph DISTILL["2 · Distill with a pseudo-labeling subagent"]
         direction LR
-        AGENT["<b>One subagent per paper</b><br/>parallel execution"]
+        AGENT["<b>Pseudo-labeling subagent</b><br/>process one paper"]
         WEIGHT["<b>Weight reviewer evidence</b><br/>high · medium · low"]
         SYNTH["<b>Consolidate one review</b><br/>deduplicate critiques<br/>single-reviewer voice"]
         SCORE["<b>Assign ICML scores</b><br/>within human [min, max]"]
@@ -30,14 +30,13 @@ flowchart TB
     subgraph DELIVER["3 · Deliver structured labels"]
         direction LR
         REVIEW[("<b>Pseudo-review JSON</b><br/>10 ICML review fields")]
-        META[("<b>Audit metadata</b><br/>reviewer weights · rationale")]
+        META[("<b>Reviewer-weight metadata</b><br/>analysis only")]
         USE["<b>Review Agent</b><br/>training and evaluation"]
         REVIEW --> USE
-        META -. audit trail .-> USE
     end
     INPUT --> AGENT
     SCORE --> REVIEW
-    SCORE --> META
+    SCORE -. analysis only .-> META
     classDef data fill:#EAF3F8,stroke:#3D86A6,stroke-width:2px,color:#183B56;
     classDef process fill:#E9F1FB,stroke:#2878B5,stroke-width:2px,color:#183B56;
     classDef output fill:#EDF6EC,stroke:#5B9A68,stroke-width:2px,color:#214C2B;
@@ -46,8 +45,8 @@ flowchart TB
     class REVIEW,META,USE output;
 ```
 
-**Suggested caption.** Pseudo-labeling workflow. Stratified ICML review samples
-are processed by parallel per-paper subagents. Reviewer evidence is weighted and
+**Suggested caption.** Pseudo-labeling workflow. A stratified ICML review sample
+is processed by a pseudo-labeling subagent. Reviewer evidence is weighted and
 deduplicated before producing a single structured review whose scores are
-constrained by the human-review range. Review content and audit metadata are
-stored separately for downstream Review-Agent training and evaluation.
+constrained by the human-review range. The pseudo-review is used downstream,
+while reviewer-weight metadata is retained only for analysis.
