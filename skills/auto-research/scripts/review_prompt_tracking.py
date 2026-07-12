@@ -10,6 +10,33 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator, Mapping, TextIO
 
+from review_prompt_scoring import (
+    PAPER_ID_PATTERN,
+    validate_generated_review,
+    validate_judge,
+)
+
+
+ALLOWED_WANDB_CONFIG_FIELDS = frozenset(
+    {
+        "prompt_sha256",
+        "fixture_sha256",
+        "objective_human_weight",
+        "objective_judge_weight",
+        "objective_penalty_weight",
+        "campaign_id",
+        "candidate_id",
+    }
+)
+ALLOWED_WANDB_METRIC_FIELDS = frozenset(
+    {
+        "objective/composite",
+        "objective/human_agreement",
+        "objective/judge_quality",
+        "objective/penalty",
+    }
+)
+
 
 @contextmanager
 def _locked_ledger(path: Path) -> Iterator[TextIO]:
@@ -89,7 +116,20 @@ def record_wandb_offline(
     ):
         if not isinstance(value, str) or not value.strip():
             raise ValueError(f"{field} must be a nonempty string")
-
+    if PAPER_ID_PATTERN.fullmatch(paper_id.strip()) is None:
+        raise ValueError("paper_id must be a pseudonymous paper-* identifier")
+    validate_generated_review(generated_review)
+    validate_judge(judge)
+    unexpected_config = sorted(set(config) - ALLOWED_WANDB_CONFIG_FIELDS)
+    if unexpected_config:
+        raise ValueError(
+            f"W&B config contains fields outside the allowlist: {unexpected_config}"
+        )
+    unexpected_metrics = sorted(set(metrics) - ALLOWED_WANDB_METRIC_FIELDS)
+    if unexpected_metrics:
+        raise ValueError(
+            f"W&B metrics contain fields outside the allowlist: {unexpected_metrics}"
+        )
     directory.mkdir(parents=True, exist_ok=True)
     settings = wandb_module.Settings(
         console="off",

@@ -6,10 +6,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Iterator, Mapping, Sequence
 
-from review_prompt_scoring import score_candidate
+from review_prompt_scoring import score_candidate, validate_smoke_fixture
 from review_prompt_tracking import append_record, record_wandb_offline
 
 
@@ -57,8 +59,27 @@ def load_fixture(path: Path) -> dict[str, Any]:
     return value
 
 
+@contextmanager
+def reserved_output_directory(path: Path) -> Iterator[None]:
+    """Reserve a fresh output directory and remove it after any failed run."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        path.mkdir()
+    except FileExistsError as error:
+        raise ValueError(
+            f"output directory already exists; refusing to overwrite evidence: {path}"
+        ) from error
+    try:
+        yield
+    except BaseException:
+        shutil.rmtree(path)
+        raise
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     fixture = load_fixture(args.fixture)
+    validate_smoke_fixture(fixture)
     prompt_sha256 = sha256_file(args.prompt)
     fixture_sha256 = sha256_file(args.fixture)
     generated_review = fixture["generated_review"]
@@ -70,58 +91,61 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         penalties=fixture["penalties"],
     )
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    write_json(args.output_dir / "generated-review.json", generated_review)
-    write_json(args.output_dir / "judge.json", judge)
-    write_json(args.output_dir / "metrics.json", metrics)
-    (args.output_dir / "reflection.md").write_text(
-        render_reflection(args.candidate_id, metrics),
-        encoding="utf-8",
-    )
-
-    record: dict[str, Any] = {
-        "campaign_id": args.campaign_id,
-        "candidate_id": args.candidate_id,
-        "paper_id": fixture["paper_id"],
-        "prompt_sha256": prompt_sha256,
-        "fixture_sha256": fixture_sha256,
-        **metrics,
-    }
-    if args.wandb_mode == "offline":
-        try:
-            import wandb
-        except ImportError as error:
-            raise RuntimeError(
-                "W&B offline mode requires the wandb SDK; run with "
-                "`uv run --with wandb`"
-            ) from error
-        run_id, run_directory = record_wandb_offline(
-            wandb_module=wandb,
-            directory=args.output_dir / ".wandb-offline",
-            entity=args.wandb_entity,
-            project=args.wandb_project,
-            campaign_id=args.campaign_id,
-            candidate_id=args.candidate_id,
-            config={
-                "prompt_sha256": prompt_sha256,
-                "fixture_sha256": fixture_sha256,
-                "objective_human_weight": 0.5,
-                "objective_judge_weight": 0.5,
-            },
-            metrics={
-                "objective/composite": metrics["composite"],
-                "objective/human_agreement": metrics["human_agreement"],
-                "objective/judge_quality": metrics["judge_quality"],
-                "objective/penalty": metrics["penalty"],
-            },
-            paper_id=fixture["paper_id"],
-            generated_review=generated_review,
-            judge=judge,
+    with reserved_output_directory(args.output_dir):
+        write_json(args.output_dir / "generated-review.json", generated_review)
+        write_json(args.output_dir / "judge.json", judge)
+        write_json(args.output_dir / "metrics.json", metrics)
+        (args.output_dir / "reflection.md").write_text(
+            render_reflection(args.candidate_id, metrics),
+            encoding="utf-8",
         )
-        record["wandb_run_id"] = run_id
-        record["wandb_run_directory"] = run_directory
 
-    append_record(args.output_dir / "experiments.jsonl", record)
+        record: dict[str, Any] = {
+            "campaign_id": args.campaign_id,
+            "candidate_id": args.candidate_id,
+            "paper_id": fixture["paper_id"],
+            "prompt_sha256": prompt_sha256,
+            "fixture_sha256": fixture_sha256,
+            **metrics,
+        }
+        if args.wandb_mode == "offline":
+            try:
+                import wandb
+            except ImportError as error:
+                raise RuntimeError(
+                    "W&B offline mode requires the wandb SDK; run with "
+                    "`uv run --with wandb`"
+                ) from error
+            run_id, run_directory = record_wandb_offline(
+                wandb_module=wandb,
+                directory=args.output_dir / ".wandb-offline",
+                entity=args.wandb_entity,
+                project=args.wandb_project,
+                campaign_id=args.campaign_id,
+                candidate_id=args.candidate_id,
+                config={
+                    "prompt_sha256": prompt_sha256,
+                    "fixture_sha256": fixture_sha256,
+                    "objective_human_weight": 0.5,
+                    "objective_judge_weight": 0.5,
+                    "objective_penalty_weight": 0.25,
+                    "campaign_id": args.campaign_id,
+                    "candidate_id": args.candidate_id,
+                },
+                metrics={
+                    "objective/composite": metrics["composite"],
+                    "objective/human_agreement": metrics["human_agreement"],
+                    "objective/judge_quality": metrics["judge_quality"],
+                    "objective/penalty": metrics["penalty"],
+                },
+                paper_id=fixture["paper_id"],
+                generated_review=generated_review,
+                judge=judge,
+            )
+            record["wandb_run_id"] = run_id
+            record["wandb_run_directory"] = run_directory
+
+        append_record(args.output_dir / "experiments.jsonl", record)
     return record
 
 

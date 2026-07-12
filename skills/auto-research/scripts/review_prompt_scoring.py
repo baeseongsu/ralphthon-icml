@@ -4,7 +4,8 @@
 from __future__ import annotations
 
 import math
-from typing import Mapping, Sequence
+import re
+from typing import Any, Mapping, Sequence
 
 
 SCORE_RANGES = {
@@ -31,6 +32,28 @@ PENALTY_FIELDS = (
     "missing_evidence",
     "api_failure",
 )
+REVIEW_SCORE_RANGES = {
+    **SCORE_RANGES,
+    "confidence": (1.0, 5.0),
+}
+GENERATED_REVIEW_FIELDS = frozenset(
+    {
+        "summary",
+        "strengths",
+        "weaknesses",
+        "questions",
+        "limitations",
+        "ethical_concerns",
+        "evidence_trace",
+        "scores",
+        "score_rationales",
+    }
+)
+JUDGE_FIELDS = frozenset({"scores", "rationale"})
+FIXTURE_FIELDS = frozenset(
+    {"paper_id", "human_scores", "generated_review", "judge", "penalties"}
+)
+PAPER_ID_PATTERN = re.compile(r"^paper-[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def _finite_number(field: str, value: object) -> float:
@@ -40,6 +63,112 @@ def _finite_number(field: str, value: object) -> float:
     if not math.isfinite(number):
         raise ValueError(f"{field} must be a finite number")
     return number
+
+
+def _mapping(field: str, value: object) -> Mapping[str, Any]:
+    if not isinstance(value, Mapping):
+        raise ValueError(f"{field} must be an object")
+    return value
+
+
+def _exact_keys(
+    field: str,
+    value: Mapping[str, Any],
+    expected: set[str] | frozenset[str],
+) -> None:
+    actual = set(value)
+    if actual != set(expected):
+        missing = sorted(set(expected) - actual)
+        unexpected = sorted(actual - set(expected))
+        raise ValueError(
+            f"{field} keys do not match schema; "
+            f"missing={missing}, unexpected={unexpected}"
+        )
+
+
+def _nonempty_text(field: str, value: object) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{field} must be a nonempty string")
+    return value.strip()
+
+
+def _text_list(field: str, value: object) -> list[str]:
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{field} must be a nonempty list")
+    return [_nonempty_text(f"{field}[{index}]", item) for index, item in enumerate(value)]
+
+
+def validate_generated_review(value: object) -> Mapping[str, Any]:
+    review = _mapping("generated_review", value)
+    _exact_keys("generated_review", review, GENERATED_REVIEW_FIELDS)
+    for field in ("summary", "limitations", "ethical_concerns"):
+        _nonempty_text(f"generated_review.{field}", review[field])
+    for field in ("strengths", "weaknesses", "questions", "evidence_trace"):
+        _text_list(f"generated_review.{field}", review[field])
+
+    scores = _mapping("generated_review.scores", review["scores"])
+    _exact_keys(
+        "generated_review.scores",
+        scores,
+        set(REVIEW_SCORE_RANGES),
+    )
+    for dimension, (minimum, maximum) in REVIEW_SCORE_RANGES.items():
+        score = _finite_number(dimension, scores[dimension])
+        if not minimum <= score <= maximum:
+            raise ValueError(
+                f"{dimension} score must be within {minimum:g}..{maximum:g}"
+            )
+
+    rationales = _mapping(
+        "generated_review.score_rationales",
+        review["score_rationales"],
+    )
+    _exact_keys(
+        "generated_review.score_rationales",
+        rationales,
+        set(REVIEW_SCORE_RANGES),
+    )
+    for dimension in REVIEW_SCORE_RANGES:
+        _nonempty_text(
+            f"generated_review.score_rationales.{dimension}",
+            rationales[dimension],
+        )
+    return review
+
+
+def validate_judge(value: object) -> Mapping[str, Any]:
+    judge = _mapping("judge", value)
+    _exact_keys("judge", judge, JUDGE_FIELDS)
+    scores = _mapping("judge.scores", judge["scores"])
+    _exact_keys("judge.scores", scores, set(JUDGE_DIMENSIONS))
+    for dimension in JUDGE_DIMENSIONS:
+        score = _finite_number(dimension, scores[dimension])
+        if not 1.0 <= score <= 5.0:
+            raise ValueError(f"{dimension} judge score must be within 1..5")
+    _nonempty_text("judge.rationale", judge["rationale"])
+    return judge
+
+
+def validate_smoke_fixture(value: object) -> Mapping[str, Any]:
+    fixture = _mapping("fixture", value)
+    _exact_keys("fixture", fixture, FIXTURE_FIELDS)
+    paper_id = _nonempty_text("paper_id", fixture["paper_id"])
+    if PAPER_ID_PATTERN.fullmatch(paper_id) is None:
+        raise ValueError("paper_id must be a pseudonymous paper-* identifier")
+
+    human_scores = _mapping("human_scores", fixture["human_scores"])
+    _exact_keys("human_scores", human_scores, set(SCORE_RANGES))
+    human_targets(human_scores)
+    validate_generated_review(fixture["generated_review"])
+    validate_judge(fixture["judge"])
+
+    penalties = _mapping("penalties", fixture["penalties"])
+    _exact_keys("penalties", penalties, set(PENALTY_FIELDS))
+    for field in PENALTY_FIELDS:
+        penalty = _finite_number(field, penalties[field])
+        if not 0.0 <= penalty <= 1.0:
+            raise ValueError(f"{field} penalty must be within 0..1")
+    return fixture
 
 
 def human_targets(

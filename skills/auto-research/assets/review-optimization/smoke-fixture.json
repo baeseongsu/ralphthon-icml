@@ -30,6 +30,14 @@
       "originality": 4,
       "overall_recommendation": 4,
       "confidence": 3
+    },
+    "score_rationales": {
+      "soundness": "The bounded comparison is methodologically coherent, but the fixture does not establish robustness beyond the stated setting.",
+      "presentation": "The problem and controlled comparison are clear enough to follow, with limited reproduction detail in the smoke artifact.",
+      "significance": "The result is useful as a bounded demonstration but does not yet support broad impact claims.",
+      "originality": "The controlled framing offers a distinct evaluation perspective within the synthetic setting.",
+      "overall_recommendation": "The artifact has clear merits and a coherent evaluation, while its narrow evidence limits the strength of the recommendation.",
+      "confidence": "The assessment is based on a deliberately small smoke artifact rather than a complete paper."
     }
   },
   "judge": {

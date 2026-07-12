@@ -38,6 +38,9 @@ JUDGE_DIMENSIONS = {
 
 
 def load_module(path: Path, name: str):
+    scripts_directory = str(path.parent)
+    if scripts_directory not in sys.path:
+        sys.path.insert(0, scripts_directory)
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -106,6 +109,10 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             set(fixture["generated_review"]["scores"]),
             set(SCORE_RANGES) | {"confidence"},
         )
+        self.assertEqual(
+            set(fixture["generated_review"]["score_rationales"]),
+            set(fixture["generated_review"]["scores"]),
+        )
         self.assertEqual(set(fixture["judge"]["scores"]), JUDGE_DIMENSIONS)
         serialized = json.dumps(fixture).lower()
         for forbidden in (
@@ -130,6 +137,22 @@ class ReviewPromptSmokeTest(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "soundness"):
             scoring.human_targets({**valid_human_scores(), "soundness": [0]})
+
+    def test_runtime_schema_rejects_sensitive_unknown_fields(self) -> None:
+        scoring = load_module(SCORING, "review_prompt_scoring")
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        fixture["generated_review"]["raw_human_review"] = "private review"
+
+        with self.assertRaisesRegex(ValueError, "generated_review"):
+            scoring.validate_smoke_fixture(fixture)
+
+    def test_runtime_schema_rejects_out_of_range_confidence(self) -> None:
+        scoring = load_module(SCORING, "review_prompt_scoring")
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        fixture["generated_review"]["scores"]["confidence"] = 6
+
+        with self.assertRaisesRegex(ValueError, "confidence"):
+            scoring.validate_smoke_fixture(fixture)
 
     def test_composite_uses_equal_human_and_judge_weights(self) -> None:
         scoring = load_module(SCORING, "review_prompt_scoring")
@@ -179,6 +202,7 @@ class ReviewPromptSmokeTest(unittest.TestCase):
 
     def test_wandb_table_contains_review_but_no_human_scores(self) -> None:
         tracking = load_module(TRACKING, "review_prompt_tracking")
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
         fake = FakeWandb()
         with tempfile.TemporaryDirectory() as directory:
             run_id, _ = tracking.record_wandb_offline(
@@ -191,14 +215,8 @@ class ReviewPromptSmokeTest(unittest.TestCase):
                 config={"prompt_sha256": "sha256:" + "a" * 64},
                 metrics={"objective/composite": 0.8},
                 paper_id="paper-smoke-001",
-                generated_review={
-                    "summary": "complete generated review",
-                    "scores": {"soundness": 3},
-                },
-                judge={
-                    "scores": {"rubric_coverage": 5},
-                    "rationale": "grounded",
-                },
+                generated_review=fixture["generated_review"],
+                judge=fixture["judge"],
             )
 
         self.assertEqual(run_id, "offline-smoke-run")
@@ -207,9 +225,68 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             "review-prompt-candidate",
         )
         payload = json.dumps(fake.logged_payload["reviews/all"].rows)
-        self.assertIn("complete generated review", payload)
+        self.assertIn("bounded synthetic optimization problem", payload)
         self.assertNotIn("human_scores", payload)
         self.assertNotIn("pdf", payload.lower())
+
+    def test_wandb_rejects_sensitive_payload_before_init(self) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking")
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        fixture["generated_review"]["raw_human_review"] = "private"
+        fake = FakeWandb()
+
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "generated_review"):
+                tracking.record_wandb_offline(
+                    wandb_module=fake,
+                    directory=Path(directory),
+                    entity="smoke-entity",
+                    project="review-prompt-smoke",
+                    campaign_id="smoke-001",
+                    candidate_id="baseline",
+                    config={"prompt_sha256": "sha256:" + "a" * 64},
+                    metrics={"objective/composite": 0.8},
+                    paper_id="paper-smoke-001",
+                    generated_review=fixture["generated_review"],
+                    judge=fixture["judge"],
+                )
+
+        self.assertIsNone(fake.init_kwargs)
+
+    def test_wandb_rejects_config_and_metrics_outside_allowlist(self) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking")
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        cases = (
+            (
+                {"prompt_sha256": "sha256:" + "a" * 64, "api_key": "secret"},
+                {"objective/composite": 0.8},
+                "config",
+            ),
+            (
+                {"prompt_sha256": "sha256:" + "a" * 64},
+                {"objective/composite": 0.8, "raw_human_score": 4},
+                "metrics",
+            ),
+        )
+
+        for config, metrics, expected in cases:
+            with self.subTest(expected=expected), tempfile.TemporaryDirectory() as directory:
+                fake = FakeWandb()
+                with self.assertRaisesRegex(ValueError, expected):
+                    tracking.record_wandb_offline(
+                        wandb_module=fake,
+                        directory=Path(directory),
+                        entity="smoke-entity",
+                        project="review-prompt-smoke",
+                        campaign_id="smoke-001",
+                        candidate_id="baseline",
+                        config=config,
+                        metrics=metrics,
+                        paper_id="paper-smoke-001",
+                        generated_review=fixture["generated_review"],
+                        judge=fixture["judge"],
+                    )
+                self.assertIsNone(fake.init_kwargs)
 
     def test_cli_writes_recomputable_evidence_with_wandb_disabled(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -252,6 +329,90 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             self.assertTrue((output / "generated-review.json").is_file())
             self.assertTrue((output / "judge.json").is_file())
             self.assertTrue((output / "reflection.md").is_file())
+
+    def test_cli_rejects_sensitive_fixture_before_writing_output(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+            fixture["generated_review"]["raw_human_review"] = "private"
+            fixture_path = root / "malicious.json"
+            fixture_path.write_text(json.dumps(fixture), encoding="utf-8")
+            output = root / "run"
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(RUNNER),
+                    "--fixture",
+                    str(fixture_path),
+                    "--prompt",
+                    str(PROMPT),
+                    "--output-dir",
+                    str(output),
+                    "--campaign-id",
+                    "smoke-sensitive",
+                    "--candidate-id",
+                    "baseline",
+                    "--wandb-mode",
+                    "disabled",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertIn("generated_review", completed.stderr)
+            self.assertFalse(output.exists())
+
+    def test_cli_duplicate_rerun_preserves_existing_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "run"
+            base_command = [
+                sys.executable,
+                str(RUNNER),
+                "--prompt",
+                str(PROMPT),
+                "--output-dir",
+                str(output),
+                "--campaign-id",
+                "smoke-duplicate",
+                "--candidate-id",
+                "baseline",
+                "--wandb-mode",
+                "disabled",
+            ]
+            first = subprocess.run(
+                [*base_command, "--fixture", str(FIXTURE)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(first.returncode, 0, first.stderr)
+            review_before = (output / "generated-review.json").read_bytes()
+            ledger_before = (output / "experiments.jsonl").read_bytes()
+
+            changed = json.loads(FIXTURE.read_text(encoding="utf-8"))
+            changed["generated_review"]["summary"] = "MUTATED REVIEW"
+            changed_fixture = root / "changed-fixture.json"
+            changed_fixture.write_text(json.dumps(changed), encoding="utf-8")
+            second = subprocess.run(
+                [*base_command, "--fixture", str(changed_fixture)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertNotEqual(second.returncode, 0)
+            self.assertEqual(
+                (output / "generated-review.json").read_bytes(),
+                review_before,
+            )
+            self.assertEqual(
+                (output / "experiments.jsonl").read_bytes(),
+                ledger_before,
+            )
 
 
 if __name__ == "__main__":

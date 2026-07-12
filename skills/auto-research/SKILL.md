@@ -119,6 +119,13 @@ review text, human score arrays, original paper/reviewer identifiers, secrets,
 or private data to W&B. W&B remains an observation layer: the same local
 selection result must be produced with `--wandb-mode disabled`.
 
+The fixture, generated review, Judge result, W&B config, and W&B metrics use
+exact fail-closed schemas; unknown fields are rejected before `wandb.init`.
+Every `--output-dir` must be new. The runner refuses to reuse an existing
+directory before writing evidence or creating a W&B run, and removes a newly
+reserved directory if the candidate fails before its ledger append completes.
+Use a new candidate ID and output directory for every iteration.
+
 This smoke consumes frozen response fixtures; it does not call a live LLM API.
 Choose and freeze the PDF ingestion method, API provider, Reviewer model, and
 Judge model before replacing that boundary.

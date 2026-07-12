@@ -67,6 +67,14 @@ Return one JSON object and no surrounding prose:
     "originality": 1,
     "overall_recommendation": 1,
     "confidence": 1
+  },
+  "score_rationales": {
+    "soundness": "string",
+    "presentation": "string",
+    "significance": "string",
+    "originality": "string",
+    "overall_recommendation": "string",
+    "confidence": "string"
   }
 }
 ```

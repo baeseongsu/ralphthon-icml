@@ -354,3 +354,9 @@ uv run --with wandb python3 skills/auto-research/scripts/review_prompt_smoke.py 
 CompositeScore, append-only ledger, full anonymized review table serialization을
 end-to-end로 확인한다. PDF 원문, raw human review, human score arrays, 원래
 paper/reviewer identifier는 W&B에 보내지 않는다.
+
+Fixture와 W&B payload는 exact allowlist schema를 사용한다. Unknown field,
+잘못된 score range, 누락된 rationale은 어떤 output 또는 W&B run을 만들기
+전에 거부한다. Candidate output directory는 매 iteration마다 새 경로여야
+하며 기존 경로 재사용은 evidence overwrite 없이 실패한다. 새로 예약한
+경로에서 run이 실패하면 partial local/W&B evidence를 제거한다.

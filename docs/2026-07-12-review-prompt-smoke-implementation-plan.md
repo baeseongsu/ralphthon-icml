@@ -867,3 +867,19 @@ The following work is explicitly outside this implementation plan and requires a
 - Development/holdout subset sizes and topic/score stratification.
 - Multi-paper QWK/rank-correlation metrics and keep/discard regression thresholds.
 - Online `wandb sync`, project visibility, and provider retention approval.
+
+## Post-review hardening
+
+Implementation review added the following fail-closed requirements to the
+completed smoke:
+
+- Generated reviews include one nonempty rationale for every score, including
+  confidence.
+- Fixture, generated-review, Judge, W&B config, and W&B metric keys are exact
+  allowlists. Unknown or sensitive fields fail before any output or `wandb.init`.
+- Paper IDs must use the pseudonymous `paper-*` form.
+- Candidate output directories are atomically reserved and must be new. A
+  duplicate rerun cannot overwrite an existing review or ledger and cannot
+  create a second W&B run.
+- Any failure after reserving a new output directory removes its partial local
+  evidence and offline W&B directory before returning the error.
