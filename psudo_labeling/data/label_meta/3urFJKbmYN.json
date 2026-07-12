@@ -1,0 +1,26 @@
+{
+  "forum_id": "3urFJKbmYN",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_3RwU",
+      "weight": "high",
+      "reason": "Specific and substantiated; its two central weaknesses (single competitive-programming domain and single base model) are exactly the shortcomings the meta-review adopts as significant, and it also raises the need to validate that paired variants reflect the intended transfer distance, which aligns with the meta-review's difficulty-ordering concern. Also flags the concrete broken reference and the ICL oracle-retrieval realism issue."
+    },
+    {
+      "reviewer": "Reviewer_Uini",
+      "weight": "high",
+      "reason": "Detailed, high-confidence (5) review whose core weaknesses (single domain, single base model, and the need for fuller method explanation before results) are corroborated by the other reviewers and echoed by the meta-review's scope and presentation concerns. Substantive praise of the framework's novelty and the depth of the experimental design."
+    },
+    {
+      "reviewer": "Reviewer_EPJc",
+      "weight": "high",
+      "reason": "Its presentation critique (vague single-sentence category definitions, examples only in the appendix) and its point that the increasing difficulty of the levels is justified mainly by empirical fit map directly onto the meta-review's noted presentation and 'relative difficulty of each test set variant' concerns; the model-generality concern is corroborated. The significance=2 score is a mild outlier relative to the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_EgVT",
+      "weight": "medium",
+      "reason": "The single-task and single-model weaknesses are corroborated and on-target, but the score-driving soundness=2 rests on a narrower failure-mode reproducibility concern that the meta-review does not centrally adopt, and the 'lack of theoretical analysis' point is fairly generic. The reproducibility point itself is specific and legitimate, so the review is partly on-target."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on the single-dataset/single-base-model limitation as the significant shortcoming and treats the presentation and test-set difficulty-ordering concerns as real but resolvable, which keeps the quality dimensions at the good/fair boundary rather than higher. The three high-weight reviewers (3RwU, Uini, EPJc) converge on soundness 3, presentation 3, significance 3, originality 3, and weak-accept overall, so those dimensions are set to 3 and the overall to 4, within the reviewers' [4,5] range and matching the modal weak-accept plus the meta-review's tentative acceptance. EgVT's soundness=2 and EPJc's presentation/significance=2 are read as minority positions driven by narrower or resolvable concerns and thus lower confidence in those dimensions without pulling them below 3. Overall confidence 4 reflects strong mutual corroboration on the central issues (framework novelty, single-domain and single-model scope) despite some divergence on the finer-grained soundness and significance scores."
+}

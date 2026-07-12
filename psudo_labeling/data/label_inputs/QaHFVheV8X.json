@@ -1,0 +1,62 @@
+{
+ "forum_id": "QaHFVheV8X",
+ "title": "SAQNN: Spectral Adaptive Quantum Neural Network as a Universal Approximator",
+ "abstract": "Quantum machine learning (QML), as an interdisciplinary field bridging quantum computing and machine learning, has garnered significant attention in recent years. Currently, the field as a whole faces challenges due to incomplete theoretical foundations for the expressivity of quantum neural networks (QNNs). In this paper we propose a constructive QNN model and demonstrate that it possesses the universal approximation property (UAP), which means it can approximate any square-integrable function up to arbitrary accuracy. Furthermore, it supports switching function bases, thus adaptable to various scenarios in numerical approximation and machine learning. Our model has asymptotic advantages over the best classical feed-forward neural networks in terms of circuit size and achieves optimal parameter complexity when approximating Sobolev functions under $L_2$ norm.",
+ "primary_area": "theory->learning_theory",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper is a theoretical one that studies universal function approximation by quantum neural networks. In particular, it proved that quantum neural networks have asymptotic advantages over the best classical feed-forward neural networks in terms of circuit size and achieves optimal parameter complexity when approximating Sobolev functions under $\\ell_{2}$ norm.\n\nThe initial reports by reviewers pointed out the theoretical guarantees are solid, but there were some concerns about the practicality, comparison to existing works, etc. The authors made decent rebuttals for clarifying these points, and all scores converge to accepts unanimously. The decision is hence acceptance - the ICML 2026 audiences will benefit from such a theory result and understanding the difference between quantum and classical neural networks.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_PHzc",
+   "summary": "This paper constructs a quantum neural network based on truncated Fourier series implemented via quantum multiplexors. Authors prove a UAP for multivariate L2 functions. They show advantage over classical FFN for Sobolev function approximation. This advantage does not seem to come from the theorem it prove (though it's properly characterized) but more from the hardware attribute. This does not provide much guidance to FFN practitioner.",
+   "strengths_and_weaknesses": "This paper headline is derived from theoretically proposition and very limited experimental validation.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "It does not seem to be brand new to discuss the universal approximation property and it is not commonly assumed that Quantum Circuits will be worse than the typical FFN. Is it reasonable to say that Quantum Circuits based model are more general therefore the performance upper limit is definitely better than FFN. It is still non trivial to quantify this result in this paper.",
+   "limitations": "This paper is very theoretical and can not be adopted by common machine learning practitioner.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_u459",
+   "summary": "This paper proposes a constructive quantum neural network model and proves that it has the universal approximation property, meaning it can approximate any square-integrable function to arbitrary accuracy. The authors further claim that the model supports switching function bases, making it adaptable across different approximation and learning settings. Beyond universality, the paper argues that the proposed construction has asymptotic advantages over the best classical feed-forward neural networks in circuit size and achieves optimal parameter complexity for approximating Sobolev functions.",
+   "strengths_and_weaknesses": "Strengths \n- The paper studies an important and timely topic in quantum machine learning: the expressivity and approximation power of quantum neural networks.\n- Overall, this appears to be a potentially significant theoretical contribution to QML foundations.\n\nWeaknesses\n- The core direction is strong, but some important aspects need clearer explanation. For exmaple, in Theorem 1, more details are needed for the QNN. Only existing claim is not strong.\n- The L2 norm should be better justified. While this is a standard choice in approximation theory, the paper should explain why it is the most relevant notion here and what its limitations are for learning tasks.\n- The paper would benefit from more discussion of the assumptions under which the asymptotic advantages hold.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- What are the main new insights of this work compared with existing universal approximation and expressivity results for QNNs?\n- How can the proposed constructive model be translated into practical quantum machine learning algorithms, and how realistic are the claimed advantages under implementation constraints?",
+   "limitations": "- The broader impact would be clearer if the paper better explained how these approximation results inform the design or analysis of practical QML models and algorithms.\n- Some additional intuition about the model construction and why it leads to these approximation properties would improve accessibility.\n- Better explain the insights with existing expressivity and universal approximation literature in QML.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_Sekk",
+   "summary": "In this paper, the authors introduce the Spectral Adaptive Quantum Neural Network (SAQNN), a constructive quantum machine learning architecture designed to serve as a universal approximator. Authors prove that SAQNN possesses the Universal Approximation Property for any multivariate square-integrable function. Moreover, they establish non-asymptotic error bounds for approximating Sobolev functions under the L2 norm, demonstrating that their model achieves optimal parameter complexity. Last, they show that SAQNN overcomes the curse of dimensionality.",
+   "strengths_and_weaknesses": "For soundness, I believe that theoretical foundation of this paper is highly rigorous. By leveraging established approximation theory, specifically Fourier and Chebyshev, authors provide solid mathematical proofs for their claims regarding UAP and error bounds. However, it would be better to see experiments with different dimensions, not limited with two, and training points for observing how model behaves under various circumstances.\nFor presentation, I think manuscript is well-written and easy to follow.\nFor significance, as a researcher who works with high dimensional datasets, I find the theoretical circumvention of the curse of dimensionality to be a highly significant contribution. The fact that the model's costs remain polynomial relative to the input dimension d suggests immense long-term utility for processing complex social or behavioral data. Last, with implementing Fourier and Chebyshev techniques, it also incorporates an interpretable framework for machine learning.\nFor originality, I believe that authors offer valuable perspective to the field. Instead of relying on heuristic approaches, they introduce a constructive model that naturally embeds classical approximation theory.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "1-In real-world datasets, the input dimension d can be massive. While your theoretical bounds hold, did you observe any overheads or optimization difficulties when simulating dimensions larger than d=2?\n2-Could you elaborate on how coefficient a's scale might impact the gradients during the actual Adam optimization process?",
+   "limitations": "The authors have adequately discussed the technical limitations of their work, specifically noting the challenging O(nlogn) circuit depth for near-term hardware and the need to investigate learning landscapes in future work. However, they dismiss the broader societal impact.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_hY5x",
+   "summary": "The paper introduces the Spectral Adaptive Quantum Neural Network, which is a circuit architecture for quantum machine learning. They demonstrate that the architecture possesses the universal approximation property. After providing the notation, the scheme, the theorems, and error bounds, they show some numerical experiments.",
+   "strengths_and_weaknesses": "Soundness: The submission is technically sound. \nPresentation: The presentation is good.\nSignificance: Whereas the authors address an interesting problem, I question whether or not this manuscript is suitable for ICML, as it lacks any significant empirical results. Furthermore, its practical relevance (quantum machine learning, that is, currently or in the future) for the general machine learning community is highly questionable.\nOriginality: The paper is original and deepens our understanding of quantum machine learning.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Can one simulate an example on a more realistic machine-learning task? How does the influence of Barren plateaus impact the usefulness of the algorithm?",
+   "limitations": "To some degree, but the authors could further discuss both the technical challenges of the quantum machine learning field as a whole and the problems arising through Barren plateaus latter is briefly mentioned in the conclusion.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "yUOnI5IAuT",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_7adr",
+      "weight": "high",
+      "reason": "Most detailed and specific review. Raised the distillation-versus-architecture attribution confound that the meta-review identifies as the single most important issue, plus the missing advanced inference-time-scaling baselines (Best-of-N, Tree-of-Thoughts) and the under-explained hybrid inference mechanism. Highest confidence (4) and well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_LQGf",
+      "weight": "high",
+      "reason": "Raised the same distillation-vs-Para-Thinker attribution question the meta-review anchors on, along with concrete data-contamination and SFT/RL-baseline concerns. Specific, evaluation-relevant questions; positive overall (4), consistent with the accept direction."
+    },
+    {
+      "reviewer": "Reviewer_YoSR",
+      "weight": "medium",
+      "reason": "Corroborated the missing-TTS-baseline concern echoed by the meta-review and flagged that several theorems read as intuition rather than proof, which is partly on-target. However, its 'gains are small' framing is undercut by the consistent improvements the meta-review emphasizes, and its confidence was low (2)."
+    },
+    {
+      "reviewer": "Reviewer_zDkc",
+      "weight": "medium",
+      "reason": "Positive review whose praised strengths (novelty, well-motivated Pa-Attention/LPRoPE, extensive experiments) align with the meta-review, and whose ablation and path-scaling weaknesses are reasonable. But it is fairly generic, low-effort in places (e.g., malformed limitations field), and misses the central attribution concern."
+    }
+  ],
+  "score_rationale": "The two high-weight reviewers (7adr, LQGf) both raised the distillation-versus-architecture attribution concern that the meta-review calls the most important result, so I foreground it while keeping the dimension profile at LQGf's 3/3/2/2 given the clearly positive accept direction. Significance and originality sit at 2 because both high-weight reviewers scored them there and the meta-review frames the paradigm as an intuitive extension with moderate gains. Overall recommendation is 4 (weak accept), following LQGf and the positive meta-review direction while remaining within the reviewers' [3,4] range. Confidence is 4 because the key concerns are strongly corroborated across reviewers and by the meta-review."
+}

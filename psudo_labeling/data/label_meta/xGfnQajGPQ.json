@@ -1,0 +1,26 @@
+{
+  "forum_id": "xGfnQajGPQ",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_gPLB",
+      "weight": "high",
+      "reason": "The most thorough and engaged review: specific about experimental magnitudes (the ~1-2 point gains, 8-bit occasionally trailing), ablation coverage, and constructive positioning against recent unlearning work, with the highest confidence. Its balanced but positive assessment closely matches the meta-review's 'technically sound, well-executed, clean and practically useful' framing."
+    },
+    {
+      "reviewer": "Reviewer_XCho",
+      "weight": "medium",
+      "reason": "Provides the strongest and most technically grounded related-work critique (SCAFFOLD/FedDyn variance reduction, PCGrad/CAGrad multi-objective optimization), which is corroborated by the other reviewers' positioning concerns, and its 'incremental over DualOptim' point is echoed by gPLB. However, the positive meta-review only partly endorses the 'mechanism is not new' framing, and the formal-guarantees point is fairly generic to the unlearning field, so medium rather than high."
+    },
+    {
+      "reviewer": "Reviewer_fXAf",
+      "weight": "medium",
+      "reason": "Directly raises the generality/breadth-of-evaluation concern that the meta-review adopts as its central caveat, and its related-work point is corroborated by XCho and gPLB. The review is relatively brief and some weaknesses are soft or partly addressed by the paper itself (memory/runtime reporting and the 8-bit variant), so medium."
+    },
+    {
+      "reviewer": "Reviewer_B5yh",
+      "weight": "medium",
+      "reason": "Contributes concrete, verifiable points (the missing TOFU Forget Quality metric, the simplified theoretical assumptions) and echoes the call for simpler/standard baselines. Its missing-baselines framing partly conflates the optimizer with the loss/objective choice, and the retain-data-availability concern is partly addressed by the tested no-original-data setting, so medium."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on a technically sound, well-executed contribution with a clean, useful idea, tempered by the concern that generality is not fully substantiated; this fixes soundness at the modal 3 and originality at the unanimous 2. Significance is held at 2 despite gPLB's 3 because the three other reviewers scored 2 and the meta-review explicitly caps the generality claim, while presentation is set to 3 following the highest-weight reviewer (gPLB) and XCho and the meta-review's 'well-executed' framing, within the [2,3] range. Overall recommendation is 4 (weak accept): the modal score across the specific, mutually corroborating reviews and consistent with a positive-but-qualified accept, with gPLB's 5 acknowledged but not dominant given three independent 4s. Confidence is 4 because the reviews strongly corroborate one another on the core idea, originality, and the positioning/generality weaknesses, and align with the meta-review."
+}

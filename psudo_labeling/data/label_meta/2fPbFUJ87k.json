@@ -1,0 +1,26 @@
+{
+  "forum_id": "2fPbFUJ87k",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_ENMy",
+      "weight": "high",
+      "reason": "Most detailed and specific theoretical critique - RoPE mismatch, dropping W_O without justifying isometry, the Lemma 3.3 Taylor expansion, and the internal inconsistency where Eq. 8 reintroduces softmax-like weighting against the linear assumption - plus concrete missing baselines (Compactor, KVzip). These map directly onto the meta-review's reservation about the correspondence between the theoretical surrogate and standard attention, though the overall reject score (2) is an outlier below the consensus and the final decision, so its content is adopted but its overall score is not."
+    },
+    {
+      "reviewer": "Reviewer_NaPt",
+      "weight": "high",
+      "reason": "Specific and substantiated: identified the linear-Gaussian/softmax simplification carrying too much weight, the loose Appendix B unification, and marginal gains over Expected Attention without confidence intervals or significance tests. All are echoed by the meta-review's rigor concern and corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_L3Ld",
+      "weight": "high",
+      "reason": "High-confidence, specific critiques: the capacity-performance correlation appears driven by within-method variation across compression ratios rather than across methods at a fixed ratio, the query/noise-independence assumption is undiscussed, and an oracle that solves the original objective is warranted. The presentation score of 2 is driven mainly by a local figure-caption rendering issue rather than a structural problem, so its presentation score was not adopted as the synthesis value."
+    },
+    {
+      "reviewer": "Reviewer_LRSo",
+      "weight": "high",
+      "reason": "On-target and corroborating: the request to validate the noise-term assumption (which absorbs softmax and multi-head effects) against real attention is essentially the meta-review's core question stated crisply, and the calls for 128k+ long-context and hybrid quantization/merging evaluation are useful and specific. Its soundness score of 4 is generous relative to the substantiated rigor concerns it and others raise, so that score was not adopted as the synthesis value."
+    }
+  ],
+  "score_rationale": "All four reviews converge on the same picture - a novel and appealing information-theoretic unification with strong, broad empirics but a theoretical foundation built on heavy, insufficiently validated simplifications - and the meta-review anchors the paper's main reservation to exactly that theoretical rigor while noting the experimental concerns were addressed. I therefore set soundness to 2, siding with the two most technically engaged and highest-confidence reviewers (who identified the Eq. 8 internal inconsistency, the unjustified W_O drop, the RoPE mismatch, and a probable correlation artifact) and with the meta-review's standing concern about the surrogate's correspondence to real attention. Presentation, significance, and originality are held at 3, reflecting the strong majority and the recognized novelty of the unifying perspective, with the lone 2s driven by a local figure-rendering issue and a narrower reading of novelty. Overall recommendation is 4 (weak accept), matching the three corroborating reviewers and the acceptance direction of the meta-review while treating the single reject as an outlier; confidence is high because the evidence across reviews is specific and mutually reinforcing."
+}

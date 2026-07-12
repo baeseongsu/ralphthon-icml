@@ -1,0 +1,62 @@
+{
+ "forum_id": "hRyilopCCT",
+ "title": "Noise as a Natural Regularizer in Markov Decision Processes: Connecting Environmental Stochasticity and Policy Simplicity",
+ "abstract": "The planning horizon in a Markov Decision Process (MDP) determines how far into the future an agent reasons. In practice, shorter horizons are commonly associated with policies that exhibit simpler or more interpretable decision-making behavior. In this paper, we establish a formal connection between environmental stochasticity and planning horizon in MDPs. We show that for broad classes of transition noise, solving a noisy MDP can be formally related to solving a noise-free MDP with a shorter effective discount factor, leading to identical optimal policies in some cases and near-optimal ones in others. We further characterize settings in which this correspondence breaks down, clarifying when horizon-based interpretations of noise are not valid. These results, which are supported by both theory and experiments, also give some insight into the common practice of using smaller discount factors for reinforcement learning than those that can be justified by standard modeling interpretations.",
+ "primary_area": "theory->reinforcement_learning_and_planning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper studies properties of MDPs under which the optimal policy is \"simple\", in particular making connections between noisiness in the environment and effective horizon for planning. The reviewers agree that this is an interesting and novel perspective and uniformly lean towards acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_7ASi",
+   "summary": "This paper studies the effect of noisy MDPs on the optimal policy, and the relationship between the discount factors of the policy of noisy MDP and that of noise-free MDP.",
+   "strengths_and_weaknesses": "**Strengths:**\nThe paper is theoretically supported by solid and interesting theorems.\n\nThe theories of the paper is validated by two experiments.\n\n**Weaknesses:** \nAlthough there are results on reset and uniform noise, the reviewer also expects an empirical evaluation of the sticky noise on the discount-factor and resulting policy, or explanation why this type of model is not considered.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "What are the limitations of the considered noise models in evaluating more complex continuous environment?\n\nThere are also some theorems on the effect of noise models on the optimal value-function. Cannot it be empirically evaluated based on some experiments?",
+   "limitations": "Some limitations of this work are well mentioned.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_r2CE",
+   "summary": "This paper takes a noval perspective on how noise influence optimal strategy in discounted MDPs. Rather treating noises to be adversarial, as in existing robust MDP literature, this paper studies structured state transition noises and show that some noise classes influence the optimal policy by shortening the planning horizon. Specifically, the paper identifies and proves that the following three types of noises shortens the planning horizon in the optimal policy:\n    - sticky noise, where there is probability not switching states\n    - reset noise, where there is probability switching to states from a fixed distribution\n    - reversible and slowly changing noise, where noise only leads to noisy states with rewards similar to the original state and a deterministic path back to the original state",
+   "strengths_and_weaknesses": "# Strengths\n- The perspective of this paper is noval and fundamentally different from other exiwsting perspectives, including robust MDPs.\n- The paper successfully identifies three classes of structured noises whose influence can be characterized by an effective planning horizon.\n- The theory is backup by experiments.\n\n# Weaknesses\n- Beyond characterizing the optimal or near-optimal policy, how can the results help in terms of policy learning?\nFor example, as a starting point, can one learn a paramterized policy that takes a noise level and outputs the action distribution for that noise level? In this case, one doesn't need to retrain the policy of the noise distribution changes. It would be great if the authors can come up with more results that facilitate policy learning in noisy environments.\n- The the claim on assumptino is weak in section 7.1. The main argument relies on Theorem 2 in Jiang et al. (2016). However, this theorem only provides an upperbound of the value difference on the `noise level' (or transition kernel distance). It would be better if the authors can develop a theorem that lower bounds the value different using the transition kernel distance. \n- The paper only covers a small subspace of all noises/MDPs. This paper identifies three structural assumptions on the (MDP, noise) pair where transition noises change the policy planning horizon. However, these structured classes only covers a small portion of all MDPS/noises. I strongly encourage the authors to explore (MDP, noise) classes that rule out the extreme corner cases, e.g. the tigerope example, and to character the optimal policy for a much larger space of (MDP, noises).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 4,
+   "key_questions_for_authors": "Please address my concerns and questions in the weakness section. I am willing to raise the score if the weaknesses are properly addressed.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_8AaW",
+   "summary": "The authors investigate the effect of different types of structured transition noise in the Markov decision processes (MDP). They relate the effect of the noise to the horizon length that is determined by the discount factor. The authors consider the setting where the reward is a function of the state only and does not depend on the action. The paper considers four cases: sticky noise, reset noise, slowly-changing reversible MDPs and general transition noise. The authors show that the sticky and reset noise settings are equivalent to non-noisy MDPs with smaller discount factors. For the slowly-changing reversible MDP setting, the authors provide a bound for the performance loss. They also state that obtaining the bounds for the general transition noise setting is not possible. The authors also provide some experimental results for two different environments.",
+   "strengths_and_weaknesses": "1. I think it is interesting and useful to understand how noise effects the dynamics. The paper also gives clear conclusions on the equivalences between the sticky and reset noise settings and discounting.\n2. The section slowly-changing reversible setting is rather unclear. The reversibility assumption seems too restrictive. Theorem 6.1 is hard to interpret. I think an example that illustrates the bound given by Theorem 6.1 for varying $\\gamma$ and $\\epsilon$ values would be helpful. I tried to elaborate on this in the questions below.\n3. The authors refer to some prior results from Jiang et al. in Section 7.1. However, they avoid providing the exact result and provide some description. I think it would be much more clear if the authors simply add the exact statement from this paper. I also believe that a direct comparison between two results would be helpful.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. Could you elaborate on the reversibility assumption? How restrictive is this assumption? Could you give some examples of the settings which can be modeled by this assumption?\n2. Could you explain what $\\pi'$ in Theorem 6.1 represents? While the proof sketch for Lemma 6.2 mentions how this is constructed, why do we care about this policy? Why do we want this specific policy to upper bound the optimal value for the discount factor $\\gamma'$?\n3. Could you provide some examples/discussion about how tight the bound in Theorem 6.1? Could you also provide comparisons between your bounds and the ones in Jiang et al., which were discussed in Section 7.1?\n4. Theorems 4.1 and 5.1 states the equivalence of optimal policies. This implies the optimal behavior stays the same. However, the other theorems provide some equalities/inequalities for the values of these optimal policies. I am not sure if this leads to conclusions about the optimal behavior immediately. Changing the discount factor should also change the scale of the value functions. Could you discuss what does these inequalities imply about the policies? Do your results (theoretically) guarantee that the optimal policies are also close in some metric?\n5. I am not quite sure what conclusion I should deduce from the results. My understanding is as follows: If I aim to act (near-)optimally in a noisy environment for some effective horizon induced by $\\gamma'$, I should increase the discount factor $\\gamma$ I optimize for. Then, by the results in the paper, I will behave optimally under the reduced discount factor. However, this is not quite the conclusion in the paper: \"By limiting the effective planning horizon, environmental stochasticity can make simpler decision structures sufficient, offering a route to interpretability that emerges naturally rather than being enforced by design.\" Here, this effect is framed as if the effective horizon reduction due to the noise is something desirable. However, if I aim to optimize for a specific $\\gamma'$, the noise would force me to use a larger discount factor $\\gamma$, which leads to worse convergence rates. Could you discuss further actionable insights one can deduce from your results?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_42mi",
+   "summary": "This article explores: why does aiming for short-term goals (heavily discounting future rewards) actually perform better in the real world than the textbooks claim? The writers reveal that everyday environmental chaos naturally caps how far ahead an agent can reliably look.\n\nThey back this up with hard math, proving that operating in a perfect, noise-free world with a short-term focus is mathematically identical to navigating a world hit by specific glitches:\n\nGetting Stuck: Sometimes, the agent tries to make a move but just randomly freezes in its current spot.\n\nForced Restarts: Every so often, the agent gets magically warped right back to square one.",
+   "strengths_and_weaknesses": "**Strength**\nThe math here is very solid. The authors clearly prove that certain system glitches (like getting stuck or starting over) are exactly the same as planning for a shorter timeframe. They also use good math to show this mostly holds true for minor, fixable glitches, and they clearly state where this whole idea stops working. On the testing side, they use grid calculations to prove their exact formulas are right, and they use active simulations to show that adding more randomness generally acts just like looking less far into the future.\n\n**Weakness**\nThe math for the broader \"stuck\" glitches is confusing and relies on strict rules that aren't well explained. Also, the proof in Section 6 assumes an impossible scenario where the agent can perfectly see and undo errors; they don't explain how a normal system could actually do this. For the active simulations, the testing is too basic—they forgot standard things like error bars and multiple runs. There is also a major mistake: they say a tracking tool measures \"actions,\" but it actually measures \"scores,\" which needs to be fixed. Finally, they need to build a specific test just to check if the math in Section 6 holds up in practice.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weakness",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 1
+  }
+ ]
+}

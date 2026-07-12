@@ -1,0 +1,26 @@
+{
+  "forum_id": "grSvnNlEUU",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_UMe2",
+      "weight": "high",
+      "reason": "The most detailed and specific review, with an accurate summary and substantiated assessment across all four dimensions. Its central weakness, that the 'realistic ViT' experiments freeze all but the final-block QKV matrices and therefore fail to capture end-to-end dynamics of fully trainable deep ViTs, is exactly the external-validity concern the meta-review centers, and its points on single-patch signals, SNR estimation, harmful overfitting, and omitted components are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_cijb",
+      "weight": "high",
+      "reason": "Comprehensive dimension-by-dimension assessment that is specific and well-aligned with the consensus. Its concerns about simplified architecture/data assumptions, concrete presentation issues (typos, repeated sentences in the conclusion, missing robustness references), and weak theory-to-figure linking are corroborated by others and reflected in the meta-review's scope critique. The suggested related-work list is partly generic, but the core assessment is solid."
+    },
+    {
+      "reviewer": "Reviewer_Zrs1",
+      "weight": "high",
+      "reason": "Concise but on-target: affirms the rigor of the theoretical core and the supportive experiments, and raises specific, corroborated points on the two-layer/single-head simplification, the orthogonality/Gaussian-noise assumptions, the harmful-vs-benign overfitting gap, and concrete citation errors. Aligned with the meta-review's accept direction; slightly less comprehensive than UMe2/cijb and contains a minor inaccuracy about the datasets used."
+    },
+    {
+      "reviewer": "Reviewer_e2NL",
+      "weight": "medium",
+      "reason": "The lone reject, and its core concern (heavily simplified architecture, stylized data model, and empirical validation too closely aligned with the assumptions to establish transfer to realistic ViTs) is precisely the legitimate central theme the meta-review adopts and reiterates. However, its overall reject stance was not adopted (meta-review resolves to weak accept), the review is thin (one-line strengths, 'check weaknesses' in place of questions), and some sub-claims (e.g., that empirical alignment is weak) are contradicted by the other reviewers, so its substance is on-target while its judgment and effort are down-weighted."
+    }
+  ],
+  "score_rationale": "Soundness (3), originality (3), and the weak-accept overall (4) are anchored by the three high-weight reviewers (UMe2, cijb, Zrs1) and the meta-review, which states that the technical rigor and the novelty of this first feature-learning analysis for ViTs were not in dispute; the overall stays at the mode of the high-weight reviewers and matches the meta-review's explicit Weak Accept. Significance (3) follows the majority of high-weight reviewers and the meta-review's affirmation that the contribution is valuable to the learning-theory/robustness communities, while the prominent external-validity limitation (the crux of the discussion) is given full weight in the prose rather than by dropping the score. Presentation (2) reflects concrete, multiply-corroborated surface issues (typos, repeated sentences, broken/missing citations, weak theory-to-figure linking) flagged by the most detailed reviewers. Reviewer e2NL's reject was down-weighted to medium because, although its external-validity concern is the meta-review's central legitimate theme, its overall stance was not adopted and its review is thin; confidence (4) reflects the strong cross-reviewer corroboration on both the strengths and the core weakness."
+}

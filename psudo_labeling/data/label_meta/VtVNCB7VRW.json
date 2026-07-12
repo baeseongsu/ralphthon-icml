@@ -1,0 +1,21 @@
+{
+  "forum_id": "VtVNCB7VRW",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_mhyK",
+      "weight": "high",
+      "reason": "Its central critique, that the method is inherently lossy but presented as near-lossless with no error bound or proper quality-difference analysis, is exactly the point the meta-review adopted (recommending the authors reframe it as a lossy method with often negligible accuracy drops). Specific, substantiated, and directly on the decision-relevant issue."
+    },
+    {
+      "reviewer": "Reviewer_BNnA",
+      "weight": "high",
+      "reason": "Accurate and constructive; its weaknesses on threshold sensitivity across models and on the reliance on top-1 confidence (with alternative estimators proposed) are specific and independently corroborated by the other reviewers, feeding directly into the synthesized weaknesses and questions."
+    },
+    {
+      "reviewer": "Reviewer_4Z6y",
+      "weight": "medium",
+      "reason": "Contributes useful, specific points (zero/few-shot clarity, single-model sensitivity study, applicability to SDAR/dParallel, and comparability of baseline throughput numbers) that were adopted in toned-down form, but its soundness=1 rating and reliability accusations are off-base relative to the meta-review's clear accept direction and its note that the rebuttal was addressed well, and are internally inconsistent with its own weak-accept recommendation."
+    }
+  ],
+  "score_rationale": "Reviewer_mhyK's lossy-versus-near-lossless concern was weighted highly because the meta-review explicitly adopted it, so it shaped the soundness discussion and the reserved weak-accept landing. Reviewer_BNnA's corroborated points on cross-model threshold sensitivity and confidence estimators were also weighted highly and folded into the weaknesses and questions. Reviewer_4Z6y's soundness=1 and reliability accusations were treated as off-base given the meta-review's clear accept direction, so soundness is set to the corroborated 3 rather than lower, with presentation/significance/originality also at the two substantive reviewers' 3s. The overall recommendation is a weak accept (4), positioned between the accept-leaning reviews and the meta-review's clear acceptance while preserving the genuine reservations about lossiness, threshold robustness, and measurement clarity; confidence is 4 given strong mutual corroboration on the main points against a single reliability outlier."
+}

@@ -1,0 +1,62 @@
+{
+ "forum_id": "9sg34nj13o",
+ "title": "Towards Pareto-Optimal Tool-Integrated Agents with Pareto Ranking Policy Optimization",
+ "abstract": "Recent advances in tool-integrated language agents have significantly improved their ability to solve complex reasoning tasks. However, existing alignment methods predominantly focus on maximizing task accuracy, while overlooking auxiliary objectives such as tool-use efficiency, which are essential for practical deployment. To address this gap, we introduce \\textbf{ParetoPO}, a two-stage multi-objective optimization framework for aligning tool-using large language models (LLMs) under competing objectives. In the first stage, ParetoPO leverages hypervolume-guided dynamic scalarization to adapt reward weights based on global Pareto frontier progress. In the second stage, it replaces scalarized learning signals with Pareto-ranking-based advantage computation, promoting nondominated trajectories through dominance-aware credit assignment. This design enables fine-grained, action-level optimization across multiple conflicting objectives. Experimental results on mathematic reasoning and multi-hop QA tasks show that ParetoPO consistently discovers policies with superior accuracy-efficiency trade-offs compared to static and heuristic baselines. Our code is publicly available at https://github.com/Applied-Machine-Learning-Lab/ICML2026_ParetoPO.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "This paper received positive evaluations from the reviewers, who agreed that:\n\n* It addresses an important and practical problem of balancing multiple objectives (e.g., accuracy and tool efficiency) in tool-augmented LLM agents;\n* The proposed ParetoPO framework is novel, well-motivated, and supported by solid theoretical analysis;\n* The empirical results consistently demonstrate improved trade-offs between performance and efficiency.\n\nReviewers also noted a few areas for improvement:\n\n* The evaluation is limited to two objectives, and it remains unclear how well the method scales to more complex multi-objective settings;\n* Experiments are conducted on a limited set of models, leaving questions about generalization to larger or more diverse backbones.\n\nDuring the rebuttal, the authors addressed concerns regarding clarity and experimental design, which increased confidence in the method’s effectiveness and contribution.\n\nOverall, the paper makes a meaningful and well-supported contribution to multi-objective optimization for LLM agents. Therefore, I recommend accepting this paper for the conference.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_whi1",
+   "summary": "This submission introduces ParetoPO, a two-stage reinforcement learning framework tailored to optimize tool-augmented large language models across conflicting objectives, specifically task accuracy and tool-use efficiency. The first stage utilizes hypervolume-guided dynamic scalarization to adapt reward weights based on smoothed Pareto frontier progress, facilitating exploration of the supported convex hull. The second stage applies a Pareto-ranking-based policy optimization strategy, relying on non-dominated sorting to compute trajectory advantages within a Group Relative Policy Optimization (GRPO) setup. Empirical evaluations on mathematical reasoning benchmarks and multi-hop QA benchmarks demonstrate that ParetoPO produces policies with higher Exact Match scores and fewer tool calls than baseline methods.",
+   "strengths_and_weaknesses": "Strengths: \n- Multi-objective optimization is a critical and practical problem in aligning the behavior of LLM agents.\n- The theoretical foundation explicitly connects the two-stage training approach to established multi-objective optimization principles.\n- Integrating hypervolume-guided dynamic scalarization with discrete, non-dominated sorting for advantage computation within an online RL pipeline is a novel combination of techniques\n\nWeaknesses:\n- The experimental setting is not quite persuasive. From Table 1 / 2, it seems # tool calling is in general very small in the benchmarks selected (see Key Questions for more details). \n- The clarity of the presentation can be further improved.\n- As the experiments only focus on 2 objectives: performance vs. tool efficiency, the authors should scope down the claim of multi-objective optimization to be more specific, as it's not clear if the approach would generalize to 3+ objectives.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- In Section 2.3, $N_{optimal}$ is approximated using the minimum tool calls from current successful trajectories. How sensitive is the initial phase of Stage 1 to the stochastic discovery of highly sub-optimal success paths, and does this risk trapping the policy in a local efficiency minimum?\n- In Table 1 and 2, it seems your optimization approach achieves both higher accuracy + higher efficiency than baselines, which is quite interesting. Considering the usual trade-off between performance vs. efficiency, most prior approaches focus on accuracy improvement (like Search-R1), what's the insight behind the strong empirical results that your multi-objective optimization approach can even outperform single-objective optimization approach?\n- Experiment setting related: \n1. For tool-integrated agents, it would be better to include more tool-use / agentic benchmarks like Tau-Bench (https://arxiv.org/abs/2406.12045) and BrowseComp (https://arxiv.org/abs/2504.12516).\n2. Qwen-2.5 series are known to suffer from Spurious Rewards (https://arxiv.org/pdf/2506.10947), can you show the results with a different LLM family to support the generalizability of the proposed optimization method?\n- Efficiency analysis of the proposed optimization method compared to baselines.",
+   "limitations": "No, I do not see a \"Limitations\" section or paragraph discussing the limitations of the method. There is an Impact Statement though.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_y1Pd",
+   "summary": "This paper studies tool-integrated LLM agents from a multi-objective reinforcement learning perspective. It proposes ParetoPO, a two-stage method that first uses hypervolume-guided dynamic scalarization to explore better accuracy efficiency trade-offs, and then applies Pareto rank-based policy optimization to favor non-dominated trajectories during RL training. The experiments on MATH and QA tasks show that ParetoPO consistently improves the accuracy while reducing tool calls simultaneously.",
+   "strengths_and_weaknesses": "Strength:\n* The paper studies an important and practically meaningful problem: tool-integrated agents should optimize both task performance and tool-use efficiency. The proposed two-stage framework is novel and well motivated, and offers an inspiring way to cast tool-agent training as Pareto-aware multi-objective RL.\n* The empirical results are strong. For both Math and QA benchmarks, ParetoPO consistently achieves the best overall trade-off between exact-match accuracy and tool call efficiency, and in many settings it improves accuracy while simultaneously reducing tool usage relative to prior GRPO-based baselines.\n* The method appears relatively simple and practical to implement. It introduces only a small number of additional hyperparameters beyond standard GRPO training, and the sensitivity analysis suggests that the method is reasonably robust to different reward-weight choices on both math and QA tasks.\n* The paper provides theoretical justification for both stages of the method, including coverage of supported Pareto-optimal points in Stage 1 and Pareto-ascent properties of the Stage 2 optimization procedure.\n\nWeakness:\n* The main weakness is scalability beyond the two-objective setup. The method is demonstrated only for task accuracy and tool efficiency, and it is unclear whether the proposed two-stage procedure would remain practical or effective when extended to three or more objectives. Since both hypervolume computation and Pareto-based ranking typically become more cumbersome in higher-dimensional objective spaces, the implementation and optimization complexity may grow quickly, limiting the generality of the approach.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "N/A",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_i3Wo",
+   "summary": "The paper proposes ParetoPO, a two-stage multi-objective RL framework for tool-integrated LLM agents. It combines hypervolume-guided dynamic scalarization with Pareto-ranking advantages. Experiments show higher accuracy with fewer tool calls across math reasoning and multi-hop QA benchmarks.",
+   "strengths_and_weaknesses": "Strength：\n- Solid theoretical analysis with convergence guarantees.\n- Consistent empirical improvements across math benchmarks and model sizes.\n- Tool usage is significantly reduced while accuracy improves.\n\nWeakness：\n- The efficiency reward depends on a moving \n$𝑁_{optimal}$, which may introduce training instability. Its dynamics and compatibility with the convergence analysis are not discussed.\n- Experiments use only Qwen2.5 models; generalization to other backbones is unclear.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- Possible data issue: identical AIME2024/2025 results for the 1.5B model raise concerns about whether distinct datasets were used.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_QmdP",
+   "summary": "This paper studies the problem of multi-objective alignment for tool-integrated LLM agents. It is about how to train LLM agents under multiple conflicting objectives using multi-objective reinforcement learning.",
+   "strengths_and_weaknesses": "Strength\n1. The motivation is interesting and the problem is important. Agents should balance multiple factors such as accuracy, cost, latency, and tool usage in practice.\n2. The authors formulate the agent training problem as a multi-objective Markov Decision Process with two reward components: task success and tool efficiency. The authors provide solid theoretical analysis to strengthen the methodological rigor of the work.\n\nWeakness\n1. The experiments only consider two objectives. It would be helpful to evaluate the method with more objectives to demonstrate its scalability and generality.\n2. All experiments appear to use relatively small models (e.g., Qwen 1.5B or 7B). It is unclear whether the method scales effectively to larger LLMs. In fact, LLMs with larger parameter sizes require a more careful trade-off between performance and efficiency.\n3. The introduction of hypervolume contribution calculations and non-dominated sorting introduces additional computational overhead. The paper does not provide a detailed analysis of the training overhead compared to baselines.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. How does the Pareto ranking mechanism scale as the number of objectives increases? Does the number of non-dominated solutions typically explode?\n2. Have the authors tested if the efficiency gains found on one dataset (e.g., MATH500) generalize to unseen tasks without further fine-tuning?",
+   "limitations": "See weakness and questions.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

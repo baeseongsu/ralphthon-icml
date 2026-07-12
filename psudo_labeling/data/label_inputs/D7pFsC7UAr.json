@@ -1,0 +1,66 @@
+{
+ "forum_id": "D7pFsC7UAr",
+ "title": "PuzzleMoE: Efficient Compression of Large Mixture-of-Experts Models via Sparse Expert Merging and Bit-packed inference",
+ "abstract": "Mixture-of-Experts (MoE) have shown strong potential in scaling language models efficiently by activating only a small subset of experts per input. However, their deployment remains limited due to the high memory overhead associated with storing all expert parameters, particularly as the number of experts increases. To address this challenge, prior works have explored expert dropping and merging strategies; however, they often suffer from notable performance drop especially at high compression ratios due to their reliance on coarse-grained tensor- or expert-level operations. In this paper, we introduce PuzzleMoE, the first MoE merging method to enable fine-grained element-wise merging while achieving both high accuracy and inference speed, via two key innovations: First, PuzzleMoE performs sparse expert merging by identifying element-wise weight redundancy and specialization. It introduces a dual-mask approach to capture both shared and expert-specific salient parameters. Second, to avoid the overhead of storing masks and signs, we introduce a bit-packed encoding scheme that reuses underutilized exponent bits, enabling efficient MoE inference on GPUs. Extensive experiments demonstrate that PuzzleMoE outperforms prior MoE compression methods by up to 16.7\\% on MMLU at 50\\% compression ratio, and achieves up to 1.80$\\times$ end-to-end inference throughput gain.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers gave positive scores and the authors' rebuttals solve the raised problems well.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_6rwa",
+   "summary": "The submission proposes a fine-grained, element-wise expert merging method for mixture of experts model compression.  It incorporates an element-wise similarity-based mask for shared weights, and a saliency-based mask for diverse weights.  The strategy then merges some experts.  A bitpacked encoding is employed for compression.  Benchmarking across a range of models and tasks shows some marginal improvements at 25% and 50% sparsity.",
+   "strengths_and_weaknesses": "The method is reasonably described, and addresses a popular research area of compressing MoE models.  The results support that it performs reasonably against chosen baselines.  There are very many works published on MoE compression, which diminishes the significance and originality of this specific submission.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "What are your arguments for the specific range of sparsity chosen?  Could it be pushed even further?  Chosen compression rates vary in published works.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The authors have addressed some concerns regarding the range of compression evaluation, at least on the 2 models reported in the rebuttal.  I have raised my score from 3 to 4."
+  },
+  {
+   "reviewer": "Reviewer_bKxV",
+   "summary": "This paper presents PuzzleMoE, a fine-grained expert merging framework for compressing MoE models. The core contributions include a dual-mask merging strategy that leverages weight saliency and inter-expert similarity, as well as a bit-packing encoding scheme that embeds metadata directly into the floating-point representation. To enable efficient inference, the authors design a customized GPU kernel that fuses decoding with the GEMM computation. Experimental results show that PuzzleMoE outperforms existing methods on several language modeling, zero-shot, and reasoning benchmarks. Furthermore, it achieves approximately \n1.7$\\times$ speedup over the original Mixtral-8×7B model during inference.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper is well-structured and clear to understand.\n2. A new fine-grained strategy is proposed that considers weight similarity and saliency.\n3. A GPU kernel is developed that enables practical benefits.\n4. The model accuracy achieves a great improvement compared to baselines.\n\nWeaknesses:\n1. Although a customized GPU kernel is developed for decoding-GEMM, there are still some limitations of this kind of reconstruct-then-compute, e.g., reduced parallelism, if two experts are activated in the same time, it needs to reconstruct and compute one first then repeat it for another expert.\n2. The bit-packing scheme highly relies on the existing weight distribution, which may be varying in the future and then hinders the extensibility.\n3. The experimental part lacks of the ablation study about dual mask. What if only salient or only similarity is used, which is reduced into single mask?",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Why are some results missing in Table 1?\n2. What is the throughput improvement compared to existing work?\n3. In figure 3, it's confusing that why the last element of the first row and the first element of the second row Mj are 0?\n4. Why Qwen2-MoE is not evaluated since Qwen1.5-MoE and Qwen3-MoE are tested?",
+   "limitations": "See in weaknesses and questions.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "All my concerns have been addressed based on authors' clarification. Thus, I choose to raise my score to 4."
+  },
+  {
+   "reviewer": "Reviewer_v5iX",
+   "summary": "This paper proposes a novel MoE compression method that performs expert merging by modifying the storage method of weight parameters. At a 50% compression ratio, it outperforms existing MoE compression methods and achieves 1.80x inference acceleration.",
+   "strengths_and_weaknesses": "**Strengths:**\n1. The authors tested the PuzzleMoE method on multiple MoE models (Mixtral, DeepSeekMoE, Qwen), demonstrating the universality of the approach\n2. This work implements high-performance Triton operators for computing merged PuzzleMoE weights, enhancing its feasibility for practical inference scenarios\n3. Comprehensive experimental results prove that PuzzleMoE outperforms existing methods on established models, and the selection of hyperparameter τ is thoroughly discussed\n\n**Weaknesses:**\n1. Due to its special merging approach, PuzzleMoE only supports merging two experts into one. Although the authors discuss this in the Appendix, it limits its application in more complex scenarios (e.g., hierarchical merging)\n2. Existing work [1] points out that expert similarity in MoE models varies significantly across different layers, and each layer contains both similar and dissimilar experts. In this context, random merging may not be the optimal choice. If possible, the authors should supplement comparisons of different merging strategies across all models (beyond the models and Search methods mentioned in the Ablation study)\n\n[1] SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The comparisons with baseline methods in Table 1 seem incomplete. For instance, for the Mixtral model, the authors compared against NAEE, STUN, D2, Wanda, HC-SMoE, and SubMoE, while for the more general Qwen3-MoE-30B-A3B, only Wanda and SubMoE were compared. The authors should standardize baseline settings across different MoE models. If methods are not applicable, corresponding explanations should be provided. (Additionally, the authors seem to have not explained the missing values in Table 1)\n2. Regarding Weakness 2, for search-based grouping, the authors appear not to have provided specific search strategies. What rules and similarity metrics are used for this search? The authors should provide detailed explanations in the Appendix.\n3. In Section 4.4 Efficiency Analysis, the authors compared throughput between PuzzleMoE models and Full Models, but did not provide speed comparisons with existing baselines (e.g., HC-SMoE, D2-MoE). Including these speed comparisons could further emphasize PuzzleMoE's advantages over existing methods. Furthermore, as I understand, PuzzleMoE primarily accelerates expert loading time during the decode phase without reducing computational FLOPs. Reporting Time To First Token (TTFT) and Time Per Output Token (TPOT) for model inference could further clarify PuzzleMoE's effective acceleration domain, as it's unclear whether this method is effective for the compute-bound prefilling phase.\n4. According to my understanding, $M_j$ in Figure 3 should be [1 0 1; 1 1 1; 0 1 1] ($M_j^{sal} \\lor M^{sim}$). Is this a drawing error?\n\nOverall, I believe this work is well-written and the proposed method is novel. However, the occupation of index parts may limit the potential for combining with quantization methods in the future (the Appendix notes that directly using AWQ quantization on Mixtral models outperforms PuzzleMoE). Additionally, supporting only pairwise merging limits PuzzleMoE's usage scenarios.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal addressed my concerns, and I continue to maintain my positive score."
+  },
+  {
+   "reviewer": "Reviewer_vutX",
+   "summary": "This paper proposes an expert merging approach for Mixture-of-Experts (MoE) models with the aim of reducing the memory footprint and consequently increasing the speed of inference. The authors propose finding two masks that highlight weight redundancy and saliency for pairs of experts in a specific layer of the model. This allows them to express the weights of two experts by using a single expert's weights and other metadata, including the aforementioned masks and an additional mask for storing parameter sign values. However, this by itself does not yield a sufficient memory footprint reduction. Therefore, the authors utilize the unused exponent bits of the expert parameters in Bfloat16 format  as placeholders for the produced metadata. Accordingly, they design proper GEMM kernels to decode the parameters on the fly and perform the required calculations.",
+   "strengths_and_weaknesses": "### Strengths:\n\n- The proposed approach is well-defined and well-presented.\n- The authors have evaluated the quality of the generated output of their model using multiple benchmarks and compression rates. The comparison with prior work is comprehensive.\n- The paper aims to address the challenges of MoE inference, which is the SOTA architecture for LLMs.\n- The approach is novel and is able to deliver speedup specially for memory-bound workloads.\n\n### Weaknesses:\n\n- As mentioned by the authors, the proposed approach is based on an observation of weights from multiple MoEs in Bfloat16 format. This limits the applicability of the proposed approach when dealing with quantized models in lower precision formats, such as FP8 or FP4 which have less underutilized exponent bits.\n- There is no discussion in the paper about the overhead of unpacking the metadata and decoding the parameters in the customized GEMM kernel. The authors compare the performance of their customized GEMM against the case of having two experts with half the batch size (Figure 5). This comparison masks that overhead because the speedup is primarily achieved by doubling the batch size and increasing the arithmetic intensity of a single expert, which is memory-bound.  A more comprehensive comparison would also include a scenario with sufficiently high batch sizes for each of the merged experts (i.e., the experts before and after merging operating in compute-bound regions) or simply a single expert with the same batch size.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "- How do you apply the proposed approach to models with lower precision weights?\n- What is the overhead of your customized GEMM kernel?\n- Suggestion: I think adding the reconstructed weights using Equation 6 to Figure 3 can help the reader to understand your approach better.",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 5,
+   "final_justification": "I will maintain my positive rating."
+  }
+ ]
+}

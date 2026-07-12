@@ -1,0 +1,26 @@
+{
+  "forum_id": "6GpYUWbqOQ",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_oZBm",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review. The meta-review explicitly adopts its core point, that the paper falls short of a fully developed and rigorous diagnostic framework, as a 'fair limitation,' and its specific criticisms (threshold-imposed regimes providing no independent signal, missing quantitative definitions for deceptive sharpness/flatness/roughness, absent robustness/sensitivity checks, retrospective rather than predictive analysis, PINN-vs-CV Hessian estimation mismatch) are corroborated by other reviewers. Its content is weighted heavily even though its reject recommendation is not adopted by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_9qHM",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its points on observational evidence being interpreted mechanistically (overclaiming), the optimizer analysis being far more developed for PINNs than FNOs/NeuralODEs, and the need for stability of regime boundaries across thresholds/seeds/settings (with NNCG instability as concrete evidence) are independently corroborated and align directly with the meta-review's 'worthwhile avenues for clarification and strengthening.'"
+    },
+    {
+      "reviewer": "Reviewer_sQNm",
+      "weight": "high",
+      "reason": "Positive assessment that the meta-review echoes almost verbatim ('interesting, original, and timely empirical study'), combined with a substantive, expert technical criticism about the notion of 'training data size' for PINNs, which can resample collocation points essentially for free, undercutting the data-scarcity framing. Both the framing and the concrete objection are on-target."
+    },
+    {
+      "reviewer": "Reviewer_kKd9",
+      "weight": "low",
+      "reason": "Brief, generic, and low-effort with self-reported confidence of 2. Its observations (limited benchmarks, unclear regime-separation procedure, uncertain generalization across SciML) are valid but fully covered, and better substantiated, by the higher-quality reviews, so it adds little independent evidentiary weight beyond reinforcing the positive-leaning consensus."
+    }
+  ],
+  "score_rationale": "The meta-review anchors acceptance on the positive reviewers (interesting/original/timely empirical study) while explicitly conceding the rejection reviewer's central point, that the framework is not fully developed or rigorous, as a 'fair limitation.' I therefore held soundness at the well-corroborated skeptics' level (2), reflecting the widely echoed concerns about threshold-imposed regimes, absent quantitative definitions, retrospective analysis, and missing robustness checks, while setting presentation, originality, and significance at 3 to capture the strong visualizations, the genuinely novel unified cross-SciML regime lens, and the meta-review's tempered-positive read of the insights as 'suggestive and potentially useful.' Overall recommendation is a weak accept (4), matching the decision to accept over the lone reject while foregrounding acknowledged limitations; I weighted oZBm's substance, 9qHM's specifics, and sQNm's expert positive take most heavily and discounted kKd9's thin, low-confidence review. Confidence is 4 because the underlying evidence is strongly mutually corroborating on both the key weaknesses (regime-definition arbitrariness, robustness, quantitative rigor, benchmark breadth) and the key strengths (visualizations, timeliness, honest optimizer treatment)."
+}

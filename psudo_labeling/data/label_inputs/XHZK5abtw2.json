@@ -1,0 +1,49 @@
+{
+ "forum_id": "XHZK5abtw2",
+ "title": "$\\tau$-Knowledge: Evaluating Conversational Agents over Unstructured Knowledge",
+ "abstract": "Conversational agents are increasingly deployed in knowledge-intensive settings, where correct behavior depends on retrieving and applying domain-specific knowledge from large, proprietary, and unstructured corpora during live interactions with users. Yet most existing benchmarks evaluate retrieval or tool use independently of each other, creating a gap in realistic, fully agentic evaluation over unstructured data in long-horizon interactions. We introduce $\\tau$-Knowledge, an extension of $\\tau$-Bench for evaluating agents in environments where success depends on coordinating external, natural-language knowledge with tool outputs to produce verifiable, policy-compliant state changes. Our new domain, $\\tau$-Banking, models realistic fintech customer support workflows in which agents must navigate roughly 700 interconnected knowledge documents while executing tool-mediated account updates. Across embedding-based retrieval and terminal-based search, even frontier models with high reasoning budgets achieve only $\\sim$25.5\\% pass^1, with reliability degrading sharply over repeated trials. Agents struggle to retrieve the correct documents from densely interlinked knowledge bases and to reason accurately over complex internal policies. Overall, $\\tau$-Knowledge provides a realistic testbed for developing agents that integrate unstructured knowledge in human-facing deployments.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper addresses an important problem related to agent faithfulness: whether an agent can faithfully incorporate natural language knowledge and act accordingly.\n\nThe main concerns relate to presentation, the single-domain setting, and its positioning relative to τ-Bench. Two out of three reviewers are fully convinced by the authors’ rebuttal. I agree that the presentation and the single-domain scope are limitations. However, given the importance of the problem and the reasonable (though not extensive) evaluation framework, I believe this work can be useful to the community, particularly for researchers and practitioners working in enterprise settings.\n\nI expect the authors to improve the clarity of the presentation and extend the evaluation, as suggested by the reviewers.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_nWJL",
+   "summary": "The paper suggests an extension to the Tau-Bench framework that tests whether agents can incorporate NL knowledge and act accordingly. \n\nDuring the last year, we have seen many attempts to integrate agents into real production-level businesses; however, it is very difficult to earn the trust of the users and the agent builder. I am a true believer in knowledge and policy for agents, and think that this is the main requirement for agents to succeed in enterprise adoption.\n\nI am quite familiar with Tau-Bench and other agent benchmarks, so I will not write a long review. I really like the paper, and I think it is a major contribution to the community. I do think that if the benchmark can fit both a computer-use agent and an API-based agent, with less focus on the conversation part, it can have a major impact.",
+   "strengths_and_weaknesses": "Strengths\n1. The topic is very important to the ML community, and the paper addresses one of the main problems that agents are struggling with: the knowledge.\n2. I would feel comfortable running an agent in my organization that got super high accuracy on these benchmarks, as I know it will follow my rules, instructions, and policies.\n3. I am actively building agents, and I believe this benchmark has the potential to take the adoption of agents in real settings one step ahead\n\n\nWeaknesses\n1. The paper presentation is fine, but can definitely be improved. As the main contribution of the paper is the benchmark itself, I would put more focus on what kind of things the benchmark is testing and how exactly it tests them.\n2. You did not test a real enterprise-ready multi-agent system that knows how to work with policy, knowledge, etc. This is a major concern as the vanilla agents were not designed to tackle this kind of problem. \n3. The paper is missing some important references and a short discussion on the sister domains\nFor example: Web agent and computer using agents (e.g., AgentE, Claude computer use, IBM CUGA, Open AI Operator),  and benchmarks that test policy (e.g., SafeCUA, ST-WebBench) and knowledge. \nThe domain of computer-using agents is closely related to yours, so you should address it properly (no experiments, just cite and explain the difference).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "1. How did you let the agent know the policy and knowledge? Did you just put it in the system prompt? Rag?\n2. Can your approach be extended to computer-using agents, or even something that is less conversational?\n3. Please test, even on a small subset of samples, a true enterprise-ready multi-agent system with policy.\n\n* I know that 3 might be difficult, but it is super important for me to be convinced that it is not just a problem with the vanilla agent you tested",
+   "limitations": "Yes, the authors discussed the limitations in detail",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_Hrb7",
+   "summary": "This paper presents τ-Knowledge, a benchmark designed to test how well language agents can handle unstructured knowledge during conversations. Building on the previous τ-Bench, the authors introduce a new \"τ-Banking\" domain where agents act as customer support representatives. To succeed, these agents must read through a large corpus of documents, retrieve the correct information, and interestingly, discover new tools that are only defined within those texts. The evaluation uses a simulated user and measures success based on whether the agent correctly updates a database. The authors tested several frontier models. The results show that the task is incredibly difficult. The experiments suggest that the main bottleneck isn't finding the right document, but rather the agent's ability to reason over that information once retrieved.",
+   "strengths_and_weaknesses": "Strengths\n\n- This work presents a novel \"discoverable tools\" mechanism: The idea that agents must discover their own tools by reading documentation is a very compelling design choice.\n\n- By feeding the agent the perfect document and seeing that performance still caps at around 35%, the authors provide proof that the problem lies in reasoning and knowledge utilization, not just in the retrieval step. This offers a valuable insight to the community.\n\nWeaknesses\n\n- The benchmark currently only covers a single domain (banking). While the depth is good, it is a step back from the multi-domain approach of the original τ-Bench. It is difficult to say if the findings, such as the dominance of the agent model over the retrieval method, will generalize to other fields like legal or medical support.\n\n- The primary novelty is adding a knowledge base and discoverable tools to an existing framework. While this is a meaningful extension, the contribution is closer to a new domain/dataset for an existing benchmark than a new evaluation paradigm. The paper would benefit from a more explicit discussion of what is architecturally new versus inherited.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Is it possible to run a small human evaluation on a subset of these tasks (e.g., 20 tasks)? Knowing the human ceiling can help readers better understand whether the low model performance is due to reasoning failures or task ambiguity.\n\n2. Why is the \"Action Recall\" metric relegated to the appendix?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_8hyr",
+   "summary": "The paper introduces a new benchmark $\\tau$-Knowledge which is an extension of $\\tau$-Bench, where task success requires retrieving, reasoning over, and applying knowledge from a natural-language corpus. It include just one domain $\\tau$-Banking with 698 LLM-generated documents with human supervision. Then the paper runs evaluation at 6 different models with different retrieval models or settings to showcase even the best models yet cannot achieve satisfactory performance, with some efficiency and error analysis.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. the targeted problem is valuable, writing is easy-to-understand.\n2. the benchmark is scalable due to minor human supervision.\n\nWeakness\n\n1. the contribution is limited and incremental. For example, lots of similar problems are also mentioned in $\\tau$-Bench, such as policy constraints, and dynamically retrieve such constraints during interactions; discoverable tools are similar with tool retrieval / selection in tons of existing work.\n2. there is just one domain in proposed benchmark, it is slightly overclaimed as $\\tau$-Knowledge.\n3. the writing and experiments can be better refined. ie.., a table to show direct comparsion with existing tool benchmarks or agent; benchmarks; the performance of more models and different retrevial settings (i.e., number of returned documents); task distribution analysis and so on.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "See above",
+   "limitations": "Yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  }
+ ]
+}

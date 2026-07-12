@@ -1,0 +1,62 @@
+{
+ "forum_id": "BWhC4ezzeE",
+ "title": "DynaTok: Token-Based 4D Reconstruction from Partial Point Clouds",
+ "abstract": "We address 4D reconstruction from partial point cloud sequences, where depth-sensor observations are incomplete, unordered, and lack explicit temporal correspondences. This geometry-only setting is challenging due to missing observations and ambiguous dynamics. While recent progress has largely relied on image-based methods, existing point-based approaches typically focus on single objects, assume relatively complete inputs, or require explicit correspondences.\nTo address these limitations, we propose DynaTok, a point-based framework for correspondence-free 4D reconstruction from partial point cloud sequences without images. DynaTok encodes frames into compact latent tokens, aggregates incomplete observations over time with a Transformer-based spatiotemporal encoder, and decouples geometry and motion through residual tokens in a unified model. A flow-matching decoder then reconstructs complete, temporally consistent 4D point-cloud sequences conditioned on the latent tokens.\nExperiments on object- and scene-level benchmarks demonstrate improved reconstruction quality and temporal coherence from partial point cloud observations.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "This submission received mixed reviews initially (3, 4, 4, 2). After the rebuttal, two reviewers increased their scores, resulting in the final scores of (3, 5, 4, 3), which are still mixed. One of the reviewers (`cKqN`) acknowledged that they were not an expert in this topic and not confident in their assess. Therefore, their review is down weighted during the final assessment.\n\nWhile reviewers agree that the problem formulation is new and well-motivated, they also share several major concerns, including limited technical innovation (`uijr`), limited evaluations and comparisons (`uijr`, `JSMB`, `MFk5`), insufficient discussion of limitations (`JSMB`, `MFk5`), and inadequate technical descriptions (`MFk5`). After the rebuttal and discussion, most of the concerns have been sufficiently addressed, except Reviewer `uijr`'s reservation around the technical novelty. Although Reviewer `MFk5` also did not upgrade their review to a positive score, they've indicated that their concerns have been fully resolved.\n\nThe Area Chairs agree that the new task is valuable and the competitive results, although not groundbreaking, still serve as a strong baseline. Considering all aspects, the ACs think that the value of the work slightly outweighs the limitations and hence recommend to accept the manuscript. The authors are highly encouraged to incorporate the changes into the final version, including the technical clarifications requested by the reviewers.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_uijr",
+   "summary": "This paper studies 4D reconstruction from partial point cloud sequences, where each observation is incomplete, unordered, and lacks explicit point correspondence across time. The goal is to reconstruct complete and temporally coherent 4D geometry using geometry-only inputs, without relying on images or explicit tracking. To address this, the paper proposes DynaTok, which first encodes each frame into a compact set of latent tokens, then aggregates information across time with a Transformer-based spatiotemporal encoder, and finally reconstructs complete point clouds using a conditional flow-matching decoder. A residual token design is introduced to separate persistent geometry from temporal variation within a unified latent representation. Experiments on object-level and scene-level benchmarks show improvements over frame-wise 3D baselines and the closest 4D baseline, especially under partial observations. Overall, I think the paper’s main contribution is not only a concrete architecture, but also a clear formulation of partial, correspondence-free point-cloud 4D reconstruction as a meaningful problem setting, together with evidence that token-level temporal aggregation is effective in this regime.",
+   "strengths_and_weaknesses": "Strengths:\n- The problem setting is meaningful and well-motivated. The overall method design is coherent. The pipeline has a clear information flow.\n- The core idea of token-level temporal aggregation is potentially useful beyond this specific paper\n\nWeaknesses:\n- The main novelty is more in problem formulation, system integration, and representation design than in a sharply new individual component. Tokenization, Transformer-based aggregation, residual modeling, and flow-matching decoding are not individually new. The contribution mainly comes from combining them effectively for this particular setting.\n- The baseline suite is also somewhat limited. The paper argues that no prior method directly matches its setting, which is fair, but the experimental evidence still mainly shows that the proposed method is better than frame-wise 3D baselines and one nearby 4D baseline. It does not yet fully establish competitiveness against a broader range of dynamic geometry modeling approaches.\n- In addition, some central claims are supported only indirectly. For example, the paper emphasizes geometry-motion decoupling through the residual token design, but the evidence is mostly reconstruction quality and qualitative behavior rather than direct analysis of what the latent decomposition captures. Similarly, temporal consistency is claimed, but the evaluation is mainly through geometric reconstruction metrics and visualizations rather than a more direct consistency-oriented analysis.\n- The real-world validation remains limited. The paper tests on Bonn RGBD and DAVIS using point maps predicted by CUT3R, rather than raw partial point clouds from real sensing pipelines. This is still useful, but it mainly demonstrates robustness to noisy reconstructed geometry rather than fully establishing readiness for realistic deployment scenarios.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to the weaknesses. I hope the authors' response in the rebuttal.",
+   "limitations": "Yes.",
+   "overall_recommendation": 3,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_JSMB",
+   "summary": "This work introduces DynaTok, a method for 4D reconstruction from sequences of point clouds alone (no RGB). The core motivation of the problem is that images may contain texture-less surfaces which are not always informative enough for reconstruction. In many applications a point cloud is available from an RGB-D sensor, so this is a sensible approach. The authors introduce a transformer with flow-matching decoders to output points directly, and show the method outperforms the baselines on DT4D and Kubric.",
+   "strengths_and_weaknesses": "**Strengths**:\n- Novel formulation, outperforms previous methods with richer supervision (full meshes). Point clouds without correspondence annotations are available at scale.\n- Method is relatively simple and likely scalable. \n- Paper is well-written and easy to follow. \n\n**Weaknesses**:\n- I would appreciate an ablation including rgb as an input. You argue rgb can be tricky in low-texture regimes, but don't ablate it. You can add dino features into the alignment module or global decoder.\n- There is limited discussion of limitations. One of the main questions I have is 'why does this outperform motion2vecsets'? My best guess is that we know regression point clouds is easier than meshes and, especially at a smaller scale, this leads to better downstream performance. Please discuss.\n\n**Minor notes**:\n- In the FM notation we often set t=0 to be the full noise state and t=1 the denoised state. This is opposite from notation in ddpm's.\n- Please add citations in the tables, e.g. table 1.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please answer the questions raised in the weaknesses section above.",
+   "limitations": "- See weaknesses above.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_cKqN",
+   "summary": "The paper proposes DynaTok, a token-based framework for 4D reconstruction from partial point cloud sequences. The method  We propose a token-based temporal aggregation framework to enable coherent 4D reconstruction. The paper also  present a unified model that works for both object-level and scene-level 4D reconstruction. Experiments on various datasets proved the effectiveness on reconstruction quality and consistency.",
+   "strengths_and_weaknesses": "**Strength**\n\n(1) The paper proposes a token-based temporal aggregation framework that provides a clear method for 4D reconstruction.\n\n(2) The experiments evaluate the method on various inputs and show improvements over relevant baselines in reconstruction accuracy.\n\n**Weakness**\n\nI am not an expert in this area, I would prefer to take into account the feedback from other reviewers before forming a final judgment.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I am not an expert in this area, I would prefer to take into account the feedback from other reviewers before forming a final judgment.",
+   "limitations": "I am not an expert in this area, I would prefer to take into account the feedback from other reviewers before forming a final judgment.",
+   "overall_recommendation": 4,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_MFk5",
+   "summary": "This manuscript proposes a 4D reconstruction framework called DynaTok, aiming to recover complete dynamic geometry from partial, unordered, and non-corresponding point cloud sequences. Experiments show that this method outperforms existing methods in terms of reconstruction quality and temporal consistency.",
+   "strengths_and_weaknesses": "Strengths: 1) This work explicitly proposes 4D reconstruction from partial, unordered, and uncorresponding point cloud sequences, which has strong practical significance. 2) It uses conditional flow matching to generate point clouds, supports unordered point sets and variable density output, and has strong adaptability. 3) It has abundant experimental data, and has been evaluated on both object-level and scene-level datasets.\n\nWeaknesses: 1) Lack of comparison with image-based 4D methods (such as Diffusion4D and Consistent4D), despite their different modalities, they are comparable in 4D reconstruction targets. 2) Parameters are ambiguous (number of input points, number of frames, etc.), and these experimental details affect reproducibility. 3) Lack of comparison of model complexity (FLOPs, number of parameters, inference speed). 4) While successful cases are shown, the potential failure scenarios (such as rapid motion, severe occlusion, and multiple overlapping objects) are not discussed. 5) The appendix demonstrates the potential for generating correspondences, but the evaluation is not quantified (such as correspondence accuracy and tracking error), resulting in insufficient depth in demonstrating downstream tasks.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. The authors should provide a comparison with image-based 4D methods to fully compare model performance.\n\n2. Detailed experimental details (model parameters, etc.) should be clearly stated in the manuscript to enhance the reproducibility of the work.\n\n3. Lack of analysis on model complexity.\n\n4. Lack of analysis on model constraints.",
+   "limitations": "This work primarily lacks comparisons of model complexity, making it difficult to evaluate the overall performance of the proposed model. Furthermore, the experimental section could be compared with more algorithms to clarify experimental details.",
+   "overall_recommendation": 3,
+   "confidence": 4
+  }
+ ]
+}

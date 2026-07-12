@@ -1,0 +1,21 @@
+{
+ "forum_id": "R49XZi14YH",
+ "reviewer_stances": [
+  {
+   "reviewer": "Reviewer_qnMz",
+   "weight": "high",
+   "reason": "Specific and substantiated at confidence 4. Its two load-bearing concerns, the quadratic-time preprocessing/overhead of submodular construction (asking for training time inclusive of preprocessing against the baselines) and scaling to >= 1M pairs, are both directly echoed by the meta-review's recommendation to add detailed overhead timing and large-scale results. Also flags the missing limitations discussion of preprocessing cost. Treated as an anchor reviewer."
+  },
+  {
+   "reviewer": "Reviewer_2gCh",
+   "weight": "high",
+   "reason": "Accurate detailed summary and concrete technical weaknesses. Its Q1 asks precisely for steps-per-second / epoch-time overhead comparison across Random, NGAME, HOBIT, and HOBIT-C, matching the meta-review's overhead-timing point and corroborating qnMz. Additional weaknesses (early-epoch violation of the bounded-drift Assumption A.3, and the fixed alpha / annealing question) are specific and technically grounded."
+  },
+  {
+   "reviewer": "Reviewer_3DbE",
+   "weight": "medium",
+   "reason": "Enthusiastic and positive, corroborating the widely praised presentation and the sense that the method is properly theoretically justified, and it caught a concrete potential typo (alpha vs k in ConstructBatch) plus a sharp question on tying the two temperatures. However it self-declares non-expert (confidence 3), lists no substantive weakness beyond wanting more baseline detail, and its uniform all-4 scores set the ceiling rather than the anchor, so it is weighted below the two overhead/scaling reviewers."
+  }
+ ],
+ "score_rationale": "The meta-review anchors the substantive critique on overhead timing and large-scale scaling, which were exactly the concerns raised by qnMz and 2gCh, so both were weighted high and drove the score positioning; 3DbE was weighted medium as an enthusiastic but self-declared non-expert whose all-4 scores set the upper bound. Soundness (3), significance (3), and originality (3) were positioned by the two high-weight reviewers (each 3 on all three) rather than 3DbE's 4, reflecting that the surrogate is standard, the guarantees lean on an assumption, and overhead/scaling were not fully established. Presentation was set to 4, supported by strong, consistent praise for the step-by-step derivations and clarity (two 4s including a high-weight reviewer). Overall recommendation of 5 sits within the [4,5] range and aligns with the spotlight-accept direction of the meta-review, weighing qnMz's 5 and 2gCh's 4 alongside 3DbE's 5; confidence is 4 given the high coherence and mutual corroboration of the three reviews around the same themes."
+}

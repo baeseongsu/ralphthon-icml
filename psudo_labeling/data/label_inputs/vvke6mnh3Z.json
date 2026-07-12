@@ -1,0 +1,49 @@
+{
+ "forum_id": "vvke6mnh3Z",
+ "title": "ACTG-ARL: Differentially Private Conditional Text Generation with RL-Boosted Control",
+ "abstract": "Generating high-quality synthetic text under differential privacy (DP) is critical for training and evaluating language models without compromising user privacy. Prior work on synthesizing DP *datasets* often fail to preserve key statistical attributes, suffer utility loss from the noise required by DP, and lack fine-grained control over generation. To address these challenges, we make two contributions. First, we introduce a hierarchical framework that decomposes DP synthetic text generation into two subtasks: *feature learning* and *conditional text generation*. This design explicitly incorporates learned features into the generation process and simplifies the end-to-end synthesis task. Through systematic ablations, we identify the most effective configuration: a rich tabular schema as feature, a DP tabular synthesizer, and a DP fine-tuned conditional generator, which we term ACTG (**A**ttribute-**C**onditioned **T**ext **G**eneration). Second, we propose Anchored RL (ARL), a post-training method that improves the instruction-following ability of ACTG for conditional generation. ARL combines RL to boost control with an SFT anchor on best-of-$N$ data to prevent reward hacking. Together, these components form our end-to-end algorithm **ACTG-ARL**, which advances both the quality of DP synthetic text (+20% MAUVE over prior work) and the control of the conditional generator under strong privacy guarantees. Our code is at https://github.com/actg-arl/ACTG-ARL.",
+ "primary_area": "social_aspects->privacy",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper addresses the challenges of generating high-quality synthetic text under differential privacy (DP) constraints. The authors propose a hierarchical framework, ACTG (Attribute-Conditioned Text Generation), which decomposes the task into private feature learning and feature-conditioned text generation. To enhance instruction-following and prevent reward hacking during post-training, the authors introduce Anchored RL (ARL), which combines Reinforcement Learning with a supervised fine-tuning (SFT) anchor. The integrated approach, ACTG-ARL, aims to improve both synthetic text quality (measured by MAUVE) and fine-grained control over generation. The submission presents a technically solid contribution to the field of private synthetic data generation. The authors successfully addressed technical concerns regarding utility, generalizability, and computational overhead during the rebuttal phase. While one reviewer maintains concerns over presentation issues, the overall consensus among the other reviewers is positive - although their confidence are not high enough. Therefore I suggest a \"weak accept\" for this paper and recommend the authors to further improve the presentation quality of their final submission.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_NQfH",
+   "summary": "To generate high-quality synthetic text data under DP restriction, this paper introduces both (1) a hierarchical framework that decomposes DP text synthesis into 2 easier tasks including private feature learning and feature conditioned text generation; (2) anchor-RL to prevent reward hacking when post-training the feature conditioned test generator.\n\nThorough ablation on how private feature extraction and what feature should be applied is performed to select out the best combination. For the ARL part, the author made basic comparisons with basic DP-FT and (DP-)RL.",
+   "strengths_and_weaknesses": "**Strengths**:\n1. Best-of-N data selection for constructing a high-quality SFT anchor is a very interesting design which incurs no further privacy cost.\n2. The per-instance control given by ARL is also a very precise and interesting design.\n\n**Weaknesses**:\n1. My biggest concern about this work is that, although a clear gain in MAUVE is witnessed, which reflects what the synthetic dataset is more similar to the private dataset in distribution. However, the utility of the dataset is not discussed. Previous works like Aug-PE includes the performance of models trained using the synthetic samples. This point is very crucial to me. Therefore, as long as this point is not made clear in the paper (using experiments), I prefer not to give a positive rating.\n2. What's the training cost of this method? Also, can the training of one group of feature extractor and conditioned generator support multiple downstream tasks?\n3. Could you explain why in Fig 5, for PMC-patients dataset, the MAUVE of ACTG-ARL is even lower than ACTG even when the error is smaller? Should this be explained as some potential shortcomings of the proposed ARL?\n4. Could you provide more equations and summarize your algorithms? Currently, the presentation is somewhat hard to follow.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "Please see weaknesses.",
+   "limitations": "No, I think no limitation is dicussed in Section \"Conclusionandlimitations\" in this paper.\n\nI think the time cost and the reliance on good (well defined) feature extractors are some points that may limit the power of the proposed method.",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_uuJZ",
+   "summary": "The paper presents a new method for generating high-quality synthetic data by proposing a hierarchical framework that first learns a feature, then performs conditional generation. They further used a post-training approach that combines SFT and RL to improve instruction following.",
+   "strengths_and_weaknesses": "Strengths:\n\n---\n\n- The proposed method proposes a more interpretable and controllable way for DP data generation via learning a feature, then acting upon it via RL.\n- The paper is well-written and includes diverse types of analysis. \n- The paper includes various ablations to verify the effectiveness. \n\n---\n\nWeaknesses:\n\n- Structured Features dependability: while in most of the cases a Tabular Schema might exist, I believe quantifying the method performance in cases that lack a tabular schema would be beneficial for the paper's strength. \n\n- Increasing pipeline complexity: While I don't believe this is a big issue, I think including a computational cost comparison between the proposed method and the prior work would be useful, given that this multi-stage pipeline may increase training complexity, tuning requirements, and computational cost compared to simpler DP generation approaches.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "NA",
+   "limitations": "NA",
+   "overall_recommendation": 5,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_WRdS",
+   "summary": "Proposes a method for generating fake text synthetic data by first extracting attributes and then conditionally generating based on these attributes. To ensure a fine-tuned model follows attribute instructions, use RL + best examples dataset. Operating under differential privacy guarantees ensures the reliability of the proposed method. First, an external llm is used to extract an attribute table from the private data. They then train AIM to generate this tabular data, which allows for the generation of synthetic attribute tables that leak no information about the private data. This tabular data is used to generate synthetic text as inference time via conditional generation.",
+   "strengths_and_weaknesses": "Strengths \n* The decomposition into an attribute extraction phase (higher level concepts) and a conditional generation phase seems very natural and intuitive \n* The evaluation contributions towards better usage of MAUVE is useful in its own right for the field \n* The evaluation and experiments seem very thorough — covering both classification, next token prediction fine-tuning, and instruction following\n* The method itself seems to achieve superior results than baselines, and the ablation is useful towards understanding what drives performance \n\nWeaknesses: \n* The attribute extraction phase seems like it may need to be altered depending on the specific dataset.\n* Requires a powerful model to extract meaningful features \n* There seems to be circularity with IFAcc — if gemma is extracting the attributes, why is it also evaluating the instruction following? This seems like asking gemma to evaluate itself. \n* It would be interesting to see whether the method generalizes to datasets beyond biomedical, since that would probably alter what defines a good attribute scheme",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "(disclaimer: I am unfamiliar with DP and this area of research): I feel like there may be a way to frame the attributes as a principled decomposition of the dataset over latents — is there any probabilistic interpretation as to how the attributes relate to the dataset? Is there any way to view them as latents? I think that it would be interesting to view the attributes as some form of a discrete latent model — this may enable better ways to design the schema for the attributes.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 2
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "aJVkQAd7tv",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_nSvh",
+      "weight": "high",
+      "reason": "The most thorough and specific review, with concrete, substantiated concerns. Its central points, single-dataset/two-cell-line validation, missing simpler baselines (linear/mean), untested generalization to new cell types and donors, and breadth of evaluation frameworks, map directly onto the meta-review's emphasis on improvements across multiple cell lines, baselines, and evaluation frameworks, and corroborate the DEG-selection and knowledge-graph sensitivity concerns raised elsewhere."
+    },
+    {
+      "reviewer": "Reviewer_mrYu",
+      "weight": "high",
+      "reason": "Specific and substantiated. Correctly identifies the DEG/non-DEG distinction as the paper's original angle, praises presentation, and flags dependence on external statistical DEG selection plus a missing recent framework/baseline (SYSTEMA), points echoed by other reviewers and consistent with the meta-review's focus on additional evaluation frameworks."
+    },
+    {
+      "reviewer": "Reviewer_t8Qj",
+      "weight": "high",
+      "reason": "Detailed, technically grounded critique: the incremental-novelty framing, the weak/inconsistent effect sizes of the non-DEG loss ablation, the uninformative downstream pathway analysis, missing reproducibility details, and the HEPG2-vs-RPE1 dataset inconsistency. Several points are independently corroborated and align with the meta-review's 'concerns mostly addressable in camera-ready' framing."
+    },
+    {
+      "reviewer": "Reviewer_BXkW",
+      "weight": "medium",
+      "reason": "Partly on target: corroborates the knowledge-graph (STRING) sensitivity concern and the call for additional baselines, and the graph-robustness/edge-dropout question is relevant. However, the review is brief and its foundation-model comparison ask is somewhat generic, and its depth does not match its stated high confidence."
+    }
+  ],
+  "score_rationale": "The meta-review anchors acceptance on a well-motivated attack on mean-collapse and a strengthened empirical contribution demonstrated across multiple cell lines, baselines, and evaluation frameworks, which directly echoes the specific concerns of the high-weight reviewers (nSvh on datasets/baselines/generalization, mrYu on DEG-selection dependence and missing frameworks, t8Qj on ablation effect sizes and reproducibility); the briefer, more generic BXkW review was weighted medium. Soundness (3) and presentation (3) follow the reviewer majority and the accept direction, with presentation held at 3 rather than 4 because of the reproducibility gaps and dataset inconsistency. Significance was set to 3 in line with the meta-review's explicit positive direction on the empirical contribution, while originality was held at 2 to reflect the corroborated 'incremental' critique that the meta-review does not counter. Overall 4 (weak accept) matches the 'Accept (regular)' decision and the modal reviewer recommendation, bracketed by mrYu's 5 and nSvh's 3."
+}

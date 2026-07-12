@@ -1,0 +1,26 @@
+{
+  "forum_id": "RNDJpm1kUW",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_2yEx",
+      "weight": "high",
+      "reason": "Most detailed review with the highest confidence (5), assessing all four dimensions specifically. It directly drives both anchor concerns in the meta-review — comprehensiveness of empirical evaluation (baseline selection, single local update, small batch sizes, counterintuitive HFGI/momentum results) and clarity of novelty (objective is a natural extension of IG; label recovery reuses existing techniques). Substantiated and corroborated by others."
+    },
+    {
+      "reviewer": "Reviewer_9uGa",
+      "weight": "high",
+      "reason": "Substantive, well-structured review whose weaknesses are concrete and corroborated by other reviewers: reliance on access to the initial optimizer state, activation-function assumption (ReLU/Sigmoid vs. GELU/SiLU), batch-size degradation, secure-aggregation limitation, and computational cost. Aligns with the meta-review's empirical-comprehensiveness concern."
+    },
+    {
+      "reviewer": "Reviewer_knSg",
+      "weight": "medium",
+      "reason": "Substantive strengths and weaknesses that corroborate the panel (activation/bias assumption in Hypothesis 3.1, batch-size and training-stage degradation, sensitivity to DP), but self-reported confidence is only 2, and its significance/originality scores of 4/4 sit above the meta-review's stated concern about clarity of novelty."
+    },
+    {
+      "reviewer": "Reviewer_23ff",
+      "weight": "medium",
+      "reason": "Raises two specific, corroborated points — missing recent related work (echoed by 2yEx) and an apparent threat-model inconsistency about access to m_{t-1}/v_{t-1} (echoed by 9uGa). However, its significance=2 rationale that the paper only discusses Adam is partly contradicted by other reviewers who note demonstrated generalization to AdaGrad and RMSProp."
+    }
+  ],
+  "score_rationale": "The meta-review's two anchor concerns — comprehensiveness of empirical evaluation and clarity of novelty — were driven chiefly by the two most substantive, highest-confidence reviews (2yEx, 9uGa), which I weighted most heavily; these pull originality and significance to 3 even though two lower-confidence reviewers rated them 4. Soundness is a unanimous 3 and the overall recommendation is a unanimous 4, matching the meta-review's note that the panel 'converged to weak acceptance.' Presentation sits at 3, following the two high-weight reviewers, since praise for the writing is tempered by minor clarity and citation issues. Confidence is 4, reflecting strong mutual corroboration across the reviews (batch-size degradation, assumption robustness, novelty scope) and alignment with the meta-review."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "40fUEdwvH3",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_d53j",
+      "weight": "high",
+      "reason": "Detailed, specific, and substantiated positive review. Its points (large speedups on a rigorous production baseline, natural-language evaluation instead of only math benchmarks, training-free single hyperparameter, large FLOPs reduction, and the missing AR/batch-size baselines) are echoed by the meta-review's emphasis on solid contributions and corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_DGQV",
+      "weight": "high",
+      "reason": "Specific and well-substantiated. Identifies the novel early-layer attention-delta insight, the high practical value of enabling large-batch DLLM inference, and the hardware-generalization gap. Aligns directly with the meta-review's framing of novel, solid contributions and overlaps with the other high-weight reviewers."
+    },
+    {
+      "reviewer": "Reviewer_NNs6",
+      "weight": "high",
+      "reason": "Balanced and specific. Corroborates the motivation and system-design strengths while raising concrete, constructive weaknesses (single-hardware scope, unexplained quality gains, lack of hyperparameter guidance, missing joint quality-throughput Pareto plot) that overlap with the other high-weight reviewers."
+    },
+    {
+      "reviewer": "Reviewer_LCcq",
+      "weight": "medium",
+      "reason": "Partly on-target: the small-batch/AR-baseline and comparison-fairness points are specific and corroborated by another reviewer, but the central low scores for originality and significance (framed around similarity to Sparse-dLLM/d2Cache) are contradicted by the meta-review's explicit statement that the contribution is novel and by the three other reviewers."
+    }
+  ],
+  "score_rationale": "The meta-review and the three high-weight reviewers (d53j, DGQV, NNs6) converge on a solid, novel, well-executed system with strong throughput results, anchoring an overall of 5 (within the [4,6] range) and originality of 3, since the meta-review's explicit novelty claim outweighs LCcq's originality=2 outlier. Soundness, presentation, and significance are set to 3 to reflect genuine, corroborated weaknesses (single-hardware evaluation, unexplained quality improvements, missing small-batch and AR baselines, and absent hyperparameter guidance) while staying above LCcq's low outliers that the meta-review does not support. Confidence is 4 because the high-weight reviewers' strengths and weaknesses are highly consistent and mutually corroborating."
+}

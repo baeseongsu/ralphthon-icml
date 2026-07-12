@@ -1,0 +1,26 @@
+{
+  "forum_id": "3vNaSvdEAc",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_DKSQ",
+      "weight": "high",
+      "reason": "Detailed, specific, and substantiated critique. The phase-portrait estimator concern is explicitly adopted by the meta-review, and the points on evaluation coverage (subset-only Humanoid faults), presentation density, limited theoretical guarantees, and the phase-vs-time issue on manipulation are concrete and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_wgSU",
+      "weight": "high",
+      "reason": "Thorough, well-substantiated review whose central question on applicability beyond locomotion is explicitly taken up in the meta-review (answered via PandaReach). Its assessment of the safety/stability treatment, comprehensive experiments, and related-work positioning aligns with the acceptance direction."
+    },
+    {
+      "reviewer": "Reviewer_5fVa",
+      "weight": "high",
+      "reason": "Concrete concerns about baseline fairness (frozen fault-free SAC) and missing runtime/computational-cost analysis are explicitly adopted by the meta-review, and its points on limited biological background and modest gains over adaptive baselines are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_uByq",
+      "weight": "medium",
+      "reason": "Probing, partly on-target questions on the adaptation protocol, biological grounding, microzones, and baseline referencing are corroborated by DKSQ and 5fVa. However, its central weak-reject stance rested on a demand for formal convergence/stability guarantees that the meta-review judged an unreasonable bar for this problem setting (unknown post-training faults, no model access), so the negative overall verdict was down-weighted."
+    }
+  ],
+  "score_rationale": "Scores are anchored to the three high-weight reviewers (DKSQ, wgSU, 5fVa), whose specific concerns -- the underspecified phase estimator, baseline fairness, and missing runtime analysis -- were explicitly echoed in the meta-review, and to the strongly cross-corroborated presentation and biological-grounding weaknesses, which pin presentation at 2 and originality at 2. Soundness (3) and significance (3) reflect the practically important problem and comprehensive experiments credited across the reviews and the meta-review, tempered by modest gains over adaptive baselines and simulation-only scope. The overall recommendation (4) stays within the reviewers' [3,5] range and follows the meta-review's clear acceptance direction while remaining coherent with the fair presentation and originality sub-scores; uByq's weak-reject and theory-centric stance was down-weighted because the meta-review deemed the absence of formal guarantees a reasonable limitation for this setting."
+}

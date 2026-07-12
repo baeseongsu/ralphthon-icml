@@ -1,0 +1,66 @@
+{
+ "forum_id": "WUjRCkjKC7",
+ "title": "Finding the Correct Visual Evidence Without Forgetting: Mitigating Hallucination in LVLMs via Inter-Layer Visual Attention Discrepancy",
+ "abstract": "Large Vision-Language Models (LVLMs) have shown remarkable performance on a wide range of vision-language tasks. Despite this progress, they are still prone to hallucination, generating responses that are inconsistent with visual content. In this work, we find that LVLMs tend to hallucinate when they pay insufficient attention to the correct visual evidence and gradually forget it during the generation process. We empirically find that although LVLMs overall attend insufficiently to visual evidence, they exhibit sensitivity to the correct visual evidence in specific layers, with notable inter-layer discrepancy. Motivated by this observation, we propose a novel hallucination mitigation method that enhances visual evidence based on **I**nter-**L**ayer **V**isual **A**ttention **D**iscrepancy (**ILVAD**). Specifically, we obtain the attention weights from early generated tokens to visual tokens across layers and identify the tokens that are repeatedly activated as visual evidence, forming a saliency map. We then enhance attention to visual evidence during generation through the saliency map to reduce visual forgetting. In addition, we leverage the saliency map to obtain attention scores of generated text to visual evidence, in order to select and emphasize text tokens that are strongly grounded in visual evidence. Our method is training-free and plug-and-play. Multiple benchmark evaluations conducted on five recently released models show that our method can consistently mitigate hallucinations in different LVLMs over various architectures. Code is available at https://github.com/ytx-ML/ILVAD.",
+ "primary_area": "deep_learning->foundation_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "After reviewing the paper, the reviewers’ comments, and the authors’ rebuttals, I recommend acceptance. The authors addressed all reviewer concerns thoroughly and professionally. They provided additional experiments on more recent benchmarks (ALOHa, Factuality, Coverage, CLAIR) and newer, larger models (Qwen3-VL, GLM-4.1V), demonstrating the method’s generalization and effectiveness. They clarified the handling of genuinely important tokens, the role of the early token window, and the distinction from related work (e.g., AGLA, MemVR). All reviewers acknowledged that their concerns were fully resolved, with several raising their scores accordingly. The paper is technically solid, training-free, and empirically well-supported, with no unresolved issues. Therefore, I recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_9JZe",
+   "summary": "Unlike prior works that derive saliency maps from differences across decoding steps or across attention heads, this paper focuses on attention differences across layers to obtain saliency maps, and uses them during decoding to mitigate hallucinations. Specifically, it first selects attention heads and layers that are sensitive to visual tokens, and then amplifies visual tokens that receive high attention weights. To reduce the influence of sink tokens, it uses the changes in attention weights between adjacent layers as the final scores for constructing the saliency map. Experiments on CHAIR, POPE, MMHAL-Bench, as well as general benchmarks, show that the proposed method outperforms existing approaches.",
+   "strengths_and_weaknesses": "Strengths\n1. Because MLLMs are being used for many high‑stakes decision‑making tasks, research on reducing their hallucinations is timely.\n2. The method does not require training and can be applied easily.\n\nWeaknesses\n1. In Equation (6), how does the method handle the case where a token is genuinely important and therefore highly activated across all layers, rather than being a spurious signal?\n2. CHAIR is not an appropriate benchmark for evaluating hallucinations in long-form generation for LVLMs. Does the proposed method still outperform baselines on more recent or more suitable evaluation benchmarks? [1,2,3]\n\n[1] Lee et al., \"Toward Robust Hyper-Detailed Image Captioning: A Multiagent Approach and Dual Evaluation Metrics for Factuality and Coverage\" ICML 2025  \n[2] Petryk et al., \"ALOHa: A New Measure for Hallucination in Captioning Models\" NAACL 2024  \n[3] Chan et al., \"CLAIR: Evaluating Image Captions with Large Language Models\" EMNLP 2023",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. In Equation (6), how does the method handle the case where a token is genuinely important and therefore highly activated across all layers, rather than being a spurious or hallucinatory signal?\n2. CHAIR is not an appropriate benchmark for evaluating hallucinations in long-form generation for LVLMs. Does the proposed method still outperform baselines on more recent or more suitable evaluation benchmarks?",
+   "limitations": "No.",
+   "overall_recommendation": 4,
+   "confidence": 5,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_ux3F",
+   "summary": "This paper addresses the issue of hallucinations in LVLMs caused by insufficient focus on correct visual evidence and the gradual \"forgetting\" of such evidence during the generation process. The proposed method extracts saliency maps by analyzing attention weights from early-generated tokens to visual tokens across layers, identifying consistently activated \"visual evidence\" tokens. These maps are then used to boost visual attention during generation to mitigate visual forgetting.",
+   "strengths_and_weaknesses": "### Strength\n* The approach leverages saliency maps to bolster visual attention during the decoding stage, which effectively prevents critical visual information from being \"diluted\" or \"forgotten\" as the sequence length increases.\n* The proposed method is training-free and introduces negligible computational overhead, ensuring it does not significantly impact inference latency.\n\n### Weakness\n* ILVAD requires extracting the attention weights from the first $T$ generated tokens to construct the saliency map. Consequently, if the model fails to attend to the correct visual regions during the initial generation phase (e.g., the first 10 tokens), the effectiveness of the subsequent enhancement may be significantly constrained.\n* The process of identifying \"visual evidence\" requires filtering out \"Attention Sinks.\" However, if the filtering mechanism is too aggressive, it may inadvertently suppress subtle but essential visual cues, leading to the loss of fine-grained information.\n* The underlying concept—masking or suppressing non-salient image regions to mitigate abnormal attention—shares significant similarities with existing work [M]. The authors should more clearly articulate the unique technical contributions and distinctions of their method compared to this baseline.\n\n[M] Mitigating Object Hallucinations in Large Vision-Language Models with Assembly of Global and Local Attention",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "Please see the weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal addressed my concerns."
+  },
+  {
+   "reviewer": "Reviewer_J9Eo",
+   "summary": "This paper addresses the issue of hallucinations in Large Vision-Language Models (LVLMs), where generated responses are inconsistent with visual content. The authors identify that hallucinations often occur when models pay insufficient attention to correct visual evidence and gradually \"forget\" it during the generation process. To exploit this, the authors propose a training-free, plug-and-play method that constructs a saliency map to identify and enhance critical visual tokens while emphasizing text tokens strongly grounded in visual evidence. Experimental results across five benchmarks and various architectures, demonstrate that ILVAD consistently mitigates hallucinations and improves multimodal understanding with minimal inference overhead.",
+   "strengths_and_weaknesses": "**Strength:**\n1. The paper is well-written and easy to follow, providing a clear motivation and a logically structured methodology.\n2. The authors evaluated their method across five diverse benchmarks and five LVLM architectures. The proposed ILVAD method demonstrates robust generalization and powerful hallucination mitigation.\n3. The method is training-free and plug-and-play, requiring no architectural modifications. Crucially, it introduces minimal additional inference overhead, maintaining a runtime nearly identical to greedy decoding.\n\n**Weakness:**\n1. Potential Bias in Saliency Map: The reliance on a fixed, short window of early tokens assumes that the model's initial attention patterns are sufficient to identify all relevant visual evidence for the entire response. However, the authors does not address whether this static saliency map remains effective for long-form generation where the required visual evidence might shift beyond what is captured in the first 10 tokens.\n2. For discriminative benchmarks such as POPE and MME, the model's correctness is typically determined by the very first generated token (e.g., 'Yes' or 'No'). Could the authors clarify how the saliency map—which requires 10 tokens to be constructed—is used to mitigate hallucinations in these single-token response tasks?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See the weakness.",
+   "limitations": "Hyperparameter Sensitivity across Architectures: The effectiveness of ILVAD appears dependent on manual tuning of key parameters. For instance, the enhancement strength must be varied between models (e.g., 3 for LLaVA-NeXT-7B vs. 5 for Qwen2-VL-7B). The authors should discuss the lack of a universal parameter setting and the resulting tuning cost for new models.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal addressed my concerns."
+  },
+  {
+   "reviewer": "Reviewer_hjYD",
+   "summary": "The paper analyzes the relationship between attention maps and hallucinations in LVLMs and finds that hallucinations often occur when the model allocates insufficient attention to relevant visual evidence. Additionally, LVLMs do not consistently attend to visual evidence across layers, showing strong inter-layer discrepancy. The authors propose a train-free method that uses this discrepancy to enhance this attention and show that the method effectively mitigates hallucinations and improves visual understanding in LVLMs.",
+   "strengths_and_weaknesses": "__Strengths__:\n\nThe paper presents a clear analysis that motivates an edit in the weight space to reduce hallucinations. The paper is well-written, and the results show strong benefits of using this method for various applications. The ablations are very useful for understanding the robustness of this method.\n\n__Weaknesses__:\n\n1. The analysis does not discuss other impacts of the presented edit. How does this approach change the behaviour of existing benchmarks (e.g., common benchmarks that can be found in VLMEvalKit). If this approach harms the results in these cases, it makes it less useful for the general case, while if this approach helps/doesn't change the result, this approach can be a very significant contribution to the community.\n\n2. The analysis is done on relatively old and small models. With Qwen2.5, Qwen3, Qwen3.5, and GLM models, it is not clear how useful this approach is in a more modern setting. While I still think that this is a useful and interesting direction even for older models, I would like to know how relevant this approach is for newer and larger models. An analysis of the relations between the approach and scale/model version can make it significantly stronger.\n\n3. Missing references: Some relevant papers need to be mentioned and compared (e.g., [1,2]). Some of these methods can be combined with the presented approach, and I am curious to see whether they can work together to improve the results further.\n\n \n[1] Huang et al., OPERA: Alleviating Hallucination in Multi-Modal Large Language Models via Over-Trust Penalty and Retrospection-Allocation, CVPR 2024\n\n[2] Jiang et al., Interpreting and Editing Vision-Language Representations to Mitigate Hallucinations, ICLR 2025",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See the weaknesses",
+   "limitations": "I couldn't find a section that clearly discusses the limitations of the paper, and I encourage the authors to add such a section.",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "The rebuttal addressed my concerns"
+  }
+ ]
+}

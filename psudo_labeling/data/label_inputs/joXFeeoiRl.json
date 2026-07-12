@@ -1,0 +1,52 @@
+{
+ "forum_id": "joXFeeoiRl",
+ "title": "Learning Permutation Distributions via Reflected Diffusion on Ranks",
+ "abstract": "The finite symmetric group $S_n$ provides a natural domain for permutations, yet learning probability distributions on $S_n$ is challenging due to its factorially growing size and discrete, non-Euclidean structure. Recent permutation diffusion methods define forward noising via shuffle-based random walks (e.g., riffle shuffles) and learn reverse transitions with Plackett–Luce (PL) variants, but the resulting trajectories can be abrupt and increasingly hard to denoise as $n$ grows. We propose *Soft-Rank Diffusion*, a discrete diffusion framework that replaces shuffle-based corruption with a structured soft-rank forward process: we lift permutations to a continuous latent representation of order by relaxing discrete ranks into soft ranks, yielding smoother and more tractable trajectories. For the reverse process, we introduce *contextualized generalized Plackett–Luce (cGPL)* denoisers that generalize prior PL-style parameterizations and improve expressivity for sequential decision structures. Experiments on sorting and combinatorial optimization benchmarks show that Soft-Rank Diffusion consistently outperforms prior diffusion baselines, with particularly strong gains in long-sequence and intrinsically sequential settings.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper considers generative modeling over the space of permutations. Specifically, they consider moving beyond discrete shuffle based methods, and propose soft-rank diffusion which lifts this into a continuous latent representation. This achieves improved performance compared to prior works. The reviewers all believe this is a well motivated, reasonable idea which demonstrates improved performance. However, none of the reviewers strongly advocate for the paper's acceptance.\n\nBased on the reviewer feedback I recommend weak accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_QRFA",
+   "summary": "In this paper, an algorithm, called Soft-Rank Diffusion, is proposed for permuation generation. Specifially, it relaxes permutations into continuous soft ranks and developed the hybrid reverse sampler, cGPL, and pointer-cGPL. The experimental results on the four-digit MNIST and TSP datsets demonstrate that the proposed algorithm outperforms the conventional methods.",
+   "strengths_and_weaknesses": "**Strength**\n1. This paper is clearly written and easy to follow.\n2. The motivation and core idea are reasonable and technically sound. Also, Appendix B provides the derivation for better understanding. \n3. The experimental results show that the proposed algorithm can achieve better performance than conventional methods.\n\n\n**Weakness**\n1. The experiments cover the essential comparison, but they remain at the bare minimum in terms of dataset variety.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "In overall, I believe that this paper has good amounts of contribution. However, I have listed a few concerns below.\n\n1. The proposed algorithm is evaluated on the four-digit MNIST and TSP datasets. There are some more tests such as solving jigsaw puzzles on Noisy MNIST and CIFAR10 used in Symmetric Diffusers. Also, there is the SVHN dataset used in Error-free DSF.  It would strengthen the paper if it is possible to compare the results on these datasets. \n\n2. It would be better to have run-time comparison with the conventional methods w.r.t. sequence length to show its practical value. \n\n3. It would be good to have some analysis on the failure cases.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "All my remaining questions have been fairly resolved, so I will maintain my original recommendation."
+  },
+  {
+   "reviewer": "Reviewer_wRXd",
+   "summary": "The authors consider the setting of learning permutation distributions; due to the factorial scaling of $S_n$, denoising can be very hard as sequence length increases. The authors propose Soft-Rank Diffusion; that is, instead of diffusing directly on permutations, use a continuous vector $[0,1]^n$ to run a reflected diffusion process and sorting the latent coordinates. An analogous method is proposed for the backward process as well. Experimental results are provided.",
+   "strengths_and_weaknesses": "Strengths:\n- The ideas are clear, and despite the heavy notation, it is quite intuitive.\n- The gap between the proposed method and existing methods increase in the sequence length.\n\nWeaknesses:\n- It is a bit unclear where most of the gains come from (e.g. the soft-rank diffusion or the better decoder).\n- The benchmarks are a bit narrow; it would be great if similar results can be shown in other settings as well.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- How sensitive is the proposed method to the choice of the initial sample distribution?\n- What's the computational cost of the cGPL reverse process?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "After reading all of the rebuttal responses, I believe my concerns have been adequately addressed. I will maintain my score (with higher confidence) since I think it is a nice study on a fundamental combinatorial optimization benchmark."
+  },
+  {
+   "reviewer": "Reviewer_MorP",
+   "summary": "This paper studies generative modeling over permutations and proposes a new discrete diffusion framework, Soft-Rank Diffusion. The core idea is to replace diffusion defined on discrete permutations with diffusion in a bounded continuous space whose order pattern induces a permutation. The forward process is formulated as reflected diffusion in this continuous space, while the reverse model is parameterized using cGPL and pointer-cGPL. Experimental results show that Soft-Rank Diffusion consistently outperforms prior methods, especially on longer sequences and intrinsically sequential tasks.",
+   "strengths_and_weaknesses": "## Strengths\n\n1. The idea of moving diffusion from discrete permutations to a continuous space is a natural and interesting attempt, and it has the potential to mitigate the abrupt trajectory changes and scalability issues.\n2. The proposed continuous space is relatively easy to model, and the decoding mechanism--recovering a permutation via argsort--is simple and direct.\n3. The method demonstrates strong empirical performance across multiple experiments.\n\n## Weaknesses\n\n1. The paper does not sufficiently discuss the fundamental properties of the introduced latent space, and several important issues remain unaddressed. For example, 1) since only the coordinate ordering matters, many different latent vectors correspond to the same permutation—what are the implications of this non-uniqueness for diffusion modeling? 2) argsort partitions the space into n! chambers, but the paper does not analyze the consequences of this induced geometry.\n2. Restricting the latent variables to $[0,1]^N$ appears motivated by modeling convenience , but the paper does not provide a detailed discussion of this decision.\n3. Permutation problems often involve structural constraints in practice, and it is currently unclear whether such constraints can be incorporated into Soft-Rank Diffusion.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "I appreciate the authors’ attempt to introduce a new space and the completeness of the model design. However, I still have several concerns regarding the choice of continuous space and the extensibility of the framework:\n\n1. Why is $[0,1]^N$ chosen as the latent space, rather than other intervals or more structure-preserving relaxations such as the Birkhoff polytope[1,2] or the orthogonal group[3]?\n2. To my knowledge, many permutation problems involve additional constraints[4]. Can Soft-Rank Diffusion be naturally extended to constrained permutation settings?\n\n[1]. Learning Latent Permutations with Gumbel-Sinkhorn Networks, ICLR, 2018.\n\n[2]. Probabilistic Permutation Synchronization Using the Riemannian Structure of the Birkhoff Polytope, CVPR, 2019.\n\n[3]. OT4P: Unlocking Effective Orthogonal Group Path for Permutation Relaxation, NeurIPS, 2024.\n\n[4]. Reparameterizing the Birkhoff Polytope for Variational Permutation Inference, AISTATS, 2018.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "Since this is a new relaxation perspective, I do not think it is necessary at this stage for the proposed relaxation to surpass existing alternatives in every aspect. Therefore, I am raising my score to 4."
+  }
+ ]
+}

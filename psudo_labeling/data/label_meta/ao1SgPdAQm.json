@@ -1,0 +1,26 @@
+{
+  "forum_id": "ao1SgPdAQm",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_BXGd",
+      "weight": "high",
+      "reason": "The most influential review per the meta-review: it defended the novelty of the three-branch design in reviewer discussion and secured the LongGRIT open-source commitment that resolved a key concern. Its points are specific and substantiated (the L_FC notation/illustration ambiguity, the dataset-vs-framework decoupling question relative to Alpha-CLIP, the FG-OVD/FG-CLIP evaluation request, and the release question), and it carries the highest self-reported confidence (4)."
+    },
+    {
+      "reviewer": "Reviewer_emZp",
+      "weight": "high",
+      "reason": "Substantiated and on-target. Its strengths (meaningful gap, model-plus-dataset scope, the three-branch framework being well-aligned with the stated optimization challenges) and its weaknesses (presentation polish, rough figures/tables, and more quantitative analysis of dataset noise) are echoed by the meta-review's writing-clarity and dataset-analysis concerns and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_qiBt",
+      "weight": "high",
+      "reason": "Explicitly credited by the meta-review for the model-design-justification concern and the writing-clarity concern. Its points are specific and substantiated: why the contrastive/region losses are anchored only on the masked embeddings, the counterintuitive cropping-objective ablation, missing annotation-pipeline and inference details, and undefined notation/formatting issues that are corroborated across the panel."
+    },
+    {
+      "reviewer": "Reviewer_QZhF",
+      "weight": "medium",
+      "reason": "Partly on-target. Several points are specific and corroborated (decoupling gains from dataset vs. text encoder, missing FG-CLIP/SigLIP 2 baselines, the fairness issue of a large LLaMA-3-8B text encoder, the unexplained 1.5x crop, and the Figure 5 attribution). However, its reject verdict and its 'limited technical innovation' framing were contradicted by the meta-review and by BXGd's novelty defense, so its overall stance is discounted."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (BXGd, emZp, qiBt) and the meta-review converge on a positive read: a meaningful problem, an intuitive and novel three-branch framework, and broad competitive experiments. This places significance and originality at 3 within the reviewers' 3-4 range (BXGd's 4 tempered by the shared decoupling concern), and soundness at 3, reflecting strong results held back by the well-corroborated need to separate the dataset's contribution from the framework's. Presentation is set to 2, the value given by three of four reviewers and the most-echoed concern in the meta-review. Overall is 4 (weak accept), weighting the high-weight cluster (4/5/5) and the accept-leaning meta-review while discounting QZhF's outlier reject, whose novelty framing the meta-review rejected; confidence is 4 given the strong mutual corroboration of the core strengths and weaknesses."
+}

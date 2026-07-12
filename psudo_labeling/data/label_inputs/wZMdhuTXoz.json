@@ -1,0 +1,62 @@
+{
+ "forum_id": "wZMdhuTXoz",
+ "title": "Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment",
+ "abstract": "Due to limited resources and public safety concerns, deep reinforcement learning (RL) agents for many cyber-physical systems (e.g., autonomous vehicles) are first trained in simulators. However, when deployed in real world environments, they often suffer from performance degradation or safety violations because of the inevitable Sim2Real gap. Existing zero-shot approaches, such as robust safe RL and domain randomization, mitigate this issue but typically at the cost of degraded performance or residual safety risks when experiencing unmodeled system dynamics. To address these limitations, we propose a novel reinforcement learning framework that enables safe and efficient policy transfer via probabilistic latent embeddings and dynamic policy adaptation. We consider a family of Constrained Markov Decision Processes (CMDPs) under different environment contexts. By leveraging latent context variable in meta-RL, the proposed framework infers the latent representation of the environment from simulated experiences. Furthermore, it incorporates a distributional RL formulation, which allows risk levels of the deployed policy to be adjusted dynamically, based on the estimation accuracy of the latent context variable. This strategy promotes safety at the early deployment stage and improves efficiency through fast policy adaptation under the Sim2Real gap.",
+ "primary_area": "reinforcement_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This work proposes a novel framework to mitigate the Sim2Real gap in cyber-physical systems by enabling safe and efficient policy transfer. It leverages probabilistic latent context adaptation within meta-RL to infer the environment's latent representation from simulated data. Crucially, it incorporates a distributional RL formulation that allows the risk level of the deployed policy to be adjusted dynamically at inference time based on the estimation accuracy of the latent context variable.\n\nThe reviewers were highly satisfied with the paper's solid theoretical foundation and the well-structured proofs presented. The integration of distributional RL with latent context adaptation offers a powerful and novel approach to managing uncertainty during policy deployment. Given the comprehensive theoretical contributions, the strong empirical performance, and the promising framework for addressing the Sim2Real gap, I recommend acceptance.\n\nFor the final version, further discussion could be beneficial on the practical balance between promoting safety early in deployment versus maintaining high efficiency through fast policy adaptation, alongside providing clearer operational guidelines for the dynamic risk adjustment mechanism. There are also some closely related work that study sim2real gap through learning the latent embedding of source and target domains and use this representation mismatch to do data filtering (Cross-Domain Policy Adaptation by Capturing Representation Mismatch) or approximate the target dynamics model (MOBODY: Model-Based Off-Dynamics Offline Reinforcement Learning). It would be helpful for the authors to discuss the connection in the final version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_bPoU",
+   "summary": "The paper provides a novel reinforcement learning framework to deal with the challenging issue, which usually happens when a deep reinforcement learning agent trained in simulators was deployed in the real environment. It enables safe and efficient policy transfer via probabilistic latent embedding and dynamic policy adaptation. Furthermore, it incorporates a distributional RL formulation to promote safety and improve efficiency under the Sim2Real gap.",
+   "strengths_and_weaknesses": "The strength of paper is that a novel reinforcement learning framework is introduced to deal with the challenging issue, which usually happens when a deep reinforcement learning agent trained in simulators was deployed in the real environment.\nHow to deal more practically with the trade-off between the safety and performance during real-world deployment becomes the weakness of paper.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "1) If a specific application to be selected to demonstrate the implementation of framework proposed in the paper, which will be the choice of authors?  Why?\n2) Could it be possible to give a brief description in the paper for the usage of framework in the domain of autonomous driving?",
+   "limitations": "Besides the description of framework, more discussion concerning the specific application in real world could be appreciated.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_hReh",
+   "summary": "This paper studies safe Sim2Real transfer for CMDP-based reinforcement learning, where policies trained in simulation may violate safety constraints after deployment. The method introduces a latent context variable inferred by an encoder $q_\\phi(z\\mid D_\\xi)$ from transition context sets. Policy/value learning is built on IQN with reward and cost critics plus a Lagrangian constraint mechanism.\n\nAt deployment, the method uses dynamic risk regulation: upper-tail cost quantiles indexed by $\\eta$, plus projected action refinement. The paper claims theory for latent-conditioned Bellman contraction, stability of alternating updates, and safety conditions based on latent estimation error. Experiments shows consistent better performances in terms of both cost and reward, as compared with Nominal, Domain Randomization, SPiDR, and Robust RL. Overall the contribution is solid, but further justification is needed.",
+   "strengths_and_weaknesses": "## Strengths\n\n1. Appendix C provides an explicit projected action-refinement procedure (Algorithm 1), making the risk-sensitive policy operational.\n\n2. The theoretical guarantee is comprehensive: The paper includes contraction/fixed-point arguments for latent-conditioned Bellman operators (Lemma 4.1, Theorem 4.2) and a stability claim for alternating optimization (Theorem 4.4).\n\n3. The empirical performance is strong, and aligns with the theory: the paper reports deployment trajectories under dynamic adaptation (Fig. 3) and OOD sensitivity (Fig. 4), aligning with the Sim2Real claim.\n\n## Weaknesses\n1. The theoretical guarantee highly depends on the assumption that the true environment is covered by the training distribution. Since this is a core assumption, I would suggest put it the main text instead of in the appendix. \n\n  \n2. Typo: Appendix A.10 is titled “Proof of Theorem 5.5”. I guess the authors are referring to Theorem 5.3?\n\n3. Evaluation is limited to POINTGOAL2, with no additional Safety Gym tasks, broader continuous-control benchmarks, or real-system transfer.\n\n4. Although Sec. 2 discusses latent-context/meta-RL methods, experiments miss baselines like direct PEARL/VariBAD-style or comparable test-time adaptation baselines.\n\n5. Table 1/Figs. 3–4 do not show uncertainty intervals despite multiple seeds, so statistical reliability is unclear.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Can you provide guarantee if $\\xi^\\star$ is outside the training support? Additionally, if $\\mu_{env}(\\xi^\\star)$ is really small and training is conducted with finite interactions, how would the performance of your algorithm degrade?\n2. Intuitively, this latent-context-encoder-based approach allows the agent to identify the environment first, then execute the optimal policy for this environment. Why don't people just use a history-dependent policy so that the algorithm can automatically identify the environment?\n3. What is the online overhead of Algorithm 1 (e.g., $K_{ref}$, gradient evaluations per step), and how sensitive are outcomes to $(\\alpha_r, \\alpha_c, \\beta_n)$?",
+   "limitations": "see weaknesses",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_PHwa",
+   "summary": "This paper proposes a Policy Adaptation for Sim-to-Real Deployment.  First, they learn a  policy with latent context in the simulated environments. When deploying this policy, it utilizes a small number of real interactions to infer the specific context of the current environment. Then it also dynamically adjusts its risk sensitivity based on the uncertainty of this inference, so that the policy is initially conservative, then progressively more permissive.",
+   "strengths_and_weaknesses": "The method seems to be well justified, supported by the theoretical analysis. Each component is well motivated.  They studied an important cross-domain generalization problem, while they also have to ensure the policy is safe in the policy deployment, which I think is a hard problem. They also provide additional analysis to ensure safety. Empirical results validate their method, receiving lower cost but higher reward compared with the baseline. \n\n\nWeakness:\n\nThe method looks too complicated to me, and the paper is a little bit hard to follow. And the complex method might be hard to tune in the real world practive.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Are there any ablation studies to verify that each component is necessary? It seems to me that you have too many components. I was wondering how each component is contributing to the overall performance.\n\n2, I was wondering whether the latent z can really learn the dynamics information or capture the dynamics difference.",
+   "limitations": "See question and weakness.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_xxS7",
+   "summary": "This paper introduces a transferable RL for simulation-to-real world scenarios. The problem is formulated as constrained Markov decision process (CMDP) over dynamic environments, The proposed framework mainly focus on combining distributional RL with latent context adaptation to achieve conservatism over unseen scenarios. The authors evaluate their method on the well-established benchmark OpenAI Safety Gym.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper provides solid theoretical coverage with clear and well-structured proofs.\n\n2. The problem of the distributional shift between simulation and real world scenarios is a very important and timely problem in the RL domain.\n\n3. The organization, writing quality, and overall clarity of the paper are very good, and the presentation is easy to follow.\n\n4. The integration of distributional RL and meta-RL is clearly motivated and well justified within the proposed framework.\n\nWeaknesses:\n\n1. The main drawback in the paper is the experiments. The authors, very well, motivated the need for models that address the gap between simulation and real world scenarios. However, they only include simulation-based environments, even if they change the seed and the dynamics of the scenarios.\n\n2. The work lacks comparing strong baselines from the meta-RL domain (Pearl for example) and distributional RL.\n\n3. The proposed framework can be very complicated. A complexity analysis is missing.\n\n4. An ablation study is not presented to highlight the significance of each module in the framework.\n\n5. some writing issues appear, for example punctuation in the equations.\n\n6. While the authors focus on real world issues, it has been proven that online RL does not suit real world deployments due to safety concerns.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. What is the complexity of the proposed framework compared to the baselines? Is it realistic for real world scenarios to design highly complicated frameworks?\n\n2. How your proposed method be formulated in offline RL context?\n\n3. How will the proposed framework perform in real world scenario beyond simulations and enviroments changing?",
+   "limitations": "In my opinion, a limitation section (or a paragraph in the conclusion) is needed to highlight the potential limitations of their work.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

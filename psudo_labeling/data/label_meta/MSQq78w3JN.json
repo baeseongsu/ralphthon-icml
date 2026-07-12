@@ -1,0 +1,21 @@
+{
+  "forum_id": "MSQq78w3JN",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_6fGe",
+      "weight": "high",
+      "reason": "Most specific and expert review (confidence 4): cites concrete comparators (RAE with DDT head, JiT) and specific baseline numbers, and questions whether the core claim (raw features are hard to optimize) really holds versus a dimensionality/capacity explanation. Its fairness-of-comparison and Refiner-cost concerns are independently corroborated by mj11. Although the meta-review ultimately sided with the authors on the residual guidance debate, the critique is substantive and well-grounded, and the AC noted the author clarification was engaged with directly."
+    },
+    {
+      "reviewer": "Reviewer_mj11",
+      "weight": "high",
+      "reason": "Detailed and balanced review (confidence 4) with specific, corroborated weaknesses: fairness of the Fig. 1 convergence comparison given the three-stage advantage, inference settings (250 steps, CFG=15), Refiner cost (338 GFLOPs) versus modest gain, need to explain why the VFM-based VAE works, and missing ablations. These align with 6fGe's points, and the meta-review explicitly validates this reviewer's engagement (concerns 'fully resolved,' raised score)."
+    },
+    {
+      "reviewer": "Reviewer_Wj3B",
+      "weight": "medium",
+      "reason": "Named positively by the meta-review (concerns resolved, score raised) and offers some specific technical observations — the under-justified bias-free projection and the Refiner improving rFID while worsening gFID (a train/inference distribution-mismatch hypothesis) — that partly corroborate the other reviewers on three-stage complexity and Refiner robustness. However, confidence is low (2) and the image-editing suggestion is generic and out of scope for a class-conditional generation paper, so weighted medium."
+    }
+  ],
+  "score_rationale": "The meta-review anchors an accept outcome and validates the engagement of mj11 and Wj3B (concerns 'fully resolved') while framing 6fGe's residual objection as addressable, so I weighted the specific, mutually corroborating critiques from 6fGe and mj11 most heavily and treated Wj3B as medium. Presentation is a clear 3 (unanimous), and soundness and significance sit at 3, following mj11 (high) and the meta-review's positive framing of a real bottleneck and effective solution, while the corroborated fairness-of-comparison and Refiner cost/benefit caveats keep them from 4. Originality is 2, tracking both high-weight reviewers who see the method as an incremental combination over RAE. Overall recommendation is 4 (weak accept), within the reviewers' [3,4] range and consistent with the accept decision, reflecting strong convergence results tempered by genuine initial concerns about comparison fairness and the causal claim; confidence is 4 given the strong cross-reviewer corroboration."
+}

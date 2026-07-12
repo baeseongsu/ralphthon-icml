@@ -1,0 +1,21 @@
+{
+  "forum_id": "hCY1J253Kf",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_cZ3L",
+      "weight": "high",
+      "reason": "Specific and substantiated, and covers all three concerns echoed by the meta-review: single-model evaluation (a main concern), sensitivity of the offline-calibrated static window to distribution shift (calibration robustness), and degradation on reasoning-heavy/long-form generation. Also raises continuous-batching fragmentation and broader baselines. Well-calibrated scores (3/3/3/3, overall 4, confidence 4)."
+    },
+    {
+      "reviewer": "Reviewer_c2Ai",
+      "weight": "high",
+      "reason": "Most detailed and precise review. Directly identifies the calibration-robustness failure modes (domain/task shift, prompt-template, decoding params, quantization/kernels) that the meta-review flags as legitimate remaining concerns, plus the continuous/dynamic-batching (vLLM/CUDA Graph) throughput risk and short-form evaluation bias. Credits the paper's overhead breakdown and ablations. Consistent scores (3/3/3/3, overall 4, confidence 4)."
+    },
+    {
+      "reviewer": "Reviewer_ZwbT",
+      "weight": "medium",
+      "reason": "On target for the model-diversity concern (only LLaMA-2 7B), which the meta-review treats as a main issue, and raises batch inference and long-context. However, it misses the calibration-robustness concern that the meta-review highlights, its limitations field is left as N/A, and its lower soundness/originality scores (2) are not corroborated by the two more thorough reviews or the meta-review's endorsement of the core contribution."
+    }
+  ],
+  "score_rationale": "The two high-weight reviewers (cZ3L, c2Ai) both scored soundness/presentation/significance/originality at 3 and overall at 4, and their concerns map cleanly onto the meta-review's anchor points (model diversity, calibration robustness, generation-heavy degradation), so I set those four dimensions to 3 and the overall to 4. Soundness stayed at 3 rather than ZwbT's 2 because the meta-review affirms the core contribution stands and the empirical mechanism (overhead breakdown/ablations) is credible; originality stayed at 3 rather than 2 because both high-weight reviewers judged the well-targeted combination as good even if incremental. All human overalls were 4 (weak accept), consistent with the Accept (regular) decision. Confidence is 4 because the three reviews strongly corroborate each other and align with the meta-review on both strengths and remaining weaknesses."
+}

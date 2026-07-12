@@ -1,0 +1,26 @@
+{
+  "forum_id": "7Xiv7Hszi7",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_24Wj",
+      "weight": "high",
+      "reason": "The most detailed and technically substantiated review; it independently hit all three concerns the meta-review anchors on (the missing SA-KAN-vs-MLP ablation, the limited two-dataset evaluation scope, and the absence of per-keyframe timing), and added precise critiques such as the misleading O(N^2 G) parameter claim and the linear-motion vs. arbitrary-non-rigid-motion tension."
+    },
+    {
+      "reviewer": "Reviewer_FBmo",
+      "weight": "high",
+      "reason": "Substantive and specific; corroborated the meta-review's real-time concern by asking for end-to-end FPS, and contributed well-argued additional points on baseline input-modality transparency, the lack of quantitative mask/segmentation evaluation, and overstated result margins."
+    },
+    {
+      "reviewer": "Reviewer_ckL6",
+      "weight": "high",
+      "reason": "Raised two of the three meta-review concerns squarely (limited datasets and non-real-time operation) plus a concrete Figure 2 presentation critique; the review is somewhat lighter and its soundness score of 2 is driven by scope/real-time rather than a fundamental flaw, but its evaluation-relevant points are all corroborated."
+    },
+    {
+      "reviewer": "Reviewer_aFHw",
+      "weight": "medium",
+      "reason": "Partly on-target: the ablation gap for isolating Metric3D/DINOv2 priors and the questions on optical-flow sensitivity and fast motion are substantive, but the specific ablation the meta-review flagged (SA-KAN vs MLP) was raised more sharply by others, the missing-video point is minor, and its presentation score of 2 is the lone outlier."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on three concerns, limited evaluation scope, the missing SA-KAN-vs-MLP ablation, and absent real-time analysis, all raised most sharply by 24Wj and FBmo (high) and corroborated by ckL6 (high), so their critiques drive the weaknesses and hold soundness and significance at 3 and originality at 2 (high-weight reviewers split 2/2/3 on originality and the incremental-architecture concern is well substantiated). Presentation is set to 3 because aFHw's 2 is the lone outlier and carries medium weight. The overall is positioned at 4: high-weight reviewers leaned toward 3, but the meta-review's regular-accept decision and 'valuable contribution' framing clearly point to the accept end of the [3,4] range. Confidence is 4 because the four reviews are coherent and their criticisms mutually reinforce around the same three themes, despite some spread on the final recommendation."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "A7LiBHEsOo",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_FnRu",
+      "weight": "high",
+      "reason": "Specific, substantiated, and engaged review. Its concern that the inference/serving evaluation is limited (largely batch size 1) directly corroborates the meta-review's point that serving evaluation should be presented more fully, and its concrete figure/ablation observations show close reading of the empirical case."
+    },
+    {
+      "reviewer": "Reviewer_D4K3",
+      "weight": "high",
+      "reason": "High-confidence, specific review whose two central asks, a direct quantitative comparison to concurrent embedding-/memory-based methods (Engrams, UltraMem) and a stronger MoE baseline, are exactly the completeness/positioning concerns adopted by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_kBqv",
+      "weight": "medium",
+      "reason": "Partly on-target: the request for a fuller account of prefilling/decoding and serving efficiency corroborates the meta-review's serving-completeness concern, but the reasoning/CoT question is speculative and the larger-scale (14B-100B) request is generic."
+    },
+    {
+      "reviewer": "Reviewer_9xWU",
+      "weight": "medium",
+      "reason": "Its central critique, that the paper's notion of sparsity is unclear relative to standard sparse architectures, is echoed almost verbatim by the meta-review, and the architecture-placement confusion reflects a real presentation gap. However, the review contains architectural misunderstandings (admitted uncertainty), the lowest confidence (3), and an off-base multi-sense-embedding rephrasing claim, so it is not weighted high."
+    }
+  ],
+  "score_rationale": "Soundness (3) and significance (3) were unanimous across reviewers and match the meta-review's endorsement of a convincing but scale-limited empirical case. Originality was set to 3 rather than 4 because, although the meta-review calls the contribution novel, the two high-weight reviewers split (FnRu 4, D4K3 3) and the corroborated concern about concurrent memory/embedding work (Engrams, UltraMem) tempers the novelty. Presentation (3) balances the high-weight reviewers' view that the paper is well written against corroborated clarity issues (architecture placement, figure references) flagged by the medium-weight reviewers. Overall recommendation (4) reflects the accept decision and the strongly positive meta-review while staying at the mode of the reviewer scores, since three of four reviewers, including the high-confidence high-weight D4K3, gave 4; confidence (4) reflects strong mutual corroboration across reviewers and the meta-review on both strengths and the remaining positioning/serving concerns."
+}

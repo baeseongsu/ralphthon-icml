@@ -1,0 +1,26 @@
+{
+ "forum_id": "wfHCePoAed",
+ "reviewer_stances": [
+  {
+   "reviewer": "Reviewer_VT5w",
+   "weight": "high",
+   "reason": "Detailed, structured review covering all four dimensions with specific, substantiated points. Its core concerns — missing quantitative comparison with process-based attribution baselines (TracIn, DVEmb), missing runtime/memory benchmarks, scalability to foundation models, and justification of the ground-truth counterfactual — are directly echoed by the meta-review, and its scores align with the positive consensus."
+  },
+  {
+   "reviewer": "Reviewer_hxWq",
+   "weight": "high",
+   "reason": "Clear, well-reasoned review whose two central concerns — evaluation limited to moderate-scale settings and unestablished reliability of the first-order approximation in nonlinear/large-scale regimes — are both reflected in the meta-review's summary of concerns. Praises for problem significance and clarity match the meta-review's stated strengths."
+  },
+  {
+   "reviewer": "Reviewer_TGAG",
+   "weight": "medium",
+   "reason": "Substantive review whose empirical concerns (no wall-clock/GPU-hour reporting, under-discussed computational scalability, reliance on MNIST and controlled spurious-correlation settings) are echoed by the meta-review. However, its lower significance (2) and originality (2) scores run against the meta-review's explicit emphasis on the significance of the research question and the originality of the approach, and the prior-knowledge/scope and backdoor stress-test points are unique and not corroborated."
+  },
+  {
+   "reviewer": "Reviewer_EWRY",
+   "weight": "medium",
+   "reason": "Accurate summary and one well-corroborated point (excessively high computational complexity) adopted by the meta-review and other reviewers. But the novelty concern (\"replacing training with attribution seems less innovative\") is contradicted by the meta-review's praise of originality, the additivity/synergy concern is explicitly hedged, and the review carries the lowest self-reported confidence (2)."
+  }
+ ],
+ "score_rationale": "Soundness is fixed at 3 (unanimous). Presentation is set to 3: three of four reviewers gave 3 with a shared, specific gap (no concrete efficiency benchmarks), and although one high-weight reviewer gave 4 for clarity, the majority and the substantiated presentation-level weakness anchor it at 3 within the [3,4] range. Significance and originality are set to 3 rather than 2 because the meta-review explicitly highlights the significance of the posed research question and the originality of the approach as key strengths, so the single medium-weight 2 scores (TGAG) are discounted. Overall recommendation is 4 (weak accept): the two high-weight reviewers gave 5 and the two medium-weight reviewers 4, but as a pre-rebuttal initial review the open concerns (missing baselines, absent runtime numbers, moderate-scale-only evaluation, scalability, and ground-truth justification) are all unresolved, making a positive-but-reserved weak accept the most coherent single-reviewer position within the [4,5] range. Confidence is 3, reflecting strong mutual corroboration of both strengths and the main weaknesses, tempered by residual uncertainty about the first-order approximation's reliability at scale."
+}

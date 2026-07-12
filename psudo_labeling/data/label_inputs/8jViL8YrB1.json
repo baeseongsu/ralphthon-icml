@@ -1,0 +1,66 @@
+{
+ "forum_id": "8jViL8YrB1",
+ "title": "A Strictly Proper Scoring Rule and a Calibration Metric for Interval-Censored Data Analysis",
+ "abstract": "Interval-censored data present unique challenges in statistical analysis due to the partial observability of event times within known intervals, requiring assumptions about the censoring mechanism. This paper explores the theoretical relationship between two foundational assumptions: independent monitoring and non-informative censoring. We demonstrate that these assumptions are equivalent for Case-1 interval-censored data, but not for Case-$K$ interval-censored data, where $K \\geq 2$, through a synthetic dataset example. Additionally, we propose the first strictly proper scoring rule and calibration metric specifically designed for interval-censored data under the constant-sum assumption and the non-informative censoring assumption, respectively. Our empirical evaluations on real-world datasets show that a neural network model trained with our scoring rule is competitive with established statistical baselines, offering enhanced flexibility. These contributions provide significant advancements in the theoretical understanding and practical analysis of interval-censored data.",
+ "primary_area": "general_machine_learning->unsupervised_and_semisupervised_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "After the author/reviewer discussion, the reviewers unanimously leaned toward acceptance, and in reading over the discussion, I'm in favor of recommending the paper for acceptance as well. I would recommend that the authors still address reviewer rV6m's last lingering comment.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_rV6m",
+   "summary": "The authors propose the  strictly proper scoring rule and calibration metric specifically designed for interval-censored data under the constant-sum assumption and the non-informative censoring assumption, respectively. The specifically discussed the properties of the negative log score under constant-sum assumption. Their proposed calibration metric for interval-censored data generalizes the calibration metric for right-censored data.",
+   "strengths_and_weaknesses": "The proposed proper scoring and calibration metrics extend existing work from right censoring and non-informative censoring to interval censoring and constant sum censoring settings. \n\nIt is unclear how the proposed negative log proper scoring rule differs from the negative log-likelihood, which is well established in the statistical literature. \n\nThe paper appears to assemble known results without providing sufficient discussion or new insight.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. The negative log likelihood is often used as loss function in statistical learning. The properties of the proposed proper scoring are mainly for negative log likelihood (Theorems 4,6-4.9). How much difference the proposed scoring with the existing scoring, especially for interval censoring case.\n\n2. The main result for calibration metric for interval censored data is (16), where the piecewise linear function $\\pi(u, \\lambda_i, \\rho_i)$ is not specifically defined. To allow practitioners to use the proposed metric, the construction of the function is essential.\n\n3. The authors' main contribution to proper scoring is establishing the relationship between scoring rules under different censoring assumptions; however, this key result is not presented in the main text.",
+   "limitations": "No limitation is specified. The authors may wish to provide information on conditions under which the calibration metric cannot be used.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Many thanks to the authors for their explanation. My concerns remain and I will keep my score."
+  },
+  {
+   "reviewer": "Reviewer_KyBd",
+   "summary": "This paper establishes a rigorous theoretical and evaluative framework for probabilistic modeling under interval censoring. First, the authors clarify a hierarchy of censoring assumptions, proving the equivalence of independent monitoring and non-informative censoring for Case-1 interval-censored data, while demonstrating their divergence in Case-K (K> 2) interval-censoring settings. Building on this, they formalize the notion of strictly proper scoring rules and show that the Interval-Censored Logarithmic Score satisfies these properties under specific monitoring conditions. Finally, the authors introduce a calibration metric based on a generalized Probability Integral Transform. Empirical results demonstrate that neural networks optimized with IC-Log achieve competitive predictive performance and superior calibration across various parametric and non-parametric baselines on real-world datasets.",
+   "strengths_and_weaknesses": "Strength:\n* Important development of scoring rules for interval-censored data\n* Rigorous verification of the theoretical properties of the empirical calibration metric \n\nWeakness\n\n*Connections to the state-of-the-art results in scoring rules and calibration",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "In terms of the state-of-the-art theoretical results for calibration metrics and their analyses, what is the novelty of the results beyond interval censoring?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The authors have adequately answered all my concerns. I have updated my score accordingly."
+  },
+  {
+   "reviewer": "Reviewer_YgrC",
+   "summary": "This paper studies interval-censored data analysis, where the exact event time is unobserved and only known to lie within a time interval. Such data are common in applications such as healthcare and survival analysis. The paper mainly discusses two assumptions, independent monitoring and non-informative censoring, and proposes a strictly proper scoring rule for interval-censored data. Empirical evaluations on real-world datasets show that neural network models trained with the proposed scoring rule are competitive with existing statistical baselines while offering greater flexibility.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The problem studied in this paper is important in statistical analysis and commonly arises in applications such as healthcare and survival analysis.\n2. The paper starts from a clear and well-motivated perspective, namely clarifying the relationship between two common assumptions, which helps establish both the motivation of the work and the gap in existing understanding.\n3. The proposed method is supported by solid theoretical analysis and demonstrates promising empirical performance.\n\n**Weaknesses:**\n\n1. I found a related paper on non-informative censoring that seems relevant to this work and could be discussed more explicitly: Weakly Supervised Regression with Interval Targets (ICML 2023).\n2. Although the empirical results are encouraging, the experimental section is relatively limited in scope. It would strengthen the paper to include more diverse datasets or settings to better demonstrate the generality of the proposed approach.\n3. The empirical improvements over existing baselines do not always appear substantial, so the practical advantage of the proposed method over established statistical approaches could be better justified.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "**Question:**\n\n1. The paper provides strong theoretical analysis under the considered assumptions. However, in real-world applications, how plausible are these assumptions in practice, especially independent monitoring and non-informative censoring? It would be helpful if the authors could further discuss which practical scenarios are well captured by these assumptions and what may happen when they are violated.\n2. In the experiments, the proposed method appears to perform only comparably to existing approaches, without showing a clear advantage. What do the authors think is the main bottleneck behind this? Is it because the underlying assumptions may not hold in real-world settings, or is it mainly due to the model's performance?\n3. The proposed scoring rule is theoretically well motivated. Could the authors further clarify how it differs, both conceptually and practically, from existing approaches for learning with interval-censored or interval-target data?",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_vZyJ",
+   "summary": "This paper studeis survival analysis in interval-cencored setting. The first contribution of this work is a rigorous theoretical treatment of strictly proper scoring rules for interval censored data. Second, it proposes the first calibration metric specifically designed for interval-censored analysis under the noninformative censoring assumption. Finallly, empirical evaluations demonstrate the practical utility of the theoretical contributions.",
+   "strengths_and_weaknesses": "Strengths:\n1. Previous interval-censoring scoring rules lacked formal proofs. This paper bridges this gap by introducing strictly\nY-proper and strictly LR-proper and establishes these properties under weaker assumptions.\n2. This paper propose IC-Cal that can evaluate calibration performance of models under interval-censoring setting.\n3. This paper is well-written and clearly organized.\n\nWeaknesses:\n1. The paper shows in some special case that LR-properness does not imply Y-properness but does not discuss under what conditions LR is sufficient.\n2. Theorem 5.3 proves that the true distribution satisfies IC-Cal = 0, but does not establish uniqueness. For example, is there other miscalibrated fuction F satidfies this therom？\n3. The experimental baselines are limited to traditional statistical methods. Lack comparison with recent deep learning approaches",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The paper shows LR-properness does not imply Y-properness. But under what conditions on the censoring mechanism or support structure would LR-properness suffice to guarantee Y-properness? Clarifying this boundary would strengthen the theoretical contribution.\n\n2. Theorem 5.3 proves the true distribution satisfies IC-Cal = 0, but uniqueness is not established. Could a miscalibrated F' also achieve IC-Cal = 0? Can you provide a uniqueness result or a counterexample?\n\n3. Baselines are limited to classical statistical methods. Given the paper's motivation for deep learning flexibility, Can you compare with recent neural survival models or deep censored regression approaches?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "My concerns have been adequately addressed. Interval-censored data are not very common in real-world applications, which limits the method’s practical relevance. Still, I recognize the paper’s theoretical contribution and will maintain my positive rating."
+  }
+ ]
+}

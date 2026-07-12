@@ -1,0 +1,26 @@
+{
+  "forum_id": "hRyilopCCT",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_r2CE",
+      "weight": "high",
+      "reason": "The most technically substantive review. Its emphasis on the novelty of the perspective relative to robust MDPs is echoed directly by the meta-review, and its critique of the informal Jiang et al. (2016) argument in Section 7.1 (upper bound where a lower bound is needed) is independently corroborated by Reviewer_8AaW. Specific, well-substantiated, and self-rated at confidence 4; its scope-limitation and policy-learning points are concrete and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_8AaW",
+      "weight": "high",
+      "reason": "Detailed and technically precise, with five concrete questions. Its concerns about the restrictive/unclear reversibility setting and the hard-to-interpret Theorem 6.1 are corroborated by Reviewer_42mi, and its Section 7.1 / Jiang et al. point aligns with Reviewer_r2CE. The questions on value-scaling versus policy closeness and on actionable insights are the sharpest in the batch."
+    },
+    {
+      "reviewer": "Reviewer_7ASi",
+      "weight": "medium",
+      "reason": "On-target but thin. Correctly acknowledges the solid theory and the two experiments and raises reasonable requests for broader empirical evaluation (continuous environments, empirical study of value-function effects), but the review is brief and its request for empirical evaluation of sticky noise is partly answered by the paper's existing exact-equivalence theory."
+    },
+    {
+      "reviewer": "Reviewer_42mi",
+      "weight": "medium",
+      "reason": "Content is largely accurate and corroborates two adopted points, that the Section 6 reversibility scenario is unrealistic and that the simulations need error bars and multiple runs, plus a concrete labeling issue in a reported metric. However, the review is written informally and imprecisely and is self-rated at confidence 1, so it is weighted down to the lower end of medium; its specific experimental-rigor points still add corroborating value."
+    }
+  ],
+  "score_rationale": "Soundness and presentation were unanimous at 3 across all reviewers, so both are set to 3. Significance is set to 2 because both high-weight reviewers rated it 2 and only the confidence-1 reviewer gave 3; the concrete implications remain limited to specific noise structures. Originality is set to 3, the modal score supported by one high-weight reviewer (8AaW) and both medium reviewers; although the meta-review stresses novelty and one high-weight reviewer (r2CE) gave 4, the contribution is a novel framing built on relatively standard MDP tools, so I stayed at the well-supported 3 within the [3,4] range. Overall recommendation is 4, matching both high-weight reviewers and consistent with the meta-review's uniform lean toward acceptance, rather than the single 5 from a medium reviewer. Confidence is 4 given the strong mutual corroboration on the main weaknesses (Section 6 reversibility, the informal Jiang et al. comparison, experimental rigor) across the two most detailed reviews."
+}

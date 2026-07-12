@@ -1,0 +1,26 @@
+{
+  "forum_id": "y4uR1LFClc",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_uX95",
+      "weight": "high",
+      "reason": "Directly targets both of the meta-review's shared concerns: the over-formal, intuition-poor presentation (needs toy examples/diagrams, reads as written for differential-geometry experts) and the lack of empirical validation, plus the honestly acknowledged ReLU gap. Specific and well-argued and corroborated by the other reviewers, despite a low self-reported confidence."
+    },
+    {
+      "reviewer": "Reviewer_EDpS",
+      "weight": "high",
+      "reason": "Aligns tightly with the meta-review: flags that the central optimization-geometry (effective-Hessian) claims are analyzed only through representation geometry and not validated, requests head-depth ablations, and calls the presentation overly complicated, while affirming the novelty and good literature positioning. Specific and constructive."
+    },
+    {
+      "reviewer": "Reviewer_jwre",
+      "weight": "high",
+      "reason": "The most technically detailed review; correctly identifies that key assumptions (nonvanishing residual gradient, timescale separation) are unaudited, that empirics are CIFAR-scale and stylized, and that the ReLU gap is unresolved -- all echoed by the meta-review's empirical-depth concern. Balanced and well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_KAem",
+      "weight": "high",
+      "reason": "Detailed and specific; its empirical-validation demands (eigenspectra before/after the head, cross-backbone and smooth-vs-nonsmooth ablations, direct Hessian/curvature measurements) and the ReLU-gap concern are exactly the empirical-depth issues the meta-review foregrounds, and it usefully notes that the head's whitening is entangled with whitening-based losses. Its low significance/originality scores, driven by the claim that the invariance results add little over SimCLR, are less corroborated by the meta-review's explicit affirmation of novelty, so I discount that part."
+    }
+  ],
+  "score_rationale": "All four reviews are specific and mutually corroborating, and the meta-review adopts their two central concerns -- over-formal presentation and thin empirical validation -- so I anchored presentation at the low-middle (2) despite two reviewers scoring it 3, following the meta-review's strong statement that a clarity revision is required. Soundness (3) and originality (3) follow the majority and the meta-review's explicit affirmation that the theory is novel, rigorous, and well positioned, treating the empirical gaps as validation rather than correctness issues; significance (3) reflects the meta-review's \"novel and relevant\" framing and the two higher-scoring reviewers, discounting KAem's view that the invariance results add little. Overall recommendation (4, weak accept) sits at the top of the reviewers' [3,4] range because the meta-review states plainly that rejecting on clarity and empirical limitations alone would be inappropriate for ICML."
+}

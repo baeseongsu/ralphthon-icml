@@ -1,0 +1,26 @@
+{
+  "forum_id": "0SGle5hjIf",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_beZ9",
+      "weight": "high",
+      "reason": "Specific and well-substantiated review with a demonstrably deep understanding of the dual formulation; its call for a joint-SGD baseline (citing Fagan & Iyengar, 2018) and its concrete limitations concerns (once-per-epoch dual updates, floating-point risk) align with the meta-review's request for more baselines and are corroborated by another reviewer."
+    },
+    {
+      "reviewer": "Reviewer_z3qH",
+      "weight": "high",
+      "reason": "The most detailed critical review (confidence 4); its theory-practice convexity gap is directly adopted by the meta-review ('convexity of only training the linear head'), and its scalability/memory and step-size-versus-grid-search concerns are specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_rgcF",
+      "weight": "medium",
+      "reason": "Positive and corroborates the main strengths (well-written, theoretically solid, unified connections to related methods) and asks on-target hyperparameter and evaluation-detail questions, but its stated weaknesses are vague ('some details of the evaluations are missing')."
+    },
+    {
+      "reviewer": "Reviewer_HE8X",
+      "weight": "medium",
+      "reason": "Corroborates the baseline-comparison and n-dependence-of-the-bound concerns, but is the briefest review and the only one assigning soundness 2, and one weakness (that the choice of Bregman divergence 'should not have impact on the overall convergency') is somewhat off-base relative to the paper's central thesis and the meta-review's framing."
+    }
+  ],
+  "score_rationale": "The two most substantiated reviews anchored the assessment: one positive and specific (beZ9, well-understood summary and joint-SGD baseline gap) and one critical with high self-reported confidence (z3qH, theory-practice convexity gap, dual-variable scalability, step-size tuning). The meta-review adopts both threads, praising the new contribution and the O(1/sqrt(T)) rate under weaker assumptions while flagging convexity, baselines, and the Bregman divergence's effect, so soundness and presentation sit at 3 (near-unanimous), while significance and originality resolve to 3 on the meta-review's clearly positive novelty framing despite a 2/2-versus-3/3 reviewer split. The overall recommendation of 4 reflects the split between the initial accept (5) and weak-reject (3) views, positioned toward accept by the meta-review's positive direction while preserving genuine pre-rebuttal concerns. Confidence 4 reflects strong mutual corroboration of the core strengths and weaknesses across the reviews."
+}

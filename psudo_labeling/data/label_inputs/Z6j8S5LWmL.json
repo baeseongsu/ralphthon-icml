@@ -1,0 +1,52 @@
+{
+ "forum_id": "Z6j8S5LWmL",
+ "title": "Trainable Nonexpansive Denoisers for Contractive Image Reconstruction",
+ "abstract": "Trainable denoisers with Lipschitz control have become central to convergent image reconstruction. However, training neural networks that simultaneously offer strong denoising performance and global Lipschitz guarantees is challenging. Existing approaches enforce Lipschitz control only empirically, providing no guarantees beyond the training data. In this work, we show that by exploiting the action of permutations on the image lattice, we can constrain a neural architecture that is globally nonexpansive (Lipschitz bound $\\leqslant 1$). We integrate the proposed denoiser with forward imaging operators to develop a reconstruction mechanism that is provably contractive and therefore globally convergent. Experiments on standard inverse problems, such as superresolution and deblurring, demonstrate that our reconstruction performance is competitive with softly constrained baselines while providing Lipschitz guarantees.",
+ "primary_area": "optimization",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers agreed that this is a strong paper with an interesting approach for image reconstruction and should be accepted for publication in ICML",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Dkvb",
+   "summary": "This work, \"Trainable Nonexpansive Denoisers for Contractive Image Reconstruction,\" proposes a constraint (design) on a neural architecture with 1-Lipschitz by exploiting the action of permutations on the image lattice for the denoisers that are nonexpansive by design. Then, this new denoiser was integrated into image inverse problems such as super resolution and deblurring, proving that the reconstruction operator is contractive under mild conditions. Experiments showed that the proposed method yielded reasonable performance over prior arts, but not the best performance.",
+   "strengths_and_weaknesses": "This work proposes an interesting framework for constructing a parametric family of denoisers that are nonexpansive by design and theoretically shows that the reconstruction operator with it is contractive under mild conditions. While these results may be good contributions, it is unclear if it is indeed novel over some recent works that were not mentioned (or cited, but discussed properly - it will be important to discuss and compare with other works that have the same / similar goals) and if it is in fact practical in terms of performance, as suggested in the abstract, \"training neural networks that simultaneously offer strong denoising performance and global Lipschitz guarantees is challenging.\" Thus, this work may need to clarify its novelty and usefulness by answering questions on recent works and convincing experiments. Moreover, it is also unclear if the conditions in Theorem 3.1 is indeed practical beyond deblurring and super resolution, which are relatively less challenging in imaging over other complicated imaging operators from compressive sensing literature.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1) I think it is important to clarify the contribution and novelty over prior arts that have the similar / same goals. See below.\n- Cohen et al., NeurIPS 2021 was cited, but not properly discussed even though it seems related to this work. Since then, there were a number of works to enhance it such as (T Hong et al., Convergent Complex Quasi-Newton Proximal Methods for Gradient-Driven Denoisers in Compressed Sensing MRI Reconstruction, IEEE Transactions on Computational Imaging 2025). \n- There are other works that are similar to the work of Goujon et al., such as (S Ducotterd et al., Improving Lipschitz-Constrained Neural Networks by Learning Activation Functions, JMLR 2024). \n- S Zhang et al., Rethinking Gradient Step Denoiser: Towards Truly Pseudo-Contractive Operator, NeurIPS 2025\n- M Yukawa et al., Monotone Lipschitz-Gradient Denoiser: Explainability of Operator Regularization Approaches Free From Lipschitz Constant Control, IEEE Transactions on Signal Processing 2025\n- U Tanielian et al., Approximating Lipschitz continuous functions with GroupSort neural networks, AISTATS 2021\n2) Was the proposed method too restrictive in terms of performance? How about comparing with other recent training based deep learning methods? What are the advantages of the proposed work over them, especially some of the works using large generative models?\n3) Can this work be extended to other imaging problems, considering the conditions in Theorem 3.1? For example, there are a number of imaging problems such as phase retrieval, lensless imaging, MRI and so on that have quite challenging imaging operators.",
+   "limitations": "No.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "All of my concerns were well-addressed in the rebuttal, so I will increase my score from 3 to 4."
+  },
+  {
+   "reviewer": "Reviewer_mJ1X",
+   "summary": "This paper introduces a trainable, non-expansive denoising architecture designed to guarantee convergence in Plug-and-Play (PnP) reconstruction frameworks. By parameterizing the denoiser as a weighted aggregation of group-permuted inputs and applying a symmetrization technique, the authors ensure the operator maintains a Lipschitz constant of one.  The paper provides a theoretical analysis of the proposed construction and demonstrates its effectiveness through experiments on image reconstruction tasks.",
+   "strengths_and_weaknesses": "Strengths: The paper provides a simple, interpretable construction of non-expansive trainable denoisers to stabilize PnP reconstruction algorithms. The method is theoretically sound and demonstrates competitive empirical performance across benchmarks.\n\nWeaknesses: The proposed denoiser outputs a linear combination of permuted inputs. This may limit its expressive power compared with nonlinear CNN-based denoisers (e.g., DRUNet), which can create new features instead of only averaging existing ones. This gap also appears in the numerical results. In addition, the symmetrization step may further limit the model capacity.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The theoretical guarantees rely on the symmetrized operator used in Algorithm 1. Could the authors clarify how much the symmetrization step changes the learned denoiser in practice? For example, is there a noticeable difference between the outputs of the original operator and the symmetrized one?\n2. The framework relies on a set of permutations to construct the aggregation operator. Could the authors comment on how sensitive the performance is to the choice of the permutation group?\n3. The proposed denoiser depends on a reference image ξ obtained from a warm-up reconstruction. Could the authors comment on how sensitive the method is to the choice of ξ, and whether updating ξ during the reconstruction process would improve performance?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I thank the authors for their rebuttal. The proposed method is interesting, though it has some limitations, such as limited expressiveness and a gap between the theoretical analysis (e.g., the assumption that ξ is fixed) and the practical implementation. Overall, I will maintain my current score."
+  },
+  {
+   "reviewer": "Reviewer_6uJm",
+   "summary": "This paper deals with the definition neural network architectures that are non expensive, in order to be used in a Plug-and-Play (PnP) framework.",
+   "strengths_and_weaknesses": "On the positive aspects, this is a very interesting and timely topic. The objective of developing stable PnP is a very important topic. \n\nHowever, on the negative aspects, the constrained PnP obtain lower performance, which may seem not really negligible.\nThe writting is not always good and the functions are not always well defined.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Some specific remarks:\n1) Figure 1, some descriptions is missing on what we observe on the left/right plots.\n2) after (9) what is e ?\n3) In pratice, what is taken for the warm up procedure (algo 2) for x_0 ?\n4) Figure 2, add names (a) (b) (c) (d) to the plots and add zooms to help the reader catching the differences.\n5) In algorithm 1, the network N_\\eta takes 3 parameters while it is defined only with 2 (see (7)).\nThis appears at different places. This is almost surely a problem of notations. But please correct.\nAnd anyway, what is \\sigma ?\n6) Concerning the results reported in Tables 1 and 2.\nTheir analysis is made twice page 8 in the first anf second column, and this should be grouped.\nThe authors said either that \"The proposed method consistently ranks among the top two performers\" which is not true as the \"ours\" score is never bold nore underlined.\nThe second paragraph stating \"Our method consistently ranks among the top methods\" in more in line, yet not really informative.\n7) The performances are only evaluated in terms of reconstruction quality (which is important of course) but what about the compelexity (number of parameters,...), computation time ?\n\nMinor comments: there are a couple of typos, e.g., \"Section Section 4\" in Section 2 page 3.\nThe paper needs to be proofread.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The reviewer thinks that the paper is interesting and the authors gave interesting details in the rebuttal that enhance the paper quality.\nThis is why I increased my score."
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "forum_id": "HgRxoHLIwb",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_8tgS",
+      "weight": "high",
+      "reason": "The two weaknesses it raises — the uncharacterized gap between the linear-autoencoder theory and real training dynamics, and the shallow treatment of depth-reduced collapse — are exactly the two the meta-review adopts, and its highlighted strengths (the full causal chain and the convergence-efficiency numbers, e.g. RED-1.5B reaching GSM8K 0.27 at ~2.8B tokens) are echoed verbatim in the meta-review. Specific, substantiated, and directionally correct."
+    },
+    {
+      "reviewer": "Reviewer_NVta",
+      "weight": "high",
+      "reason": "Independently corroborates the two central weaknesses adopted by the meta-review (linear-autoencoder proxy gap and the narrow width-only scope) and raises precise, technically grounded questions (shared vs per-matrix selection, single gate/up projection, why general ability is spared). Slightly thinner than 8tgS but well aligned."
+    },
+    {
+      "reviewer": "Reviewer_QoWh",
+      "weight": "medium",
+      "reason": "Its strongest point — the missing comparison to orthogonal projection and orthogonality regularization — is directly adopted by the meta-review (added during rebuttal), and its 'why reasoning and not general ability' question is corroborated by NVta. However, its sub-scores are notably harsher than the meta-review's positive direction and the Accept decision support (originality 1 is contradicted by the meta-review's praise of the novel diagnosis), and several remaining points are minor."
+    }
+  ],
+  "score_rationale": "Scores are anchored to the two high-weight reviewers (8tgS, NVta), whose points map directly onto the meta-review, giving soundness/significance/originality 3 and rejecting QoWh's outlier 1s and 2s that run against the meta-review's positive, Accept-leaning direction. Presentation is set to 3 rather than 2 because the meta-review does not treat presentation as a weakness and the paper is repeatedly characterized as well-structured, with only minor clarity issues; soundness stays at 3 (not 4) to reflect the genuine, meta-review-endorsed theory-practice gap. Overall recommendation is 4, matching the unanimous reviewer scores and the regular-Accept decision, and confidence is 4 given strong mutual corroboration on the core weaknesses despite QoWh's harsher sub-scores."
+}

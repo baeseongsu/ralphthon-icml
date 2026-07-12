@@ -1,0 +1,62 @@
+{
+ "forum_id": "znV8JHv8b8",
+ "title": "ForesightKV: Optimizing KV Cache Eviction for Reasoning Models by Learning Long-Term Contribution",
+ "abstract": "Recently, large language models (LLMs) have shown remarkable reasoning abilities by producing long reasoning traces. However, as the sequence length grows, the key-value (KV) cache expands linearly, incurring significant memory and computation costs. Existing KV cache eviction methods mitigate this issue by discarding less important KV pairs, but often fail to capture complex KV dependencies, resulting in performance degradation. To better balance efficiency and performance, we introduce ForesightKV, a training-based KV cache eviction framework that learns to predict which KV pairs to evict during long-text generations.\nWe first design the Golden Eviction algorithm, which identifies the optimal eviction KV pairs at each step using future attention scores. These traces and the scores at each step are then distilled via supervised training with a Pairwise Ranking Loss. Furthermore, we formulate cache eviction as a Markov Decision Process and apply the GRPO algorithm to mitigate the significant language modeling loss increase on low-entropy tokens. \nExperiments on AIME2024 and AIME2025 benchmarks of three reasoning models demonstrate that ForesightKV consistently outperforms prior methods under only half the cache budget, while benefiting synergistically from both supervised and reinforcement learning approaches. Code is available at \\url{https://github.com/RUCAIBox/ForesightKV}.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "The committee unanimously agrees that this paper tackles a highly relevant and critical systems bottleneck for modern reasoning LLMs. The dual-stage methodology is principled and represents a meaningful advancement over purely rule-based or heuristic eviction strategies. During the discussion phase, the authors provided an exceptionally thorough and compelling rebuttal that systematically addressed the reviewers' initial reservations.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_44Fw",
+   "summary": "This paper studies KV cache eviction for long-form reasoning models, where cache growth creates substantial memory and latency overhead during decoding. The authors propose ForesightKV, a training-based eviction framework that learns a lightweight scoring model to predict the long-term contribution of KV pairs and evict less useful ones during generation. The method has two stages: first, a supervised stage based on a proposed Golden Eviction algorithm that constructs future-aware eviction labels from attention traces; second, a reinforcement learning stage that formulates eviction as an MDP and optimizes the scorer using GRPO with rewards designed around loss increases on low-entropy tokens. Experiments on AIME2024/AIME2025 with Qwen3-1.7B, Qwen3-4B, and DeepSeek-Qwen-7B show that ForesightKV outperforms prior KV eviction baselines under the same cache budget and often achieves similar performance with roughly half the cache.",
+   "strengths_and_weaknesses": "Strengths:\n1. The writing of the paper is clear and the motivation is easy to follows.\n2. The paper tackles a relevant systems problem for reasoning LLMs: decoding-time KV cache growth is a real bottleneck for long CoT generation, and improving the quality-efficiency tradeoff here is important.\n3. The authors provide proof to support the golden eviction algorithm, showing that this is a meaningful step beyond rule-based methods. And the empirical observations in Section 2 are useful motivation: the paper argues that attention patterns can be global, position-dependent, or semantic-dependent, and that low-entropy tokens are especially fragile under eviction.\n\nWeaknesses:\n1. The main technical justification for the supervised target seems somewhat indirect. The “Golden Eviction” objective is motivated via future attention scores and a bound in the appendix, but in the main paper the connection between minimizing future attention and preserving downstream generation quality remains only partially established. The empirical evidence is good, but the theoretical justification in the main text can be further explored.\n2. The evaluation is somewhat narrow in task diversity for the main claim. The most results mostly focused on AIME datasets. I think the evaluation results on more types of tasks can strengthen the conclusions of the paper.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. How sensitive is ForesightKV to the reward definition and entropy threshold across model families and non-math domains? I think more analysis would be super helpful.\n2. See the weaknesses above.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_24Cg",
+   "summary": "This paper proposes a method called ForesightKV. It is a training-based KV cache eviction framework that learns to predict which KV pairs to evict during long-text generation, thereby speeding up long generation. Compared to other existing evication methods, which often failed due to the reason that kv importance can be global, position-based, or semantic and time-varying. Their experiments show they can outperform other eviction methods.",
+   "strengths_and_weaknesses": "Strengths:\n- Good explanation. The paper analyzes three different kv importance patterns and discusses the necessity of the methods.\n- Clear writing. The paper clearly describes their method, experiments and etc.\n\nWeakness:\n- One concern is that the paper only focuses on reasoning tasks. Thus, the trained MLP scorer might be a better fit for reasoning tasks, but not for tasks like factual memorization, etc.\n- The paper might need some evaluations not only on reasoning tasks, but also some long context tasks and reports the accuracy or some retrival related score.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The critical question is that only math and science-related benchmarks are not enough.",
+   "limitations": "I think the papers need to include more benchmarks.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_1PQM",
+   "summary": "This paper proposes ForesightKV for KV-cache eviction. \n\nThe motivation aligns with the general direction that identify valuable pairs to retain based on their future usefulness. Another analysis focuses on low-entropy tokens, which often encode deterministic information and can induce a loss increase if evicted. \n\nAlthough the methods are simple and lack theoretical depth, the authors provide very logically consistent validation experiments and method design. For methods, first they construct a training pipeline to update a simple MLP for scoring. Second, they adopt the GRPO loss to capture long-term gains.",
+   "strengths_and_weaknesses": "**Strengths**\n\n- S1. Each single step, though the methods I think are easy to design, is reasonable and clearly validated. The paper reconducts the semantic dependency analysis, and also finds that low-entropy tokens are dangerous to remove during cache eviction. These experiments solidly support their framework.\n- S2. The presentation is clear, especially the motivation of each method module.\n- S3. The implementation is strong so that the overall efficiency gain is stable, which is a general problem for eviction.\n\n**Weaknesses**\n\n- W1. According to Table 5, the gain from Top-k multinomial is extremely high. This induces a very severe concern that the performance comes from this trick. Note that Top-k multinomial is just briefly introduced in the method section, while why this happens (e.g., is Top-k multinomial more suitable for your method design compared with Top-k or multinomial) is not clearly discussed.\n- W2. No training time cost. How much time and computation are needed for training and RL?\n\n**Suggestions**\n\n- SG1. As MLP is used as a scorer, it would be interesting to check how important kn, vn, an (in Eq. 1) are when determining the importance of a KV pair.\n\n- SG2. The author highlights that KV cache expands \"linearly\"; however, in their main experiment, the scale they reduced to is still somehow linear instead of log or something smaller. As a general setting, the experiments are fine, but emphasis on linear expansion could be revised.\n\n- SG3. ϕ in Eq. 6 Page 5 should be mathematically rederived, which is mentioned too early (Eq. 1, Page 3).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "See W1 and W2. More baselines are encouraged.",
+   "limitations": "No",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_Z8kJ",
+   "summary": "This paper proposes ForesightKV, a training-based KV cache eviction framework to improve the efficiency of long-context reasoning in large language models. The method learns a lightweight scoring model to predict the long-term importance of KV pairs and dynamically evicts less important entries under a fixed cache budget. The framework consists of a two-stage training pipeline: supervised training using constructed golden labels and reinforcement learning to further improve its effectiveness.",
+   "strengths_and_weaknesses": "**Strengths**\n\n- The paper is generally well written and easy to follow.\n- The paper addresses an important problem: KV cache compression for long reasoning traces, which is crucial for improving the efficiency of modern reasoning models.\n\n**Weaknesses**\n\n**[W1] Limited analysis of context length and training cost**\n\nRecent reasoning models (e.g., R1-Distill-7B) support context lengths beyond 32K tokens, while the experiments in this paper mainly consider relatively short contexts (up to 4K). It remains unclear whether the proposed approach would maintain its effectiveness under significantly longer contexts.\nIn addition, the training cost of the proposed method raises concerns. Although the scoring model itself is lightweight, the two-stage training pipeline (supervised learning + reinforcement learning) may become increasingly expensive as the context length grows. The paper does not provide analysis or discussion of this scalability issue.\n\n\n**[W2] Potential generalization limitations of the training-based eviction policy**\n\nA key limitation of training-based KV eviction methods is their potential lack of generalization to unseen setups. In this work, the scoring model is trained under fixed training configurations such as context length, cache budget, and eviction interval.\nAdditional evaluation under more diverse evaluation settings would strengthen the claims, such as:\n* cross-domain generalization (e.g., training on math → testing on code or other domains),\n* unseen context lengths\n* different KV cache budgets and eviction intervals.\n\n\n**[W3] Limited experimental Scope**\n\nThe empirical analysis (Section 2) and the main experiments are conducted primarily on a single model family (Qwen). It remains unclear whether the observed attention patterns and the effectiveness of ForesightKV generalize to other reasoning model families, such as LLaMA-based models.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "See Weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "forum_id": "vsErYkgeeU",
+ "title": "Differential Smoothing Mitigates Sharpening and Improves LLM Reasoning",
+ "abstract": "It is widely recognized that reinforcement learning (RL) fine-tuning of large language models often leads to \\textit{diversity collapse}, where outputs lack variety. Prior work has proposed a range of heuristics to counteract this effect, but these methods are ad hoc: they frequently trade off correctness for diversity, their effectiveness varies across tasks, and in some cases they even contradict one another. In this work, we place these observations on a rigorous foundation. We first provide a formal proof of why RL fine-tuning exhibits diversity collapse via a selection and reinforcement bias. Next, we make a key observation that any reward modification to address diversity collapse only needs to be applied on the correct trajectories. Building directly on this analysis, we introduce a principled method---\\textit{differential smoothing}---that provably improves both correctness and diversity, outperforming vanilla RL as well as widely used entropy-based heuristics. Our theory precisely characterizes when existing heuristics help and why they fail, while showing that differential smoothing is universally superior. Extensive experiments with models from 1B to 7B parameters, across domains including CountDown and real-world mathematical reasoning, demonstrate consistent gains. Differential smoothing improves both Pass@1 and Pass@k, with up to 6.7\\% improvements on AIME24 dataset.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers agree that the paper attacks an interesting problem (diversity collapse in RLVR) with a novel solution (applying entropic bonuses to correct answers and penalties to incorrect answers).  While one of the reviewers was initially concerned with the rigor of the theory, it seems that these concerns have been addressed.  Moreover, the reviewers all agree that sufficient empirical examples have been conducted, with one reviewer asking for a multi-modal example, which was then provided.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_yfBd",
+   "summary": "This paper investigates the \"diversity collapse\" problem in RL fine-tuning for LLMs. The authors find that vanilla RL makes the model too \"sharp\" on high-probability correct answers. To solve this, they propose a new method called Differential Smoothing (DS). The core idea is very interesting: using entropy bonus on correct samples to encourage diversity, while using entropy penalty on incorrect samples to improve correctness. Theoretical proofs and experiments on Countdown and MATH datasets are provided.",
+   "strengths_and_weaknesses": "The logic is very clear. The authors first give a formal proof of why diversity collapse happens (Selection and Reinforcement Bias), which provides a solid foundation for the proposed method.\nThe method is simple but effective. Only modifying the reward function can achieve both Pass@1 and Pass@K improvement. It is easy to implement in existing GRPO frameworks.\nExtensive experiments. The paper tests many models from 1B to 7B, and the performance gain on AIME24 (up to 6.7%) is quite significant. It proves the robustness of DS-GRPO.\n\nHowever,\n1. The paper uses $\\gamma_p$ and $\\gamma_n$ to control the smoothing. However, how to choose these parameters for a new task is not very clear. Is there a general rule or we must do grid search every time?\n\n2. Although the paper says it is efficient, the calculation of $\\log \\pi_{\\theta_{old}}$ for every trajectory might increase the training time. The authors should provide more data about the training cost comparison.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See above.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_NJaH",
+   "summary": "To addresses \"diversity collapse\" in RL fine-tuned LLMs, authors theoretically prove this collapse is driven by selection and reinforcement biases that disproportionately amplify already high-probability correct answers. To resolve the inherent trade-off between correctness and diversity, the authors propose Differential Smoothing (DS), which applies an entropy bonus exclusively to correct trajectories to promote solution variety, and an entropy penalty to incorrect ones to drive accuracy. Based on the evaluations across various models and reasoning benchmarks, this approach consistently improves both Pass@1 and Pass@K simultaneously.",
+   "strengths_and_weaknesses": "## Strengths\n1. The paper is generally well-written and easy to follow, with a clear description of the method.\n2. This paper conduct comprehensive experiments to validate the effectiveness of proposed method.\n3. This paper provides intuitive demonstration cases on the effect of entropy to help understand how the proposed method affects RL finetuining.\n\n## Weaknesses\n1. **Evaluation of \"Reasoning Diversity\"**\n\nThe paper relies heavily on `Pass@1` and `Pass@K` metrics to claim improvements in reasoning and diversity. However, `Pass@K` primarily measures the success rate and breadth of final outcomes, which does not necessarily equate to the diversity of the intermediate reasoning trajectories. The paper's significance would be greatly enhanced by including a semantic diversity evaluation of the intermediate generation steps (e.g., clustering the reasoning paths of correct solutions) to prove that the model explores genuinely different problem-solving approaches.\n\n2. **About Noisy Reward Models**\n\nThe theoretical proofs assume perfect reward estimation, and experiments rely solely on deterministic math/logic tasks with exact rule-based verifiers. In real-world RL fine-tuning (e.g., preference alignment), Reward Models (RMs) are inherently noisy. Applying an entropy bonus to a false-positive trajectory or a penalty to a false-negative one could severely degrade performance. Could the authors further clarify how Differential Smoothing handles noisy rewards?\n\n3. **Generalization to Multimodal RL Finetuning**\n\nWhile the paper claims broad applicability for mitigating diversity collapse, the empirical evaluation is strictly limited to text-based reasoning tasks. It remains unclear whether the proposed differential objective remains effective in more complex, high-dimensional spaces like Large Multimodal Model (LMM) reasoning.\n\nI'll be more than willing to adjust my evaluation based on authors' responses.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See `Weakness` part.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_Vxuc",
+   "summary": "This paper proposes a novel method to mitigate diversity collapse during RL post-training. Specifically, it first identifies the root causes of diversity collapse in existing RL fine-tuning approaches, namely selection bias and reinforcement bias. Based on this analysis, the proposed method applies an entropy bonus exclusively to positive samples and an entropy penalty exclusively to negative samples. Moreover, the paper provides theoretical insights into why the proposed approach can improve both diversity (i.e., variance) and accuracy (i.e., pass @1). Extensive experiments further validate the effectiveness of the method.",
+   "strengths_and_weaknesses": "Strengths:\n\n1) The proposed method is well-motivated by theory, and it achieves superior results compared to either the original GRPO baseline or other entropy-based methods.\n\n2) The theory is elegant, especially in analyzing why existing RLHF suffers from the entropy collapse issue and how the proposed method can improve diversity and performance at the same time.\n\n3) The authors evaluate the effectiveness of their proposed method on several math benchmarks (e.g., AIME 2024 and 2025), achieving improvements in both pass@1 and pass@k compared with the selected baselines.\n\nWeakness:\n\n1) Theory: please address my questions regarding the rigiorous and correctness of the proof. Otherwise, it looks good to me. \n\n2) Experiments: I feel that this method is fairly general and not limited to the math domain. It would be great if the authors could demonstrate the generalizability of the proposed approach in other domains as well (e.g., code).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1) The proof of Prosposition 6 at page 15 seems a little unclear, why we consider the Pass N rather than Pass 1 when we try to proof the selection bias? Does this proposition still holds if we consider Pass 1 only? \n\n\n2) For the proof of Theorem~4, which part of the appendix demonstrates that the variance (i.e., diversity) is significantly larger? It seems that the proof mainly shows that, by properly choosing the hyperparameter $\\gamma_{ds}$, the policy $\\pi_{ds}$ can achieve the same accuracy as $\\pi_{ent}$ while maintaining a smaller or equal KL divergence. I would suggest that the authors clarify this proof and make the logical connection to the diversity claim more explicit.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_NNxA",
+   "summary": "The paper solves one of the big problems in GRPO called diversity collapse. Prior methods have been able to solve this problem, but hurt the pass@1 performance of the model. The paper produces a novel differential smoothing algorithm that outperforms GRPO at both pass@1 and pass@k. The paper shows improvement over GRPO both theoretically and empirically.",
+   "strengths_and_weaknesses": "Strengths:\n- The paper is well written and easy to follow.\n- The paper is well motivated, as several papers show that GRPO reduces pass@k accuracy.\n- The results are strong and scale well.\n\nWeakness: \n- Please write better captions, especially for Figure 1. Also Figure itself can be made better.\n- The additional computational cost relative to GRPO should be reported.\n- Both the problem and solution are confined to GRPO or to other RLVR methods since the evaluation is only limited to GRPO.\n- Hyperparameter analysis on $\\gamma_{n}$ and $\\gamma_{p}$ are missing.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "- What is the reason why the improvements in the smaller models are minimal (especially shown in Figure 3)?",
+   "limitations": "NA",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

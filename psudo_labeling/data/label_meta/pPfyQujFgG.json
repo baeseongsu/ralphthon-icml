@@ -1,0 +1,26 @@
+{
+  "forum_id": "pPfyQujFgG",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_HDDR",
+      "weight": "high",
+      "reason": "Most specific and substantiated review with the highest confidence (4). Its core criticisms — limited single-task ImageNet evaluation, reliance on an old AlexNet backbone, no clear performance-versus-inference-cost trend, the FLOPs/token vs pixel-count framing, and absent comparisons to token-reduction/efficient-ViT methods (Swin, Pyramid, larger-patch) — are directly adopted by the meta-review, which names its concerns explicitly. Its outlying significance (2) and originality (2) are somewhat harsher than the consensus and the meta-review's positive framing of the novel k-NN convolution, so I did not follow those two scores fully."
+    },
+    {
+      "reviewer": "Reviewer_tRtQ",
+      "weight": "medium",
+      "reason": "Thorough and well-reasoned; the Table-1 factor-mixing/fixation confound is corroborated by HDDR and reflects the meta-review's matched-comparison theme, and the latency/kernel-edge-case/LoRA-sensitivity points are specific though secondary to the meta-review's main thrust. Self-reported confidence is only 2."
+    },
+    {
+      "reviewer": "Reviewer_F27X",
+      "weight": "medium",
+      "reason": "Accurate summary and on-target questions — task generalization to COCO detection/ADE20K segmentation and comparison against efficiency/token-reduction methods — that the meta-review echoes. The strengths/weaknesses text is largely descriptive rather than evaluative, so the review's value rests mainly on its questions."
+    },
+    {
+      "reviewer": "Reviewer_GSBi",
+      "weight": "medium",
+      "reason": "Brief and with generic stated strengths and no real questions, but its two weaknesses — the need for a matched FOVI-ViT-H+ @224 vs Uniform @224 comparison and the missing fovea-inspired baseline — are specific and corroborated by other reviewers, one of which (missing fovea baseline) aligns with HDDR and the meta-review."
+    }
+  ],
+  "score_rationale": "I anchored on Reviewer HDDR, whose detailed, high-confidence critique (single-task evaluation, small/old backbones, absent token-reduction comparisons, and unclear efficiency trends) is directly adopted by the meta-review; this pulled significance to a 3 rather than the 4 given by the two briefer reviews, while stopping short of HDDR's 2 given the corroborated value of the contribution. Soundness (3), presentation (3), and originality (3) reflect near-unanimous reviewer agreement and the meta-review's positive framing of the novel k-NN convolution, so I did not follow HDDR's outlying originality 2. Overall recommendation of 4 (weak accept) sits at the mode of the reviewers and matches the meta-review's 'merits acceptance, with revisions' stance. Confidence 4 reflects strongly corroborating criticisms across reviewers (matched-comparison/fixation confounds, missing baselines, task generalization), with only significance genuinely contested."
+}

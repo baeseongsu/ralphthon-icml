@@ -1,0 +1,26 @@
+{
+  "forum_id": "MPwD9hhJoa",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_bdQx",
+      "weight": "high",
+      "reason": "Specific and well-substantiated review whose three weaknesses -- calibration transfer under distribution shift (lift measures predictability, not truth), the heuristic CI-score gate on the tighter graph bound, and the extraction/completeness limitation with the strongest domains being the easiest to extract -- are exactly the concerns adopted by the meta-review and corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_qren",
+      "weight": "high",
+      "reason": "Thorough, high-confidence assessment structured across all four dimensions that echoes every meta-review concern (guarantees conditional on calibration and verifier reliability under shift, heuristic/uncharacterized design components, and limited generality to marker-rich, strong-verifier settings) with concrete, well-grounded points; also anchors the presentation-density concern."
+    },
+    {
+      "reviewer": "Reviewer_sFnc",
+      "weight": "medium",
+      "reason": "Specific and substantiated on the central meta-review concern that the method sidesteps robust extraction where structural markers are absent, and contributes a concrete repair/graph-dynamics critique (stale edges after repair). However, its overall negative lean (weak reject, soundness and significance of 2) and its framing of the work as mere repackaging run against the meta-review's acceptance direction and the shared originality-3 assessment, so the negative verdict was down-weighted."
+    },
+    {
+      "reviewer": "Reviewer_NqK7",
+      "weight": "medium",
+      "reason": "On-target but brief and low on specifics (questions deferred to the weaknesses list). Its two points -- reliance on manual rules and hyperparameters limiting generalizability, and computational overhead versus simply regenerating -- are corroborated by qren and sFnc and align with the meta-review's generality and heuristic-component concerns, but the review offers little substantiation of its own."
+    }
+  ],
+  "score_rationale": "Scores are anchored to the two high-weight reviewers (bdQx and qren), whose specific concerns -- calibration under distribution shift, the heuristic CI-score gate, and limited generality beyond marker-rich tasks -- are exactly those adopted by the meta-review; soundness (3), significance (3), and originality (3) follow their ratings and the meta-review's explicit judgment that these concerns do not undermine the core contribution. Presentation is set at 3 because three of four reviewers (including high-weight bdQx) found the writing clear and the paper transparent, outweighing qren's density-driven 2. The overall recommendation of 4 (weak accept) stays within the reviewers' [3,4] range and matches the meta-review's stated weak-acceptance recommendation, tempering sFnc's lone weak-reject, whose more negative soundness and significance sub-scores were down-weighted for running counter to the acceptance direction. Confidence is 4 given the strong mutual corroboration among the reviewers and their close alignment with the meta-review."
+}

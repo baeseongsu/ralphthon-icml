@@ -1,0 +1,49 @@
+{
+ "forum_id": "o2H3TE1F0g",
+ "title": "Contrastive Diffusion Alignment: Learning Structured Latents for Controllable Generation",
+ "abstract": "Diffusion models excel at generation, but their latent spaces are high dimensional and not explicitly organized for interpretation or control. We introduce ConDA (Contrastive Diffusion Alignment), a plug-and-play geometry layer that applies contrastive learning to pretrained diffusion latents using auxiliary variables (e.g., time, stimulation parameters, facial action units). ConDA learns a low-dimensional embedding whose directions align with underlying dynamical factors, consistent with recent contrastive learning results on structured and disentangled representations. In this embedding, simple nonlinear trajectories support smooth interpolation, extrapolation, and counterfactual editing while rendering remains in the original diffusion space. ConDA separates editing and rendering by lifting embedding trajectories back to diffusion latents with a neighborhood-preserving kNN decoder and is robust across inversion solvers. Across fluid dynamics, neural calcium imaging, therapeutic neurostimulation, facial expression dynamics, and monkey motor cortex activity, ConDA yields more interpretable and controllable latent structure than linear traversals and conditioning-based baselines, indicating that diffusion latents encode dynamics-relevant structure that can be exploited by an explicit contrastive geometry layer.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper addresses structuring diffusion latent spaces for controllable generation with a general-purpose plug-and-play framework validated across five diverse scientific domains. The core disagreement centers on Reviewer rGMX's concern about the kNN decoder's adequacy, which the authors addressed with new evidence (locality ablation, MLP comparison, Stable Diffusion stress test). Reviewer rGMX's remaining objection is about scope (wanting ImageNet-class validation) rather than a demonstrated failure within the paper's stated scope — the method works consistently well across all evaluated domains. Also, Reviewer a1a1's raised score. Therefore, although the novelty concern is real, I am leaning towards a borderline accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_a1a1",
+   "summary": "The paper focus on learning a structured latent space for diffusion model to enable better controllability. To learn the control latent space is learned via contrastive loss. Experiments show improvements in alignment quality and generation fidelity across several diffusion tasks.",
+   "strengths_and_weaknesses": "Strengths\n\n1. One of the major issue with diffusion is that the latent space is not as interpolate as GAN, where one can smoothly conduct interpolation to obtain generated results that are meaningful. This paper addresses this issue with diffusion, which can be very useful. \n\n2. The framework proposed by this paper is general and can be applied to all diffusion models. Experiments also covers a wide range of applications and data domain. \n\nWeakness\n\n1. The novelty is limited as it resembles existing contrastive preference learning approaches adapted to diffusion models.\n2. The process of obtaining the latent-label pair in diffusion is very expensive by using DDIM inversion.  Also the experiments are relatively short scale, making it unclear how the method performs for large diffusion models trained with a very large dataset. \n3. The paper lacks deeper insight into why the contrastive objective is suitable for diffusion alignment, can one find a better loss specifically designed for diffusion models?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Compared with classifier-free guidance that steers the sampling process towards the conditioned distribution, what makes this method better? \n2. Can one learn a small latent space on the conditions and interpolate the conditions to control the generation process with CFG?\n3. How well-behaved are the learned latent spaces? The fact that linear method does not perform as well might indicate that the latent space is not as smooth. Also, can one perform temperature sampling in the latent space as in GAN?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_rGMX",
+   "summary": "This paper learns an interpretable space given an input from a pre-trained diffusion latent space using contrastive learning. This allows smooth nonlinear traversal for physical and biological applications. The proposed method relies on an inversion method to first turn a latent into a noise from the prior distribution, and use the contrastive encoder to map it into the learned space. After applying the target operations to the features in this space, a kNN Decoder is used to convert it back to the diffusion latent space for the sampling process.",
+   "strengths_and_weaknesses": "While designing a structured space that allows interpretable operations such as interpolation is an important problem for many scientific applications, learning the maps between the diffusion latent space and the contrastive embedding space is important and non-trivial. \n\nAlthough this paper tackles the encoding process (from the diffusion latent space to lower-dimensional space) using a contrastive learning framework, which is reasonable, the decoding process is done with a brittle k nearest neighbor weighting process.  Basically given an interpolated embedding in the low-dimensional space, its k nearest neighbors in lower-dimensional space are selected and weights based on the proximity of these neighbors are applied to their corresponding high-dimensional diffusion latents to reconstruct the diffusion latent. This assumes that the decoding process is linear, which is clearly not the case. \n\nIn face, given the extremely low dimensionality of the structured embedding space, such as $d=8$ for fluid dynamics and $d=3$ for other domains like calcium imaging and facial expressions, reconstructing the diffusion latents is really challenging. To demonstrate this, if one applies PCA to the diffusion latent of a natural image and visualize its first three principal components as the RGB channels, the resulting image looks quite similar to the input image. Therefore. decoding a small latent vector with less than 10 channels to a latent image is not simpler than the original image generation problem. To this end, the kNN decoder is suboptimal to address this problem.",
+   "soundness": 1,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "I don't have other questions.",
+   "limitations": "Yes",
+   "overall_recommendation": 2,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_17dw",
+   "summary": "This paper introduces ConDA (Contrastive Diffusion Alignment), a network architecture designed to address the lack of interpretability in the latent representations of diffusion models. The authors propose a plug-and-play layer that aligns these latents and reconstructs them into meaningful embeddings. Through experiments on five spatiotemporal datasets, ConDA demonstrates consistent improvements over non-aligned baselines, validating the effectiveness of the approach.",
+   "strengths_and_weaknesses": "The paper addresses a critical limitation in diffusion models—the opacity of their latent representations—by proposing a simple yet effective solution: a plug-and-play alignment layer that enhances interpretability without disrupting the original generative process. The idea is both innovative and practical.\n\nThe experimental evaluation is thorough, covering five diverse datasets with clearly described setups, metrics, and network architectures. The ablation study is well-reasoned, and the results consistently show that ConDA outperforms existing methods. Overall, the paper makes a strong contribution to improving the controllability and interpretability of diffusion-based generative models.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "In Table 4 (page 8, line 185) and Figure 4 (line 415), ConDA is compared with PCA and β-VAE. Given that ConDA is designed to integrate with diffusion-based frameworks, could the authors extend their evaluation to include a broader range of generative or representation learning models for comparison?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

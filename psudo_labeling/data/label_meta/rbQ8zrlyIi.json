@@ -1,0 +1,26 @@
+{
+  "forum_id": "rbQ8zrlyIi",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_2kw1",
+      "weight": "high",
+      "reason": "Most detailed review with the highest confidence (4). Uniquely identifies the false-positive / non-transferability justification gap that the meta-review explicitly adopts, and also flags the L2-vs-sign / anchor-count notation inconsistencies, the opaque NLP token-space instantiation, and missing hyperparameter defaults/sensitivity — all echoed by the meta-review and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_UXaD",
+      "weight": "high",
+      "reason": "Sharp, substantiated technical critiques that the meta-review adopts: the L2 constraint paired with a sign step, the unusual sum-over-anchors loss, the underspecified NLP shifting pipeline, and untested cross-domain/auxiliary-dataset generalization. Specific and well aligned with the consensus; also credits the clear threat-model illustration and reproducible verification protocol."
+    },
+    {
+      "reviewer": "Reviewer_4uaf",
+      "weight": "high",
+      "reason": "Concrete reproducibility and presentation findings echoed by the meta-review: dataset-varying verification threshold and its generalizability implications, unclear NLP perturbation mechanism, missing CDA baseline results undermining the fidelity claim, unsupported spectral-vs-K-means choice, and undefined notation (c in Eq. 4; FTLL/FTAL/CDA used before definition)."
+    },
+    {
+      "reviewer": "Reviewer_NmG7",
+      "weight": "high",
+      "reason": "Raises the clearest presentation point in the meta-review — the absent main-text related-work section — plus auxiliary-dataset sensitivity and adaptive-attacker robustness, both corroborated by other reviewers. Accurate and on-target, though slightly less technically deep than the other three (its amplification-citation point is minor)."
+    }
+  ],
+  "score_rationale": "All four reviewers are high-weight: they converge on weak accept (all overall=4) with specific, mutually corroborating critiques that the meta-review adopts wholesale (NLP opacity, L2/sign and anchor-count notation inconsistencies, false-positive justification, threshold generalizability, missing related work). Significance and originality were unanimously 3 and overall unanimously 4, so those carry directly. Soundness is set to 3, the modal value from three of four reviewers, since the concerns are matters of justification and clarity rather than a fundamental flaw and the empirical breadth is strong; presentation is set to 2, reflecting three of four reviewers plus the meta-review's emphasis on missing related work, notation issues, and underexplained ablations, treating UXaD's 4 as an outlier. Confidence 4 reflects the strong agreement and mutual corroboration among the reviews and the meta-review."
+}

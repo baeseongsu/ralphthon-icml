@@ -1,0 +1,21 @@
+{
+  "forum_id": "5yXKRaNI2R",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_BLmy",
+      "weight": "high",
+      "reason": "Most detailed and technical review, specific and substantiated throughout. Engages deeply with the theory (a concrete concern about the lambda-to-0 claim and the O(lambda) bound in Proposition C.7), raises the when-to-prefer-which-variant concern that the meta-review adopts, requests a comparison to closely related primal-dual constrained-learning work, and questions the rare-event claims with a concrete normalized-error argument."
+    },
+    {
+      "reviewer": "Reviewer_JPq9",
+      "weight": "high",
+      "reason": "Core concerns (under-discussed related work / overclaimed novelty, missing guidance on CGM-relax vs CGM-reward, unclear contribution of each surrogate relative to the maximum-entropy solution) are exactly the positioning, presentation, and variant-preference issues the meta-review flags as the main remaining concerns, and are corroborated by the other reviewers. The presentation score of 1 is an outlier inconsistent with the paper's rigorous proofs and clear problem framing, so the substance rather than that score drives the weight."
+    },
+    {
+      "reviewer": "Reviewer_omQE",
+      "weight": "medium",
+      "reason": "On-target and corroborating on penalty-coefficient sensitivity/tuning, on novelty arising from classical ingredients, and on the evaluation's limited evidence about broader generation quality. However, several points are more generic than substantiated and self-reported confidence is low (2), so it partly rather than fully anchors the assessment."
+    }
+  ],
+  "score_rationale": "I weighted BLmy and JPq9 highly because their concerns, under-discussed related work / overclaimed novelty and the absence of guidance on when to prefer CGM-relax versus CGM-reward, are precisely the positioning, presentation, and variant-selection issues the meta-review names as the main remaining concerns, with BLmy adding a specific, substantiated theoretical concern. Following the meta-review's judgment that there is no fatal methodological weakness, I kept soundness and significance at 3 (the majority view) and set overall at 4 (weak accept), consistent with the two positive recommendations and the accept decision. Originality is held at 2 because the novelty/related-work concern is corroborated across all three reviewers, while presentation stays at 3 since JPq9's score of 1 is an outlier inconsistent with the paper's rigorous proofs and clear problem framing. omQE was medium-weighted: on-target on tuning and evaluation scope but lower-confidence and more generic. Confidence is 4 given strong mutual corroboration on the variant-guidance, positioning, and penalty-tuning themes."
+}

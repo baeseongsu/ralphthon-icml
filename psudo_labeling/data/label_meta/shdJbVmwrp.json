@@ -1,0 +1,26 @@
+{
+  "forum_id": "shdJbVmwrp",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Lz6B",
+      "weight": "high",
+      "reason": "Most substantiated and specific review, at confidence 4. It uniquely raises the 134-episode statistical-rigor concern that the meta-review echoes, and articulates the computational-cost (5-7 inferences per step) and limited-originality (natural extension of DiscussNav/DialFRED) points precisely. Its concerns align directly with the meta-review's three headline issues."
+    },
+    {
+      "reviewer": "Reviewer_Xcfr",
+      "weight": "high",
+      "reason": "Detailed, confidence-4 review whose critiques on computational efficiency/latency, interaction-time hallucination and error accumulation, and concrete failure-case analysis (Heat/Cool underperformance) map cleanly onto the meta-review's efficiency and error-propagation concerns. Well-substantiated strengths and specific, evaluation-relevant questions."
+    },
+    {
+      "reviewer": "Reviewer_g6Mg",
+      "weight": "medium",
+      "reason": "On-target and corroborating (inference latency versus named baselines VIPER/DiscussNav, error propagation from conflicting VLM answers, scalability to dynamic real-world settings), and its concerns are echoed by the meta-review. Weight is capped at medium because the key-questions and limitations fields are left as 'refer to weakness' and confidence is moderate (3)."
+    },
+    {
+      "reviewer": "Reviewer_bZL8",
+      "weight": "medium",
+      "reason": "Solid, on-target review flagging latency/computational cost, VLM error propagation, and sensitivity to the number of questions, all corroborated by other reviewers and by the meta-review. Weight is medium rather than high because the assessment is less detailed and lower confidence (3) than the two strongest reviews."
+    }
+  ],
+  "score_rationale": "Weights were anchored to the meta-review, whose three headline concerns (computational efficiency, VLM error propagation, and statistical robustness/scalability) are exactly the points made most concretely by the two high-weight reviewers (Lz6B and Xcfr, both confidence 4), with Lz6B alone supplying the statistical-rigor critique the meta-review echoes. Soundness (3), presentation (3), significance (3), and originality (3) sit at the upper end of the reviewers' ranges because the meta-review frames the method as solid and well-validated and does not flag originality as decisive, so Lz6B's lone 2s on significance and originality were noted in the prose but not treated as controlling. Overall recommendation is set to 4 (weak accept), matching both high-weight reviewers and staying within the [4,5] range while reflecting the substantive-but-addressable open concerns appropriate to an initial review. Confidence is 4 given the strong mutual corroboration across all four reviews on both strengths and weaknesses."
+}

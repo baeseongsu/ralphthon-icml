@@ -1,0 +1,26 @@
+{
+  "forum_id": "jjHZnkDk5l",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_kvgG",
+      "weight": "high",
+      "reason": "Specific and constructive. Its three core concerns — lexical-copying bias (copying is not thinking), confounding from the uniform-attention structural perturbation, and unverified cross-scale transfer — are all directly echoed by the meta-review, and its proposed controls (alternative operators, matched non-retrieval-head masking, n-gram/human-label checks) are concrete and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_m6wN",
+      "weight": "high",
+      "reason": "The central concern that the copy/retrieval mechanism is not clearly linked to reasoning quality maps onto the meta-review's noted concern about the connection between retrieval behavior and reasoning quality. The review is substantiated, flags the s1K underperformance and hyperparameter sensitivity, and offers concrete suggestions; highest confidence and overall among the reviewers."
+    },
+    {
+      "reviewer": "Reviewer_55fH",
+      "weight": "high",
+      "reason": "Substantiated points about AIR favoring longer self-reflective/rollback chains and the need for a redundancy/repetition baseline correspond to the meta-review's concern about bias toward lexical copying or longer reflective chains and about ruling out superficial heuristics; the robustness-across-families point corroborates the cross-scale concern."
+    },
+    {
+      "reviewer": "Reviewer_Gfsq",
+      "weight": "medium",
+      "reason": "On-topic but thin: strengths are generic enthusiasm and the weaknesses defer to the questions. The influence-versus-quality question is a legitimate soundness point and is folded in, but its concerns (stage-dependent criteria, AIME25) are not corroborated by the other reviews or reflected in the meta-review."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (kvgG, m6wN, 55fH) converge, and the meta-review corroborates, on the same soundness concerns — the under-justified link between token-copying retrieval heads and reasoning quality, a possible bias toward lexical copying or longer reflective chains, and insufficiently validated cross-scale transfer — which anchors soundness at the low end (2) of the [2,3] range. Presentation (3) and originality (3) are unanimous and endorsed as positive by the meta-review, and significance sits at 3 given the timely, practical, training-free contribution despite one reviewer's lower mark. The overall recommendation of 4 reflects the high-weight reviewers' 4/4/5 marks and the regular-accept direction, discounting the thinner medium-weight review's 3. Confidence is 4 because the evidence across the strongest reviews and the meta-review is mutually reinforcing."
+}

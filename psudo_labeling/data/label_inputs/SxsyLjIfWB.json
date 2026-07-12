@@ -1,0 +1,62 @@
+{
+ "forum_id": "SxsyLjIfWB",
+ "title": "TabICLv2: A Better, Faster, Scalable, and Open Tabular Foundation Model",
+ "abstract": "Tabular foundation models, such as TabPFNv2 and TabICL, have recently dethroned gradient-boosted trees at the top of predictive benchmarks, demonstrating the value of in-context learning for tabular data. We introduce TabICLv2, a new state-of-the-art foundation model for regression and classification built on three pillars: (1) a novel synthetic data generation engine designed for high pretraining diversity; (2) various architectural innovations, including a new scalable softmax in attention improving generalization to larger datasets without prohibitive long-sequence pretraining; and (3) optimized pretraining protocols, notably replacing AdamW with the Muon optimizer. On the TabArena and TALENT benchmarks, TabICLv2 without any tuning surpasses the performance of the current state of the art, RealTabPFN-2.5 (hyperparameter-tuned, ensembled, and fine-tuned on real data). With only moderate pretraining compute, TabICLv2 generalizes effectively to million-scale datasets under 50GB GPU memory while being markedly faster than RealTabPFN-2.5. We provide extensive ablation studies to quantify these contributions and foster open research by releasing code for inference, pretraining, and synthetic data generation at https://github.com/soda-inria/tabicl.",
+ "primary_area": "deep_learning->foundation_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers agreed that the paper makes significant contributions, and the results were further strengthened during the rebuttal. The authors addressed all concerns raised. While reproducibility is a valid and essential requirement—as one reviewer noted—I believe the authors provided sufficient evidence in the rebuttal and appendices to support their claims.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_R6UP",
+   "summary": "The paper introduces follow-up work presenting a series of improvements to the TabICL tabular foundation model.\n\nIn particular, the authors present the following improvements:\n\n- A revised synthetic prior\n- Changing the softmax layer of their architecture to handle attention fading in long contexts\n- Repeated feature grouping \n- Many-class classification through mix-radix ensembling\n\nAll proposed patches are either known techniques applied to an existing model or minor variations of the existing TabICL model. \n\nAs a result, the novelty of the paper relies mostly on the results, rather than on the method.",
+   "strengths_and_weaknesses": "The paper is sound, and the presentation is clear. The paper addresses a niche domain in the Deep Learning community, which is nevertheless gaining momentum.\n\nHowever, the originality is lacking as this reads as a follow-up work of TabICL, with patching together mostly known techniques/components in a novel combination.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 1,
+   "key_questions_for_authors": "Can you better explain the performance of Ref with TabICL prior in the experiment Figure 10?",
+   "limitations": "Why is the prior code not released? This severely limits the reproducibility of the paper. \n\nAs a result, I am giving a rejection recommendation.",
+   "overall_recommendation": 2,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_RRau",
+   "summary": "This paper presents TabICooL, a new tabular foundation model built on a stronger synthetic data generation engine together with additional architectural improvements. The authors evaluate the method on TabArena and TALENT, showing consistently strong results and a state-of-the-art overall accuracy/runtime tradeoff",
+   "strengths_and_weaknesses": "Strengths:\nThe empirical evaluation is extensive and thorough, with many analyses that consistently support the strength of TabICooL.\nThe ablations, both in the main paper and in the appendix, are comprehensive and help clarify which components contribute most to the gains. In particular, the paper makes clear that both the synthetic data pipeline and the architectural changes matter.\nI also appreciate the authors’ commitment to releasing the full codebase, including the synthetic data generation pipeline. This is especially valuable given the increasing closed-source trend in this area\n\nWeaknesses\nThe runtime comparison is not perfectly apples-to-apples. TabICooL runtimes are measured on an H100 GPU, whereas the runtimes for competing methods are taken from the benchmark sources. As a result, it is difficult to fully disentangle improvements due to algorithmic advances from differences in evaluation setup.\nAt review time, the full codebase is not yet available, so reproducibility is still incomplete.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "How does performance change as the number of estimators increases? Can this be interpreted as a form of test-time compute?\nDo the authors envision the synthetic data generation pipeline being useful beyond training tabular foundation models, for example as a more general synthetic benchmark or pretraining resource?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_GshV",
+   "summary": "The paper introduces a novel tabular foundation model, TabICooL, with multiple architectural and training innovations in order to alleviate the limitations of existing models such as TabPFN and TabICL. Some of the major architectural improvements are incorporating repeated feature grouping, injecting label embeddings in an early stage of attention, and the use of query-aware softmax. The training process is improved mainly through the introduction of a novel synthetic prior. The new prior includes a different random graph sampling technique and additional function classes to model parent-child dependencies in the random causal graphs, compared to the TabPFN prior. Experiments on the performance of the model are based on two popular tabular benchmarks, TabArena and TALENT, on which the model shows significant improvements over existing foundation models. Multiple ablation experiments have been conducted to evaluate the contribution of each design choice.",
+   "strengths_and_weaknesses": "**Soundness:**\n\n*Strengths:* \nThe paper is technically sound and builds upon the well-established literature on tabular foundation models and prior-data fitted networks. Authors have explained the heuristic insights behind most of the architectural design improvements over the existing methods. For example, the introduction of repeated feature grouping to avoid representation collapse and loss of fine-grained feature information is well-motivated and intuitive. The empirical study also establishes the contribution of each such modification, and is reflected in the final performance of TabICooL w.r.t. the existing models. Experiments are based on two widely used benchmarks, covering many binary and multi-class classification, and regression datasets. \n\n\n*Weaknesses:* \nHowever, there are many other modifications, particularly within the training framework, which do not have a proper rationale and justified only through the ablations. For example, target-aware embedding in the architecture, the correlated sampling of scalars in synthetic data generation, and the choice of the optimizer in the training setup. Moreover, based on the critical difference plots in the appendix, while TabCooL performs better than the existing models such as TabPFNv2 and TabICL, its performance doesn’t seem to be significantly better than TabPFN 2.5 and RealTabPFN.\n\n**Presentation:**\n\nThe paper follows an easy-to-understand flow, and the content is well-organized into logical sections. All the modifications and the experiments are explained clearly, with additional details in the appendix.\n\n**Significance:**\n\nThe problem of constructing tabular foundation models is an important area of research due to multiple reasons. Majority of potential machine learning applications in areas such as finance, healthcare and scientific discovery involves tabular data. In addition, the in-context learning performance of existing foundation models for language processing is not so good. Given these reasons, the focus of TabICooL towards expanding the horizons of tabular foundation models is timely and well-motivated. However, even though the model demonstrates significant performance gains over the existing models such as TabPFN and TabICL, the performance gains w.r.t. TabPFN 2.5 and RealTabPFN are not statistically distinguishable according to the critical difference plot.\n\n\n\n**Originality:**\nOverall, the work proposes a novel architecture and a training setup including modifications to the synthetic prior. However, considering each component independently, the improvements can be seen as either extensions of the existing works or combinations of them in contrast to a fundamentally new paradigm. Nevertheless, the total contribution can be considered original enough, given the overall performance gains exhibited in the empirical study. \nThe authors have sufficiently compared the proposed framework w.r.t. the existing methods within the dedicated section on related works as well as in the rest of the paper as relevant.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "How does TabICooL perform in the few-shot regime (e.g., with <20 samples)?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_uQVH",
+   "summary": "TabICooL introduces a state-of-the-art tabular foundation model built on three pillars: a novel synthetic data generation engine for high pretraining diversity, architectural innovations including Query-Aware Scalable Softmax (QASSMax) for better long-context generalization, and optimized pretraining protocols using the Muon optimizer. Overall, the manuscript explores how to improve scalability while achieving faster inference than existing methods. The model achieves state-of-the-art performance on TabArena and TALENT benchmarks without hyperparameter tuning.",
+   "strengths_and_weaknesses": "Strengths\n  - Achieves state-of-the-art performance on two established benchmarks (TabArena and TALENT) with a valid evaluation setting\n  - Inference is more than 10x faster than competing foundation models while scaling to million-sample datasets under 50GB GPU memory\n  - Strong commitment to open research: weights, synthetic data engine, and pretraining code will be released, addressing the closed-source trend in the field\n  - Clear and well-organized paper presentation with detailed technical explanations and extensive ablation studies quantifying each contribution\n  - Main claims (novel synthetic data generation, architectural innovations like QASSMax, Muon optimizer benefits) are well-supported by empirical evidence and ablations\n\nWeaknesses\n  - The choice of Muon optimizer over AdamW lacks sufficient justification beyond empirical performance",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- Can you provide more justification for choosing the Muon optimizer? Is this purely based on empirical evaluation, or are there theoretical reasons why Muon is particularly suited for tabular foundation models?\n- How would recent LLMs (e.g., GPT-5, Claude Opus) perform on these benchmarks if given training data as in-context examples, potentially with random or diversity-based sample selection? This comparison would help position TabICooL against LLM-based approaches.\n- Would training example selection help further improve performance and scalability?\n- How resilient is the model to noise in the data, which is common in real-world settings?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

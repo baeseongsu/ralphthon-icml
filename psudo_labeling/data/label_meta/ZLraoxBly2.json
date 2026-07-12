@@ -1,0 +1,26 @@
+{
+  "forum_id": "ZLraoxBly2",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_7YbB",
+      "weight": "high",
+      "reason": "Specific and substantiated on the two concerns the meta-review adopts, weak (uniform/random-only) baselines and narrow empirical scope/scalability, while giving a clear, balanced strengths assessment. Directly corroborated by other reviewers and by the meta-review's note on empirical-study scope."
+    },
+    {
+      "reviewer": "Reviewer_G4ks",
+      "weight": "high",
+      "reason": "Detailed and technically precise: articulates the LOT+PCA-surrogate-vs-native-posterior limitation and the linearization risk, and pinpoints the weak-baseline issue with a concrete proposal (simpler embedding + active learning). Presentation praise aligns with the meta-review's emphasis on clarity."
+    },
+    {
+      "reviewer": "Reviewer_x1Jh",
+      "weight": "high",
+      "reason": "Deepest technical read of the method, with a substantive related-work question (multi-marginal Schrodinger Bridge) and an honest observation that empirical gains are modest in the regime where selection should matter. Highest overall recommendation, consistent with the positive meta-review direction."
+    },
+    {
+      "reviewer": "Reviewer_decN",
+      "weight": "medium",
+      "reason": "Raises some thoughtful, specific concerns (coordinate drift under reference-measure updates, generalizability beyond biology, compute-vs-gain tradeoff) that partly align with the empirical-scope concern, and its LOT-locality point is corroborated by others. Down-weighted by low self-reported confidence (2) and soundness/significance scores below consensus, tilting more negative than the clearly positive meta-review."
+    }
+  ],
+  "score_rationale": "The meta-review is clearly positive, praising presentation clarity and the novelty of the problem/modeling and calling the approach technically solid while flagging empirical-scope concerns; this anchors presentation at 4 (supported by two high-weight 4s plus 7YbB also calling the writing good) and keeps soundness and significance at 3, the consensus among the high-weight reviewers, rather than following decN's lower 2s. Originality is fixed at 3 since all four reviewers agreed. Overall recommendation is 4, the central tendency of the high-weight reviewers (three 4s, one 5) and consistent with an accept-as-solid-contribution outcome. Confidence is set to 4 because the strengths (clarity, novel problem framing) and the weaknesses (weak baselines, limited empirical breadth, LOT-linearization caveats) recur consistently and corroborate across reviewers."
+}

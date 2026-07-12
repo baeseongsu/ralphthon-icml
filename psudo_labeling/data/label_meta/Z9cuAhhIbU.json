@@ -1,0 +1,26 @@
+{
+  "forum_id": "Z9cuAhhIbU",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_o6fz",
+      "weight": "high",
+      "reason": "Specific and high-confidence (4). Its three central critiques (unexplained early-layer loss reduction, non-compute-matched steering comparison, and missing auto-interp score distribution) are precisely the concerns the meta-review echoes about unexplained mechanisms and evaluation, and are independently corroborated by 1GqX and i8zb."
+    },
+    {
+      "reviewer": "Reviewer_i8zb",
+      "weight": "high",
+      "reason": "Detailed and high-confidence (4). The non-standard AxBench evaluation, insufficiency of auto-interp alone (with supporting citation), negative-loss framing, and notation inconsistencies are substantive and corroborated. Its originality=1 score is an outlier that the meta-review's strong novelty emphasis contradicts, so that particular rating was discounted while the methodological critiques were adopted."
+    },
+    {
+      "reviewer": "Reviewer_1GqX",
+      "weight": "high",
+      "reason": "Specific and substantiated (confidence 3). The overstated steering-superiority claim, limited SAE/DLM architecture coverage, need for quantitative interpretability metrics, and the unsupported 2-10x claim are all echoed by other reviewers and by the meta-review's notes on limited exploration and unclear generalization."
+    },
+    {
+      "reviewer": "Reviewer_W1t8",
+      "weight": "medium",
+      "reason": "Brief and low-effort with confidence 1, but partly on-target: the deepest-layer instability and the complexity of training SAEs across all timesteps are corroborated by o6fz and by the meta-review's mention of instability across layers."
+    }
+  ],
+  "score_rationale": "Scores follow the three high-weight, specific reviewers (o6fz, i8zb, 1GqX) and the meta-review's direction. Soundness is set to 2, the value chosen by the two most confident reviewers and consistent with the meta-review's emphasis on unexplained mechanisms and evaluation gaps. Presentation (3), significance (3), and originality (3) sit at the corroborated cluster within range, with i8zb's outlier originality=1 discounted because the meta-review foregrounds the work's novelty. Overall recommendation is 4, the value both confident high-weight reviewers gave and consistent with the accept decision, staying within the [4,5] reviewer range while reflecting the substantive, echoed soundness concerns."
+}

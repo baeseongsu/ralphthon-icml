@@ -1,0 +1,26 @@
+{
+  "forum_id": "znV8JHv8b8",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_44Fw",
+      "weight": "high",
+      "reason": "Specific and substantiated. Frames the Golden Eviction algorithm as a meaningful step beyond rule-based methods, which directly echoes the meta-review's 'meaningful advancement over purely rule-based or heuristic' framing. Its concerns (indirect theoretical justification of the supervised target; narrow task diversity beyond AIME) are precise and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_1PQM",
+      "weight": "high",
+      "reason": "High-confidence (4), detailed, and pinpointed. Raises concrete, verifiable concerns tied to specific evidence (Table 5 Top-k multinomial gain possibly driving performance; missing training/compute cost; equation/derivation and 'linear expansion' framing issues). The training-cost concern is independently corroborated by Reviewer_Z8kJ."
+    },
+    {
+      "reviewer": "Reviewer_Z8kJ",
+      "weight": "high",
+      "reason": "High-confidence (4) and the most thorough on generalization. Its three concerns (short context lengths vs 32K+ and training scalability; cross-setup generalization; single Qwen model family) are specific, substantiated, and align with the reservations the meta-review says the rebuttal had to address. Task-scope concern corroborated by 44Fw and 24Cg."
+    },
+    {
+      "reviewer": "Reviewer_24Cg",
+      "weight": "medium",
+      "reason": "On-target but brief and generic. Its central point - evaluation limited to math/science and needing broader long-context/retrieval tasks - is corroborated by 44Fw and Z8kJ, but the review adds little unique, substantiated analysis beyond that single concern."
+    }
+  ],
+  "score_rationale": "The meta-review anchors a positive read (Accept, methodology called 'principled' and a 'meaningful advancement'), so on the dimensions where reviewers split I positioned toward the higher end within range: soundness 3 and significance 3 (three of four reviewers at 3; only the second-lowest-weighted split point, Z8kJ, gave 2), and originality 3 (a 2-2 split among reviewers, tipped up by the meta-review's explicit 'meaningful advancement' framing despite the noted simplicity of components). Presentation is unanimously 3. Overall recommendation is held at 4 since all four reviewers gave 4 (weak accept), consistent with the regular-accept decision. Confidence is set to 4 because the underlying evidence is strongly mutually corroborating - the high-weight reviewers independently converge on task-diversity/generalization limits and unreported training cost."
+}

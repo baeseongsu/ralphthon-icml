@@ -1,0 +1,52 @@
+{
+ "forum_id": "ACycnhWzRX",
+ "title": "Calibrated Knowledge Aggregation in Bayesian Mixture-of-Experts for Continual VQA",
+ "abstract": "Continual learning for visual question answering (VQA) is typically implemented by training one expert per task and routing each query using task-ID supervision. Yet continual VQA tasks overlap substantially: on the VQA-v2 task stream, a non-native expert outperforms the task’s own expert on $49.9\\%$ of queries, so hard routing both wastes transferable knowledge and can be confidently wrong when mismatched. We propose a calibrated Bayesian mixture-of-experts that trains parameter-efficient per-task adapters, learns routing by directly maximizing expected VQA utility, and marginalizes expert identity at inference via Bayesian aggregation in a unified answer space; an entropy penalty prevents the utility objective from collapsing to one-hot routing, enabling evidence pooling across plausible experts. We reach $64.16$ accuracy with $0.63$ forgetting on VQA-v2 CL-LS ($+5.74\\%$ accuracy, $-2.99$ forgetting vs. the strongest prior method), $78.81$ with $0.40$ forgetting on TDIUC CL-LS ($+3.10$, $-1.74$), and $83.41$ with $3.21$ forgetting on TDIUC CL-VS ($+1.58$, $-0.82$). Calibration also improves on VQA-v2, reducing ECE from $0.15$ to $0.07$.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "Multi-expert architecture for reliability in continual VQA. Improves “hard (top-1 expert) routing by combining [pieces of] evidence of expert predictive distributions to recover from a) overconfident wrong predictions, b) underconfident correct predictions, 3) incorrect predictions due to misrouting.”\n\nRating: Reviewer Hmdb (4) , Reviewer Dhbu (5) , Reviewer eEgz (4). The reviewers find the paper well-written and well-motivated. They also find the proposed approach intuitive with sound+efficient aggregation schemes (Bayesian aggregation, LoRA utilization) with strong empirical results to back up the claims.\n\nMajor Concerns\n\n1. [Reviewer Hmdb, Reviewer eEgz, resolved] Small base VQA model. The reviewers want to see larger VLMs to justify the proposed approach’s relevance. The authors provided BLIP (VQA-v2 dataset) and Qwen3-VL-4B (continual medical VQA) results during the rebuttal.\n\n2. [Reviewer eEgz, somewhat resolved] Robustness to component changes. Reviewer eEgz questioned the sensitivity to task ordering and weak experts. They also questioned the costs of inference speed and memory usage as the expert pool grows large. The authors evaluated the framework across 5 task orderings. The authors also provided an additional result on adversarial AdVQA to test robustness. Finally, introduced a \"reuse-before-expand\" extension to address memory scaling, though Reviewer eEgz remained partially unconvinced regarding this part.\n\n3. [Reviewer Dhbu, resolved] Scalability. Reviewer Dhbu questions the approach’s scalability due to a pre-defined global answer dictionary. The authors clarified that the unified answer space is the union of answers observed so far, which grows slowly under overlap-heavy scenarios.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Hmdb",
+   "summary": "This paper proposes a multi-expert architecture to tackle continual VQA. The authors train an expert for each task and a router to aggregate answer predictions from multiple experts given a new question during inference. Experts share the same base VLM, adapted through several LoRA parameter sets and equipped with answer heads. The router is trained to maximize total expert performance while smoothing routing prediction. The experiments show improvement over previous continual learning methods and experts with oracle routing.",
+   "strengths_and_weaknesses": "Strengths\n\nThe proposed method is intuitive and reasonable. Representing task-specific capabilities with LoRA and aggregating all learned capabilities for novel problems looks smart and efficient.\n\nWeaknesses\n\n1. The paper presentation does not look comfortable for me, especially the title spacing and the font size. In addition, there is no qualitative comparison or examples. This could tell us how different experts trained on different tasks contribute to a new question.\n2. There is no comparison of state-of-the-art VQA systems, especially large VLMs. While I can understand it might be valuable to improve small models, such as generalizability or robustness to forgetting, I feel the authors may at least discuss the differences, benefits, or anything that makes the proposed system important in this era, and also show the performance gap.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "Questions\n1. Could the authors provide several example questions and the corresponding predictions from different experts?\n2. Could the authors show comparisons with large VLMs?\n3. Could the authors put the reference section in the main paper? This will greatly improve the reading experience.\n4. I’m also curious whether more experts can help with a new question or introduce more noise. Could the authors show performance at different stages (numbers of trained experts)?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "The experiments in the rebuttal show that the proposed method may benefit specialized and professional VQA with small models. This may bring positive impacts to the community, and thus I'm increasing my rating."
+  },
+  {
+   "reviewer": "Reviewer_Dhbu",
+   "summary": "This paper proposes a calibrated Bayesian Mixture-of-Experts framework for continual VQA to address the limitations of traditional \"hard routing.\" Instead of relying on task-ID supervision, the authors use utility-driven routing and entropy regularization to identify the most capable experts across overlapping tasks. By performing Bayesian aggregation in a unified answer space, the model effectively pools evidence from multiple experts, reducing overconfidence and catastrophic forgetting. Experimental results demonstrate the proposed methods.",
+   "strengths_and_weaknesses": "- The motivation is quite clear.\n- This paper is well-written and easy to follow.\n- The dynamic routing with MoE for continual learning is interesting.\n- The experiments are extensive and demonstrate the effectiveness.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- Potential limited scalability of the Unified Answer Space. The proposed Unified Answer Space Projection relies on a pre-defined, global dictionary that must be maintained and updated as new tasks arrive. This may limit the real-world application of proposed framework and arise several concerns such as open-set vulnerability, memory overhead. Could authors provide clarification on this issue?\n- Insufficient sensitivity analysis of the entropy regularization hyperparameter. While the authors demonstrate that entropy regularization effectively prevents the router from collapsing into a \"hard-routing\" mode, the submission lacks a detailed sensitivity analysis regarding the regularization hyperparameter λ.\n- Typos. The formula in section 4.3 has two overlapping indices.",
+   "limitations": "The limitation is not discussed.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The authors' reply addresses my concerns."
+  },
+  {
+   "reviewer": "Reviewer_eEgz",
+   "summary": "This paper studies continual VQA and argues that hard task-ID routing is suboptimal because non-native experts often answer queries better than the assigned task expert. It proposes a calibrated Bayesian mixture-of-experts with parameter-efficient task adapters, utility-driven soft routing, and Bayesian aggregation in a unified answer space. Experiments on VQA-v2 and TDIUC continual learning benchmarks show improved accuracy, reduced forgetting, and better calibration, demonstrating more reliable and transferable expert sharing.",
+   "strengths_and_weaknesses": "Strengths:\n1. The method section is well organized and clearly explains the motivation, routing design, Bayesian aggregation, and calibration strategy in a coherent and easy-to-follow manner.\n2. The experimental section is thorough, with strong analyses of transfer, forgetting, calibration, and routing behavior, which makes the empirical findings convincing and informative.\n\n\n\nWeakness:\n1. Evaluating only relatively small VQA models is not fully convincing; it would be more meaningful to test the method on stronger MLLM backbones such as LLaVA.\n2. In the era of large multimodal models, the practical importance of studying continual learning specifically for traditional VQA settings should be better justified.\n3. The authors should vary the task sequence in the continual learning benchmarks to examine how sensitive the proposed method is to ordering effects.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Could the model still produce overconfident wrong predictions when all top-k experts are insufficiently competent for a query, especially under severe distribution shift or ambiguous inputs?\n2. How do inference speed and memory usage scale with the number of tasks, and do these costs become impractical when the expert pool grows large?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The authors addressed my concerns about robustness. I tend to accept the paper."
+  }
+ ]
+}

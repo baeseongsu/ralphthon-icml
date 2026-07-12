@@ -1,0 +1,21 @@
+{
+  "forum_id": "bBylXHoUTl",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_vaKb",
+      "weight": "high",
+      "reason": "Specific and substantiated. Identifies concrete, verifiable weaknesses: higher FLOPs/params with lower Top-1 on classification, DiT underperformance on FID/IS with no latency reported, the misleading '0.57% of training cost' framing (inherits a fully trained checkpoint), and the fairness of the SD3.5 baseline comparison. Its empirical concerns are corroborated by another reviewer, and it also credits the thorough ablations and the compelling SD3.5 result."
+    },
+    {
+      "reviewer": "Reviewer_FzwU",
+      "weight": "high",
+      "reason": "Highest confidence (4) and the most careful on theoretical soundness. Provides insightful praise (Softmax-as-two-layer-MLP reinterpretation, the Key Shift observation, full weight inheritance) and precise, well-targeted questions on TTT-Softmax equivalence, whether Key Shift is the dominant instability source, InstanceNorm information distortion, and W1/W2 initialization, plus a constructive limitations list."
+    },
+    {
+      "reviewer": "Reviewer_13NY",
+      "weight": "medium",
+      "reason": "Partly on-target and corroborating: independently flags the classification FLOPs-up/accuracy-down issue and the missing efficiency measurements, and contributes a substantive baseline request (benchmark prior linearization methods and a matched attention-to-linear-attention swap). However, confidence is low (2), scores are uniformly at the bottom of the range, and the review is briefer and less developed; its initialization question overlaps with the higher-confidence reviewer."
+    }
+  ],
+  "score_rationale": "The meta-review is generic ('all reviewers gave positive comments') and offers no dimension-specific steer, so I anchored on corroboration and specificity, letting the two high-weight reviewers (vaKb, FzwU) drive the profile with the medium-weight reviewer (13NY) corroborating the empirical-efficiency concerns. Presentation (3) and originality (3) follow the two high-weight reviewers, who agreed the writing is coherent and the TTT-as-linearization-target framing plus Key Shift analysis are novel. Soundness (2) and significance (2) sit at the lower end of the range because the efficiency claims are not demonstrated outside the SD3.5 text-to-image setting, key efficiency measurements and matched baselines are missing, and the theoretical equivalence is unresolved, all concerns shared across reviewers. Overall recommendation (4) is unanimous and consistent with the accept decision, and confidence (4) reflects the strong mutual corroboration on both the standout T2I result and the shared weaknesses."
+}

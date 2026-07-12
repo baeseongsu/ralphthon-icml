@@ -1,0 +1,26 @@
+{
+  "forum_id": "N7hNbQ8o5Q",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_nF9B",
+      "weight": "high",
+      "reason": "The most thorough and specific review. Its identification of the problem formulation as the key strength, the internal consistency of the theory, and the value of the portability results all align directly with the meta-review, and its central criticisms (the recursive-rollout theory not matching single-forward-pass baselines, the un-enforced increment-estimator interpretation, missing significance testing behind 0.001-level margins, and reproducibility gaps) are corroborated by Reviewer_4rgi."
+    },
+    {
+      "reviewer": "Reviewer_4rgi",
+      "weight": "high",
+      "reason": "The initially critical review (overall 3). Its concerns are specific and substantiated -- loose coupling between theory and architecture with undjustified heuristic choices, absence of statistical significance testing with improvements at the noise level, and weak/uninformative figures -- and they are strongly corroborated by Reviewer_nF9B and consistent with the meta-review's framing of the theory-vs-experiment issue as the pivotal point later addressed."
+    },
+    {
+      "reviewer": "Reviewer_SEF1",
+      "weight": "medium",
+      "reason": "On-target and partly corroborated: the calls for robustness/sensitivity evidence for the lag metrics (TailAUC/ExcessAUC) and for more detail on how L-Context is combined with the original sequence are echoed by other reviewers and by the meta-review's mention of sensitivity and tail metrics. However, the review is brief and assigns soundness (4) and presentation (4) above the consensus, so it is only partly on the mark."
+    },
+    {
+      "reviewer": "Reviewer_7QWb",
+      "weight": "medium",
+      "reason": "Points are on-target but relatively brief and generic. The concatenation/tensor-shape question and the noise-amplification question corroborate other reviewers, but the review adds limited independent depth and its scores sit at the middle of the range without detailed justification."
+    }
+  ],
+  "score_rationale": "Scores are anchored on the two high-weight reviews (nF9B and 4rgi), whose substantive concerns align with each other and with the meta-review. Soundness (3) reflects an internally consistent theory paired with a genuine theory-experiment coupling gap and thin statistical validation; presentation (3) follows the meta-review's characterization of the writing/figure problems as minor wording/framing issues, tempering one reviewer's much harsher score. Significance (3) and originality (3) are lifted from the high-weight reviewers' lower marks by the meta-review's explicit endorsement of the problem formulation as a strong, novel contribution and by the portable design, while staying within the reviewers' range. Overall (4) tracks nF9B's weak-accept anchor and the acceptance direction while preserving the genuine initial concerns; confidence (4) reflects the strong mutual corroboration across the reviews and the meta-review."
+}

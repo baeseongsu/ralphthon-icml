@@ -1,0 +1,26 @@
+{
+  "forum_id": "I0RgZXTO53",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_ecLd",
+      "weight": "high",
+      "reason": "Specific and substantiated; its central point that the geometric misalignment claim is suggestive rather than quantified (no principal angles/CCA/CKA/Procrustes) is directly echoed by the meta-review, and its free-form-generalization and distractor-sampling concerns are well argued."
+    },
+    {
+      "reviewer": "Reviewer_HvvC",
+      "weight": "high",
+      "reason": "Substantive with the highest confidence; its small-model-scale limitation and its 'geometric analysis is suggestive, not causal' assessment both align with the meta-review, and its view that the probing-plus-intervention combination is original matches the meta-review's novelty framing."
+    },
+    {
+      "reviewer": "Reviewer_9GNF",
+      "weight": "medium",
+      "reason": "High-effort and technically detailed (low-rank k-dimensional intervention, missing CCA/CKA link that corroborates ecLd, reporting inconsistencies), but its presentation score of 1 is an outlier contradicted by the meta-review's 'well written' verdict and the other three reviewers, and several distinctive asks (retraining comparison, notation nits) are uncorroborated."
+    },
+    {
+      "reviewer": "Reviewer_Dryz",
+      "weight": "high",
+      "reason": "Specific and insightful; its prediction-probe-versus-logit-head concern is distinctive, its 'linear decodability need not equal causally-used knowledge' point corroborates the suggestive-geometry theme adopted by the meta-review, and its originality framing matches the meta-review."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on strong empirics, clear writing, and a novel probing+geometry+intervention combination while flagging a suggestive (non-rigorous) geometric interpretation and an evaluation limited to MCQ tasks and smaller models. I weighted ecLd, HvvC, and Dryz highly because their concerns (unquantified subspace alignment, correlational/causal overreach, scale limits, uneven gains) are corroborated by the meta-review and by each other; 9GNF's technical points were valued but its presentation=1 is an uncorroborated outlier contradicted by the meta-review, so presentation stays at the consensus 3. Soundness (3) and originality (3) follow the high-weight majority and the meta-review's positive novelty framing; significance (2) reflects the two high-weight 2s plus the meta-review's tempering on scope; overall (4) matches the three weak-accept votes consistent with a regular accept."
+}

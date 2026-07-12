@@ -1,0 +1,26 @@
+{
+  "forum_id": "UCAda9kS57",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_RJVY",
+      "weight": "high",
+      "reason": "Most thorough review; strengths (scale, strong ablations, failure taxonomy, PR-derived workaround) and weaknesses (no training evidence, per-language dependence, unquantified leakage) are specific and substantiated. Its questions on leakage, flakiness, and licensing map exactly onto the details the meta-review credits as validating pipeline robustness."
+    },
+    {
+      "reviewer": "Reviewer_EoAC",
+      "weight": "high",
+      "reason": "Detailed and well-targeted: identifies the missing downstream training validation as the primary gap, presses on setup-success analysis (~20% single-attempt) and narrow diagnostic-language coverage, and asks for differentiation from prior multilingual pipelines. All of these align with the meta-review's novelty and validation concerns."
+    },
+    {
+      "reviewer": "Reviewer_si4Z",
+      "weight": "high",
+      "reason": "Brief but squarely on-target: nails the single most-echoed concern (absence of any downstream training experiment) that the meta-review explicitly names, and adds a concrete, actionable reporting gap (total pipeline compute). Corroborated by every other reviewer."
+    },
+    {
+      "reviewer": "Reviewer_o4vH",
+      "weight": "medium",
+      "reason": "On-target on the novelty concern (a meta-review theme) and on contamination, and correctly frames the resource as the largest and most diverse, but the review is short and its novelty framing is somewhat tentative. Its significance score (2) sits below the meta-review's strongly positive read of the resource's practical value."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on scale, engineering, and immediate practical value as the paper's clear merit while naming moderate novelty and missing downstream training validation as the limiting factors, matching the three high-weight reviewers (RJVY, EoAC, si4Z). I set soundness, presentation, and significance to 3 to reflect a solid, well-ablated, high-value resource whose central 'enables better training' claim remains unverified, and originality to 2 given the acknowledged incremental novelty over existing collection pipelines. Overall recommendation of 5 reflects the meta-review's 'solid, standard acceptance' and the high-weight cluster of recommendations near accept (4-6). Confidence 4 reflects the strong mutual corroboration across all four reviews and the meta-review on both the strengths and the two limiting weaknesses."
+}

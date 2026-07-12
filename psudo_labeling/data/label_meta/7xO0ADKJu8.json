@@ -1,0 +1,26 @@
+{
+  "forum_id": "7xO0ADKJu8",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_DaFV",
+      "weight": "high",
+      "reason": "The most detailed and specific review. Its central concerns (unquantified training-cost overhead, the missing RL baseline, and the selective/underspecified oracle design) are echoed by the meta-review and corroborated by the other reviewers, and its motivation and experimental assessments are well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_G48u",
+      "weight": "high",
+      "reason": "Concise but on-target. Both weaknesses, the unquantified training overhead and the batch-size-1/single-hardware efficiency evaluation, are explicitly named in the meta-review as concerns the rebuttal had to address (robustness across batch sizes and hardware)."
+    },
+    {
+      "reviewer": "Reviewer_Ekmx",
+      "weight": "high",
+      "reason": "Specific and well-aligned with the meta-review: the equal-training-budget fairness concern and the RL/DPO comparison are directly reflected there, and its lower soundness/originality scores plus its question on whether the optimality guarantees survive practical truncation anticipate the meta-review's concern that the theoretical grounding is overstated."
+    },
+    {
+      "reviewer": "Reviewer_X9FQ",
+      "weight": "medium",
+      "reason": "On-target but comparatively generic. The training-cost and hyperparameter-sensitivity points are reasonable and corroborate the other reviewers, but the review is less substantiated and adds little beyond the shared concerns; the code-release point is minor."
+    }
+  ],
+  "score_rationale": "The three high-weight reviews (DaFV, G48u, Ekmx) and the meta-review converge on the same picture: a well-motivated, novel path-level reformulation with strong, broad empirical gains, offset by unquantified training cost, a fairness question in the comparison protocol, a missing RL/DPO baseline, and a theoretical framing that is stronger than what is established. Significance and originality sit at 3 because the meta-review explicitly endorses the empirical gains and the novelty of shifting to sequence-level acceptance; soundness stays at 3 (the empirical work is solid) rather than dropping to 2, while presentation is held to 3 given the acknowledged theoretical-presentation issue. Overall recommendation is 4 (weak accept), matching the meta-review's explicit weak-acceptance call at the lower end of the reviewers' [4,5] range, and confidence is 4 given the strong mutual corroboration across the reviews and meta-review on the main axes."
+}

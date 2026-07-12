@@ -1,0 +1,26 @@
+{
+  "forum_id": "EKmiOtjZjI",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_iEFj",
+      "weight": "high",
+      "reason": "Specific and substantiated, and three of the concerns it raises are adopted almost verbatim by the meta-review: the imprecise 'optimal'/'best-known' claims relative to upper-bound-only results, the missing proof sketches, and the finite-sample coverage undershoot (~93%). Its strengths (linearized-regret black-box reduction, asymmetric two-asset conformal market, parameter-free UP-OCP, extensive experiments) match the meta-review's praise."
+    },
+    {
+      "reviewer": "Reviewer_PTj8",
+      "weight": "high",
+      "reason": "Highest confidence (5) and the sharpest articulation of the paper's core novelty, that no-regret alone does not imply coverage but no-linearized-regret does, which the meta-review echoes as the central theoretical contribution. Its weaknesses are minor clarifications, and its asymmetry question is directly evaluation-relevant, so it is both specific and corroborated."
+    },
+    {
+      "reviewer": "Reviewer_U4YL",
+      "weight": "medium",
+      "reason": "Its main actionable concern, that prior-work miscoverage rates are scattered and should be consolidated into a comparison table, is directly adopted by the meta-review, and its sharpness-of-reduction point (loose Lemma A.1 for OSD, unclear whether Theorem 4.3 inherits slack) is substantive. Weighted medium rather than high because confidence is low (2) and it is a mild outlier on presentation (2) and overall (4)."
+    },
+    {
+      "reviewer": "Reviewer_UHNT",
+      "weight": "medium",
+      "reason": "Directionally aligned with the spotlight decision (overall 6, confidence 4), and its requests for a discussion of practical limitations and extensions toward strongly adaptive regret (Bhatnagar et al., 2023) are adopted by the meta-review. Weighted medium because the review is brief and its 'experiments are rather limited' remark is not corroborated; the other reviewers and the meta-review treat the empirical evaluation as a strength."
+    }
+  ],
+  "score_rationale": "The two highest-weight reviewers (iEFj and PTj8) and the meta-review converge on a strong, novel theoretical contribution with a practically valuable parameter-free algorithm, anchoring the overall recommendation at 5 (accept, matching both high-weight reviewers) and holding significance and originality at the unanimous 3. Soundness is set to 3 rather than 4 because the imprecise 'optimal'/'best-known' claims and untightened reductions flagged by iEFj and U4YL and echoed by the meta-review temper the otherwise-solid analysis. Presentation is 3, reflecting the widely noted missing proof sketches and the scattered prior-work comparison that the meta-review requires be consolidated into a table, set against an otherwise clear exposition. Confidence is 4 given the reviewers' strong mutual corroboration, with only UHNT's 'limited experiments' remark running counter to the consensus that the empirical evaluation is a strength."
+}

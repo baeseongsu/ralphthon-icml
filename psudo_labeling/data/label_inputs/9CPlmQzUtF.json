@@ -1,0 +1,52 @@
+{
+ "forum_id": "9CPlmQzUtF",
+ "title": "EduMirror: Modeling Educational Social Dynamics with Value-driven Multi-agent Simulation",
+ "abstract": "Understanding how educational social dynamics evolve is critical for informing effective educational policies and counterfactual interventions. However, traditional methods face a fundamental dilemma: observational studies often lack causal power, while controlled experiments are frequently constrained by ethical concerns. Although LLM-based multi-agent simulations offer a scalable **in silico** alternative, existing approaches remain limited by weak psychological grounding and insufficient measurement of latent psychological states. To address this, we introduce **EduMirror**, a multi-agent simulator for the scientific study of educational social dynamics. We provide configurable education-oriented agent forms, including value-driven agents grounded in psychological needs and social value orientation, together with a dual-track measurement protocol for quantifying observable behaviors and latent psychological states. We validate the realism and usability of EduMirror through case studies on school bullying and group cooperation, as well as broader evaluations across diverse educational scenarios. The results show that EduMirror generates educational social dynamics that are realistic, theory-consistent, and measurable by empirical criteria. These properties enable structured **in silico** educational research, providing a computational tool for hypothesis testing and counterfactual intervention analysis in educational science. Project page: *https://edumirror.net*.",
+ "primary_area": "applications->social_sciences",
+ "decision": "Accept (regular)",
+ "decision_comment": "Reviewers agree the multi-agent simulation platform for educational social dynamics, like bullying, cooperation, classroom interactions, is well-designed, based on established social and psychological theories and including interventions, and has potential for scaling up studies that are difficult to conduct in the real world. There are some concerns surrounding LLM-as-judge evaluations and simulation complexity. These were at least partially addressed during the response period, so authors should be sure to include these additional evaluations and discussions in the revision.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Nqz4",
+   "summary": "This paper introduces EduMirror, a multi-agent simulation platform designed to model educational social dynamics using large language model–driven agents grounded in psychological and social value frameworks. The system integrates a value-driven cognitive architecture with a scenario-based simulation environment to enable the study of complex educational phenomena such as bullying, cooperation, and classroom social interactions. Overall, this research's principal topic pertains to the use of LLM-driven multi-agent simulations as a tool for studying educational social dynamics and enabling in silico experimentation in contexts where real-world experimentation may be ethically difficult.",
+   "strengths_and_weaknesses": "Strength:\n\n1. The paper addresses an important and underexplored research problem by attempting to model educational social dynamics using LLM-based multi-agent systems. The motivation is well articulated, particularly the argument that traditional observational and experimental methods are limited when studying sensitive educational phenomena such as bullying or peer influence.\n\n2. The experimental section includes multiple case studies that demonstrate the flexibility of the platform. For example, the bullying simulation analyzes how different intervention strategies affect the victim’s psychological needs over time, while the social interaction experiments explore cooperation–competition dynamics in classroom settings. These examples illustrate potential applications of the framework in educational research.\n\nWeakness:\n\n1. The evaluation metrics are also somewhat subjective. Measures such as naturalness, plausibility, and behavioral realism are assessed through automated judgments rather than objective quantitative metrics or controlled behavioral experiments.\n\n2. The simulations involve relatively small groups of agents and simplified educational scenarios. Although the paper claims to model educational social dynamics, the scale and complexity of the simulations remain limited compared with real educational environments.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. The experiments focus on relatively small-scale simulations with limited numbers of agents. The authors should discuss whether the framework can scale to larger social systems such as entire classrooms or schools.\n\n2. The paper claims that EduMirror enables causal analysis through counterfactual simulation. The authors should clarify how causal conclusions are validated and whether the simulation outcomes correspond to empirical findings from educational research.",
+   "limitations": "See weakness.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_oswg",
+   "summary": "The paper introduces EduMirror, a multi-agent simulator that studies the mechanisms of educational social dynamics. It integrates LLMs with a value-driven cognitive architecture and is applied to scenarios including school bullying and group cooperation. Results show that EduMirror generates scenarios aligned with established theories.",
+   "strengths_and_weaknesses": "Strengths:\n* The framework is grounded on established social and psychological theories. The design is well motivated and also clearly described in the paper\n* The paper integrates an intervention engine and expands scenarios to enable the what-if experimentation. This supports causal analysis and makes the framrwork more solid.\n\nWeakness:\n* The paper is a little dense to read, with too much information in the appendix instead of the main text. I understand that this is partially due to the page limit of the conference, but authors may consider including details like the dual-track measurement in the main text",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "* Authors adapt a dual-track measurement protocol which relies on LLM rater and surveryor to evaluate behavior generated by LLMs. I wonder if this will bias the evaluation towards certain LLM-typical speech patterns\n* I wonder how the framework handles the long-context issue in LLMs, given the amount of information to be provided to LLMs as memory. How will the model choose what to remember and what to forget?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "I would like to thank the reviewers for the detailed rebuttal. I will keep my current score."
+  },
+  {
+   "reviewer": "Reviewer_oFjf",
+   "summary": "This paper introduces EduMirror, a comprehensive multi-agent simulation framework designed to “mirror” and analyze the causal mechanisms of educational social dynamics. As direct utilization of LLMs as social agents suffers from inconsistency between psychological states and behavior, this paper aims to to enable realistic, interpretable, and measurable social simulation for educational study. This approach consists of , which supports a curated library of 20 pre-designed educational scenarios, and a value system to quantify the state of   each agent for adaptive behaviour generation. Case studies demonstrate EduMirror’s capacity to reproduce realistic, coherent narratives.",
+   "strengths_and_weaknesses": "Strength:\n1. This paper addresses a critical and highly significant issue in the social sciences: educational and social problems such as school bullying or peer pressure experienced by teenagers during their primary and secondary education. By designing and implementing EduMirror, it demonstrates the potential of large-scale model technology to tackle such challenges where real-world experiments are difficult to conduct.\n2. The case studies are thorough and intuitively presented. The simulations of school bullying and peer group cooperation are detailed, logically structured, and clearly connected to established social science theories.\n\nWeakness:\n1. Limited Technical Novelty. While the system is well-engineered and application-driven, the technical components largely build upon existing multi-agent paradigms. The paper lacks methodological innovation at the algorithmic or modeling level.\n2. Reliance on LLM-Based Evaluation and Potential Validity Concerns. The dual-track measurement protocol depends heavily on LLM-based assessors to transform qualitative interactions into quantitative metrics. However, the reliability, bias, and reproducibility of such LLM-as-judge evaluations are not rigorously validated.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Is there any behaviors or phenomenon that is unexpected or unseen in the real world?",
+   "limitations": "Yes. Limitation is discussed in this paper.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "This paper addresses a critical and highly significant issue in the social sciences. The rebuttal has fully resolved my questions and I lean toward acceptance."
+  }
+ ]
+}

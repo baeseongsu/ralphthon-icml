@@ -1,0 +1,21 @@
+{
+  "forum_id": "ya4nicrVDf",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_bMLB",
+      "weight": "high",
+      "reason": "Accurate summary and specific, substantiated strengths. Their central concern, whether NTK separability is achievable for KANs, is exactly the point the meta-review anchors on, and it is independently echoed by the other reviewers' worries about assumption verifiability."
+    },
+    {
+      "reviewer": "Reviewer_y8GA",
+      "weight": "high",
+      "reason": "Detailed, high-effort review that engages deeply with the technical content and the experiments, with the highest-confidence positive read on soundness and presentation. Concerns (multi-layer extension, meaningful epsilon, missing MLP comparison) are substantive and well grounded, and align with the meta-review's positive but qualified stance."
+    },
+    {
+      "reviewer": "Reviewer_a6YE",
+      "weight": "medium",
+      "reason": "Substantive, well-articulated questions on assumption verifiability, the reference point, and initialization partly align with the meta-review's concern about assumption strength. However, the significance=1 rating is harsher than the meta-review's 'nice contributions' framing supports, and the originality=2 complaint that DP noise addition is standard, while legitimate, is not echoed by the meta-review or the other reviewers."
+    }
+  ],
+  "score_rationale": "Scores are anchored on the two high-weight reviewers (bMLB, y8GA) and the meta-review's positive-but-qualified tone. Soundness and presentation sit at 3 (good), reflecting rigorous, correct-appearing proofs and clear exposition tempered by minor clarity and notational gaps. Significance and originality are set to 3, following the high-weight reviewers and the meta-review's 'nice contributions' framing while discounting a6YE's outlier significance=1 and originality=2, which the meta-review does not support. Overall recommendation is 4 (weak accept), consistent with the unanimous accept leanings and the acknowledged, meta-review-echoed concern about the strength and practical feasibility of the NTK assumption; confidence is 4 given strong cross-reviewer agreement on both the novelty and the assumption concerns."
+}

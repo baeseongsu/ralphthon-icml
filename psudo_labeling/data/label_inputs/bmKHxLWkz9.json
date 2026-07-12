@@ -1,0 +1,66 @@
+{
+ "forum_id": "bmKHxLWkz9",
+ "title": "CORE: Context-Robust Remasking for Diffusion Language Models",
+ "abstract": "Standard decoding in Masked Diffusion Models (MDMs) is hindered by context rigidity: tokens are retained based on transient high confidence, often ignoring that early predictions lack full context. This creates cascade effects where initial inconsistencies misguide the remaining generation. Existing revision strategies attempt to mitigate this by relying on static confidence scores, but these signals are inherently myopic; inconsistent tokens frequently appear confident to the model itself. To address this, we propose Context-Robust Remasking (CORE), a training-free framework for inference-time revision. We introduce a new selection paradigm: rather than trusting static token probabilities, we identify *context-brittle* tokens by probing their sensitivity to adversarial perturbations. We formalize revision as a robust optimization problem targeting worst-case context shifts. CORE efficiently approximates this objective using theoretically bounded probability margins to expose and revise unstable tokens. On LLaDA-8B-Base, CORE delivers consistent improvements across reasoning and code benchmarks, outperforming compute-matched baselines and boosting performance on code generation (MBPP) by up to $+9.2\\\\%$, with comparable gains generalizing to the Dream-7B architecture.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "CoRe proposes a training-free remasking framework for masked diffusion models that identifies context-brittle tokens via adversarial perturbation rather than static confidence scores, with strong gains on code generation. Three reviewers converged to weak accept or accept with all concerns fully resolved; Reviewer pPkG remains at weak reject but did not engage during the discussion phase, and the rebuttal empirically addressed their metric justification and Sudoku edge-case concerns.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_pPkG",
+   "summary": "This paper proposes a remasking procedure for discrete diffusion models that remasks tokens that are sensitive to other tokens being remasked. The procedure choses a set of remasking candidates using the margin between the top-1 and top-2 probabilities, then computes an instability score over those candidates. The instability score is simply the surprisal of the unmasked token under the perturbed context. Experiments show some gains primarily on coding tasks.",
+   "strengths_and_weaknesses": "The core idea makes intuitive sense as an informal heuristic. Informally, I would want a procedure that finds tokens with high mutual information with only a small number of existing tokens, and retries those together. This should be an improvement over previous remasking procedures, which do not incorporate second-order information. This paper pushes towards that. \n\nSoundness and presentation: The paper appears correct and is well-written for the most part. There is some over-formalization. Some notation in the main paper (Q in equation 6) is barely used and not included in the notation table 5. This could easily be replaced with a single phrase, such as \"a distribution over perturbed contexts\". Additionally, while the improvements are significant over the baseline, the baseline's code generation numbers are extremely low compared to modern LLMs which have the benefit of on-policy distillation from stronger models.\n\nSignificance: This is a significant problem for masked diffusion models, although arguably I expected remasking to ultimately be learned through reinforcement learning rather than step-wise heuristics. This paper seems to make modest progress on this front. The biggest weakness is the experimental results. A secondary weakness is the lack of justification for instability as the target measure.\n\nOriginality: I believe their approach is novel.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "Can you explain what Figure 3 is showing? I interpret it as the instability score cleanly separates tokens. But it does not provide much evidence on whether instability is actually the right measure. Ideally the analysis section would contain evidence that instability is the right measure.\n\nI can imagine a setting where instability is not the right measure to resample: sudoku with a diffusion model. Difficult tokens might be unstable initially, but as search proceeds they would become stable. Back-tracking would require re-masking a large number of tokens. While this is a common weakness of masked diffusion with remasking, it still shows the shortcomings of instability as a metric.",
+   "limitations": "Yes",
+   "overall_recommendation": 3,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_DPxB",
+   "summary": "This paper studies revision in diffusion language models. The authors argue that early tokens can be wrong even when they look confident. Their method tests whether a token stays reliable after part of the context is masked. If the token becomes unstable, the model revises it. The method helps most on code generation tasks.",
+   "strengths_and_weaknesses": "### Strengths\n1. Clear and well-motivated problem setup.\n2. Training-free and easy to plug into decoding.\n3. Strong gains on code benchmarks, especially MBPP.\n\n### Weaknesses\n1. The practical method still relies on heuristic margin-based candidate selection.\n2. The robust optimization story is only approximately realized in the final algorithm.\n3. Validation is limited mainly to one base model, LLaDA-8B-Base.",
+   "soundness": 4,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weakness above",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I thank the authors for their detailed response. My concerns have been adequately addressed."
+  },
+  {
+   "reviewer": "Reviewer_QUft",
+   "summary": "CoRe addresses a real weakness in masked diffusion decoding: tokens committed early under sparse context become hard anchors that propagate structural errors. Rather than measuring uncertainty at sampling time, CoRe probes whether each token remains probable when nearby tokens are jointly masked—treating instability under this perturbation as the revision signal. The method is training-free, adds ~6% compute overhead, and shows consistent gains on LLaDA-8B-Base, most strikingly +9.2% on MBPP.",
+   "strengths_and_weaknesses": "Strength:\n\n1> The brittle-vs-uncertain distinction is conceptually neat and maps to a real failure mode. The qualitative examples (Appendix E) make the mechanism concrete in a way tables alone cannot.\n\n2> Compute-controlled comparisons (Tables 2–3) are handled carefully. That ReMDM-conf degrades on code when given equal compute is one of the paper's clearest results.\n\n3> The code generation gains are large enough to matter in practice for anyone working on MDM deployment.\n\nWeakness:\n\n1> The algorithm identifies candidates by low-margin, then ranks by instability, but these stages are not separated. Table 2's controls all share the same margin-based candidate pool, leaving open whether instability or the margin prefilter drives the gains. This missing ablation simultaneously weakens soundness, originality, and the central framing.\n\n2> The appendix result confirms that the computed instability is a lower bound on worst-case instability—the chosen perturbation is feasible, not near-optimal. Section 4.1 should be framed as motivation, not justification.\n\n3> All results come from one model (LLaDA-8B-Base) under greedy decoding; claims of broader generality are not necessarily supported.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1> Does instability-based revision improve performance when candidates are selected randomly or by recency rather than by low-margin? If not, is the method better characterized as a two-stage hybrid where margin does the heavy lifting?\n\n2> What fraction of tokens that CORE actually revises would have been missed by the low-margin candidate screen?\n\n3> What evidence supports that the chosen perturbation (masking low-margin tokens) approximates the worst-case context shift more closely than an arbitrary feasible perturbation?\n\n4> Does jointly re-evaluating newly unmasked positions after a revision step change performance, and if so by how much?",
+   "limitations": "I think the paper should more explicitly address two limitations:\n\n1> The paper claims to move beyond confidence-based heuristics, yet the candidate pool is itself assembled using the top-2 probability margin which is a confidence-adjacent signal. This tension is never acknowledged or discussed.\n\n2> The evaluation uses a single model (LLaDA-8B-Base) under greedy decoding with fixed generation length. The paper does not flag this as a scope limitation, yet several claims imply generality that the current evidence does not support.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_HGzu",
+   "summary": "This paper proposes CoRe, a remasking mechanism for diffusion language models. Instead of choosing the remasked positions based on confidence, as in existing works, the authors proposed to choose remasked positions based on context-stability -- positions whose output distribution changes a lot when the context changes. The authors further proposed a fast approach to choosing the perturbed context. Experiments show that the proposed remasking significantly improves diffusion language models' performance on coding and reasoning tasks. Further ablation studies confirm that the improvement is due to the improved metric for selecting remasking positions.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The proposed method shows a very great improvement in math and coding tasks over baselines.\n2. Sufficient ablation studies are performed\n\n**Weaknesses**\n\nMy biggest concern with the paper is that the math formulations can be improved. Specifically\n\n1. On page 2, the equation\n$$\np_{\\theta} (y_i^{(t)} = v | y^{(t)}, i)\n$$\ndoes not look correct, because it involves the distribution of a variable conditional on itself (the authors used the same variable notation for both the conditioning and the distribution). I understand what the authors intend to show with this notation, but this can be expressed in a more rigorous way. For example, the author could use the unmasked subset of $y^{(t)}$ as the condition, or could use a different variable to distinguish the unmasked or masked version of the variable.\n\n2. Equation (11), $p_{\\theta}(v|\\tilde{y}^{(t)})$ seemed very ambiguous because it does not specify the position $i$. I would recommend changing it back to $p_{\\theta}(y_i^{(t)} = v|\\tilde{y}^{(t)})$.\n\n3. I wonder why Equation (8) is expressed in such a circuitous way. Considering the optimal solution for $\\pi$ is a corner solution concentrated on the set $S_t$ this maximizes $\\mathcal{L}(S_t)$. A more straightforward formulation seems to be\n$$\n{S_t}^* = \\text{argmax}_{S_t \\subset C_t} \\mathcal{L}(S_t), s.t. |S_t| \\leq m\n$$\nThis formulation maintains consistency with Equation (10). Is there any reason to have disparate formulations for Equations (8) and (10)?\n\n4. Perhaps one reason the authors introduced $\\pi$ is to make a connection with the approximated distribution for $\\pi$ introduced in Section 4.2. However, the authors state that $\\tau \\rightarrow 0$ so everything is deterministic. Why introduce $\\pi$ while the approximated decision can be more straightforwardly expressed as\n$$\n{S_t}^* = \\text{argmin} \\sum_{i \\in S_t} \\text{margin}_t(i)?\n$$\n\n5. It is very easy for the authors to fail to understand the differences between Equations (8) and (10). In the former case, the perturbation set $S_t$ changes both the positions to be masked, and the positions to be summed over ($\\sum_{i \\in S_t}$). In the latter case, $I_t$ only changes the positions to be summed over, GIVEN the perturbation set fixed to $S_t$. This confusion is partly due to not emphasizing that the $\\ell_i$ is a function of $S_t$. It would make the paper clearer if $\\ell_i$ is changed to $\\ell_i(S_t)$ in Equations (2), (3), and (10).\n\n6. (minor) In line 273 (right), use \\citet instead of \\cite or \\citep because Kim et al is used as a sentence component. So it should be 'following Kim et al. (2025b)'.\n\n7. (minor) Font size in tables is too small. Consider changing it back to normal size, should there be additional space allowed.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weakness",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 2,
+   "final_justification": "The rebuttal has addressed the writing concerns."
+  }
+ ]
+}

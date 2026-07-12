@@ -1,0 +1,26 @@
+{
+  "forum_id": "538sn0p2Ek",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_BazH",
+      "weight": "high",
+      "reason": "Specific and substantiated, with an accept recommendation aligned with the consensus. Its two concrete concerns, the limited task horizon and whether CVAE-synthesized (not just uploaded) features can be inverted, are both echoed in the meta-review's main concerns."
+    },
+    {
+      "reviewer": "Reviewer_kfBT",
+      "weight": "high",
+      "reason": "Well-targeted, actionable concerns that map directly onto the meta-review: comparison against lighter generator-free/prototype-based methods, insufficient privacy scope with no formal (epsilon, delta)-DP guarantee, and a systematic communication-cost analysis. Measured weak-accept consistent with the accept decision."
+    },
+    {
+      "reviewer": "Reviewer_MDXa",
+      "weight": "high",
+      "reason": "Detailed and on-target: membership-inference/broader privacy evaluation, justification of CVAE vs. diffusion or MLP-based generators, deeper hyperparameter sensitivity, and evaluation with more clients, all of which the meta-review adopts. Accept recommendation aligned with consensus."
+    },
+    {
+      "reviewer": "Reviewer_urS8",
+      "weight": "medium",
+      "reason": "The lone weak-reject, with soundness=2/significance=2 that run against the meta-review's accept direction and the other three reviewers, and it is the 'somewhat unconvinced on broader applicability' reviewer. However, its itemized weaknesses (homogeneous-architecture assumption, missing loss-weight sensitivity analysis, long-horizon CVAE drift) are specific and are adopted in the meta-review, so the points are valuable even though the bottom line is off-consensus."
+    }
+  ],
+  "score_rationale": "The meta-review anchors a clear regular accept and describes the contribution as technically sound and practically valuable, so I held soundness, significance, and presentation at 3 (good) rather than letting the lone weak-reject's soundness/significance of 2 pull them down, since that reviewer's bottom line is off-consensus even though its itemized concerns are valid; originality is unanimously 3. Overall recommendation is set to 4 (weak accept): three of four reviewers were at 4-5 and the decision is accept, but a single reviewer synthesizing the full union of open concerns (long-horizon scalability, model heterogeneity, generator-choice justification, privacy scope and formal DP, hyperparameter sensitivity, communication analysis) pre-rebuttal would land at a measured weak accept rather than a clear 5. Confidence is 4 because the four reviews are strongly mutually corroborating on both strengths and weaknesses and the meta-review adopts those same points, with the only real divergence being urS8's low bottom-line scores."
+}

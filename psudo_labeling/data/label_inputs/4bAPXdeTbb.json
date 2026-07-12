@@ -1,0 +1,62 @@
+{
+ "forum_id": "4bAPXdeTbb",
+ "title": "SAOT: Self-Supervised Continual Graph Learning with Structure-Aware Optimal Transport",
+ "abstract": "Self-supervised Continual Graph Learning (CGL) aims to successively learn from a graph sequence with different tasks without label supervision—a paradigm that has attracted widespread attention. Most existing self-supervised CGL methods rely on instance-level consistency objectives that enforce stability of individual node (or node-pair) embeddings. Due to optimizing nodes in isolation, these methods fail to maintain global relational structure, causing inter-node correspondences to progressively distort under continual learning. To this end, we propose a novel Structure-Aware Optimal Transport (SAOT) framework that explicitly captures and preserves relational structure within graph representations across sequential tasks. Specifically, SAOT leverages optimal transport theory to capture global inter-node correspondences, thereby facilitating and enhancing graph representation learning. Simultaneously, SAOT incorporates a cross-task knowledge distillation mechanism to preserve the previous structural knowledge. Extensive experiments on four CGL benchmark datasets demonstrate that SAOT outperforms existing self-supervised baselines. In particular, SAOT achieves significant performance gains, improving average accuracy by up to 5% on CoraFull-CL and over 15% on Products-CL compared with state-of-the-art methods in the Class-IL setting.",
+ "primary_area": "deep_learning->selfsupervised_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper has four reviews, with ratings 5, 5, 5, and 3, respectively. The reviewers raised the following major concerns:\n1. The computational cost is high (resolved by the rebuttal).\n2. The novelty and theoretical analysis are insufficient (from Reviewer 8vrM).\n3. The tested datasets are insufficient (resolved by the rebuttal).\n\nI partially agree with the concern of limited novelty in applying OT to graph learning. However, the application of OT to continual graph learning seems novel. Moreover, the experiments showed that the proposed method is much more effective than the baselines, meaning that the innovation is significant.\n\nDuring the discussion, Reviewer 8vrM has no obligation to accept the paper.\n\nBased on the above, I recommend accepting the paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_bGxt",
+   "summary": "This paper addresses a critical and under-explored problem in continual graph learning (CGL): self-supervised learning that preserves global relational graph structure to mitigate structural drift and catastrophic forgetting. By aligning OT plans from the graph space and the representation space, SAOT guides the encoder to learn embeddings that retain global relational structure; by distilling OT plans from previous tasks, it mitigates structural drift in CGL. Extensive experiments conducted on multiple datasets demonstrate its performance.",
+   "strengths_and_weaknesses": "Strengths:\n\n(1)The core contribution of integrating Structure-Aware Optimal Transport (SAOT) into self-supervised CGL is innovative. Unlike existing instance-level consistency methods that optimize isolated node embeddings, it explicitly models global inter-node correspondences via OT theory and Gromov-Wasserstein distance.\n\n(2)The design of a transport plan-level distillation mechanism (rather than point-wise embedding constraints) is a well-justified choice. \n\n(3) The problem formulation for self-supervised CGL is clear and consistent with prior work, and the decoupled representation-classifier paradigm ensures fair evaluation of learned embeddings.\n\nWeaknesses:\n\n(1) The paper provides no quantitative analysis of whether it is sensitive to task order, which is a common issue in continual learning. The experiments use a fixed task order, and no random task order evaluations are included, limiting the generalizability of the results.\n\n(2)The authors use a 2-layer GCN for most datasets and a 3-layer GAT for Reddit-CL but provide no justification for this choice (e.g., why GAT is better for Reddit-CL, or how encoder depth/architecture impacts SAOT’s performance).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "See weakness",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_8vrM",
+   "summary": "This work identifies that current self-supervised CGL methods often rely on instance-level consistency, which can lead to structural drift where the global relationships between node embeddings distort over time. The proposed SAOT method addresses this problem by using Optimal Transport theory to capture and align the global relational structure between the input graph space and the representation space. Experiments are conducted on 4 benchmark datasets to demonstrate the benefit of the proposed approach.",
+   "strengths_and_weaknesses": "Strengths: \n\n1. SAOT explicitly models inter-node correspondences, effectively mitigating structural drift. \n\n2. SAOT seems to be quite effective on the selected datasets. \n\n \n\nWeaknesses: \n\n1. The manuscript lacks a rigorous theoretical analysis to demonstrate the advantages of SAOT. Given the high standards for theoretical depth at ICML, the paper may not be suitable in its current form. \n\n2. I have concerns about the novelty. The application of OT to the graph domain is already a well-established paradigm.  For example, the following papers also apply the optimal transport theory. What are the key distinction in this paper?\n\n [1] HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport. ICML 2025. \n\n [2] GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs. AAAI 2026. \n\n3. Following 2, calculating OT distance  can be computationally intensive for very large graphs compared to simple point-wise CGL objectives. Therefore, both complexity and running time compared to baselines should be reported. \n\n4. “The learning rate is tuned within the range 1e-4 to 1e-2”. A more detailed setting that has been adopted should be reported.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please see weaknesses above.",
+   "limitations": "Not much discussion. One limitation authors could potentially discuss: there are different kinds of evolving distributions (e.g. gradual drift or a burst/rapid changes). Can the proposed method work equally work well in these different distributions, or perform better for certain scenarios?",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_ip6V",
+   "summary": "Summary:\n\nThe author proposes a new method called SAOT, a self-supervised continual graph learing framework which uses structure-aware optimal transport to preserve global relational structure. SAOT has achieved SOTA performance on 4 benchmark datasets compared with baselines.",
+   "strengths_and_weaknesses": "Pros:\n- The author proposes a new method called SAOT, a self-supervised continual graph learing framework which uses structure-aware optimal transport to preserve global relational structure.\n\n- SAOT has achieved SOTA performance on 4 benchmark datasets compared with baselines.\n\nCons:\n- The experiments are conducted on only 4 datasets, which seems limited. \n- More extreme setting, like replay-free would be interesting to explore and test\n- OT is computationally heavy and the efficiency analysis is not comprehensive.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "please refer to cons",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_DDmC",
+   "summary": "This paper proposes SAOT, a novel self-supervised continual graph learning method that explicitly captures and preserves relational structure within graph representations across sequential tasks. Simultaneously, SAOT incorporates a cross-task knowledge distillation mechanism to preserve the previous structural knowledge. Extensive experiments conducted on multiple datasets demonstrate the state-of-the-art performance of the proposed SAOT.",
+   "strengths_and_weaknesses": "Strengths:\n(1) The paper identifies a significant and nuanced problem in self-supervised continual graph learning (CGL)—structural drift—which is often overlooked by instance-level methods. The proposed solution, using Optimal Transport to capture and preserve relational structures, is a novel and theoretically grounded approach to this problem.\n(2) The SAOT framework is well-structured and clearly explained. \n(3) Experimental results demonstrate that SAOT achieves significant performance gains in the most of the datasets.\n\nWeaknesses:\n(1) A major concern for OT-based methods, especially those involving Gromov-Wasserstein distances (Equation 5-7), is their computational cost. The paper mentions using a \"batched\" approach but does not provide a detailed analysis of the time and memory complexity of computing the fused optimal transport plans.\n(2)The notation G_t^bat is introduced in Section 4 but its precise meaning is not fully clear.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "(1) While SAOT achieves the best AP on Arxiv-CL under Class-IL, its AF is significantly worse than TRACE (-6.4%) and even some supervised methods. A deeper analysis of this specific failure case would be insightful.\n\n(2) Some equations (e.g., Equations 5) need more intuitive explanations.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

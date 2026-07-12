@@ -1,0 +1,21 @@
+{
+  "forum_id": "UZF4ssK12K",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Q4u6",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its two central recommendations -- expand the benchmark suite (e.g., Libero, hard-exploration Antmaze) and demonstrate the approach with another finetuning procedure such as residual RL -- are directly adopted in the meta-review (which notes a new benchmark and a residual-RL run were added). Its algorithm-clarity concern (unstated policy update, missing algorithm box) is concrete and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_Kf7a",
+      "weight": "high",
+      "reason": "Detailed and largely on-target. Its complexity / wall-clock-time and intra-fleet communication-overhead questions and its call for comparisons to established exploration methods are echoed by the meta-review (appreciation of wall-clock comparisons; method 'similar to existing exploration approaches'). One suggestion (moving to discrete open-ended domains like Craftax) is less apt for this continuous-control robotics paper, but the core concerns are corroborated."
+    },
+    {
+      "reviewer": "Reviewer_yojD",
+      "weight": "medium",
+      "reason": "On-target but briefer and less substantiated than the two high-weight reviews. Its computational-cost concern and its request for more baselines align with the meta-review's complexity and 'not overly significant' framing, and its 'integrates naturally with diffusion policies' phrasing is mirrored in the meta-review. The pretrained-prior-sensitivity and early-critic questions are thoughtful, but the review is less specific overall."
+    }
+  ],
+  "score_rationale": "The meta-review foregrounds three threads -- add more benchmarks (Q4u6's Libero/Antmaze and residual-RL suggestions), analyze complexity/wall-clock cost (Kf7a's and yojD's concerns), and the method's similarity to existing exploration approaches with only modest gains -- so Q4u6 and Kf7a are weighted high and yojD medium. Soundness (3), significance (3), and originality (3) sit at the upper end of the reviewer range because two of three reviewers converged there and the regular-accept outcome endorses the direction, but the meta-review's 'similar to existing approaches / not overly significant' framing keeps them from higher and prevents rounding originality up. Presentation is set to 3 to balance Q4u6's substantiated algorithm-exposition concern (2) against Kf7a's readability praise (4). Overall recommendation is 4, the unanimous reviewer value and consistent with the acceptance; confidence is 4 given how strongly the three reviews and the meta-review corroborate one another."
+}

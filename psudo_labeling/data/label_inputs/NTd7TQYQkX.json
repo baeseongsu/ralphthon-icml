@@ -1,0 +1,66 @@
+{
+ "forum_id": "NTd7TQYQkX",
+ "title": "Dynamics Reveals Structure: Challenging the Linear Propagation Assumption",
+ "abstract": "Neural networks adapt through first-order parameter updates, yet it remains unclear whether such updates preserve logical coherence.\nWe investigate the geometric limits of the Linear Propagation Assumption (LPA), the premise that local updates coherently propagate to logical consequences.\nTo formalize this, we adopt relation algebra and study three core operations on relations: negation flips truth values, converse swaps argument order, and composition chains relations.\nFor negation and converse, we prove that guaranteeing direction-agnostic first-order propagation necessitates a tensor factorization separating entity-pair context from relation content.\nHowever, for composition, we identify a fundamental obstruction.\nWe show that composition reduces to conjunction, and prove that any conjunction well-defined on linear features must be bilinear.\nSince bilinearity is incompatible with negation, this forces the feature map to collapse.\nThese results suggest that failures in knowledge editing, the reversal curse, and multi-hop reasoning may stem from common structural limitations inherent to the LPA.",
+ "primary_area": "deep_learning->theory",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "Reviewers agree this paper makes creative use of relational algebra to offer new insights into the cause of several well-known failure modes in LLMs.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_VLWc",
+   "summary": "The manuscript studies the limitations of neural network training via\ngradient descent in terms of consistency with respect to logical\noperations. It highlights how standard gradient updates fail to\nguarantee consistency and provides a principled framework to study\nconditions guaranteeing consistency wrt various relations.",
+   "strengths_and_weaknesses": "The paper sheds new light on the reasons for well-known failure modes\nin standard neural models like LLMs, like management of negation and\nmulti-hop reasoning.\n\nThe problem is formalized in a rigorous and actionable way using\nrelation algebra, which allows to identify geometric constraints\nneeded to achieve logical consistency and incompatibility between\ndifferent relations when it comes to guaranteeing consistency with\ngradient updates.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "none",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "This is a solid contribution on the learnability problems of gradient-based approaches, providing a fresh perspective on some difficulties observed in learning certain patterns of reasoning."
+  },
+  {
+   "reviewer": "Reviewer_Qvqe",
+   "summary": "This paper investigates the logical systematicity under the linear propagation assumption, which leverages the first-order Taylor expansion. Logical systematicity of negation, converse, and conjunction (multi-hop) is discussed. Interesting, the co-existence of linear feature space (which is the gradient of the score) and requirement of logical first principles lead to the failure of the linear propagation assumption. Suggesting the pathway for future research.",
+   "strengths_and_weaknesses": "Strength:\n- This paper reveals the key deficiency of one fundamental assumption LPA in the field of knowledge editing by undeniable first principles rooted in logical algebras and linear geometrical spaces. Revealing the compiling fact that such geometric assumption failed to capture the systematicity of the logical structure.\n- The analysis is convincing and applies not only to LLMs but all connectionism networks.\n- The implication of this paper is also meaningful. Even though LPA will almost surely be a minimal way to attack related problems. Knowing its gap is beneficial.\n\nWeakness:\n- Some notations are not clearly stated properly, such as the O sum and O times, which is not commonly defined for readers in general background. Adding a paragraph describing notations somewhere are welcomed.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. whether the formal assumptions are too strong for practical model editing? Would there be any empirical evidences?\n2. one of the key element is that the negation is achieved by sign flipping. However, this is not supported by evidence in Figure 2. Does this fact weaken the practical significance of this discussion?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_apAP",
+   "summary": "This paper explores what the authors call the \"Linear Propagation Assumption\" (LPA). Simply put, LPA is the assumption that first-order parameter updates preserve logical coherence about the facts being updated as well as related beliefs not explicitly updated. Prior research has shown that LLMs generally do not maintain such logical coherence. Thus, the authors investigate what constraints must be satisfied to allow such coherence to be maintained, which they formalize as \"Systematic Linear Propagation\" (SLP). The authors interpret the relations being updated in terms of relational algebra and use this formalization to prove that the negation and converse cases are theoretically satisfiable by linear updates to the LLM but that conjunction requires a constraint incompatible with negation. Thus, the overall conclusion is that linear updates to the model fundamentally constrain logical coherence of the updates, suggesting that alternative update geometries are necessary to guarantee logical coherence during updates.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper analyzes LLM updates under a creative regime, applying the relational algebra to knowledge updates.\n2. The claims of the paper are technically sound, supported either by prior results or derived within the setup of the paper.\n3. The topic of the paper is especially relevant in current times where commonly used tools are being replaced by pure-AI alternatives, increasing the risk of misinformation due to slight differences in how knowledge is queried.\n\nWeaknesses:\n1. There paper is rich in notation and terminology which may not be familiar to NLP/ML audiences compared to database audiences. For example, the notation for closure is first used over 3 pages after it is explained, at which point the actual composition is highly important for understanding the subsequent proofs.\n2. It seems that the conclusions of the analysis in this paper only apply to individual updates, but it's unclear if these results apply when linear updates are iteratively applied over multiple optimization steps throughout the model.\n3. (Minor) The authors suggest properties that optimization methods may need to satisfy the logical coherence constraints but do not provide concrete guidance to analyze any such method beyond that they must enforce the theorized structures. I suspect that this analysis framework will be difficult to apply in practice to prove theoretical coherence.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Perhaps I missed this, but I did not find anything where this analysis was specific to LLMs. Does any proof or setting use assumptions specific to language models?\n2. Although you prove that the negation and conjunction requirements are incompatible, it's not clear to me the implications of that incompatibility. Is it possible to formalize something like error bounds?\n3. Under the requirements imposed by your formalization, how might you extend this analysis for multi-step non-local optimization?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The rebuttal addressed my questions and I maintain my original score."
+  },
+  {
+   "reviewer": "Reviewer_MgGj",
+   "summary": "This paper investigates the geometric limits of LPA under first-order parameter updates and proposes a theoretical framework based on relational algebra and gradient linearized features. Within this framework, the authors derive necessary structural conditions on negation/converse. Specifically, to guarantee direction-agnostic first-order propagation, negation requires a tensor factorization that separates entity-pair context from relation content (Theorem 1). Converse further requires a decomposition into symmetric and antisymmetric components, constraining how argument order is represented (Theorem 2). Moreover, the paper identifies a fundamental obstruction when extending this systematicity to composition (Theorem 3).",
+   "strengths_and_weaknesses": "Strengths\n\n1. This study empirically presents that the current LLMs violate a basic requirement for negation consistency under LPA. \n\n2. By introducing relation algebra and linearized Features to give a central definition: Systematic Linear Propagation. \n\n3. The analysis reveals several necessary conditions on the required geometry of first-order updates.\n\nWeaknesses\n\n1. The theoretical results are highly dependent on SLP and Assumption 1 obtained from relation algebra and linearization features, but the SLP definition is strong. For example, SLP requires that the logical constraints hold for all  $\\Delta\\theta\\in W$ in the first-order regime, as well as in practical applications where $\\phi$ is a learned low-dimensional embedding, Assumption 1 usually does not hold.\n\n2. The theoretical results lack empirical support.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. This paper adopts relation algebra and study three core operations on relations. These results suggest that failures in knowledge editing, the reversal curse, and multi-hop reasoning may stem from common structural limitations inherent to the LPA. However, the paper currently lacks empirical support for these claims, making it difficult to assess whether the theory faithfully captures behavior observed in practice. A toy model or controlled synthetic experiment could be a useful first step to support the theory.",
+   "limitations": "I suggest that the authors explore the limitations of the theoretical conclusions in practical applications. Having not empirically verified the theoretical results, I do not know the reliability of the theoretical results in practical applications.",
+   "overall_recommendation": 4,
+   "confidence": 1,
+   "final_justification": "This rebuttal addresses my primary concern about the lack of empirical support for the theoretical claims."
+  }
+ ]
+}

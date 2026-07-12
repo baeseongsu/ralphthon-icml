@@ -1,0 +1,26 @@
+{
+  "forum_id": "dIhYhrVTCO",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_smFm",
+      "weight": "high",
+      "reason": "Most detailed and specific review, with high self-reported confidence. Its central concerns -- dependence on domain-specific physical metrics, substantial per-frame computational overhead (hundreds of seconds in 3D), and cumulative drift over long horizons -- are exactly the remaining concerns highlighted in the meta-review and are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_osYb",
+      "weight": "high",
+      "reason": "Specific, substantiated concerns about limited baselines and lack of downstream physical-fidelity evaluation are explicitly echoed by the meta-review, which credits the addition of stronger baselines and improved evaluation of physical fidelity. Also raises corroborated points on PATS threshold/window sensitivity and throughput reporting."
+    },
+    {
+      "reviewer": "Reviewer_fXH6",
+      "weight": "high",
+      "reason": "Detailed and on-target: its concerns about computational overhead, generality of hand-designed metrics, and numerical stability / long-horizon robustness are the exact 'stronger concerns' the meta-review foregrounds. Its uniformly low scores are the outlier and were tempered by the positive decision, so its concerns are adopted in the prose but do not pull the overall recommendation below accept."
+    },
+    {
+      "reviewer": "Reviewer_MxDa",
+      "weight": "medium",
+      "reason": "Accurate and corroborated but brief, with only a single question. Its concrete observation that the method write-up is imprecise (the 'local decision engine' gate ambiguity) aligns with the meta-review's note on clarification of the method, and its hand-designed-metric concern is universal, but the analysis is thinner than the other three."
+    }
+  ],
+  "score_rationale": "The meta-review anchors a positive, accept-leaning direction: the problem is important and timely, the temporal+spatial combination is a meaningful contribution, and the method is technically sound, with remaining concerns about generality and overhead framed as trade-offs. I therefore positioned soundness, presentation, significance, and originality at 3 (the top of the reviewers' [2,3] ranges), driven by the high-weight reviewers who scored 3 and by the meta-review's positive framing, while acknowledging the lower 2s from the stricter reviewers in the prose. Overall recommendation is set to 4 (weak accept), consistent with three of four reviewers and the accept decision, with the dissenting overall-3 review's substantive concerns fully incorporated as weaknesses rather than as a lower score. Confidence is 4 because the four reviews are strongly mutually corroborating on the key points (domain-specific metrics, overhead, long-horizon robustness, baselines, and method clarity)."
+}

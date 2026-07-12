@@ -1,0 +1,21 @@
+{
+  "forum_id": "W6qfbvysDh",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_tnfk",
+      "weight": "high",
+      "reason": "Their specific criticisms are the ones the meta-review explicitly adopts as lingering issues: the paper feeling unfocused (Section 4.2 relevance), the QwQ math-reasoning dataset being a niche/artificial stress test, confusing notation around segment counts (M vs M+1), unlabeled Figure 3 axes, and non-comprehensive baselines (cited concrete missing methods that map to the muKE/FT-UKE additions). Specific and substantiated, even though their overall recommendation of 3 was ultimately overturned by acceptance."
+    },
+    {
+      "reviewer": "Reviewer_9bNy",
+      "weight": "high",
+      "reason": "The meta-review directly anchors on this reviewer's two main points, the use of older (pre-2024) models and the missing RAG comparison, both of which the authors were noted to have addressed. Review is accurate, specific, and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_BP3b",
+      "weight": "high",
+      "reason": "Specific and substantiated technical review: proposes simpler rule/model-based segmentation baselines to isolate Bayes-Chunk's contribution and asks for sensitivity/ablation on heuristic design factors and the number of segments k. The baseline concern is independently corroborated by Reviewer_tnfk and aligns with the meta-review's note on additional baselines."
+    }
+  ],
+  "score_rationale": "Soundness and presentation were fixed at 3 (all reviewers agreed). For significance I chose 3, following the two high-weight reviewers (9bNy, BP3b) and the meta-review's emphasis on the method being plug-and-play and consistently useful, over tnfk's 2. For originality I chose 2, reflecting that two high-weight reviewers (9bNy, tnfk) viewed the surprisal-based chunking as a relatively incremental modification of AnyEdit, with BP3b's 3 offset by the theoretical framing being the main value-add. Overall recommendation was set to 4 (weak accept): the meta-review clearly directs toward acceptance and two reviewers gave 5, but tnfk's substantive and meta-review-validated concerns (narrow baselines, under-motivated dataset, clarity/notation, missing ablations) temper an initial-review synthesis away from a clean accept; confidence is 4 because the three reviews and the meta-review are highly coherent and mutually corroborating."
+}

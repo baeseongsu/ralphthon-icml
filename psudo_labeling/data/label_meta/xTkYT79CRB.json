@@ -1,0 +1,26 @@
+{
+  "forum_id": "xTkYT79CRB",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_P5Tm",
+      "weight": "high",
+      "reason": "The most substantive review (highest confidence, grounded in specific figures and citations). Its three weaknesses — task scope limiting significance, the untested attention-faithfulness assumption, and the strong assumptions in the factorization (Eq. 2) — are each echoed in the meta-review's weakness list, and its evaluation-design praise matches the meta-review's 'comprehensive evaluation' strength."
+    },
+    {
+      "reviewer": "Reviewer_x4Qh",
+      "weight": "high",
+      "reason": "Concise but precisely on-target: all three of its concerns — white-box/closed-source applicability, narrow task scope, and dependency on visual grounding — appear verbatim in spirit in the meta-review's weaknesses, and it independently corroborates the other high-weight reviewers."
+    },
+    {
+      "reviewer": "Reviewer_BgyJ",
+      "weight": "high",
+      "reason": "Detailed and specific; raised the closed-source-applicability and generalization concerns adopted by the meta-review, plus a well-motivated point on Top-K layer selection. Its praise of the mathematically grounded framework matches the meta-review, though its soundness/presentation/originality scores of 2 run below the meta-review's positive framing."
+    },
+    {
+      "reviewer": "Reviewer_tAdC",
+      "weight": "medium",
+      "reason": "Identifies the two meta-review-corroborated weaknesses (factorization based on intuitive assumptions, unclear generalization to other tasks), but the review is comparatively brief and less substantiated, and its soundness/presentation scores of 4 are outliers well above the other three reviewers and above the paper's acknowledged weaknesses. Its code-availability concern is moot given the released code link."
+    }
+  ],
+  "score_rationale": "All four reviews converged on weak accept (overall = 4) and on the same core picture — a compelling Logit-Attention Divergence insight and strong, comprehensive results, offset by scope and applicability limits — so overall_recommendation = 4 and a coherent confidence of 4 were straightforward. Soundness (3), presentation (3), and originality (3) reflect the meta-review's positive framing ('mathematically grounded,' 'novel') balanced against the well-corroborated concern about the factorization's strong, untested assumptions; I discounted tAdC's outlier 4/4 soundness/presentation as more generous than the paper's acknowledged weaknesses warrant, and did not adopt BgyJ's lone originality 2 against the meta-review's explicit novelty claim. Significance was set to 2 because the two most substantive, highest-confidence reviews (P5Tm, x4Qh) rated it fair with explicit reasoning, and the meta-review's weakness list is dominated by exactly these scope- and applicability-limiting concerns (generalization to other tasks, closed-source models), even though the underlying problem is important."
+}

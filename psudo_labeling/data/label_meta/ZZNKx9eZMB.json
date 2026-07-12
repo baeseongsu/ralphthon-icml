@@ -1,0 +1,26 @@
+{
+  "forum_id": "ZZNKx9eZMB",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_f8Wp",
+      "weight": "high",
+      "reason": "Highest confidence (5) and the only reviewer to run the released code and verify robustness trends. Points are specific and substantiated (idealized global-scalar perturbation, narrow related work, need for a deeper ablation discussion), and its emphasis on the novelty of the Scale Mismatch Problem, the rigorous theory, and comprehensive experiments is exactly what the meta-review adopts."
+    },
+    {
+      "reviewer": "Reviewer_i22T",
+      "weight": "high",
+      "reason": "Confident (4) and highly specific: catches a concrete backbone inconsistency (ResNet-18 vs ResNet-50), raises the insightful K=2 statistical-instability concern, and independently corroborates f8Wp on the artificial/extreme temperature-scaling threat model. Strengths (novelty, rigorous proofs, comprehensive evaluation) align directly with the meta-review's stated basis for acceptance."
+    },
+    {
+      "reviewer": "Reviewer_nSEo",
+      "weight": "medium",
+      "reason": "Positive and echoes the well-motivated / identifies-a-real-gap theme adopted by the meta-review, but the review is light and low confidence (2). Its clarity questions on the experimental setup and the meaning of AUROC are genuine and worth surfacing, yet reflect partial understanding of the protocol rather than substantive critique."
+    },
+    {
+      "reviewer": "Reviewer_Yd1e",
+      "weight": "medium",
+      "reason": "Most critical, with the lowest scores. Its central framing that the theoretical analysis is high-level and its low soundness/originality ratings are contradicted by the two higher-confidence reviewers (who found the theory rigorous) and by the meta-review's emphasis on novelty and rigor, so those are discounted. However, its specific asks for a runtime/overhead comparison and calibration analysis are valid and were retained as constructive points."
+    }
+  ],
+  "score_rationale": "The two most confident reviewers (f8Wp at confidence 5, who also ran the code, and i22T at confidence 4) anchored the scores; both rated originality and significance at 4 and were echoed by the meta-review's emphasis on the novelty of the scale-invariant mechanism and the comprehensiveness of the experiments, so I set originality=4, significance=4, and overall_recommendation=5 (Accept). Soundness was held at 3 rather than 4 because both high-weight reviewers independently flagged the idealized uniform scale-perturbation threat model and the instability of standardization at low K, which temper an otherwise rigorous theory; presentation=3 was unanimous across all four reviewers. Yd1e's lower scores and 'theory is high-level' framing were discounted as contradicted by the higher-confidence reviewers and the meta-review, while its runtime and calibration points were kept, and nSEo's setup-clarity questions were retained but weighted as medium given its low (2) confidence. Confidence is 4 because the underlying reviews are strongly mutually corroborating on both strengths and the main concerns, with only the low-weight dissent introducing noise."
+}

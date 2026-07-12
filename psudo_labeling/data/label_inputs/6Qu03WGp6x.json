@@ -1,0 +1,49 @@
+{
+ "forum_id": "6Qu03WGp6x",
+ "title": "Learning Global Representation from Queries for Vectorized HD Map Construction",
+ "abstract": "The online construction of vectorized high-definition (HD) maps is a cornerstone of modern autonomous driving systems. State-of-the-art approaches, particularly those based on the DETR framework, formulate this as an instance detection problem. However, their reliance on independent, learnable object queries results in a predominantly local query perspective, neglecting the inherent global representation within HD maps. In this work, we propose \\textbf{MapGR} (\\textbf{G}lobal \\textbf{R}epresentation learning for HD \\textbf{Map} construction), an architecture designed to learn and utilize global representations from queries. Our method introduces two synergistic modules: a Global Representation Learning (GRL) module, which encourages the distribution of all queries to better align with the global map through a carefully designed holistic segmentation task, and a Global Representation Guidance (GRG) module, which endows each individual query with explicit, global-level contextual information to facilitate its optimization. Evaluations on the nuScenes and Argoverse2 datasets validate the efficacy of our approach, demonstrating substantial improvements in mean Average Precision (mAP) compared to leading baselines. Code is available at\n  \\href{https://github.com/skyshoumeng/MapGR}{\\texttt{github.com/skyshoumeng/MapGR}}.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "After the discussion phase, all reviewers recommended acceptance (3x Weak Accept) noting that the task is important, the paper is clearly written, the method is simple and has novelty, and that the results are strong. The rebuttal addressed many of the reviewer concerns, such as adding additional results/metrics and clarifying contributions versus existing work (e.g., MGMap). As a result, the AC decided to accept the paper. Please take the reviewer feedback into account when preparing the camera-ready version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Fz97",
+   "summary": "This paper studies camera-based vectorized HD map construction and argues that existing DETR-style query-based methods over-emphasize instance-level local optimization while underusing global map context. To address this, the paper proposes MapGR, a plug-in module with two components: GRL, which aggregates all queries into a holistic rasterized map prediction and applies BCE supervision, and GRG, which feeds the resulting global representation back into the queries. The method can be integrated into existing query-based frameworks and shows consistent gains on nuScenes and Argoverse 2 with MapTR, MapTRv2, and MapQR.",
+   "strengths_and_weaknesses": "Strengths\n\n- The proposed method is simple, modular, and easy to add to existing frameworks.\n\n- The empirical gains are consistent across two benchmarks and multiple strong baselines.\n\n- The ablations are reasonably thorough, covering GRL/GRG, insertion depth, representation dimension, and efficiency.\n\n- The paper is clearly written and easy to follow.\n\nWeaknesses\n\n- The novelty is somewhat limited. It mainly combines global auxiliary raster supervision with query guidance.\n\n- The claim about learning “global structural information” is somewhat overstated, since the supervision is still raster-mask BCE rather than explicit topology modeling.\n\n- The evaluation does not directly measure structural quality such as connectivity or fragmentation.\n\n- The mechanism is not fully isolated; stronger comparisons against simpler dense auxiliary supervision baselines would help.\n\n- Some design choices, such as applying the module only to the first two decoder layers, are not deeply analyzed.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "- Can the paper include metrics that directly measure structural quality, such as connectivity, fragmentation, or endpoint consistency?\n\n- How much of the gain comes from the specific GRG design, versus simply adding dense global auxiliary supervision?\n\n- Why is applying MapGR to the first two decoder layers the best design choice?\n\n- Do the gains on Argoverse 2 remain under longer training schedules?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_GBF9",
+   "summary": "This paper aims to addressing the flaw in current HD Map construction, as existing models treat map elements as \"spiky\" independent objects, whereas maps actually have \"streak\" distributions (continuous lines). MapGR fixes this by learning a global representation. \nExperiments show strong gain and plug-and-play versatility on top of different frameworks.",
+   "strengths_and_weaknesses": "Strength:  \n1. Addresses a valid limitation: It identifies that existing models treat map elements as \"spiky\" independent objects, whereas maps actually have \"streak\" distributions (continuous lines). MapGR fixes this by learning a global representation.\n2. Plug-and-Play Versatility: One of the paper's strongest points is that its modules are designed to be integrated into existing frameworks like MapTR and MapQR without requiring a total architectural overhaul. \n3. Solid Empirical Gains: The method shows consistent improvements in mean Average Precision (mAP) across two major datasets: nuScenes and Argoverse 2.\n\nWeakness: \n1. My main concern is if the improved HD map would in general help with down streaming task of driving. Figure 1 gives one example that supports the impact of improved map. But most examples in Figure 9 seem to show that the driving decision would not change much. The gain may not sufficiently justify the overhead, though I agree that the overhead is small. \n2. In the experiment part, the weight ratio between the global representation learning loss and the query prediction loss is set at 1.0:0.1.  And in the ablation study part, only one additional number 0.3 is tested. This may not sufficient address question in hyper-parameter sensitivity:  if moved to a new dataset, would the current number 0.1 be sufficient? or would the user need to do hyper-parameter search?",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "see weekness",
+   "limitations": "This paper does not include mandatory impact statement.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_mQGL",
+   "summary": "This paper proposes MapGR, a global representation learning approach for HD Map construction. In MapGR, a Global Representation Learning (GRL) module and a Global Representation Guidance (GRG) module are designed. This paradigm learns a global representation and utilizes this to guide the optimization process of local queries, and finally refined the vectorized HD map construction. Extensive experiments are conducted that the incorporating of this plug-and-play module enhances the performance without increasing computational burden.",
+   "strengths_and_weaknesses": "Strengths: \n\n1.\tThis paper is well-written, and the expression is clear. Figures and Tables are clear to express the MapGR design and effectiveness.\n\n2.\tGlobal Representations are essential for map constructions, especially when there are obstructions or low-light scenarios. The motivation is reasonable.\n\n3.\tUsing segmentation loss to construct the global representative is reasonable and effective.\n\n4.\tExperiments are extensive to show the effectiveness based on different HD mapping baselines.\n\nWeakness:\n\n1.\tIn Figure1(c), it is hard to convince that the map's global embedding assists in the improvement. More explanations are required for the global embedding.\n\n2.\tLack of novelty. The effectiveness of using segmentation loss has been proposed in MGMap [1]. More distinctions and comparative experiments are required to show the effectiveness and specific design. \n\n3.\tIt is doubtful that the model’s benefits may partly come from additional supervision, not entirely from the global representation itself. This point requires more specification.\n\n4.\tGrammar mistakes: line 53-54: “aims to learns” line 86-87: “which can guides”. In experiments: “the results is”.\n\n\n[1] Liu, X., Wang, S., Li, W., Yang, R., Chen, J., & Zhu, J. (2024). Mgmap: Mask-guided learning for online vectorized hd map construction. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 14812-14821).",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "See the part of weakness.",
+   "limitations": "No. \n\nFor limitations and potential negative societal impact, the consideration on ensuring the real-deployed inference speed and model generalization ability are reuiqred.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

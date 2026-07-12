@@ -1,0 +1,66 @@
+{
+ "forum_id": "SAJMlj9x39",
+ "title": "Intrinsic Credit Assignment for Long Horizon Interaction",
+ "abstract": "How can we train agents to navigate uncertainty over long horizons? In this work, we propose ∆Belief-RL, which leverages a language model's own intrinsic beliefs to reward intermediate progress. Our method utilizes the change in the probability an agent assigns to the target solution for credit assignment. By training on synthetic interaction data, ∆Belief-RL teaches information-seeking capabilities that consistently outperform purely outcome-based rewards for RL, with improvements generalizing to out-of-distribution applications ranging from customer service to personalization. Notably, the performance continues to improve as we scale test-time interactions beyond the training horizon, with interaction-efficiency increasing even on Pass@k metrics. Overall, our work introduces a scalable training strategy for navigating uncertainty over a long-horizon, by enabling credit assignment to intermediate actions via intrinsic ∆Belief rewards.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper provides a simple idea for generating dense rewards based on a model's own log-probabilities as it gathers information. The idea can work for any setting where a ground truth \"correct\" answer is available post-hoc when the rewards are computed. An additional forward pass is necessary, but it can be done efficiently with a special purpose mask design. The paper provides a rigorous empirical evaluation of this idea, beyond just RL training performance. Some reviewers maintain concerns about comparisons to related work, but these were largely addressed.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_hVJN",
+   "summary": "This paper presents ∆Belief-RL, a reinforcement learning framework that leverages a language model's own intrinsic beliefs to reward intermediate progress for training LLM in multi-turn, partial information environments.",
+   "strengths_and_weaknesses": "#### Strengths\n\n- This paper is generally well written and easy to follow with a simple and representative experiment design.\n\n- Utilizing the model's internal log-probabilities directly avoids the cost of training and deploying a separate process reward model, and the results demonstrate that this signal can be beneficial.\n\n- The trained models using \\delta-belief-rl enable the model with higher and generalized capabilities of long-horizon interaction over OOD tasks like murder mystery, indicating the successful learning of information-seeking techniques.\n\n#### Weakness\n\n- The core mechanism seems to be a combination highly similar  of several recent work over multi-turn rl for LLM and token-level log-probabilities as signal. This paper is then essentially an application level combination of them without further novel design.\n\n- The framework requires an elicitation prompt to measure the probability of the target. While this leads to policy that generalizes, the training framework itself is then limited to environments where a single, easily elicitable ground-truth noun is known.\n\n- The primary training and evaluation rely on the 20 Questions environment with immediate feedback. While this task requires interaction, it is actually highly constrained with direct binary-response that does not adequately reflect the complexity and openess or the necessity of multi-step reasoning required for most infromation seeking tasks and agents.\n\n- It seems in Fig.1 the GRPO results are not further explained.  The GRPO success rate peaks early and then severely drops, this could potentially due to the use of BF16 or the omission of KL term? At least the GRPO with KL and without should both present in the results comparison, comparing with the best results within GRPO with other modifications and the original GRPO.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- How does the theoretical formulation of the  ∆Belief reward fundamentally differ from the stepwise confidence gain proposed in related works like PACR?\n\n- What is the main reason behind modifying the GRPO? Did these modification made results better than standard GRPO?",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_ErKz",
+   "summary": "The paper proposes $\\Delta$Belief-RL, a reinforcement learning framework for long-horizon language-agent interaction that uses the model’s own belief change toward the target as a dense intrinsic reward for intermediate credit assignment. The method avoids a separately trained critic by deriving turn-level training signals directly from changes in the model’s elicited belief over the correct answer. Experiments on 20 Questions indicate improvements over baselines. Overall, the idea is novel and appealing, though there is still room to further strengthen the empirical validation and analysis.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. $\\Delta$Belief-RL does not rely on a critic, but instead uses the model’s own internal belief signal. This is a simple and elegant design choice, and the experiments provide evidence for its effectiveness.\n\n2. The empirical results are encouraging, and on the 20 Questions benchmark the proposed method shows clear improvements over the baselines.\n\n3. The paper is well written and easy to follow, with a clear and well-motivated presentation of the core idea.\n\n4. The paper takes the extra step of validating the proposed $\\Delta$Belief signal before incorporating it into RL training, which strengthens the overall methodological rigor.\n\nWeaknesses:\n\n1. While the belief-based design is interesting, the proposed belief construction is not yet fully convincing. In particular, the method relies on $b_t = p_\\theta(y \\mid h_t, e)$ as a proxy for the agent's internal belief, where the measured quantity depends on both the elicitation prompt $e$ and the current interaction history $h_t$. Since language model probabilities can be sensitive to prompt phrasing and surface-form biases, they do not necessarily correspond to a well-calibrated posterior update over the target concept. Therefore, it is unclear to what extent $\\Delta$Belief reflects genuine progress in uncertainty reduction, rather than prompt-dependent scoring effects.\n\n2. Since the main experiments are centered on 20 Questions, a setting particularly well matched to the $\\Delta$Belief design, it remains unclear how well the method generalizes to less structured interaction settings with ambiguous or noisy feedback.\n\n3. The current framework appears to rely on access to the correct target during training, and may therefore be better suited to tasks with verifiable and uniquely specified answers than to more open-ended interaction settings.\n\n4. Although the supplement is extensive, much of it is devoted to qualitative examples and auxiliary prompt content rather than stronger quantitative validation, so its length does not fully translate into stronger empirical support. Moreover, the lack of a code release also limits reproducibility, and a complete implementation would likely be more useful than a lengthy supplement.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I have no additional questions beyond those already raised in the weaknesses section.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I view the paper positively, with its strengths outweighing its weaknesses, and the rebuttal helpfully resolved my main confusion. However, the clarification was not sufficient to change my evaluation, so I keep my original score unchanged."
+  },
+  {
+   "reviewer": "Reviewer_WZPE",
+   "summary": "The authors present a novel method to densify the reward signal in long-horizon tasks. They use the model’s internal knowledge to measure progress towards the goal through the notion of belief.",
+   "strengths_and_weaknesses": "**Strengths:** \n\n- Novel dense reward mechanism for more efficient training in long-horizon tasks. (Originality)\n- Significant performance improvement across all experiments. (Significance)\n- The method exhibits interesting zero-shot performance on OOD tasks. (Significance)\n\n**Weaknesses:** \n- The target solution needs to be known beforehand to calculate the belief, making it a very limited framework. There are setups where the final solution depends on interactions and can only be formulated later. (Significance/Soundness)\n- Computational overhead: CIA requires an additional forward pass each iteration to calculate the belief. Can you provide a table showcasing this? (Soundness/Presentation)",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- Do you have Oracle results for “Murder Mystery” and “Guess My City” to compare the zero-shot performance? A good oracle would be to train CIA and other baselines on these environments as well.\n- How robust is CIA when interacting with a weaker simulator? Can you provide an experiment where the judge is a smaller LM?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "I find the paper well-written, with an intuitive and original idea. The authors addressed my concerns effectively, and I have increased the score accordingly."
+  },
+  {
+   "reviewer": "Reviewer_K4z8",
+   "summary": "This paper proposes a ΔBelief-RL method for long-horizon interactive environments with sparse rewards. It constructs a dense, turn-level reward by measuring the per-turn increase in belief (log-probability) over the ground-truth target, and combines it with trajectory-level outcome for GRPO training.",
+   "strengths_and_weaknesses": "### Strengths:\n1. In the long-horizon environment, reward shaping for sparse reward is a crucial problem, and ΔBelief-RL constructs a dense, turn-level reward by measuring the per-turn increase in belief (log-probability) over the ground-truth target.\n2. Extensive experiments on several datasets validate ΔBelief-RL's strong performance over baseline and STARPO.\n3. The paper is very rich in content. Extended discussions on belief's reflection on interactive progress, comparisons of different reward normalizations, ablations of reward compositions, and OOD generalization make the results more convincing.\n\n### Weaknesses:\n1. I agree with the limitations discussed in the paper. $\\Delta$Belief-RL seems effective only for information-seeking tasks which have clear answers for each task, but cannot be applied to more general environments.\n2. The paper draws several conclusions based primarily on 1.7B and 4B models. This seems insufficient to support broader claims about scaling behavior or generality. Adding a larger model (e.g., 8B) and reporting the same comparisons would strengthen the conclusions.\n3. The method requires computing/collecting per-turn belief signals during training. It is unclear how this affects sampling throughput and wall-clock training time relative to trajectory-level GRPO. A clear cost breakdown would make the “efficiency” claims more convincing.\n---\ntypo: \nThe manuscript contains three missing cross-references: Line 2289, Line 2812, Line 2828.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The paper’s core signal ($\\Delta$Belief as turn-level log-probability improvement on the ground-truth target) appears closely related in spirit to IGPO[1] and TIPS[2] turn-level information-gain reward, which also uses incremental increases in ground-truth log-likelihood. Please discuss the key conceptual differences (e.g., target definitions, signal's roles) and why those differences matter.\n2. Can $\\Delta$Belief-RL be evaluated or at least discussed on IGPO-style[1] QA benchmarks? A short experiment or discussion would help clarify novelty and scope.\n\n[1] Information Gain-based Policy Optimization: A Simple and Effective Approach for Multi-Turn LLM Agents\n\n[2] TIPS: Turn-level Information-Potential Reward Shaping for Search-Augmented LLMs",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The author did solve most of my problems, and I have increased my score accordingly."
+  }
+ ]
+}

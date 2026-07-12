@@ -1,0 +1,26 @@
+{
+  "forum_id": "RB4V5TkIOz",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_7mWj",
+      "weight": "high",
+      "reason": "Most technically incisive and specific review: identifies the missing linear-interpolation ablation needed to isolate the Bezier contribution, the mismatch between the ReLU-only theoretical justification and the ViT-Base ImageNet experiments, and an actual internal contradiction in the Table 3 monotonicity claim, plus the underdeveloped defense implications. Highly substantiated even though these particular points are not individually named in the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_R3U6",
+      "weight": "high",
+      "reason": "Both weaknesses (weak motivation for an EA in a white-box setting and lack of transparency on the true cost of the gradient steps) map directly onto the meta-review's anchors on black-box applicability and computational cost; specific, constructive, and offers a concrete black-box extension via zeroth-order estimation."
+    },
+    {
+      "reviewer": "Reviewer_aRQ2",
+      "weight": "high",
+      "reason": "Uniquely and explicitly raises the small-scale-experiments / larger-datasets concern that the meta-review names, together with computational cost versus gradient-based attacks and the black-box-transfer opportunity; specific and substantiated, though the soundness=2 is somewhat harsh given the scale concern is addressable."
+    },
+    {
+      "reviewer": "Reviewer_GoKY",
+      "weight": "medium",
+      "reason": "The concrete concerns about the white-box motivation and the absence of a matched-compute comparison against gradient-based attacks are corroborated by peers and adopted by the meta-review, but the headline framing as an incremental 'A+B' combination is dismissive and unsupported by the meta-review's acceptance, and presentation=2 is an outlier low relative to the other reviewers."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (R3U6, aRQ2, 7mWj) converge on a novel, well-executed idea whose main concerns, white-box-only motivation, opaque compute cost versus gradient-based methods, small-scale evaluation, and a missing ablation plus an internal inconsistency, are real but addressable and map onto the meta-review's named concerns (black-box applicability, computational cost, larger datasets). Soundness, presentation, significance, and originality are set to 3 to reflect the majority of the human scores, treating aRQ2's soundness=2 and 7mWj's significance/originality=4 as minority endpoints of the allowed ranges. Overall recommendation is 4 (weak accept), the modal initial score, consistent with the meta-review's accept direction while remaining a pre-rebuttal assessment; confidence is 4, reflecting the strong mutual corroboration among the reviewers and with the meta-review."
+}

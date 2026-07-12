@@ -1,0 +1,62 @@
+{
+ "forum_id": "gl5xoOJJ22",
+ "title": "CAMEL: Confidence-Gated Reflection for Reward Modeling",
+ "abstract": "Reward models play a fundamental role in aligning large language models with human preferences. Existing methods predominantly follow two paradigms: scalar discriminative preference models, which are efficient but lack interpretability, and generative judging models, which offer richer reasoning at the cost of higher computational overhead.\nWe observe that the log-probability margin between verdict tokens strongly correlates with prediction correctness, providing a reliable proxy for instance difficulty without additional inference cost.\nBuilding on this insight, we propose CAMEL, a confidence-gated reflection framework that performs a lightweight single-token preference decision first and selectively invokes reflection only for low-confidence instances. To induce effective self-correction, we train the model via reinforcement learning with counterfactual prefix augmentation, which exposes the model to diverse initial verdicts and encourages genuine revision.\nEmpirically, CAMEL achieves state-of-the-art performance on three widely used reward-model benchmarks with 82.9% average accuracy, surpassing the best prior model by 3.2% and outperforming 70B-parameter models using only 14B parameters, while establishing a strictly better accuracy-efficiency Pareto frontier.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "After considering the reviews and the authors’ rebuttal, I recommend accepting this paper. The paper addresses an important problem in reward modeling and proposes a simple, well-motivated confidence-gated reflection framework with empirical evaluation and a favorable accuracy-efficiency trade-off. The main reviewer concerns were about novelty, threshold selection, and generalization, and the rebuttal addressed these issues sufficiently for acceptance. Overall, this is a technically solid and timely contribution, and the remaining limitations are minor and suitable for revision in the final version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_87N2",
+   "summary": "This paper proposes CAMEL, a confidence-gated reflection framework for reward modeling. The key idea is to use the log-probability margin of the verdict token as a lightweight confidence signal: the model exits early on high-confidence cases and invokes reflection only on uncertain ones.",
+   "strengths_and_weaknesses": "Strengths\n\n1. Well-motivated problem: adaptive allocation of reasoning cost for reward modeling is practically important.\n\n2. Simple and clean method: confidence from verdict-token margin is lightweight and easy to deploy.\n\n3. Strong empirical results: CAMEL-Reflection outperforms prior baselines, and gated CAMEL gives a favorable Pareto frontier.\n\n Weaknesses\n\n1. The method feels somewhat incremental: token-margin confidence + conditional reflection + RL is effective, but the novelty is moderate.\n\n2. The confidence argument is largely empirical/correlational; the paper does not fully explain why this signal should remain robust across model families or shifted settings.\n\n3. Empirical validation is somewhat narrow, mostly centered on the same benchmark family and backbone setting.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please refer to the  Weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_YUfX",
+   "summary": "This research works towards building a better generative reward models. Based on the empirical evidence that the log-probability margin between verdict tokens strongly correlates with prediction accuracy, the authors proposed CAMEL, a new response format and a confidence-gated reflection mechanism. To realize the reflection ability, they train the model using RL with counterfactual prefix augmentation. Empirically, they compared CAMEL with various scalar reward models and generative reward models across three RM benchmarks (e.g., RewardBench, RM-Bench, JudgeBench) with 82.9% average accuracy, with 14B parameters.",
+   "strengths_and_weaknesses": "Strengths:\n1. The empirical observation shown in Figure 2 is interesting and solid. \n2. The new response format (starting with a verdict token, and then reflect and give another verdict token) and RL training with Counterfactual Prefix Augmentation are novel and technically sound.\n3. Paper writing is clear.\n4. Empirical evaluation and analysis are comprehensive. \n\nWeakness/questions:\n1. Could you explain which prompt and response format is used for Qwen3-14B in Figure 2? Are they same with the CAMEL model, and why Qwen3-14B is not in the benchmark results, e.g., GenRMs category. \n2. It would be helpful for audience if the authors could include some comparative examples in the appendix to illustrate the differences in response formats across various generative reward models.\n3. It seems that CAMEL skip the judge sequences before the first verdict token, compared with the generative RM formation introduced in Section 2, any reasons here?\n4. What is the key difference between CAMEL and RM-R1? It seems that both two used RL to train the model using the final accuracy signal?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Please see the above weakness points.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_1hc8",
+   "summary": "The paper proposes CAMEL, a confidence-gated reflection method for reward modeling that combines the benefits of scalar RMs and generative RMs. The authors use the initial verdict token's log-probability margin as a confidence score to decide whether to trigger a reflection before the final verdict token. Then they use GRPO with counterfactual prefix augmentation that forces the model to diverse initial verdicts and encourages genuine revision. CAMEL is evaluated on multiple RM evaluation benchmarks such as RewardBench, RM-Bench, and JudgeBench.",
+   "strengths_and_weaknesses": "## Strengths\n* The problem to bridge scalar and generative RMs is well-motivated. The method is simple and intuitive.\n* The evaluation covers broad RM benchmarks.\n* The authors provide some useful analyses, such as the confidence-accuracy relationship and ablation studies.\n\n## Weaknesses\n* Although the confidence gating is intuitive, it is not necessarily calibrated across domains or models. In my opinion, the authors should conduct a further calibration study (ECE or ROC for confidence-as-difficulty). There is no principled way to choose the threshold for different models. There is limited analysis of failure modes when high-confidence errors bypass reflection.\n* The method is highly based on entropy/confidence-based paradigm. However, the adaptive-compute or confidence-gated methods, such as [1, 2, 3], are not cited or discussed. The authors should clarify the novelty and distinction from prior works.\n* Generalization to BoN selection (which is crucial for practical RM) is not evaluated.\n\n[1] Taubenfeld, Amir, et al. \"Confidence improves self-consistency in llms.\" Findings of the Association for Computational Linguistics: ACL 2025. 2025.\n\n[2] Fu, Yichao, et al. \"Deep think with confidence.\" arXiv preprint arXiv:2508.15260 (2025).\n\n[3] Sharma, Aman, and Paras Chopra. \"Think just enough: Sequence-level entropy as a confidence signal for llm reasoning.\" arXiv preprint arXiv:2510.08146 (2025).",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "* Could the authors add an analysis in what fraction of high-confidence predictions are wrong?\n* How is the confidence threshold selected across datasets/domains?\n* How sensitive is CAMEL to the base model? Would the performance scale with smaller/larger models?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_jTNp",
+   "summary": "The paper proposes CAMEL (confidence-gated reflection for reward modeling). It introduces a two-stage framework that bridges\nscalar and generative paradigms through selective reflection. Experiments first empirically demonstrate that confidence scores in single-token predictions are highly correlated with final accuracy. Therefore, the paper proposes a two-stage pipeline, first performing lightweight single-token decisions, and if confidence is insufficient, generating brief reflections before final judgment. In the experiment results, they show that CAMEL-Reflection improves upon CAMEL-fast by enabling more thinking, and CAMEL  shows good accuracy-cost Pareto frontier.",
+   "strengths_and_weaknesses": "## Soundness\n### Strengths:\n- The core observation that confidence scores correlate with accuracy is well-motivated and empirically validated across multiple datasets (Figure 2, Figure 7). This provides a principled basis for the gating mechanism.\n- The counterfactual prefix augmentation is a clever technique that addresses a real problem: without it, the model might simply echo its initial verdict rather than genuinely reflecting.\n### Weaknesses:\n- Missing critical baseline: The paper lacks comparison against a natural baseline—standard SFT+RL training where the model generates reasoning before the verdict rather than the reflection structure where an initial verdict exists. \n- Limited model diversity: Only Qwen3-14B is examined. The generalizability of the CAMEL across different model families and scales remains unverified.\n- Threshold sensitivity: The choice of τ=5 as the default threshold appears somewhat arbitrary. While Figure 4 shows the Pareto frontier, there's no principled method for selecting τ in new deployment scenarios.\n\n## Presentation\nThe paper is well-written and easy to follow. However, the paper would benefit from:\n- A more detailed analysis of what the model learns during reflection (qualitative examples)\n- Discussion of failure cases where reflection hurts rather than helps (the 51 cases in Figure 6a)\n\n## Significance\nThe work addresses a practical problem which is balancing accuracy and efficiency in reward modeling. The approach would be particularly valuable in resource-constrained deployment scenarios.\n\n## Originality\nThis paper integrates multiple approaches to form an effective combined solution: (1) using token-level confidence as a gating signal, (2) counterfactual prefix augmentation for RL training",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "- Do you think CAMEL training would hurt performance compared to normal judge training?\n- Do you expect the confidence-accuracy correlation  to hold for models of different sizes and families? Have you conducted any preliminary experiments with other base models?\n- For practitioners deploying CAMEL, what guidance can you provide for setting τ? Is there a validation-based approach, or does the optimal threshold vary significantly across domains?\n- In Figure 6, there are cases where reflection changes correct predictions to incorrect ones. What characterizes these failure cases? \n- Figure 5 shows the confidence distribution shifts leftward after CAMEL training, do you think it could lead to over-triggering of reflection at inference time?",
+   "limitations": "No, the paper does not include an explicit limitations section. Please see weaknesses and questions above for further improvement.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  }
+ ]
+}

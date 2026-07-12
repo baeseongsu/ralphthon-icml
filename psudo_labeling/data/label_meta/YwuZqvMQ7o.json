@@ -1,0 +1,26 @@
+{
+  "forum_id": "YwuZqvMQ7o",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_zehn",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review, covering all four dimensions with specific evidence. Its central points — the center-based box approximation for elongated objects, insufficient comparison with dynamic/cylindrical voxelization, undocumented hyperparameter selection, and class-specific gains — are echoed in the meta-review and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_8yNN",
+      "weight": "high",
+      "reason": "Specific and on-target: missing hyperparameter ablation, the center-based approximation with a concrete four-corner-loss alternative, need for comparison against recent adaptive/dynamic voxelization, and stress-testing the architecture-agnostic claim (cylindrical baseline only on SECOND). These map directly onto the meta-review's stated concerns."
+    },
+    {
+      "reviewer": "Reviewer_NFyN",
+      "weight": "high",
+      "reason": "Concise but accurate. Correctly identifies the nonlinearity of the box transform, the incomplete memory (vs latency) evaluation, hyperparameter sensitivity, and the limited long-range benefit — all corroborated by other reviewers and reflected in the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_7Xxz",
+      "weight": "medium",
+      "reason": "The technical concerns (box-transform bias, missing memory/active-voxel analysis, isolating Newton cost, and generalization to larger data) are legitimate and corroborated. However, the meta-review explicitly frames this reviewer's dissent as a significance-threshold judgment rather than a technical flaw and deems it an insufficient basis for rejection, so the weak-reject stance and significance=1 are discounted."
+    }
+  ],
+  "score_rationale": "The meta-review anchors an Accept (regular) and explicitly rejects the dissenting reviewer's significance=1 as a threshold judgment rather than a technical flaw, so significance is set to 3 (the mode of the other three reviewers) rather than being pulled down. Soundness (3) and originality (3), and the concerns behind them — the center-based box approximation, incomplete memory analysis, and missing comparisons to dynamic voxelization — are corroborated across all reviewers and echoed in the meta-review. Presentation is set to 3 in line with the meta-review's 'clearly presented' characterization, though real gaps (voxel-size reporting, related-work focus) keep it from higher. The overall recommendation of 4 reflects the weighted center of the three high-weight reviewers (5/4/4) and the meta-review's 'accept, but not strong or oral' framing, discounting the single weak reject."
+}

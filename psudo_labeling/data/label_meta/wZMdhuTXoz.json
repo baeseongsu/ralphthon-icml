@@ -1,0 +1,26 @@
+{
+  "forum_id": "wZMdhuTXoz",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_hReh",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review: specifically flags the coverage assumption being relegated to the appendix, missing meta-RL baselines (PEARL/VariBAD-style), single-task (POINTGOAL2) evaluation, and absent uncertainty intervals. Its praise for the comprehensive theory aligns with the meta-review, and its weaknesses are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_xxS7",
+      "weight": "high",
+      "reason": "Specific and substantiated: simulation-only evaluation despite the Sim2Real motivation, missing meta-RL/distributional baselines, absent complexity analysis, and no ablation study. Its praise for the solid theory and clear proofs matches the meta-review, and its weaknesses overlap with hReh and PHwa."
+    },
+    {
+      "reviewer": "Reviewer_PHwa",
+      "weight": "medium",
+      "reason": "Low confidence (2) and comparatively light on detail, but the complexity/tunability concern and the call for ablations are genuine and corroborated by xxS7. Partly on-target rather than fully substantiated."
+    },
+    {
+      "reviewer": "Reviewer_bPoU",
+      "weight": "medium",
+      "reason": "Largely restates the abstract with generous scores and thin justification, but its single substantive point, the practical safety-versus-performance trade-off during deployment, is directly echoed by the meta-review's suggested improvement, so it is not dismissed."
+    }
+  ],
+  "score_rationale": "The meta-review anchors strongly on the rigorous theory and strong empirical results, so soundness, presentation, and originality track the two high-weight reviewers (hReh, xxS7) at 3 rather than the lone soundness-2 outlier. Significance is set at 3, positioned by the meta-review's clearly positive, accept-leaning direction, despite one high-weight and one medium-weight reviewer scoring it 2 over the simulation-only evaluation. The overall recommendation of 4 (weak accept) reflects three of four reviewers at 4 and the accept decision, with bPoU's more generous 5 down-weighted for genericness. Confidence is 4 because the principal weaknesses (missing meta-RL/distributional baselines, no ablation, simulation-only scope, and complexity) are corroborated across multiple reviewers and partly echoed by the meta-review."
+}

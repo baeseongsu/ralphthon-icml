@@ -1,0 +1,26 @@
+{
+  "forum_id": "I5IMkvVKd7",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_ctJh",
+      "weight": "high",
+      "reason": "The most detailed and specific review; its training-data-cost concern is echoed directly by the meta-review, and its adaptive-beta and preemptive-baseline points are independently corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_9d7q",
+      "weight": "high",
+      "reason": "The outlier whose central concern, the missing connection to stochastic-scheduling and learning-augmented (algorithms-with-predictions) literature, is explicitly adopted by the meta-review as a residual weakness and independently corroborated by CKAc; its design-choice questions overlap with ctJh's, though its reject-leaning recommendation was contrarian."
+    },
+    {
+      "reviewer": "Reviewer_CKAc",
+      "weight": "high",
+      "reason": "Demonstrates deep understanding of the scheduling problem and independently corroborates the key literature-connection concern (stochastic scheduling / queuing theory and algorithms with predictions); also flags the absence of theoretical performance guarantees."
+    },
+    {
+      "reviewer": "Reviewer_J814",
+      "weight": "low",
+      "reason": "Uniformly glowing, generic review with no identified weaknesses and low self-reported confidence (2); it does not engage the substantive concerns on which the other reviewers and the meta-review converged, and its higher dimension scores are not well substantiated."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on a clear accept with strong, consistent empirics, so I positioned the four quality dimensions at the good level (3) where the three specific, mutually corroborating reviewers (ctJh, 9d7q, CKAc) clustered, discounting the uniformly glowing but low-confidence, weakness-free review (J814) that alone pushed soundness and significance to 4. The overall recommendation of 5 follows the two high-weight reviewers at 5 and the meta-review's firm acceptance, while the contrarian reviewer's central concern, the missing connection to stochastic-scheduling and learning-augmented literature, is elevated prominently in the write-up because the meta-review explicitly requires its incorporation and a second reviewer independently raised it. Confidence is 4 given the strong mutual corroboration on both the core contribution and the principal weaknesses."
+}

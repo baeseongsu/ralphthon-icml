@@ -1,0 +1,26 @@
+{
+  "forum_id": "eYwCaFakq6",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_SBYq",
+      "weight": "high",
+      "reason": "Specific, substantiated, and thoughtful. The central concerns -- the gap between the OLS reconstruction guarantee and downstream diffusion quality, the fragility of one-shot (single-prompt, single-timestep) calibration, and the under-specified router variant/regularization -- are corroborated by fb21 and consistent with the meta-review's note that ablations were needed. Overall recommendation of 5 aligns with the accept decision."
+    },
+    {
+      "reviewer": "Reviewer_fb21",
+      "weight": "high",
+      "reason": "Technically the sharpest review. Its point that the router is calibrated on task-separated inputs while inference uses composite prompts (so OLS optimality on the calibration distribution may not transfer) directly corroborates SBYq's reconstruction-vs-generation concern, and its request for comparison to iterative least-squares LoRA merging is specific and well-matched. Strengths (compact Kr-subspace regression avoiding RegMean's ill-conditioning) are accurately identified."
+    },
+    {
+      "reviewer": "Reviewer_81a5",
+      "weight": "high",
+      "reason": "Specific and substantiated. The call for stronger subspace-aware / PEFT-specific baselines (e.g., RobustMerge) and the limited benchmark scope (10 subjects, K in {2,3,4}, 3 FFHQ attributes) are corroborated by fb21 and SBYq, and the generalization-beyond-generation concern overlaps with E1tF. Only mild divergence is significance = 2, which is below the meta-review's positive framing of the empirical gains."
+    },
+    {
+      "reviewer": "Reviewer_E1tF",
+      "weight": "medium",
+      "reason": "Partly on-target: its subspace-capacity / rank-budget fairness concern is the one point the meta-review explicitly adopts and asks to be clarified, so it is carried into the review and questions. However, its central thesis that the novelty is overstated (\"repackaged MoE\") and its outlier low scores (soundness 1, significance 1, overall 2) are contradicted by the meta-review (\"reviewers acknowledged the originality\") and by the other three reviewers, so those elements and the harsh scores are down-weighted."
+    }
+  ],
+  "score_rationale": "The three substantive reviewers (SBYq, fb21, 81a5) converge on soundness, presentation, and originality of 3 and a positive-but-qualified recommendation (4-5), and the meta-review affirms both the originality of the idea and consistent empirical gains over relevant SOTA baselines, so I set those dimensions to 3 and the overall to 4 (weak accept). Significance is set to 3, following the two reviewers who rated it 3 and the meta-review's 'meaningful contribution' framing, over the single 2. E1tF's outlier low scores and its 'novelty overstated / just MoE' thesis are contradicted by the meta-review and the other reviewers and are therefore down-weighted, although its rank-budget/subspace-capacity comparison point -- explicitly adopted by the meta-review -- is carried into the review. Confidence is 4 because the high-weight reviews are specific and mutually corroborating on the key concerns: calibration robustness, the reconstruction-vs-generation gap, and baseline breadth."
+}

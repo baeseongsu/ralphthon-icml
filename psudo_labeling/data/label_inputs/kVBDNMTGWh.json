@@ -1,0 +1,66 @@
+{
+ "forum_id": "kVBDNMTGWh",
+ "title": "UniSVQ: 2-bit Unified Scalar-Vector Quantization",
+ "abstract": "Post-training quantization at the 2-bit level enables low-cost deployment and inference acceleration for large language models (LLMs). Scalar quantization (SQ) and vector quantization (VQ) are two primary quantization methods, however, the former suffers from significant performance degradation, and the latter incurs computational and storage overhead. \nWe propose UniSVQ, a unified 2-bit quantization framework that bridges scalar and vector quantization by parameterizing codewords as an affine transform of integer lattices.\nThis structure preserves compatibility with optimized integer kernels while retaining much of VQ's flexibility. \nWe further introduce a data-driven block-wise fine-tuning strategy to directly minimize quantization reconstruction error.\nExtensive experiments across multiple LLM families and zero-shot benchmarks demonstrate that UniSVQ consistently outperforms state-of-the-art SQ methods and achieves performance comparable to advanced VQ methods, while providing higher inference throughput.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper presents a nice method to connect and unify the simplicty of Scalar Quantization and accuracy of Vector Quantization to improve ultra low-precision 2 bit performance. All the reviewers appreciate the simplicity of the algorithm. I strongly recommend authors to follow-up on the discussions in the next revision. Overall, I beleive this paper adds lots of value to the community.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_AxuW",
+   "summary": "This paper focuses on PTQ for LLMs, especially weight-only quantization. The authors analyze the advantages and disadvantages of SQ and VQ, and propose UniSVQ, a method that uses an affine transformation to bridge SQ and VQ, aiming to combine SQ's efficiency with VQ's accuracy. Experiments on qwen3 series demonstrate accuracy comparable to VQ methods, along with a 1.68× speedup compared to AQLM.",
+   "strengths_and_weaknesses": "### Strengths\n1. this paper addresses a valuable and practical question: how to bridge VQ and SQ. \n2. it is a good try to use hardware friendly operations like affine transformation to implement a VQ-like quantization\n\n### Weaknesses\n1. UniSVQ appears more like a structured and constrained form of VQ. The gap between VQ and SQ still exists, since they are not generally unified.\n2. More advanced VQ methods should be included as baseline methods, such as QTIP, VPTQ, etc\n3. Inference speed vs UQ methods should also be included.\n4. the entire process requires 6 hours on an Nvidia A100 GPU for an 8B model, which is not cheap.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "- Is this method applicable to KV-cache quantization?\n- What are the pros and cons of applying this method to MoE models?\n- What is the most costly part of the quantization pipeline for a model?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 5,
+   "final_justification": "My concerns are fully resolved, therefore I raise the rating to WA."
+  },
+  {
+   "reviewer": "Reviewer_tpSb",
+   "summary": "This paper proposes a unified 2-bit quantization framework that aims to combine the computational efficiency of scalar quantization (SQ) with the higher degree of freedom of vector quantization (VQ) in the low-bit regime.",
+   "strengths_and_weaknesses": "**Strengths**\n- The paper improves efficiency by using a linearly constrained quantization grid that can capture the advantages of both SQ and VQ.\n- The paper also demonstrates actual throughput improvements through quantization.\n\n**Weaknesses**\n- The set of baselines in Table 5 is insufficient. While the paper shows higher accuracy and throughput than AQLM, a comparison with QUIP# is also necessary. Since QUIP# shows better accuracy than UniSVQ in Table 1, a throughput comparison against QUIP# would be important.\n- The explanation of the inference kernel is insufficient.\n- More exploration of precision scaling is needed. It would strengthen the generality of the method if the authors could show that the proposed approach can also be extended to 1-bit or 3/4-bit settings.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "yes.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I am upgrading my recommendation to Weak Accept. The authors' rebuttal effectively addressed my primary concerns regarding baseline sufficiency, technical clarity, and method generality. The paper demonstrates strong originality and significance by bridging SQ and VQ through an elegant affine-constrained quantization grid. The authors successfully clarified the soundness of their approach by providing new benchmarks showing a 1.28x throughput advantage over QuIP# while maintaining a smaller memory footprint. Additionally, the new evaluation of 3-bit precision scaling confirmed the framework's robustness and flexibility beyond the initial 2-bit focus. This technically solid contribution successfully balances representational capacity with hardware-friendly execution."
+  },
+  {
+   "reviewer": "Reviewer_E9VR",
+   "summary": "This paper tackles extreme 2-bit post-training quantization for LLMs, where SQ suffers severe performance degradation and VQ bears heavy storage/computational overhead. The authors propose UniSVQ, which unifies SQ and VQ via affine lattice parameterization of codewords, reuses optimized SQ integer kernels, and adopts a data-driven block-wise fine-tuning strategy to minimize reconstruction error. Extensive experiments on Qwen-3/Llama-3 show UniSVQ outperforms SOTA SQ methods, matches advanced VQ performance, and delivers higher inference throughput with drastically reduced auxiliary parameters.",
+   "strengths_and_weaknesses": "## Strengths\n1. A clever unified quantization paradigm that bridges SQ and VQ via linear-constrained grids, achieving VQ-level performance while retaining SQ’s inference efficiency.\n2. Minimal overhead: only 20 extra floating-point parameters per weight matrix, cutting VQ’s codebook storage by 64x and retaining up to 98% of FP16 performance on zero-shot benchmarks.\n3. Strong generalizability across Transformer architectures and superior inference speed/memory efficiency.\n4. Fair and comprehensive empirical evaluation across model scales, zero-shot benchmarks, and SOTA SQ/VQ baselines, ensuring result reliability.\n\n## Weaknesses\n1. Subpar performance on some models (e.g., Qwen-3-4B, Qwen-3-32B) compared to VQ baselines like QuIP#.\n2. Only validated for 2-bit quantization, no exploration of 3-bit/4-bit or mixed-precision extensions.\n3. Incomplete inference efficiency comparison: Only FP16 and AQLM 2×8 are included in the comparison, with no throughput, memory or latency data provided against the selected SOTA SQ (GPTQ, QuIP, SpinQuant, OSTQuant) and VQ (QuIP#) baselines.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weaknesses",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "My concerns have been addressed"
+  },
+  {
+   "reviewer": "Reviewer_KXGJ",
+   "summary": "This paper proposes UniSVQ, a 2-bit quantization framework that bridges scalar quantization (SQ) and vector quantization (VQ) by parameterizing the quantization grid as an affine transformation of integer lattices. The approach aims to retain the flexibility of VQ while maintaining the computational efficiency of SQ. Experiments on Qwen3 and Llama3 models show that UniSVQ achieves accuracy comparable to state-of-the-art VQ methods while introducing significantly fewer auxiliary parameters.",
+   "strengths_and_weaknesses": "Strengths\n\n1. The idea of parameterizing the quantization codebook via an affine transform of integer lattices is conceptually elegant and provides an interesting perspective on unifying SQ and VQ.\n\n2. The proposed representation significantly reduces the number of auxiliary parameters compared to traditional VQ codebooks.\n\n3. Experimental results show competitive accuracy compared with strong VQ baselines across several model scales.\n\nWeaknesses\n\n1. Lack of clear isolation of the proposed quantizer.\n\nThe main contribution of this work is a new quantizer design rather than a full quantization pipeline. However, the proposed framework introduces several additional components, including randomized Hadamard rotations, LDLQ-based quantization, and layer-wise fine-tuning. As a result, it is difficult to determine how much of the observed performance improvement actually comes from the UniSVQ quantizer itself. A more convincing evaluation would directly replace the SQ or VQ quantizer in existing pipelines with UniSVQ while keeping the rest of the procedure unchanged.\n\n2. Insufficient ablation on the role of the rotation transform.\n\nThe paper motivates the use of randomized Hadamard transforms to suppress outliers. However, the ablation in Table 2 only replaces the orthogonal initialization with a D4 lattice generator matrix. This does not test the actual necessity of the rotation itself. A more appropriate ablation would remove the rotation step entirely to evaluate whether the rotation is truly essential for the proposed quantizer.\n\n3. Limited evidence for the claimed efficiency advantage.\n\nSince the key contribution is an efficient quantizer design, the evaluation of inference efficiency is surprisingly limited. Table 5 only reports throughput on LLaMA3-8B with AQLM (2×8) as the sole VQ baseline. Moreover, the reported speed of AQLM[1] in this table is only slightly faster than FP16 (70.97 vs. 60.38 tokens/s), which contradicts the results reported in the AQLM paper. In Table 14 of the AQLM appendix, the authors report more than 2× speedup over FP16 for LLaMA2-7B (114.1 vs. 54.2 tokens/s). Under that comparison, the acceleration ratio appears comparable to or even higher than that of UniSVQ. This discrepancy makes it difficult to assess whether UniSVQ actually provides a meaningful efficiency advantage, and requires further clarification.\n\n[1]  Egiazarian, Vage, et al. \"Extreme compression of large language models via additive quantization.\" ICML2024.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Can the authors provide experiments where UniSVQ replaces the quantizer in existing SQ or VQ pipelines while keeping all other components identical? This would help isolate the effect of the proposed quantizer.\n\n2. What is the performance impact of completely removing the rotation transform? This ablation would better validate the motivation for introducing the rotation step.\n\n3. Can the authors clarify the discrepancy between the reported throughput of AQLM in Table 5 and the speed reported in the AQLM paper? Are the experimental settings (hardware, batch size, decoding implementation) consistent?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal effectively addresses my primary concerns. The added quantizer-level isolation experiments, proper ablation of the rotation component, and clarified efficiency comparisons significantly strengthen the empirical support for the proposed method. I therefore increase my score accordingly."
+  }
+ ]
+}

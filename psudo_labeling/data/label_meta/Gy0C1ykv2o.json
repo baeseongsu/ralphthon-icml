@@ -1,0 +1,26 @@
+{
+  "forum_id": "Gy0C1ykv2o",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_8gir",
+      "weight": "high",
+      "reason": "Most detailed and specific review, with the highest self-reported confidence. Its headline critique (no ablations isolating the hierarchical schema, selective attention mask, and re-weighted loss) and its point about thin baseline coverage are exactly the gaps the meta-review notes were addressed in rebuttal (additional ablations, baseline comparisons). Its strengths analysis (schema taxonomy, keyframe pipeline, attention masking) is concrete and well-substantiated."
+    },
+    {
+      "reviewer": "Reviewer_Xq8w",
+      "weight": "high",
+      "reason": "Specific and substantiated on token/inference overhead, error accumulation over long rollouts, InternVL annotation dependency, and the lack of human preference studies. The human-evaluation concern was adopted in the rebuttal per the meta-review, and its inference-cost and annotation-bias points are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_AXi5",
+      "weight": "high",
+      "reason": "On-target and specific: annotation noise/bias quantification, reliance on automatic/VLM judges with limited human evaluation, inference cost and long-sequence scalability, and schema-sensitivity ablations. These points are echoed across reviewers and align with the rebuttal additions (ablations, human evaluation) cited in the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_RZuu",
+      "weight": "medium",
+      "reason": "Correctly identifies the central missing-ablation concern (corroborated and adopted), and frames the motivation well, but the review is comparatively brief, one weakness (validity of using Gemma to predict/evaluate states) is vaguely stated, and its significance score of 2 sits below the consensus, making it partly on-target rather than fully substantiated."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as well-motivated, technically sound, and a meaningful contribution with clear improvements, and notes the rebuttal added ablations, baselines, and human evaluation, signaling those were the genuine initial gaps; I therefore kept significance and originality at 3 (consensus, with only the lower outliers dissenting) and soundness at 3 (the meta-review's 'technically sound' framing plus the most detailed high-confidence reviewer's score), while flagging the validation gaps strongly in prose. Presentation is set to 3, the mode of three reviewers, treating the single presentation=1 as an outlier not supported by the meta-review. Overall recommendation is 4, matching the unanimous Weak Accept, and confidence is 4 given the strong mutual corroboration of the key weaknesses (missing ablations, thin baselines, limited human evaluation, inference cost, and VLM-annotation dependency) across the high-weight reviewers."
+}

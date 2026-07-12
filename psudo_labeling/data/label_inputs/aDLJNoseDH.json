@@ -1,0 +1,66 @@
+{
+ "forum_id": "aDLJNoseDH",
+ "title": "Neural Quantum States in Mixed Precision",
+ "abstract": "Scientific computing has long relied on double precision (64-bit floating point) arithmetic to guarantee accuracy in simulations of real-world phenomena. However, the growing availability of hardware accelerators such as Graphics Processing Units (GPUs) has made low-precision formats attractive due to their superior performance, reduced memory footprint, and improved energy efficiency.  In this work, we investigate the role of mixed-precision arithmetic in neural-network based Variational Monte Carlo (VMC), a widely used method for solving computationally otherwise intractable quantum many-body systems. We first derive general analytical bounds on the error introduced by reduced precision on Metropolis-Hastings MCMC, and then empirically validate these bounds  on the use-case of VMC. We demonstrate that significant portions of the algorithm, in particular, sampling the quantum state, can be executed in half precision without loss of accuracy. More broadly, this work provides a theoretical framework to assess the applicability of mixed-precision arithmetic in machine-learning approaches that rely on MCMC sampling. In the context of VMC,  we additionally demonstrate the practical effectiveness of mixed-precision strategies,  enabling more scalable and energy-efficient simulations of  quantum many-body systems.",
+ "primary_area": "applications->chemistry_physics_and_earth_sciences",
+ "decision": "Accept (regular)",
+ "decision_comment": "This manuscript considers the use of mixed precision when doing sampling within the context of VMC (e.g., for neural quantum states). The focus on sampling, while reasonable, is nevertheless a limitation in realizing significant \"end-to-end\" speedups. Nevertheless, the manuscript does a reasonable job with its formulation of the mixed-precision scheme (both theoretically and empirically) and illustrates its effectiveness. Collectively, the reviews agreed that there is a contribution here, albeit one of limited scope.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_w2C3",
+   "summary": "The authors study a mixed-precision approach for neural quantum states within VMC. The main idea is to use reduced precision primarily in the MH sampling step, while retaining higher precision for the rest of the optimization pipeline. The authors derive theoretical bounds on the bias introduced by finite-precision perturbations in MH sampling, then validate the theory empirically. Results suggest that sampling in lower precision can provide meaningful speedups without noticeably degrading the final training performance in the examined cases.",
+   "strengths_and_weaknesses": "Strengths:\n1. The study addresses a practically important systems-level bottleneck in NQS/VMC through a combination of theory and experiments, rather than relying solely on empirical optimization claims.\n2. The implementation strategy is fairly clever and practical. The authors keep a double-precision copy for updates and use a lower-precision copy only for sampling.\n\nWeaknesses:\n1. The method accelerates the sampling portion, but the paper itself notes that larger end-to-end gains may require accelerating other expensive components, such as local-energy evaluation and preconditioning. This somewhat limits the overall practical impact if sampling is not the dominant bottleneck in a target workload.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. Since the paper emphasizes speedups in sampling, I am curious to know the end-to-end wall-clock improvement for full VMC training, not just the isolated sampling kernel. How much total training acceleration is obtained in practice when all components are included?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "Thanks for the reply. I have no more questions, and I would like to keep the score as accept."
+  },
+  {
+   "reviewer": "Reviewer_FtF9",
+   "summary": "This paper studies the use of mixed precision for accelerating variational monte carlo (VMC) with neural quantum states (NQS). The authors achieved accelerated speed without sacrificing accuracy. The key idea is that sampling can be performed in lower precision without significantly affecting the stationary distribution, while gradient computation and stochastic reconfiguration are more sensitive due to conditioning issues.",
+   "strengths_and_weaknesses": "## Strengths\n\n- this paper addresses a practical bottleneck in neural quantum states and variational monte carlo workflows.\n- clear separation of precision sensitivity in the vmc pipeline\n- practical insight \n\n## Weaknesses\n\n- assumption on Gaussian distribution error - Even the authors empirically shown the result, this assumption lacks theoretical insight. how can we extend to non-gaussian or adversarial error distributions?\n- Limited diversity of experimental setups, diversity of neural architectures - in the experiments, authors utilizes RBMs and ResCNNS, what will be the performance if we utilize more expressive architectures? As different architectures may exhibit different numerical sensitivities,  the generality of the findings remains uncertain.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "* How does the algorithm performs when the correction rate is modified? Is there any rule/suggestion for this rate decision?\n* How does it perform when we use other distribution instead of Gaussian?",
+   "limitations": "Yes the authors included impact statement of the paper and provided limitations of the paper.",
+   "overall_recommendation": 5,
+   "confidence": 2,
+   "final_justification": "My initial thought was that the Gaussian assumption is strong and essential in this paper. However, as authors pointed out, it can be considered as future work and with central limit theorem and other empirical evidences. I still think that as it is ICML, more extensive experiments can be brought up, but I assume this is more theoretical paper rather than experimental. As I am not largely familiar with this domain, I remain my score as 5 with regard to the aspects mentioned."
+  },
+  {
+   "reviewer": "Reviewer_24cA",
+   "summary": "This paper studies the effect of using reduced-precision arithmetic in Metropolis–Hastings (MH) MCMC sampling, and in particular, for variational Monte Carlo (VMC) for neural quantum states. It models the rounding error as an additive Gaussian noise for the log density function, leading to a perturbed stationary distribution. It shows analytic bounds on the bias in stationary expectations under low precision. The experiments show that sampling can often be performed in half-precision without noticeable degradation in training curves or final energies, while delivering substantial speedups.",
+   "strengths_and_weaknesses": "**Strengths:** The research problem studied in this paper is an important problem in sampling and optimization. It is a natural and interesting idea to adapt the use of mixed or low-precision in optimization to sampling, and particularly to neural quantum states. The numerical experiments also validate the model and demonstrate the benefits of mixed-precision. \n\n**Weaknesses:** First, the theoretical claim about the $O(\\sigma^2)$ bias is not mathematically sound. Tthe term $1-e^{\\sigma^2}\\mathrm{erfc}(\\sigma)$ behaves linearly in $\\sigma$ near 0, so the bound is $\\Theta(\\sigma)/(1-r)$, not $\\Theta(\\sigma^2)/(1-r)$. Thus, the improvement in order over the straightforward approach may not hold.\n\nSecond, the bias depends on $\\frac{1}{1-r}$, which can be large in large MH problems. Furthermore, this quantity is hard to estimate in practice, so the tightness and utility of the bound in realistic NQS settings remain unclear.\n\nThird, in Table 1, the 'f16' row, 4.88 × 10−5 should be 4.88 × 10−4",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. This paper claims that \"the analysis of mixed-precision effects in the context of MCMC sampling employed in machine learning, or,\nNQS in particular, remains underdeveloped.\" However, I did a quick Google search and found a paper titled \"A Mixed Precision Monte Carlo Methodology for Reconfigurable Accelerator Systems\" by Chow et al. I wonder whether it is a relevant work.\n\n2. Can the contraction constant $r$ be replaced by an empirical proxy (e.g., autocorrelation or relaxation time estimates) and shown to correlate with observed robustness to mixed precision?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The authors have answered my question, but the significance and technical novelty of this work are marginal."
+  },
+  {
+   "reviewer": "Reviewer_33aJ",
+   "summary": "The paper studies the impact of reduced numerical precision on the bias of expectation values, both theoretically and on the application to variational Monte Carlo. It provides analytic bounds on the bias as a function of the target density noise and compares the bounds with numerical experiments. It also showcases problems where reduced precision does not impair precision and offers considerable speed-ups.",
+   "strengths_and_weaknesses": "# Soundness\nThe paper is technically sound and the stronger assumptions in the theorems (Gaussian distribution of delta) are supported by numerical experiments. \n\n# Presentation\n\nGenerally, the paper is logically organized and easy to follow. It was a pleasure to read. I appreciate that various results in the Figures are intuitively explained in the main text.\nI only have a few minor comments:\n\nI think paragraph below Equation 12 assumes epsilon > 0, because the case epsilon < 0 is symmetric. This is ok, but it would improve readability if this was explicitly stated in the text, not just in the Figure caption.\n\\varepsilon and \\epsilon are used for two different things, the local energy and the difference of deltas. It is clear from the context which one is used, but I still think it would be clearer if a different letter was used for one of them. Local energy is only defined implicitly in Equation 2, it would be easier to read if it was defined explicitly.\nLine 340 on the right: It is not clear what the “this hypothesis” refers to.\nSome details about the experiments in Figure 4 would be useful. How is alpha (density of parameters) defined? How is the speed-up defined, is it wallclock time to the converged ground state? If so, how is “converged” defined?\n\n# Significance\nI view the paper as a useful reference for all future work considering reduced numerical precision. As such I believe it is significant and useful.\n\n# Originality\nThe idea of using reduced precision in MCMC is not new and the approach that the authors take is also not particularly new, but they do offer new theoretical insight and the basis to assess the impact of reduced precision on the sampling results.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "I have some questions about Figure 1 b):\n\n1. The regime where the bounds are tested is a small portion of the figure (essentially sigma > 1 region), because the rest is dominated by the Monte Carlo variance. An experiment that would test the bounds in a more meaningful way would be useful. If running more samples is too expensive, a smaller or simpler model could be used.\n2. In the regime where the bounds are valid they are not particularly tight, so it is not clear how useful they are in practice? Also, the Avg bound doesn’t seem stronger than the KL bound? Why don’t we see the O(sigma) and O(sigma^2) scaling of the Avg bound in the limit sigma -> 0?",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The authors have adequately answered my questions, have added new experiments which are more convincing."
+  }
+ ]
+}

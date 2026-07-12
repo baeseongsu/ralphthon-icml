@@ -1,0 +1,26 @@
+{
+  "forum_id": "KmDPaiwdZh",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_4kjn",
+      "weight": "high",
+      "reason": "The meta-review adopts this reviewer's framing almost verbatim as the paper's headline contribution ('rigorous mathematical framework by extending randomized smoothing techniques to the parameter space of high-dimensional generative models'). Their weaknesses (dense/notation-heavy presentation, need for a pipeline diagram, UNet-specific design that may not transfer to DiT, unquantified overhead) are specific and independently corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_8zbA",
+      "weight": "high",
+      "reason": "Specific and substantiated; confidence 4. Their key contribution language ('robustness guarantees under certain-conditions, well analysed') and originality judgment are echoed by the meta-review. Their central weakness (single, non-SOTA model and UNet-only evaluation, raising applicability to SOTA transformer-based backbones) is corroborated by 4kjn and reflected in the meta-review's reservations."
+    },
+    {
+      "reviewer": "Reviewer_jvc3",
+      "weight": "high",
+      "reason": "The most thorough and technically engaged review (highest soundness score, confidence 4). Strengths and weaknesses are concrete and well-grounded in specific tables/theorems. The binary/one-bit watermark limitation (W1) is fundamental and corroborated by jbqZ's binary-target concern; the verification-cost and certified-radius-interpretability points are specific and align with concerns raised elsewhere."
+    },
+    {
+      "reviewer": "Reviewer_jbqZ",
+      "weight": "medium",
+      "reason": "Specific and substantive methodological concerns (attribution reliability, missing false-positive analysis on non-watermarked suspects, coupling bias from a shared frozen model, q*/prompt sensitivity). The binary-target point overlaps with jvc3, but the unique false-positive/coupling critiques are not echoed by the meta-review or other reviewers, so they read as legitimate but secondary reservations rather than adopted central points."
+    }
+  ],
+  "score_rationale": "All four reviewers gave overall_recommendation = 4 and the meta-review confirms an accept-with-reservations outcome, so overall = 4 is fixed by the range. Presentation is unanimous at 3, and significance (3) and originality (3) follow the majority of high-weight reviewers while respecting the meta-review's emphasis on a practically relevant, original 'first certified' contribution. Soundness is set to 2, the value given by three of four reviewers including two high-weight ones, reflecting the substantive unresolved reservations (single-model/UNet-only validation, under-validated attribution and missing false-positive analysis) that the meta-review explicitly flags as remaining limitations, while jvc3's 3 keeps the theoretical rigor in view. Confidence is 4 because the reviewers strongly corroborate one another on the architecture/single-model, binary-watermark, and validation-gap concerns."
+}
