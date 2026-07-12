@@ -1,0 +1,55 @@
+{
+  "paper_id": "paper-smoke-001",
+  "human_scores": {
+    "soundness": [2, 3, 4],
+    "presentation": [3, 3, 4],
+    "significance": [2, 3, 3],
+    "originality": [3, 4, 4],
+    "overall_recommendation": [3, 4, 5]
+  },
+  "generated_review": {
+    "summary": "The paper studies a bounded synthetic optimization problem and reports controlled comparisons.",
+    "strengths": [
+      "The central comparison is stated clearly and uses a fixed evaluation protocol."
+    ],
+    "weaknesses": [
+      "The evidence is limited to one synthetic setting, so generality is not established."
+    ],
+    "questions": [
+      "Would the conclusion change under a second seed or a shifted synthetic distribution?"
+    ],
+    "limitations": "The evaluation scope is narrow and does not support broad empirical claims.",
+    "ethical_concerns": "No material ethical concern is apparent from the supplied artifact.",
+    "evidence_trace": [
+      "Main result table -> bounded comparison claim"
+    ],
+    "scores": {
+      "soundness": 3,
+      "presentation": 3,
+      "significance": 3,
+      "originality": 4,
+      "overall_recommendation": 4,
+      "confidence": 3
+    }
+  },
+  "judge": {
+    "scores": {
+      "rubric_coverage": 5,
+      "evidence_grounding": 4,
+      "major_issue_detection": 4,
+      "score_rationale_consistency": 5,
+      "specificity_actionability": 4,
+      "summary_faithfulness": 5,
+      "hallucination_avoidance": 5,
+      "question_quality": 4,
+      "limitations_ethics": 4
+    },
+    "rationale": "The review covers the required rubric, identifies the narrow evaluation, and keeps claims tied to the supplied evidence."
+  },
+  "penalties": {
+    "hallucination": 0,
+    "schema_failure": 0,
+    "missing_evidence": 0,
+    "api_failure": 0
+  }
+}
