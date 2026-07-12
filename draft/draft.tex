@@ -105,7 +105,7 @@ This constraint covers soundness, presentation, significance, originality, and o
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.90\textwidth]{../docs/figures/image.png}
+  \includegraphics[width=0.90\textwidth]{figures/overall_pipeline.png}
   \caption{End-to-end review-agent development workflow. A frozen pseudo-review benchmark supports manuscript-only Reviewer inference, reference-score and Judge evaluation, regression-gated prompt selection, experience-guided reflection, and deployment of the kept P2 prompt.}
   \label{fig:system}
 \end{figure*}
@@ -216,11 +216,11 @@ The parent ICML 2026 accepted-paper collection contains 6,341 papers, 24,378 off
   \centering
   \begin{subfigure}[t]{0.58\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/01_primary_area_distribution.png}
+    \includegraphics[width=\textwidth]{figures/primary_area_distribution.png}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.36\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/02_reviews_per_paper.png}
+    \includegraphics[width=\textwidth]{figures/reviews_per_paper.png}
   \end{subfigure}
   \caption{Population coverage. Large Language Models is the largest primary area (1,155 papers), followed by Computer Vision (515) and Generative Models and Autoencoders (349). Most papers have four official reviews (5,190 papers; 81.8\%), while 16.7\% have three.}
   \label{fig:population-coverage}
@@ -230,11 +230,11 @@ The parent ICML 2026 accepted-paper collection contains 6,341 papers, 24,378 off
   \centering
   \begin{subfigure}[t]{0.54\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/03_review_score_distributions.png}
+    \includegraphics[width=\textwidth]{figures/review_score_distributions.png}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.42\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/04_reviewer_disagreement.png}
+    \includegraphics[width=\textwidth]{figures/reviewer_disagreement.png}
   \end{subfigure}
   \caption{Human-review scores and within-paper disagreement. Scores concentrate at 3 for the four quality dimensions and at 4 for overall recommendation; confidence is concentrated at 3--4. The violin plots show the standard deviation across reviewers for each paper. Median disagreement is approximately 0.5 points for all six dimensions, with substantial upper tails. This variation motivates consolidating multiple reviews rather than treating an arbitrary individual review as the supervision target.}
   \label{fig:human-score-statistics}
@@ -244,11 +244,11 @@ The parent ICML 2026 accepted-paper collection contains 6,341 papers, 24,378 off
   \centering
   \begin{subfigure}[t]{0.60\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/05_text_length_distributions.png}
+    \includegraphics[width=\textwidth]{figures/text_length_distributions.png}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.34\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{../psudo_labeling/figure/icml2026/individual/06_decision_composition.png}
+    \includegraphics[width=\textwidth]{figures/decision_composition.png}
   \end{subfigure}
   \caption{Text length and decision composition of the accepted-paper population. Official reviews have a median length of 427 words, compared with 166 words for abstracts, and exhibit a much longer right tail. The population contains 5,805 regular papers (91.5\%) and 536 spotlight papers (8.5\%).}
   \label{fig:text-decision-statistics}
@@ -259,14 +259,14 @@ We compare three quantities for each score dimension: the distribution of paper-
 
 \begin{figure*}[p]
   \centering
-  \includegraphics[width=0.96\textwidth]{../psudo_labeling/figure/icml2026/pseudo_score_comparison/score_distributions_comparison.png}
+  \includegraphics[width=0.96\textwidth]{figures/pseudo_score_distributions.png}
   \caption{Empirical cumulative score distributions for the full accepted-paper population, the 175-paper labeled subset, and its consolidated pseudo-labels. The full and sampled human curves are similar. Pseudo-label curves have larger jumps because each paper receives one integer label, whereas the human curves use fractional within-paper averages. Consolidated quality scores also concentrate near 3, overall recommendation near 4, and confidence near 4.}
   \label{fig:pseudo-score-distributions}
 \end{figure*}
 
 \begin{figure*}[p]
   \centering
-  \includegraphics[width=0.96\textwidth]{../psudo_labeling/figure/icml2026/pseudo_score_comparison/score_means_comparison.png}
+  \includegraphics[width=0.96\textwidth]{figures/pseudo_score_means.png}
   \caption{Mean score comparison with 95\% normal intervals. For the full population, sampled human reviews, and pseudo-labels, respectively, the means are 2.86/2.86/2.94 for soundness, 2.89/2.93/2.94 for presentation, 2.75/2.75/2.90 for significance, 2.78/2.79/2.85 for originality, and 4.15/4.17/4.18 for overall recommendation. Confidence increases from 3.46 in both human sets to 3.97 in the pseudo-labels, indicating that the consolidation procedure produces more decisive confidence judgments than a paper-level mean of reviewer confidence.}
   \label{fig:pseudo-score-means}
 \end{figure*}
@@ -275,7 +275,7 @@ Together, \Cref{fig:pseudo-score-distributions,fig:pseudo-score-means} show that
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.96\textwidth]{../docs/figures/review-prompt-autoresearch-trajectory.png}
+  \includegraphics[width=0.96\textwidth]{figures/review_prompt_trajectory.png}
   \caption{Prompt-optimization trajectory on the frozen five-paper development set. P2 is retained because it improves the composite objective and passes all component and dimension regression gates; P1, P3, and P4 are discarded.}
   \label{fig:trajectory}
 \end{figure*}
