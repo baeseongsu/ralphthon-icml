@@ -1,0 +1,21 @@
+{
+  "forum_id": "NWApJP7UKT",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_GnoN",
+      "weight": "high",
+      "reason": "Specific and substantiated: correctly identifies the decoupled-noise/shortcut mechanism and praises the empirical breadth, aligning with the meta-review's 'technically sound and well-executed.' Its central concern about inference latency under aggressive test-time scaling is independently corroborated by another reviewer, and the vision-encoder comparison suggestion is concrete. Accept score matches the consensus."
+    },
+    {
+      "reviewer": "Reviewer_R5Wh",
+      "weight": "high",
+      "reason": "The most detailed technical critique, grounded in specific table evidence (non-monotonic scaling) and a well-argued latency/deployability concern that is echoed by another reviewer; its originality concern (dual-stream MMDiT is established) is also corroborated. It is the lone Weak Accept and its harshest interpretive conclusions run somewhat against the meta-review's positive framing, so its evidence is adopted but its severity is moderated toward the accept consensus."
+    },
+    {
+      "reviewer": "Reviewer_EXJ2",
+      "weight": "high",
+      "reason": "Knowledgeable and specific: praises the clear formulation, extensive experiments, and thorough ablations (matching the meta-review), while identifying concrete related work (PAD, FLARE, VideoJAM) and a corroborated incremental-novelty concern. Raises pointed, evaluation-relevant questions about denoising-step counts. Accept score matches the consensus."
+    }
+  ],
+  "score_rationale": "All three reviews were specific and mutually corroborating, so each was weighted highly; the meta-review anchored the overall positive direction with explicit praise for technical soundness, clear presentation, meaningful ablations, and evaluation breadth. Soundness (3), presentation (4), and significance (3) follow the two-to-one majority and the meta-review's emphasis on a technically sound, well-executed, empirically strong contribution. Originality is set to 2 because two high-weight reviewers independently flagged the dual-stream MMDiT as an incremental adaptation of established generative architectures (PAD/FLARE), and the meta-review does not cite novelty as a strength. The overall recommendation of 5 reflects the accept consensus and the regular-accept decision, while confidence 4 reflects strong cross-review agreement on both strengths (empirical breadth, presentation) and weaknesses (latency of test-time scaling, incremental novelty)."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "SldP4LGjdz",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_9DhC",
+      "weight": "high",
+      "reason": "The most thorough and technically engaged review. Its central presentation critique — notation used before definition (the averaged index-set symbol in Eq. (5)) and the value function deferred to the appendix — is independently corroborated by another reviewer and matches the meta-review's call to improve presentation clarity. It adds specific, substantiated concerns (no censoring in the synthetic data, high-dimensional scalability, unclear recipe for applying the decomposition to a new model, and several figure-level questions)."
+    },
+    {
+      "reviewer": "Reviewer_MKCW",
+      "weight": "high",
+      "reason": "Specific, well-grounded weaknesses that are partly corroborated by other reviewers: the multiplicative-hazard restriction and small/second-order scope, transformation-induced non-genuine interactions, and reference-distribution sensitivity under feature dependence. Its presentation score and its questions (scale selection, reference-distribution guidance, extension to non-multiplicative/competing-risks settings) align with the meta-review's direction."
+    },
+    {
+      "reviewer": "Reviewer_FiSB",
+      "weight": "high",
+      "reason": "Independently corroborates the key presentation problem (undefined symbol in Eq. (5) used before Section 2.3), which the meta-review adopts, and offers thoughtful significance and originality framing with specific questions. Slightly discounted because the reviewer notes limited familiarity with the theoretical results and reports low self-confidence, but the corroborated presentation point makes it on-target."
+    },
+    {
+      "reviewer": "Reviewer_mTic",
+      "weight": "medium",
+      "reason": "Positive and specific where it counts — the need for quantitative metrics and behavior on inherently interpretable models — and its call for a more thorough limitations/societal-impact discussion aligns with the meta-review. However, its presentation score of 4 is an outlier that contradicts both the meta-review's presentation-clarity concern and the other three reviewers' consensus of 2, so it is only partly on-target."
+    }
+  ],
+  "score_rationale": "Soundness (3) and originality (3) were unanimous across all four reviewers and adopted directly. Presentation was set to 2, matching the three high-weight reviewers and the meta-review's explicit call to improve presentation clarity, rather than the single medium-weight outlier of 4. Overall recommendation of 4 follows the three high-weight reviewers (all 4) and the acceptance decision, discounting the medium-weight 5. Significance was borderline, with high-weight reviewers split 2/2/3; I positioned it at 3 given the acceptance, the universally acknowledged importance of the problem, and the meta-review's silence on significance, while surfacing the practical-scope caveats prominently in the prose. Confidence is 4, reflecting strong mutual corroboration (notation-clarity issues and the multiplicative-hazard/small-data scope limits raised independently) with only minor divergence."
+}

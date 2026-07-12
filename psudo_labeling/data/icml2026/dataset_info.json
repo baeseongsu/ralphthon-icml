@@ -1,0 +1,66 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "forum_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "submission_number": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "title": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "abstract": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "authors": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "keywords": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "primary_area": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "tldr": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "decision": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "decision_comment": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "num_reviews": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "reviews_json": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "paper_url": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": ""
+}

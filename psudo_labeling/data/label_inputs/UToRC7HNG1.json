@@ -1,0 +1,66 @@
+{
+ "forum_id": "UToRC7HNG1",
+ "title": "Local Policies for Graph-Structured Markov Decision Processes",
+ "abstract": "We study a cooperative form of multi-agent reinforcement learning\n  with state space dynamics and agent interaction controlled by an\n  underlying graph. Each agent has a local state and action, the\n  evolution of the local state depends only on the states and actions\n  in the $1$-hop neighborhood defined by the graph.  Structured\n  dynamics of this type arise in various applications, including\n  network resource allocation, co-operative games, epidemic control,\n  and wireless scheduling. The global state-action space scales\n  exponentially in the number of agents, so that computing global\n  optimal policies is intractable in the worst-case.  We study\n  conditions under which it is possible to approximate the optimal\n  policies by a local policy for each agent that depends only on\n  states associated with nodes within its $m$-hop neighborhood.  By\n  controlling the propagation of influences via a Dobrushin-type\n  stability matrix, we establish that globally optimal policies can\n  approximated by local policies with sub-optimality gap decaying\n  exponentially in $m$.",
+ "primary_area": "reinforcement_learning->multiagent",
+ "decision": "Accept (regular)",
+ "decision_comment": "Summary: The paper investigates graph-structured Markov Decision Processes to determine when global optimal policies can be effectively approximated by $m$-hop local policies. The authors provide a theoretical foundation for this approximation by controlling influence propagation through a Dobrushin-type stability matrix, showing that the approximation error decays exponentially with distance. \n\nDecision: Despite the weakness of the limited depth in the multi-agent algorithmic discussion and persistent typos throughout the manuscript, the paper has strong theoretical and conceptual contributions. Please ensure these multi-agent details (see discussion with rYam) are expanded and all grammatical errors are corrected in the camera-ready version. Among the reviewers, there is significant enthusiasm for the paper to be accepted and the AC agrees.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_rYam",
+   "summary": "The paper studies cooperative MARL within graph-structured partially observable MDPs. It establishes conditions under which a globally optimal policy can be approximated by $m$-hop local policies, showing that the sub-optimality gap decays exponentially with respect to $m$.",
+   "strengths_and_weaknesses": "Strengths:\n- The paper studies a novel multi-agent MDP setting where the agents are embedded into an underlying graph. The setting uses the notion of the m-neighborhood to deal with the generally intractable POMDPs.\n- For the single-agent setting, the paper not only proves the existence of an $m$-hop policy but also gives an efficient algorithm based on projected Q-iteration updates.\n\nWeaknesses:\n- While the authors provide an algorithm for the single-agent case, they have left the computation of the $m$-hop cooperative policy in the multi-agent setting as an open question. I believe that the paper would have been benefited a lot, if the authors had solved the multi-agent setting as well.\n- One concern that I have is the assumption about the bounded spectral radius. The authors have tried to explain why this assumption is reasonable, however it remains unclear whether this assumption holds even for small MDPs. It would be beneficial that the authors provide toy examples showcasing whether this assumption holds and, in general, under what conditions.\n- Last but not least, the writing should be improved. There are many typos and expressive language errors, including: 1. \"Associated with each node is an agent, along with a local\nstate, a local action, and a local reward function that only\ndepends on its own state and action\", 2. \"Moreover, the state only on the\nlocal neighborhood of state-action pairs.\", 3. \"epidemic con-\ntroml\", 4. \"co-ordination\", 5. \"PSACE-hard\", 6. \"m-neighorhood\" (in the theorem statement), 6. in equation 6, \\tilde{Q} has not been defined.",
+   "soundness": 2,
+   "presentation": 1,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- One minor concern is whether the setting is indeed meaningful for realistic scenarios, because the underlying graph is fixed. This means that the agents should always communicate with the same teammates throughout the whole learning/computation process. What happens if the graph changes either adversarially or via a known/unknown distribution?",
+   "limitations": "N/A.",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_W1NX",
+   "summary": "The authors study the problem of planning in a multi-agent setting with m-hop policies -- set of policies that a depend only on a local neighborhood of m steps. The focus on a social welfare setting, where they aim to maximize the cumulative reward across agents, and make a factorisation assumption on the transition model. \n\nIn general, even this structure may be result in NP-hard computational problems. The authors focus on the studying the performance gap between the optimal policy and an optimal m-hop policy, calculated by performing Bellman update. Specifically, this work provides upper bounds that bound the difference between these, depending on structural quantities of the MDP.",
+   "strengths_and_weaknesses": "#Strengths\n\n- Providing approximate algorithmic techniques for solving multi-agent systems is an interesting and open problem. The authors make progress towards that goal.\n- The idea, to the best of my knowledge, is novel and may provide inspiration to other researchers.\n- The paper is well written.\n\n#Weaknesses\n\n- The paper focuses only on the planning setting. It is not clear how to generalize these results to the learning setting.\n- Experiments are quite basic.\n- As the authors also suggest, solving the approximately optimal m-hop policy, is on its own, possibly, a hard problem.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- See weaknesses of the paper.\n- Can the authors provide any lower bound to the upper bounds introduces in this work?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_xn8F",
+   "summary": "This work provides exponentially close to optimal guarantees for m-hop policies in multi-agent MDPs with networked agents. This guarantee results from the m-hop local policies for each agent allowing the agents to act preemptively before the 1-step influences of agents beyond m-hops can influence the local state of the agent. These m-hop policies attain scalability improvements as they only depend on the m-hop neighbors rather than the states of all the agents. The multi-agent networked agents setting shows up in applications such as epidemic control, autonomous driving, wireless scheduling etc.",
+   "strengths_and_weaknesses": "Soundness: 3 (Good) \nOverall, this work appears to be technically sound. I did not catch any significant errors during my reading of the body of the paper or the proof of Theorem 1. Everything I read seems to be well supported.\n\nPresentation: 3 (Good)\nThe submission is clearly written and easy to understand. The proofs in the appendix are easy to read. However, there are some mathematical typos that should be resolved.\n\nBelow are some that I spotted:\n\ni) Theorem 4 looks identical to Theorem 2 (does not use H_i,j)\n\nii) The first set of equations in appendix A.2. appear to be missing $\\gamma$ when taking the difference of bellman updates\n\niii) The notation $N_i^k$ and $N_k^i$ get flipped occasionally (see section A.3. Proof of Lemma 4 in the appendix)\n\nSignificance: 4 (Excellent)\nThe result of exponential decay of the m-hop policy has been sought after result, and has been a technical challenge in the networked RL space. It gives the impression of a simple and natural result but is quite difficult to prove. The work by Zhang 2023 [1] only achieves a polynomial rate.\n\nOriginality: 3 (Good) \nThe methods are novel and this is a very clear improvement over the previous approaches in that it achieves an exponential bound\n\n[1] Zhang, Y., Qu, G., Xu, P., Lin, Y., Chen, Z., and Wierman, A. Global convergence of localized policy iteration in net-\nworked multi-agent reinforcement learning. Proceedings of the ACM on Measurement and Analysis of Computing Systems, 7(1):1–51, 2023",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "1) How limiting is the $\\gamma C < 1$ assumption? I see a similar assumption was made by Zhang 2023. Is this weak influence assumption commonly held for applications?\n\n2) I feel that a lower bound could be proved for this setting (that there exists a poor example that m hop policies are exponentially far away from optimal). Have you considered this and how difficult would it be to prove?",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "Overall, I recommend the paper for the reasons listed above. The authors have addressed my questions"
+  },
+  {
+   "reviewer": "Reviewer_XV6n",
+   "summary": "The paper introduces a methodology to compute approximately optimal cooperative policies on sparse graphs with sufficiently weak interactions between nodes. In such a scenario, due to sparsity the authors are able to achieve a result where policies based on only local states are sufficient for approximate optimality, even with partial observability. For the multi-agent cooperation scenario, they show the existence of such approximately optimal local policies, while an efficient learning algorithm for finding such policies is left to future work. The result is quite general and can apply to a variety of scenarios.",
+   "strengths_and_weaknesses": "1.  Originality: The core idea of applying exponential correlation decay and spectral radii to control / RL problems on sufficiently sparse graphs is original, though the work seems quite related to many recent results on local interaction / policies on large sparse graphs [1-3].\n\n2.  Soundness: The paper is backed by theory, including rigorous approximate optimality results for local policies. In particular, the results seem plausible to me and are of similar character as other recent results in sparse graph literature. This provides a solid foundation for any empirical results.\n\n3.  Significance: The experiments and the algorithmic contribution are a little limited, given that there is no proposed algorithm for the multi-agent scenario. But the experiment does verify the theory quite nicely.\n\n4.  Presentation: The paper positions itself primarily within a growing line of recent work on graph-structured MDPs and RL. I think the work also seems quite related to many recent results on local sparse interactions. Overall, the work is written well and very clear on its results.\n\n[1] Lacker et al. \"Local weak convergence for sparse networks of interacting processes.\" The Annals of Applied Probability 33.2 (2023): 843-888.\n\n[2] Ankan Ganguly and Kavita Ramanan. \"Hydrodynamic limits of non-Markovian interacting particle systems on sparse graphs.\" Electronic Journal of Probability 29 (2024): 1-63.\n\n[3] Fabian et al. \"Learning mean field control on sparse graphs.\" ICML 2025.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I just have a few quick questions to verify my understanding.\n\n1.  I can see that the spectral radius is used for theoretical results and sparsity is required. What happens in the case of increasingly large graphs, such as via large graph limits? \n\n2.  What happens when the assumption is not fulfilled? Does the methodology still degrade gracefully, indicating possibility of relaxing assumptions further?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "My concerns have been fully addressed. I appreciate the additional work on the multi-agent setting, and I think even just a brief discussion of initial results or possibilities in the appendix would significantly strengthen the paper. I will raise my score to 5."
+  }
+ ]
+}

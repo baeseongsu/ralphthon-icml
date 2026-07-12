@@ -1,0 +1,62 @@
+{
+ "forum_id": "WcsBsGO6SW",
+ "title": "Content-Style Identification via Differential Independence",
+ "abstract": "Generative analysis often models multi-domain observations as nonlinear mixtures of domain-invariant content variables and domain-specific style variables. Identifying both factors from unpaired domains enables tasks such as domain transfer and counterfactual data generation. Prior work establishes identifiability under (block-wise) statistical independence between content and style, or via sparse Jacobian assumptions on the nonlinear mixing function, but such conditions can be restrictive and may not hold in practice.\nIn this work, we introduce differential independence, a weaker structural condition requiring that infinitesimal variations in content and style induce orthogonal directions on the data manifold, thereby enabling identifiability even when content and style are dependent and the Jacobian is dense. We operationalize this condition through a blockwise orthogonality constraint on the Jacobian subspaces associated with content and style. To support high-dimensional generative models, we design a stochastic regularizer based on numerical Jacobian approximation, enabling scalable training in settings such as high-resolution image generation. Experiments across multiple datasets corroborate the identifiability analysis and demonstrate practical benefits on counterfactual generation and domain translation tasks.",
+ "primary_area": "theory->domain_adaptation_and_transfer_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "Summary: this work investigates the problem of identifying content and style from unpaired multi-domain data using generative models, which is an important topic. The authors propose a new identifiability condition, which assumes that infinitesimal variations in content and style variables span orthogonal subspaces of the data manifold. Under this assumption and a distribution-matching objective, the paper proves that both content and style variables are identifiable up to invertible transformations. The authors further introduce CSDI-GAN, which augments a GAN architecture with a Jacobian orthogonality regularizer approximated via Hutchinson trace estimation. Experiments on synthetic MNIST and real image datasets (AFHQ, CelebA-HQ) demonstrate improvements in counterfactual generation and domain translation tasks compared to several content-style GAN baselines. This is an interesting work that I believe is of interest to the community.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_VE6H",
+   "summary": "This paper studies the problem of identifying content and style from unpaired multi-domain data using generative models. The authors propose a new identifiability condition i.e., differential independence, which assumes that infinitesimal variations in content and style variables span orthogonal subspaces of the data manifold. Under this assumption and a distribution-matching objective, the paper proves that both content and style variables are identifiable up to invertible transformations.  The authors further introduce CSDI-GAN, which augments a GAN architecture with a Jacobian orthogonality regularizer approximated via Hutchinson trace estimation. Experiments on synthetic MNIST and real image datasets (AFHQ, CelebA-HQ) demonstrate improvements in counterfactual generation and domain translation tasks compared to several content-style GAN baselines.",
+   "strengths_and_weaknesses": "Strengths:\n- the geometric notion of disentanglement is conceptually appealing and aligns with recent work on causal representation learning and differential geometry\n- the identifiability theorem suggests content and style can be recovered without assuming statistical independence, which addresses the limitation of prior work\n- translating the differential independence condition into a regularizable loss function implemented in a GAN is an interesting idea.\n\nWeaknesses:\n- the orthogonallity assumptions on content and style-induced tangent spaces might still be too strong for natural generative processes.\n- the evaluation setup is modest, with the datasets being relatively small scale, and no comparison with recent disentanglement approaches beyond GAN variants.\n- most results rely on FID and LPIPS, which primarily measure image quality rather than disentanglement fidelity.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- is the method sensitive to violations of the assumption on exact orthogonality of Jacobian subspaces?\n- how does the computational overhead scale with model size and image resolution? compare the training costs of CSDI-GAN and baseline GAN methods would be useful.\n- would the differential independence still be meaningful to score-based diffusion models, where mapping from latents to data is implicit?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_YeXN",
+   "summary": "The paper uses differential independence to identify content and style factors in generative models. The method enforces orthogonality between content and style variations on the data manifold, which disentanglement even when factors are (or could be) statistically dependent. This approach also outperforms existing methods in counterfactual generation and domain translation on high-resolution datasets.",
+   "strengths_and_weaknesses": "Strengths:\n1. Using hutchinson’s trace estimator is an efficeint way to calculate the orthogonal directions.\n2. The theoretical constraints are relaxed compared to the previous works, which give this work more practical meanings.\n\nWeakness&questions:\n1. The model works well at unpaired data, but the domain variability assumption requires at least two domains with sufficiently diverse distributions to function. It's unclear that what happens when the differences of two domains is entangled with each other, for example, disentangle ID and a cartoon pixar styles.\n2. In L083, the authors define the generator g as a smooth and bijective mapping, but real-world image data often contains sharp transitions or discrete structures (like the edge of an object moving against a background), where the proposition A.1 might not hold.\n3. The authors model the tangent space of the data manifold as a direct sum of content and style subspaces (L132 right), this assumes that all the possible variation in the data can be decomposed into either content or style. but if there are features belongs to both manifold, will the orthogonality constraint L_orth force the model to collapse certain features or create artifacts to satisfy the requirement?",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I merged questions into weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_YV2e",
+   "summary": "This paper proposes a new content-style identification theory which is built upon orthogonal tangent subspace assumption, followed by a corresponding GAN-based identification algorithm, named CSDI-GAN. Experiments on synthetic and real-world image datasets show clear advantage of CSDI-GAN over existing baselines, in terms of counterfactual generation quality and diversity.",
+   "strengths_and_weaknesses": "Contributions of this paper are two parts: the identifiability theory under differential independence, and the identification algorithm CSDI-GAN, both of which are novel to the best of my knowledge. \n\nFor the identifiability theory, the CSDI assumption has its merit that it differs from previous statistical independence or Jacobian sparsity assumption. This provides a new option for selecting a proper assumption set. One drawback here is that the authors neither make a comparison between these assumptions, nor point out some typical situation that CSDI assumption will hold in practice. This hinders the potential application of proposed theory. By the way, there have been contemporary works considering substitute assumptions for statistical independence. I find that CSDI assumption looks similar to the **mechanistic independence** in [this paper](https://openreview.net/forum?id=0VVdai71xb). Though not counted as one weakness, I suggest the authors to compare their assumptions with such literatures in the next version.\n\nFor the identification algorithm, I am glad to see the proposed CSDI-GAN achieves better identification performance. This provides a new tool for image translation, and may further be extended to solve robustness problems.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1.\tIs CSDI assumption strictly weaker than statistical independence assumption, or just a substitute?\n2.\tDoes CSDI-GAN algorithm require the knowledge of dimensionality of content and style variables? How do you set the dimensionality in your implementation?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_xgMt",
+   "summary": "The authors address the challenge of unpaired multi-domain learning, where cross-domain correspondences are not observed. They argue that while content (shared information) and style (domain-specific information) may be statistically dependent in reality (e.g., lighting depending on object geometry), they should induce orthogonal variations on the data manifold.To operationalize this, they introduce a Jacobian-based orthogonality regularizer (L_orth) for generative models. Because computing full Jacobians for high-dimensional data is prohibitive, they develop a scalable stochastic approximation using Hutchinson's trace estimation and Vector-Jacobian Products (VJP). They provide a theoretical proof of identifiability for both content and style under these conditions and demonstrate superior performance on image generation and translation tasks using MNIST, AFHQ, and CelebA-HQ datasets.",
+   "strengths_and_weaknesses": "Strengths\n\n1. Unlike prior work, this method does not require content and style to be statistically independent, making it more applicable to real-world scenarios where these factors naturally correlate.Scalability to High Dimensions: The use of noise-probing VJP estimators allows the model to handle high-resolution images by avoiding the explicit formation of large Jacobian matrices, reducing memory requirements by a factor of roughly d_C + d_S.\n\n2. The paper provides a rigorous identifiability theorem (Theorem 3.4) showing that content and style can be recovered up to invertible transformations without relying on sparse Jacobian assumptions.Empirical Robustness: Experiments across multiple datasets show that the model (CSDI-GAN) more consistently preserves style and content during counterfactual generation compared to existing baselines like I-StyleGAN and B.I. GAN.\n\n\nWeaknesses\n\nThe authors acknowledge that the assumption of exact mutual orthogonality may not always hold in practice, which could impact the model's reliability in certain domains.Complex Implementation: While scalable, the framework involves multiple loss terms (L_GAN, L_inv, L_orth) and requires careful numerical stabilization (e.g., the \\epsilon constant in the regularizer). The current implementation is primarily focused on GAN architectures; its effectiveness in newer generative frameworks like Diffusion or Flow Matching remains largely unexplored in this paper.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 1,
+   "originality": 3,
+   "key_questions_for_authors": "1. How does the degree of \"orthogonality violation\" in the ground-truth data manifold affect the error bounds of your identifiability result?\n\n2. The Jacobian regularizer includes an \\epsilon term and requires K noise probes. How sensitive are the FID and LPIPS results to the choice of K and the magnitude of \\epsilon across different data modalities?",
+   "limitations": "yes.",
+   "overall_recommendation": 2,
+   "confidence": 4
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "Wfe1iJocjF",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_LYjU",
+      "weight": "high",
+      "reason": "The most critical reviewer, but its three substantive weaknesses (missing end-to-end comparisons against SOTA memory-efficient optimizers, absence of a convergence analysis, and insufficient from-scratch pretraining scale) are precisely the items the meta-review flags and the authors addressed in rebuttal. Points are high-value and corroborated; only the soundness/significance scores of 2 and one mismatched citation run harsher than the spotlight direction."
+    },
+    {
+      "reviewer": "Reviewer_CjkB",
+      "weight": "high",
+      "reason": "Cleanly raised the central missing-baselines concern (end-to-end comparison against 8-bit Adam and BF16 weight splitting) that the meta-review identifies as the primary rebuttal request. Accurate, specific summary and balanced, defensible scoring."
+    },
+    {
+      "reviewer": "Reviewer_vXBy",
+      "weight": "high",
+      "reason": "Highest confidence (5) and the most tightly reasoned review; contributed the companding-function-principledness limitation and the memory-trace/spike question, the latter echoed by the meta-review's memory-spike clarification. Scoring consistent with the accept consensus."
+    },
+    {
+      "reviewer": "Reviewer_QWYD",
+      "weight": "medium",
+      "reason": "Thorough and substantiated, and its evaluation-comprehensiveness/scale point is corroborated by other reviewers and the meta-review. However, its distinctive asks (compare against a classical reference implementation, report image-classification timing) are relatively minor, and its originality/significance scores of 4 skew more generous than the balanced consensus."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on the missing compressed-baseline comparisons and the limited pretraining scale as the decisive concerns, which kept soundness (3) and significance (3) at 'good' rather than higher, in line with the three Accept reviewers and above LYjU's harsher 2s that the strong-accept/spotlight direction does not support. Originality (3) and presentation (3) reflect the consensus that the two techniques are elegant and the paper clear but at points overly dense, staying within the reviewers' [3,4] ranges. The overall recommendation of 5 follows the three high-weight Accept votes and the spotlight decision, and confidence 4 reflects how tightly the reviewers' concerns corroborate one another and the meta-review."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "sLVaNS2DS3",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_eS1d",
+      "weight": "high",
+      "reason": "Most technically specific and substantiated review, with a deeply informed summary and concrete concerns (Hodge star notation error, dated 2021 baselines, incomplete use of the Hodge decomposition, scalability). Its notation and formalism points are directly echoed by the meta-review's mention of notation and aspects of the formalism, and its presentation-quality assessment corroborates the others."
+    },
+    {
+      "reviewer": "Reviewer_R3sF",
+      "weight": "high",
+      "reason": "Specific, confident (4) review that correctly reconstructs the architecture and raises well-targeted concerns about formalism generality, appendix gaps, non-topology-aware baselines, and the fragmented/handcrafted implementation. These map onto the meta-review's 'aspects of the formalism' and accessibility concerns and are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_4mwr",
+      "weight": "high",
+      "reason": "Confident (4), strongly positive assessment that independently affirms novelty, soundness, and the unifying significance the meta-review highlights, while pinpointing the same accessibility gaps (unspecified operators in Section 4, opaque Appendices E and F). Substantiated and consistent with the meta-review's overall direction."
+    },
+    {
+      "reviewer": "Reviewer_BsYS",
+      "weight": "medium",
+      "reason": "On-target on the central presentation/accessibility concern (do not assume familiarity with the Hodge Spectral Duality theorem), which the meta-review echoes, and raises a reasonable question about whether topological invariants can be learned from data. However, the review is brief, low-confidence (2), and self-describes limited expertise, so it carries less weight on the technical dimensions."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as novel, mathematically well grounded, and empirically strong, with concerns centered on accessibility, notation, and formalism; I weighted the three specific, higher-confidence reviewers (eS1d, R3sF, 4mwr) most and treated BsYS as corroborating only the presentation concern. Soundness (3) and significance (3) sit at the high-weight center within the [3,4] ranges, tempered from 4 by the concrete formalism issues (Hodge star, generality, possible spectral duplication); presentation (3) reflects the near-universal accessibility criticism while respecting eS1d's 4 and the [2,4] range. Originality (4) follows the meta-review's lead emphasis on novelty and the two high-confidence 4s, and overall (5, accept) matches the high-weight cluster of 5/5/6 within the [4,6] range. Confidence (4) reflects strong mutual corroboration across the reviews on both strengths and weaknesses."
+}

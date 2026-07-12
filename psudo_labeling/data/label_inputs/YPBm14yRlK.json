@@ -1,0 +1,52 @@
+{
+ "forum_id": "YPBm14yRlK",
+ "title": "VPD-100K: Towards Generalizable and Fine-grained Visual Privacy Protection",
+ "abstract": "Privacy protection has become a critical requirement in the era of ubiquitous visual data sharing, imposing higher demands on efficient and robust privacy detection algorithms. However, current robust detection models are severely hindered by the lack of comprehensive datasets. \nExisting privacy-oriented datasets often suffer from limited scale, coarse-grained annotations, and narrow domain coverage, failing to capture the intricate details of sensitive information in real-world environments. \nTo bridge this gap, we present a large-scale, fine-grained Visual Privacy Dataset (VPD-100K), designed to facilitate generalized privacy detection. \nWe establish a holistic taxonomy comprising four primary domains: Human Presence, On-Screen Personally Identifiable Information (PII), Physical Identifiers, and Location Indicators, containing 100,000 images annotated with 33 fine-grained classes and over 190,000 object instances. Statistical analysis reveals that our dataset features long-tailed distributions, small object scales, and high visual complexity. These characteristics make the dataset particularly valuable for demanding, unconstrained applications such as live streaming, where actors frequently face unintentional, real-time information leakage. Furthermore, we design an effective frequency-enhance lightweight module consisting of frequency-domain attention fusion and adaptive spectral gating mechanism that breaks the limitations of spatial pixel intensity to better capture the subtle details of sensitive information. \nExtensive experiments conducted on both diverse image and streaming videos benchmarks consistently demonstrate the effectiveness of our VPD-100K dataset and the well-curated frequency mechanism.",
+ "primary_area": "social_aspects->privacy",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper received two accept recommendations and one weak reject recommendation from reviewers. Reviewers recognized the VPD-100K dataset as a valuable contribution to the community, highlighting its large scale, fine-grained annotations, and practical importance for visual privacy protection. Reviewers also found the proposed frequency-enhanced mechanism effective in improving detection performance, although one reviewer viewed the methodological contribution as more incremental and raised concerns about generalizability across newer YOLO backbones. After rebuttal, the two positive reviewers indicated that their concerns had been fully addressed, while the remaining reviewer maintained a weak reject. After considering the paper, reviews, and rebuttal, AC believes that the overall contribution of the dataset resource and technical approach outweighs the remaining concerns and recommends acceptance. Authors are encouraged to incorporate the clarifications on data collection, experimental settings, and baseline discussion into the final version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_f2Cr",
+   "summary": "The paper introduces VPD-100K, a large-scale, fine-grained visual privacy dataset (100,000 images across four domains) that addresses critical gaps in existing datasets scale, taxonomy, and domain coverage. Furthermore, they propose and validate a lightweight Frequency-Enhanced Mechanism (FEM), which integrates frequency-domain attention fusion, adaptive spectral gating, and a frequency-consistency loss,verifying its effectiveness on the VPD-100K.",
+   "strengths_and_weaknesses": "Despite its merits, the paper presents the following shortcomings:\n\n(1) Fails to include current SOTA models like YOLOv11 and YOLOv12 for accuracy-latency comparisons.\n\n(2) As a plug-and-play module, FEM is not compared against standard attention mechanisms (e.g., CBAM, SENet, Mamba) to justify its superiority.\n\n(3) Lacks hyperparameter sensitivity analysis (e.g., for $\\beta$).\n\n(4) Unclear how the dataset anonymizes unintended background subjects (e.g., bystanders, license plates) in real-world video streams to prevent secondary privacy leaks.\n\n(5) The paper claims to have conducted a comprehensive user study, yet it only involves 20 participants. Such a small sample size is statistically insufficient to draw robust conclusions.\n\n(6) While the proposed method is intuitive and easy to implement, it lacks an in-depth theoretical analysis of the underlying mechanisms driving its effectiveness. The paper does not provide the code.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "see Strengths And Weaknesses",
+   "limitations": "no",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": "I appreciate the authors' response. However, regarding the question of why newer models like YOLOv11-s and YOLOv12-s yield worse results than the proposed method based on YOLOv10-s, The authors' explanation is not entirely convincing. I remain concerned that the method is specifically over-tuned for YOLOv10-s, as its poor performance on newer frameworks exposes a lack of generalizability. Therefore, I maintain my original score."
+  },
+  {
+   "reviewer": "Reviewer_ZhPN",
+   "summary": "This paper provides a foundational contribution to the field of visual privacy. The release of a high-quality, 100k-image dataset with fine-grained annotations is a major service to the research community. Furthermore, the technical integration of frequency-domain processing into modern real-time detectors provides a clear performance boost for the specific challenges of privacy detection (small/blurry text and faces) without sacrificing speed. The comprehensive evaluation and ethical rigor make it a standout submission.",
+   "strengths_and_weaknesses": "N/A",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "1.\tThe paper notes that the dataset is available, which is vital for the community\n2.\tWhile the user study with 20 participants is a good starting point, future iterations could benefit from a larger, more diverse demographic to further validate the \"Comfort\" and \"Adoption\" metrics across different cultures\n3.\tThe balance hyperparameter β=0.05 is well-justified to prevent high-frequency gradients from overwhelming the primary task, showing deep understanding of the optimization process",
+   "limitations": "please see the weaknesses.",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "The authors have fully addressed my concerns."
+  },
+  {
+   "reviewer": "Reviewer_mWVq",
+   "summary": "This paper proposes VPD-100K, a large-scale, fine-grained visual privacy detection dataset designed to address the limitations of existing privacy detection datasets, such as small size, coarse annotation, and narrow domain coverage. The dataset contains 100,000 high-resolution images, covering 33 fine-grained categories and over 190,000 target instances, divided into four core domains: human presence (8 categories), screen PII (9 categories), physical identifiers (12 categories), and location indicators (4 categories). The dataset is characterized by a long-tailed distribution, a high proportion of small targets, and high visual complexity. The authors also propose a frequency-enhanced lightweight detection module, incorporating frequency-domain attention fusion, adaptive spectral gating, and frequency consistency loss to better capture high-frequency details of sensitive information. Experiments demonstrate that this method achieves excellent performance on both image and streaming video benchmarks, significantly improving detection accuracy while maintaining real-time performance.",
+   "strengths_and_weaknesses": "Overall Assessment: This is a solid work addressing an important issue in the field of visual privacy protection. The dataset construction and methodological design demonstrate a degree of innovation, and the experiments are comprehensive. However, there is room for improvement in the originality of the methodology, the ethical details of the dataset, and the rigor of some experimental designs.\nStrengths:\n1. The dataset size (100K images) and fine-grained annotations (33 classes) significantly surpass existing privacy detection datasets (such as DIPA2 with only 1.3K images), filling a gap in the field.\n2. The ethical review process is complete (Appendix A), clearly stating that the collection of real user data will be avoided and an \"ethical scenario reconstruction\" strategy will be adopted.\nWeaknesses:\n1. Data reproducibility: The paper claims that the dataset will be made public (Availability is marked ✓ in Table 1), but the text mentions \"simulating digital interactions using internal accounts.\" However, it fails to adequately explain the specific generation protocol of this simulated data, whether it contains templated UI elements, and whether it may contain the interface copyrights of real third-party services.\n2. The rigor of the real-time claim: Table 4 claims \"130FPS\" but fails to specify hardware configuration (only mentioning NVIDIA A100), input resolution, and batch size. Is a 7.51ms latency reasonable for YOLOv10L on the A100? Detailed configuration information is recommended.\n3. The gain boundary with general detectors is unclear: Table 3 shows a 4.8% improvement in AP compared to the baseline with YOLOv10L+FEM, but is this mainly due to the dataset rather than the method? It is recommended to add a control experiment with \"changing only the dataset, not the method\".",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The rigor of the real-time claim: Table 4 claims \"130FPS\" but fails to specify hardware configuration (only mentioning NVIDIA A100), input resolution, and batch size. Is a 7.51ms latency reasonable for YOLOv10L on the A100? Detailed configuration information is recommended.",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The author's reply answered my question, and I think revising the paper is acceptable."
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "forum_id": "CVXqBkLF5y",
+ "title": "Gradient Descent with Large Step Size Restores Symmetry in Deep Linear Networks with Multi-Pathway",
+ "abstract": "Recent analyses of multi-pathway Deep Linear Networks use Gradient Flow to predict a \"winner-takes-all\" specialization in which path symmetry breaks and each feature concentrates in a single pathway.\nIn this work, we show that discrete Gradient Descent (GD) with a large step size tells a different story. \nWe prove that single-path solutions are sharp minima, whereas distributing signals across pathways reduces sharpness by a factor that decreases with both the number of pathways and depth.\nConsequently, while early training reproduces the depth-driven symmetry breaking predicted by GF, oscillations at the Edge of Stability subsequently override this tendency and drive the network into a re-balancing phase, where signals redistribute across pathways.\nTogether, these results clarify how depth shapes pathway competition and explain why large-step GD favors shared representations rather than persistent single-pathway dominance.",
+ "primary_area": "theory->deep_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "There is a clear consensus of the reviewers towards acceptance. The analysis is novel and connects two relatively distinct research directions. The results are surprising and insightful. The main limitation is the restriction to linear networks and the SVS assumption.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Wz6Z",
+   "summary": "The authors study gradient descent (GD) in deep linear networks with multi-pathway and show that gradient descent with a large step size has fundamentally different behaviors from gradient flow (GF). Unlike GF, where winner-takes-all specialization happens, GD has a distinct er-balancing phase, where the dynamics converges to a balanced signal distribution across the pathways in favor of the reduction in sharpness. Finally, the authors provide a worst-case return threshold that guarantees the dynamics survives the violent oscillations, which validates the necessity of learning rate warmup period.",
+   "strengths_and_weaknesses": "Strength:\n\n1.\tThe paper is well-organized and rich in content. \n\n2.\tThe paper highlights a qualitative difference between GF and GD in multi-pathway deep linear networks. This perspective is interesting and novel.\n\n3.\tAlthough the theory focuses on deep linear networks, the experiment in Section 5.1 shows qualitatively similar behavior in a nonlinear MLP, which suggests that the mechanism may extend beyond the linear setting.\n\nWeakness:\n\n1.\tThe theory relies heavily on the SVS reduction, which is a quite restrictive scenario.\n\n2.\tThe authors skip the analyses of GD in the small learning rate regime but just stating it is approximated by the symmetry breaking results from GF. Adding an explicit theorem for this part would strengthen the paper.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1.\tDo the results still qualitatively hold for a generic initialization other than the depth-balanced initialization?\n\n2.\tHow tight is the WCR threshold relative to the empirical stability boundary observed in experiments?",
+   "limitations": "The authors have not adequately addressed the limitations. There are a few limitations of the paper. For example, there is a strong assumption on the depth-balanced initialization that the theory is based on. Additionally, the authors studies full-batch GD and have neglected the stochastic noises. SGD is more commonly used in optimizing modern deep neural networks.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_zAJU",
+   "summary": "This paper studies whether the symmetry-breaking phenomenon predicted by gradient flow in multi-pathway deep linear networks (Shi et al., 2022) also occurs under gradient descent. The authors show that the discrete nature of gradient descent leads to a different phenomenon that they call pathway re-balancing. The paper first provides a theoretical analysis showing that distributing signal across multiple parallel pathways reduces sharpness compared to concentrating signal in a single path. As training progresses and the system approaches the edge-of-stability regime, the dynamics enter a re-balancing phase that redistributes signal across pathways. Finally, the authors show that increasing network depth enlarges the parameter regime in which this re-balancing phenomenon occurs.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper studies an interesting toy model of deep linear networks and reveals a non-trivial interaction between multi-pathway architectures and edge-of-stability dynamics.\n\n2. The work combines two previously separate research directions: the multi-pathway linear network architecture studied by Shi et al. (2022) and the edge-of-stability analysis of linear networks studied in Ghosh et al. (2025). This combination appears novel and leads to an interesting dynamical phenomenon.\n\nWeaknesses:\n\n1. Although the proofs appear technically correct, the presentation is quite difficult to follow. Important concepts are sometimes introduced without clear definitions, equations are occasionally repeated, and the overall setup of the analysis is not always clearly explained. The writing and organization could be improved significantly.\n\n2. The significance of the results is limited by the narrowness of the model studied. The analysis focuses on a very specific toy model of deep linear networks. While the authors provide a small experiment with a three-layer network using a Tanh nonlinearity, the paper would benefit from a clearer discussion of how the theoretical insights might extend to more realistic nonlinear networks. In particular, the discussion of the broader implications—such as the claim that parallelism lowers sharpness, the connection to learning-rate warmup, or potential links to mixture-of-experts architectures—is interesting but currently underdeveloped. These ideas would benefit from a deeper discussion explaining how the theoretical results support these interpretations.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. On line 110 (right column) you refer to the “SVS set (Ghosh et al., 2025)”, but this concept is not explained before it is used. Could you clarify what this set represents and how it is used in your analysis? For example, does this correspond to the SVD-style task-aligned initialization used in Saxe et al. (2014)?\n\n2. Sections 4.1 and 4.2 appear to repeat much of the setup presented in Section 3. Could you clarify the purpose of these sections and explain how they extend or differ from the earlier setup?\n\n3. Does the re-balancing phenomenon only occur for the top singular mode, or does it also affect other singular modes of the system? You should discuss this.\n\n4. Where is the “pathway balancing gap” formally defined? I could not find a clear definition in the paper.\n\n5. The paper states that “pathway imbalance is the natural attractor of continuous-time dynamics.” Could you clarify the conditions under which this statement holds? My understanding is that the symmetry-breaking (“winner-takes-all”) behavior of gradient flow typically requires infinitesimal initialization scale and slight asymmetry between pathways. For example, if all pathways were initialized exactly symmetrically, the symmetry would persist.\n\n6. More generally, I had difficulty understanding the initialization scheme used in your analysis. Could you clarify: what the SVS set represents, how the coefficients $\\alpha_h$ are chosen, and what asymmetries are assumed in the initialization?\n\n7. The term “Deep Linear Chain” is introduced without a clear definition. It would help to explicitly define this architecture when it first appears.\n\nMinor comments:\n- The multi-pathway network architecture from Shi et al. (2022) is not widely known. It would help to briefly explain this architecture when it is first introduced in the introduction, and to provide a clearer description in Section 3.1. In particular, it was not immediately clear that there is no weight sharing between pathways (unlike the pathway formulation sometimes used for ReLU networks in the style of Saxe et al.).\n- Equation (8) appears to repeat Equation (3). Is there a reason both are shown?\n- In Figure 1, it would be helpful to include a label for the gray points directly in the legend.\n- In Figure 4, the visualization might be clearer if the diagonal corresponded to $L_1 = L_2$ rather than the anti-diagonal.",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_5WYZ",
+   "summary": "This paper demonstrates that large step sizes fundamentally alter behavior in parallel Deep Linear Networks.",
+   "strengths_and_weaknesses": "The paper is clearly written and well structured. \n\nA strength of this paper is that it successfully elucidates distributing a target feature across multiple pathways significantly reduces the network's sharpness. \n\nA separate section for conclusions should be included to summarize the key findings.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "No major concerns.",
+   "limitations": "It is recommended that the authors add a \"Limitations\" section to provide a more balanced perspective.",
+   "overall_recommendation": 5,
+   "confidence": 2
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "z31fdV4WRu",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_VYMX",
+      "weight": "high",
+      "reason": "Specific and substantiated review; its two central concerns -- the asymmetric hyperparameter treatment (AdamW fixed at defaults while SGD is swept, with no matching AdamW stability analysis) and the unspecified PPO inner-loop schedule -- are exactly the technical points the meta-review says were addressed during discussion, and it also anticipates the Muon suggestion."
+    },
+    {
+      "reviewer": "Reviewer_JAur",
+      "weight": "high",
+      "reason": "Well-articulated, on-target positive assessment aligned with the strongly positive accept/spotlight direction; its main suggestion -- analyzing geometry-aware/second-order optimizers (Muon, SOAP) -- is explicitly adopted by the meta-review as a way to strengthen the comparison. Confidence is only 3 and the review is thin on weaknesses, but its substance is corroborated."
+    },
+    {
+      "reviewer": "Reviewer_QcmC",
+      "weight": "high",
+      "reason": "Detailed, high-confidence review with concrete, actionable questions; the SFT cold-start question is directly adopted by the meta-review, and it fairly flags weaker theoretical grounding. Its significance score of 2 (limited by scope) is a reasonable but minority view relative to the committee's strong emphasis on practical impact."
+    },
+    {
+      "reviewer": "Reviewer_ELSp",
+      "weight": "medium",
+      "reason": "The skeptic the meta-review explicitly references. Its concerns about the depth of the theoretical justification for dropping adaptivity and about the transferability of the very high SGD learning rate are legitimate and partly corroborated, but its central negativity and its claim that the update-sparsity analysis is 'irrelevant' are contradicted by the committee, which finds the sparsity finding compelling and the paper spotlight-worthy."
+    }
+  ],
+  "score_rationale": "I anchored on the meta-review, which is strongly positive (spotlight, potentially oral) and explicitly adopts Reviewer_VYMX's hyperparameter-fairness and PPO-scheduling concerns, Reviewer_QcmC's SFT cold-start question, and Reviewer_JAur's Muon/geometry-aware suggestion; those three were weighted high, while Reviewer_ELSp -- the acknowledged skeptic whose 'sparsity is irrelevant' claim the committee rejects -- was weighted medium. Soundness sits at 3 because the empirical breadth is strong but the asymmetric hyperparameter treatment and thin theoretical grounding are genuine (staying within the reviewers' [2,3]); presentation at 3 reflects the majority (well-written, effective figures) within [3,4]; significance at 3 and originality at 4 follow the meta-review's emphasis on practical impact and a genuinely novel, paradigm-challenging perspective. The overall recommendation of 5 sits at the weighted center of the high-weight reviewers (5, 6, 4) and matches the accept/spotlight direction with Reviewer_ELSp's 3 discounted; confidence is 4 given strong corroboration on the strengths and the largely complementary (rather than conflicting) critiques."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "CHIsZDgdb6",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_GSZ5",
+      "weight": "high",
+      "reason": "Specific and substantiated; provides an accurate technical summary and concrete points (small experiments with 0.01-9s runtimes, poor SDP scaling, definition inconsistencies). Its experimental-evaluation concern is directly echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_uAbR",
+      "weight": "high",
+      "reason": "Detailed, highest confidence (4), and on-target. Corroborates the experimental limitations (small scale, only PGD baseline) and the genericity-assumption concern, and flags the missing worst-case analysis for SVC."
+    },
+    {
+      "reviewer": "Reviewer_XaMZ",
+      "weight": "high",
+      "reason": "Most detailed and specific review; its two principal concerns (vague/restrictive genericity assumption and simplistic experiments on manual polynomials without a scalability stress test) map directly onto the meta-review's two named concerns of presentation quality and limited experimental evaluation. Soundness=2 is a mild outlier but its substantive points are strong."
+    },
+    {
+      "reviewer": "Reviewer_unMK",
+      "weight": "medium",
+      "reason": "Cleanly reasoned and its novelty concern (core SOS idea builds on prior work) is corroborated by other reviewers, and its baseline/low-level-relaxation questions are on target. However, its significance=2 and originality=2 are more negative than the meta-review's positive direction, so it is weighted partly on-target."
+    }
+  ],
+  "score_rationale": "The meta-review anchors an accept with only two named, minor concerns (presentation quality and limited experimental evaluation), and does not flag soundness, significance, or originality as problems, so those three dimensions are set to 3, matching the modal reviewer scores and discounting the lone outlier 2s from unMK (significance/originality) and XaMZ (soundness/presentation). Presentation is set to 3 rather than higher because the meta-review explicitly names it and the high-weight XaMZ review documents concrete issues (buried genericity definition, definition inconsistencies). Overall recommendation is 5, staying within the [4,5] reviewer range and positioned upward by the two high-weight positive reviews (GSZ5 and the confidence-4 uAbR, both 5) and the meta-review's clear acceptance calling remaining concerns minor; confidence is 4 because the reviews are mutually corroborating on the key strengths and on the experimental/genericity weaknesses."
+}

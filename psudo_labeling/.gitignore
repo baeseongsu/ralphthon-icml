@@ -1,0 +1,12 @@
+.env
+.venv/
+*.pdf
+data/pdfs/
+data/pseudo_labels_v1_backup/
+matched_pdfs/
+data/reviewarena_icml/data-00000-of-00001.arrow
+data/icml2026/data-00000-of-00001.arrow
+data/icml2026_raw.jsonl
+data/icml2026_papers.jsonl
+__pycache__/
+*.pyc

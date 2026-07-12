@@ -1,0 +1,26 @@
+{
+  "forum_id": "H8KE7sudq5",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_rXYu",
+      "weight": "high",
+      "reason": "The most thorough and specific review. Its central 'rising tide' framing (the dataset helps multiple model families beyond the authors' own model) is exactly the strength the meta-review anchors on, and its concerns about missing end-to-end/agentic evaluation and poor localization on native UIs are echoed by the meta-review. Substantiated with concrete numbers, ablation reasoning, and precise presentation issues (Figure 2, threshold contradiction)."
+    },
+    {
+      "reviewer": "Reviewer_xxiT",
+      "weight": "high",
+      "reason": "Directly captures all three initial concerns named in the meta-review, namely dataset/annotation quality, absent downstream evaluation, and web-only generalization, and supports them with specific evidence (e.g., ScreenSpot Mobile Recall@50 0.066, low Label PageIoU). Balanced, specific, and well aligned with the decision direction."
+    },
+    {
+      "reviewer": "Reviewer_t63k",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its weaknesses on limited dataset-quality validation, missing downstream/broader grounding evaluation, and incremental modeling (adapting document-to-markup VLMs) are all echoed by the meta-review's incremental-modeling and dataset-quality points. The lower overall score (4) and originality (2) reflect the same reservations the meta-review acknowledges."
+    },
+    {
+      "reviewer": "Reviewer_YLod",
+      "weight": "low",
+      "reason": "Leads with an off-base 'missing Impact Statements -> desk reject' concern that the meta-review never adopts and that is contradicted by the acceptance decision. Remaining weaknesses (web-centric domain, DOM annotation noise, Figure 2 whitespace) are generic restatements already covered more precisely by the high-weight reviewers, and the review provides no substantive questions (N/A) with low confidence."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (rXYu, xxiT, t63k) converge tightly with the meta-review on the same axes: a valuable, community-scale dense dataset with cross-model-family transfer as the headline strength, tempered by limited annotation-quality validation, absent downstream/agentic evaluation, and web-centric domain limits, so soundness (3, unanimous), overall recommendation (5, the majority position of high-weight reviewers under a clear accept direction), and confidence (4, strong corroboration with only minor score spread) follow directly. Originality was set to 3, tracking the two high-weight reviewers who valued the dataset, ScreenTag, and structure-aware loss over t63k's 2, while the prose still reflects the meta-review's note that the modeling is incremental. Presentation was set to 3, following the two high-weight reviewers who praised the organization and clearly defined metrics, while still flagging the concrete Figure 2 and threshold issues raised by the more critical reviewer. YLod's desk-reject framing was dropped as off-base and contradicted by the meta-review."
+}

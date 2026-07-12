@@ -1,0 +1,52 @@
+{
+ "forum_id": "DeOm4Axr9W",
+ "title": "Riemannian MeanFlow for One-Step Generation on Manifolds",
+ "abstract": "Flow Matching enables simulation-free training of generative models on Riemannian manifolds, yet sampling typically still relies on numerically integrating a probability-flow ODE. We propose Riemannian MeanFlow (RMF), extending MeanFlow to manifold-valued generation where velocities lie in location-dependent tangent spaces. RMF defines an average-velocity field via parallel transport and derives a Riemannian MeanFlow identity that links average and instantaneous velocities for intrinsic supervision. We make this identity practical in a log-map tangent representation, avoiding trajectory simulation and heavy geometric computations. For stable optimization, we decompose the RMF objective into two terms and apply conflict-aware multi-task learning to mitigate gradient interference. RMF also supports conditional generation via classifier-free guidance. Experiments on spheres, tori, SO(3), and SE(3) demonstrate competitive one-step sampling with improved quality–efficiency trade-offs and substantially reduced sampling cost.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper makes interesting contributions to generative models on (known) manifolds. The reviewers did not reach a consensus: some considered the paper interesting, while others found it too difficult to read. I strongly recommend that the authors take this feedback to heart and revise the paper to be more easily accessible to a broader audience. However, in my own reading of the paper, I found the work to be sufficiently valuable to the community that I recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_vagm",
+   "summary": "This work extends the one-step generation method, Mean Flow, to a manifold setting. The central contribution is the Riemannian Mean Flow Identity and the induced decomposed learning objective. The proposed approach is validated over three datasets, a spherical dataset, a torus dataset, and an SO(3) dataset, and is compared against several generative methods on smooth manifolds.",
+   "strengths_and_weaknesses": "Strength:\n\n1. This work uplifts Mean Flow, originally developed in Euclidean space, to smooth manifolds, which is a natural piece to complete the Mean Flow theory.\n\n2. The proposed method outperforms several baselines at NFE = 1 across multiple datasets.\n\nWeaknesses:\n\n1. This work is not appropriately motivated. Mathematically, it's a natural extension from Euclidean space to manifolds, but it discusses no practical needs of a single-step generative model on a manifold. \n\n2. Many mathematical objects are not clearly defined. This makes it hard for the audience to process the technical part of the paper, especially for those less familiar with the paradigm of generative models on manifold.\nSome examples are: \n\n 2.1. Around the right column of line 79, what is the definition of a probability path on a manifold? \n\n 2.2. How is the probability measure defined on a manifold? What are the assumptions on p0 and p1? What are the common design choices of p0 and the probability path?\n\n 2.3 What is the definition of $\\psi_t(x_0| x_1)$ in (3)? \n\n3. The experiments are mostly on lower-dimension datasets, and some have very small sample sizes. The significance of the proposed methods is not fully conveyed through experiments on these datasets. \nIn particular, I think two critical pieces of evidence to support the significance of the proposed method are missiong from the paper: 1) examples where efficient Euclidean flow/diffusion sampling methods fail while the proposed method works. 2) examples where the high-quality samples are expensive to obtain via iterative sampling with models like RMF, but can be sampled with one or few steps with Riemannian Mean Flow. (I'd be happy if the authors can prove me wrong, but I feel that for datasets like 2D sphere, a standard flow/diffusion model could work well, although the samples might be off the sphere by a small $\\epsilon$.)\n\n4. Additionally, this work only compares the proposed method with the baseline when NFE = 1. It would be important to verify how much sample quality it sacrifices for faster computation. The simplest way is to evaluate the quality of samples generated with more steps.",
+   "soundness": 3,
+   "presentation": 1,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "see weaknesses.",
+   "limitations": "Yes. The authors discussed the potential misuse of synthetic examples and over-reliance on generated outputs in high-stakes domains.",
+   "overall_recommendation": 3,
+   "confidence": 4,
+   "final_justification": "I appreciate the authors' responses and most of my concerns are resolved. I increased my score."
+  },
+  {
+   "reviewer": "Reviewer_DKRA",
+   "summary": "The paper extends MeanFlow for one step generation to the Riemannian setting where the manifold is known. After extending the meanflow identity, the paper derives a principled algorithm to produce a few step generator in the Riemannian setting. The method additionally improves on a naïve extension of MeanFlow by decomposing the MeanFlow loss into two conflicting objective, and improves upon naïve gradient descent by applying PCGrad, extending the preciously observed training instabilities for Euclidean MeanFlow models. Additionally, the method extends to conditional generation by adapting ideas from classifier-free guidance. The unconditional model is tested on standard Riemannian benchmarks, and the conditional model is tested on a synthetic benchmark.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n-\t(S1) The paper is well written and easy to follow despite the mathematical content.\n-\t(S2) The problem of one-step generation is of high relevance, and MeanFlow is a particularly strong candidate, so extending it to the Riemannian setting is interesting.\n-\t(S3) The empirical result show strong performance against recently introduced competitive methods.\n\n**Weaknesses:**\n\n-\t(W1) The novelty of the method is limited, as it can be seen as a straightforward extensions of MeanFlow to the non-Euclidean settings.\n-\t(W2) The applicability of the method is limited since it requires access to exponential and logarithm maps, which are only accessible in very simple cases.\n-\t(W3) The only performance metric is MMD. Previous work and baselines use KLD on the earth datasets [1] and test NLL on RNA torsion angles [2] to evaluate one step models on manifolds. It would improve the evaluation to add these metrics given that the baselines already use them.\n\n\n[1] Davis, Oscar, Michael S. Albergo, Nicholas M. Boffi, Michael M. Bronstein, and Avishek Joey Bose. \"Generalised Flow Maps for Few-Step Generative Modelling on Riemannian Manifolds.\" arXiv e-prints (2025): arXiv-2510.\n[2] Cheng, Chaoran, Wang, Yusong, Chen, Yuxin, et al. Riemannian Consistency Model. arXiv preprint arXiv:2510.00983, 2025.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- (Q1) Is this the first work exploring conditional generation on manifolds?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_8fXA",
+   "summary": "This work presents Riemannian MeanFlow to enable one-step generation on manifolds by extending the MeanFlow identity to location-dependent tangent spaces. By employing a log-map representation and parallel transport, the Riemannian MeanFlow avoids heavy geometric computations typically required in manifold flow matching. The framework treats its decomposed training objective as a multi-task optimization problem and applies PCGrad to resolve gradient conflicts. Experiments are conducted on spherical data, flat tori, and SO(3), demonstrating competitive one-step sampling performance with reduced sampling cost.",
+   "strengths_and_weaknesses": "Strengths\nThe paper addresses a non-trivial issue in manifold generative modeling: defining and supervising average velocities when tangent spaces vary with location. The use of parallel transport to define an intrinsic average velocity is geometrically conceptually sound.\n\nWeaknesses\nWhile the paper provides an intrinsic reformulation of the MeanFlow identity on manifolds, the degree of conceptual novelty relative to existing Riemannian flow matching or diffusion-based frameworks remains somewhat unclear. The method appears to modify the supervision target, but it does not fully establish whether this leads to a fundamentally new dynamical formulation or is primarily a reparameterization of existing Riemannian flow training objectives. As a result, the theoretical distinction from prior manifold methods may be viewed as incremental rather than foundational.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. How does RMF fundamentally differ from existing Riemannian Flow Matching or Riemannian diffusion approaches beyond replacing instantaneous velocity regression with average velocity regression?\n2. Are additional assumptions required, such as geodesic completeness or bounded curvature? Are the guarantees local or global? Clarifying the exact geometric assumptions would improve rigor.",
+   "limitations": "The core idea approximates trajectory-level information using an average-velocity identity. However, in highly curved manifolds, parallel transport effects may be non-negligible. Nonlinear geometry may amplify approximation errors. One-step generation may struggle when geodesic interpolation deviates strongly from true flow trajectories. The method does not explicitly analyze how curvature influences approximation fidelity.",
+   "overall_recommendation": 3,
+   "confidence": 4,
+   "final_justification": "Overall, the rebuttal gave me a more positive impression of the work, but not enough for me to increase my recommendation at this time."
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "qugRvYjaFx",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Jq4A",
+      "weight": "high",
+      "reason": "By far the most detailed and substantiated review. Its praise of the variate-embedding design, the multi-measure association matrix, and the spectral (Fiedler-vector) sorting justification, and its substantive concerns (Fourier decoder bias and lack of benchmarking, underexplained zero-shot mechanism, modest sorting ablation, 1D-embeddability assumption) are the best-grounded and are corroborated by other reviewers. Consistent with the meta-review's positive but substantive read."
+    },
+    {
+      "reviewer": "Reviewer_FhJg",
+      "weight": "high",
+      "reason": "Coherent, positive assessment that mirrors the meta-review's 'well motivated / clear writing / works well' framing and the spotlight outcome, with the highest dimension scores. Its weaknesses (need for stronger justification and robustness of variate sorting, missing implementation details) are corroborated by the other reviews."
+    },
+    {
+      "reviewer": "Reviewer_KEBo",
+      "weight": "medium",
+      "reason": "Solid and on-target. Independently corroborates the missing comparison for the Fourier decoder against alternative horizon-flexible decoders and the concern that key method details are deferred to the appendix, but its own critique stays somewhat high-level and it flags possible baseline-comparability issues without specifics."
+    },
+    {
+      "reviewer": "Reviewer_9qMA",
+      "weight": "medium",
+      "reason": "Contributes a specific and useful methodological concern about preprocessing datasets to a fixed variable count and its effect on comparison fairness, and notes that some gains are moderate with unclear statistical significance. Its remaining strengths and weaknesses are more generic."
+    }
+  ],
+  "score_rationale": "The meta-review is briefly and unambiguously positive (spotlight), emphasizing motivation, clarity, sufficient evaluation, and that the method works well, so I anchored toward acceptance within the reviewers' [4,5] overall range and settled on 5, matching the two higher reviewers and the exact 3/3/3/4-plus-overall-5 profile that Reviewer_9qMA used. Soundness, presentation, and significance stay at the reviewer-range floor of 3 because the corroborated concerns (unbenchmarked Fourier decoder, underexplained zero-shot transfer, modest sorting ablation, preprocessing fairness, appendix-deferred details) are real though addressable, while originality is set to 4 to reflect the genuinely novel variate-centric Fiedler-sorting-plus-patching design that the high-weight reviewers and the meta-review emphasize. Confidence is 4 given strong mutual corroboration across reviews and tightly clustered scores."
+}

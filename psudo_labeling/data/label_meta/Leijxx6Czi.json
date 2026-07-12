@@ -1,0 +1,21 @@
+{
+  "forum_id": "Leijxx6Czi",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_iFP1",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review. Its central concern — that OIPA currently functions as a post-hoc diagnostic without quantitative or intervention-based evidence linking diffusion-phase attribution to the VLM's safety failure, and that the analysis is not tied back to the method design — is precisely the reservation the meta-review adopts as central. It also anchored the threat-model, cost, evaluation-transparency, and presentation concerns that the meta-review echoes."
+    },
+    {
+      "reviewer": "Reviewer_98L2",
+      "weight": "high",
+      "reason": "Specific and constructive. Its framing that OIPA may be an artifact of the hierarchical 'division of labor' — needing evidence that phase separation emerges under flat/DDPO optimization — is directly echoed by the meta-review's 'possible artifact of the hierarchical optimization design' language, and it raised concrete threat-model (shadow-model distributional similarity), computational-cost, and model-coverage points. Its overall score of 5 is more optimistic than the meta-review's weak-accept direction, so the substantive criticisms are weighted more than the rating."
+    },
+    {
+      "reviewer": "Reviewer_A8gA",
+      "weight": "high",
+      "reason": "On-target and fully corroborated by both the meta-review and the other reviewers (strong white-box threat model, limited generality of phase alignment beyond one diffusion model and toxicity, and novelty largely from combining existing components), with the highest confidence and an overall recommendation (weak accept) that matches the meta-review exactly. It is the briefest of the three, but none of its points are off-base."
+    }
+  ],
+  "score_rationale": "All three reviewers rated soundness 3 and mutually corroborate the same core issues, so soundness is fixed at 3. Presentation is set to 3 (the modal score; the two high-weight reviewers who itemized clarity problems still leaned toward fixable, surface-level fixes, and the meta-review treats presentation as secondary), and significance to 2 (both high-weight reviewers rated it 2, matching the meta-review's reservations about the unsettled central claim and constrained practical scope). Originality is 3, since the temporal framing is acknowledged as novel even in the meta-review despite the 'combines existing components' critique. Overall is 4, matching the meta-review's explicit weak-acceptance and sitting inside the [3,5] reviewer range; confidence is 4 because the underlying evidence is strongly mutually reinforcing across reviewers."
+}

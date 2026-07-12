@@ -1,0 +1,49 @@
+{
+ "forum_id": "VtVNCB7VRW",
+ "title": "DC-Leap: Training-Free Acceleration of dLLMs via Draft-Guided Contiguous Leaping Decoding",
+ "abstract": "While parallel decoding is central to the efficiency of Diffusion Large Language Models (dLLMs), current strategies are often hindered by overly conservative confidence thresholds. These thresholds, necessitated by the Joint Probability Dependence Error (JPDE), result in redundant denoising iterations and suboptimal inference speeds.\nTo overcome this, we propose DC-Leap, a training-free framework that enables reliable acceleration of dLLMs in the moderate-confidence regime. DC-Leap introduces a Dynamic Contiguous Verification strategy that integrates strictly-ordered causal constraints into the parallel decoding process. By progressively validating token dependencies, this mechanism effectively neutralizes the JPDE, enabling reliable acceleration with comparable performance. Furthermore, DC-Leap incorporates the draft-guided decoding mechanism, where the draft helps extend the context by leaping forward across multiple tokens, providing look-ahead context and retaining the structural benefits of bidirectional attention during inference.\nExtensive experiments on standard benchmarks demonstrate that DC-Leap achieves substantial speedups, up to **53.19$\\times$** on MBPP for long-sequence generation, and up to **105.02$\\times$** when combined with KV-Cache with comparable generation quality. Code is available at <https://github.com/ffh-wyls/DC-Leap>.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper presents DC-Leap to address the efficiency bottleneck in dLLMs caused by conservative confidence thresholds. In specific, the authors uses dynamic contiguous verification, and draft guided decoding to leap forward across multiple tokens, providing look ahead context. Overall the DC Leap can achieve up to 53.19x speed up on MBPP dataset. While the authors did address the rebuttal well, the AC recommends them to tone down on the near lossless claim of the work and list it as a \"lossy\" method with often negligible accuracy drop. All reviewers praised the work, and so as the AC and thus recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_BNnA",
+   "summary": "This paper introduces DC-Leap, which is a training-free framework which enables reliable speedup for dLLMs. It proposes a Dynamic Contiguous Verification strategy that integrates strictly-ordered causal constraints into parallel decoding to progressively validate token dependencies and neutralize the Joint Probability Dependence Error (JPDE), and further incorporates a draft-guided decoding mechanism to leap forward across multiple tokens and provide look-ahead context while retaining the structural benefits of bidirectional attention. Extensive experiments on standard benchmarks show that DC-Leap achieves substantial speedups, up to 53.19% on MBPP for long-sequence generation and up to 105.02% when combined with KV-Cache, with comparable generation quality.",
+   "strengths_and_weaknesses": "Strength:\n\n1. The paper presents a comprehensive experimental evaluation across multiple dLLMs, diverse benchmarks, and task types, with strong results further supported by long-sequence, KV-cache, and ablation analyses.\n2. The proposed method is both novel and practically meaningful, introducing a training-free and plug-and-play decoding strategy that addresses a real inference bottleneck in dLLMs without requiring additional model training.\n\nWeakness:\n\n1. The ablation study is informative, but it would be helpful to further examine alternative confidence formulations, since the current method relies solely on top-1 probability for token acceptance and draft selection.\n2. The method introduces several heuristic design choices, such as separate commit and draft thresholds, and the paper could provide more intuition or analysis on how sensitive performance is to these settings across models.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Have you considered alternative confidence definitions beyond top-1 probability, such as calibrated confidence, entropy-based uncertainty, or self-assessed confidence [1][2][3]? A comparison would help clarify whether DC-Leap is robust to the choice of confidence estimator or specifically benefits from this particular confidence formulation.\n\n[1] https://arxiv.org/abs/2302.09664\n\n[2] https://arxiv.org/abs/2402.12563\n\n[3] https://arxiv.org/abs/2508.15260",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_mhyK",
+   "summary": "The paper proposes DC-Leap, a training-free acceleration method for diffusion LLMs (dLLMs). It introduces Dynamic Contiguous Verification (DCV) to enforce window-level sequentiality and reduce joint probability dependence error, enabling lower confidence thresholds and more tokens accepted per step. It also adds a draft-guided mechanism that caches high-confidence future tokens as look-ahead context while keeping window-level verification. Experiments on LLaDA and Dream report significant throughput gains with near-lossless quality.",
+   "strengths_and_weaknesses": "Strengths\n- Clear, training-free method that directly targets the JPDE bottleneck in parallel decoding for dLLMs.\n- DCV plus draft-guided look-ahead is conceptually coherent and simple to integrate into existing dLLM inference.\n- Reported speedups are substantial across multiple benchmarks, and the paper includes basic ablations on thresholds and window size.\n\nWeaknesses\n- The method is inherently lossy, yet the paper provides no theoretical analysis or bound on the induced error or distribution shift.\n- Evidence for “near-lossless” quality relies on a limited set of case studies; this does not fully characterize the loss profile or worst-case behavior.\n- Key decisions are driven by fixed confidence thresholds, but the robustness of these heuristics across tasks and settings is not well established.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- Can you provide any theoretical or empirical bound that quantifies the loss or distribution deviation introduced by DC-Leap?\n- Can you report a broader quality-difference analysis (e.g., distributional metrics or failure-mode statistics) beyond a few benchmarks?\n- How sensitive are results to the confidence thresholds in diverse settings, and is there a principled way to adapt them?\n- Is DC-Leap strictly tied to dLLMs, or can the core idea transfer to diffusion models in other modalities (image/video) with concrete adaptations?",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_4Z6y",
+   "summary": "This paper proposes DC-Leap, a training-free framework that enables reliable acceleration of dLLMs in the moderate-confidence regime. DC-Leap introduces a Dynamic Contiguous Verification strategy that integrates strictly-ordered causal constraints into the parallel decoding process. Extensive experiments on standard benchmarks demonstrate that DC-Leap achieves substantial speedups with comparable generation quality.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper is clearly written.\n\n2. Experiments demonstrate that the proposed method outperforms the baseline.\n\n3. The paper analyzes the sensitivity of hyperparameters.\n\nWeaknesses:\n\n1. Were the experiments conducted based on few-shot data or entirely in a zero-shot setting? This is not mentioned in the paper.\n\n2. The data in the paper's tables is strange. For example, Table 3 shows that fast-dllm achieves more than 9 times the TPS on the MATH dataset. This result differs greatly from the original fastdllm paper. How was this measured? Many TPS increases reported in the paper differ significantly from those in the original paper.\n\n3. Why is there such a large difference in speedup between the methods on Dream, LLaDA, and LLaDA 1.5? This is illogical and inconsistent with the results reported in other papers. I have serious concerns about the reliability of the experimental results. \n\n4. The paper only performed hyperparameter sensitivity analysis on LLaDA 1.5. It is also necessary to perform hyperparameter sensitivity analysis on other models. Do different models exhibit similar trends in hyperparameter sensitivity?\n\n5. Can the proposed method also work for block diffusion (SDAR) or step distilled DLLM (dparallel)?\n\n6. The presentation and layout of the figures in the paper need improvement.",
+   "soundness": 1,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please see the weakness.",
+   "limitations": "The authors did not discuss the limitations of their work.",
+   "overall_recommendation": 4,
+   "confidence": 5
+  }
+ ]
+}

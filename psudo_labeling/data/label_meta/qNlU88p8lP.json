@@ -1,0 +1,31 @@
+{
+  "forum_id": "qNlU88p8lP",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_tLNH",
+      "weight": "high",
+      "reason": "Most detailed and specific review; its central concern about the underdocumented human-expert baseline (and possible setter/reference-solution bias) and its praise of the taxonomy and continuous-scoring design are directly echoed by the meta-review and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_vGm6",
+      "weight": "high",
+      "reason": "Specific and balanced; the one-shot-fairness and score-aggregation concerns are substantiated and corroborated, and the question about human time/execution feedback aligns squarely with the meta-review's concern over the human-expert evaluation protocol."
+    },
+    {
+      "reviewer": "Reviewer_1rxD",
+      "weight": "medium",
+      "reason": "Positive and on-target -- the reference-solution-bias and one-shot-underestimation points corroborate the human-protocol concern adopted by the meta-review -- but the critical content is comparatively thin and largely deferred to the limitations field."
+    },
+    {
+      "reviewer": "Reviewer_gavK",
+      "weight": "medium",
+      "reason": "Strong and on-target regarding the human-expert protocol, resource-limit transparency, and prompt-information concerns that the meta-review adopts, but the review is sprawling with several idiosyncratic points (Humanity's Last Exam comparison, title) and unusually low significance/originality scores that diverge from the accept outcome."
+    },
+    {
+      "reviewer": "Reviewer_AoRe",
+      "weight": "low",
+      "reason": "Brief and low-effort (no questions, only a vague 'somewhat fuzzy' scoring comment); positive and not off-base but provides little substantiated evidence, so it carries limited weight."
+    }
+  ],
+  "score_rationale": "I anchored on the meta-review, which praises the problem-design taxonomy and continuous-scoring strategy while foregrounding concerns about the human-expert evaluation protocol and the long-term human involvement the benchmark requires. The two most detailed and mutually corroborating reviews (tLNH, vGm6) were weighted highest, pulling soundness, presentation, significance, and originality to a consistent 'good' (3) and overall to a weak accept (4), matching the accept-with-reservations tenor; tLNH's higher marks kept these dimensions from dropping toward 2. gavK's outlier significance/originality (2) and AoRe's brief, uncritical positivity were down-weighted relative to the meta-review and the other reviews. Confidence is 4 because the reviews strongly converge on both the core contribution and the central concerns (human-baseline documentation, one-shot fairness, and score aggregation)."
+}

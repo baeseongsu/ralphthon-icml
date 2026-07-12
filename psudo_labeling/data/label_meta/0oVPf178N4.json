@@ -1,0 +1,26 @@
+{
+  "forum_id": "0oVPf178N4",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_SQzh",
+      "weight": "high",
+      "reason": "Explicitly named in the meta-review as the source of the surviving technical-novelty concern (framework combining existing components). The review is specific and substantiated, and its other points (random-masking not supporting heterogeneous-robustness claims, missing runtime/memory cost, limited evaluation scope, need for a cleaner ablation) are corroborated by other reviewers and echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_cBsd",
+      "weight": "high",
+      "reason": "Balanced, specific, and substantiated. Corroborates the limited-novelty concern adopted by the meta-review, and adds well-targeted points (unjustified neighborhood-stability assumption, missing MVAE/MMVAE and MV-GPLVM baselines, no comparison to joint multi-view encoders, under-discussed per-view diffusion cost) that align with the concerns the meta-review flags as central."
+    },
+    {
+      "reviewer": "Reviewer_hr8f",
+      "weight": "medium",
+      "reason": "Positive and somewhat effusive, but raises one on-target point (adding more generative baselines) that maps to the baseline-comparison concern acknowledged by the meta-review, plus a valid minor clarity point on the diffusion section. Less critical scrutiny than the high-weight reviewers."
+    },
+    {
+      "reviewer": "Reviewer_wVVE",
+      "weight": "medium",
+      "reason": "Positive and fairly general, but contributes a specific, corroborated point (clarify the DMVG diffusion baseline and analyze the performance gap) that connects to the baseline-comparison concern, plus a minor reproducibility/experimental-detail request. Does not engage deeply with the novelty concern that drives the meta-review."
+    }
+  ],
+  "score_rationale": "Scores are anchored on the meta-review, which accepts the paper as a Weak Accept while retaining doubt on technical novelty (siding with SQzh and, on the same axis, cBsd) but calling the experiments solid. Originality is set to 2 because the meta-review explicitly adopts the 'combination of existing components' concern from the two high-weight reviewers; overall recommendation is 4 to match the meta-review's stated Weak Accept. Soundness, presentation, and significance sit at 3, reflecting the meta-review's positive read on solid experiments and agreed-upon presentation, positioned above the high-weight reviewers' 2s but below the medium-weight reviewers' more effusive 4s. Confidence is 4 because the key concerns (novelty, missing baselines, computational cost) are coherent and mutually corroborating across reviewers and the meta-review."
+}

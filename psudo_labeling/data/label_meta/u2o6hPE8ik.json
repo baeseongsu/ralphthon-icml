@@ -1,0 +1,21 @@
+{
+  "forum_id": "u2o6hPE8ik",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_2Mou",
+      "weight": "high",
+      "reason": "Thorough, specific, and substantiated. Its central points (missing end-to-end model runtime, hardware generalization beyond Arm M7, under-characterized failure mode for wide activation ranges, novelty of the float-reinterpretation approach, and presentation/reproducibility gaps in Figure 1 and Section 4.3) are corroborated by the other reviewers and echoed by the meta-review's emphasis on end-to-end speedups, multi-platform results, and the under-studied problem."
+    },
+    {
+      "reviewer": "Reviewer_hxjS",
+      "weight": "high",
+      "reason": "Specific and well-grounded, cleanly corroborating the core concerns: single Arm M7-class platform and unclear transfer to NPUs/DSP accelerators, absence of end-to-end model speedups, and lack of a systematic characterization of when post-training replacement is safe. Also clearly articulates the strengths (elegant IEEE-754 bit-reinterpretation method, under-explored systems problem), aligning with the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_6FsE",
+      "weight": "high",
+      "reason": "Substantive and specific; its primary concern (report end-to-end speedups jointly with accuracy) is the most corroborated point across reviews and is directly reflected in the meta-review's noting of demonstrated end-to-end speedups. Its requests for baselines against manually tuned/offline-optimized exp-log approximations and for justifying in-the-loop tuning are on-target. Its significance=2 skepticism about the value of automating a small finite set of activations runs slightly counter to the meta-review's positive framing of the automation contribution, so that particular stance is discounted."
+    }
+  ],
+  "score_rationale": "Presentation (3) and originality (3) were unanimous and are retained. Soundness sits at 3, the value given by two of three high-weight reviewers, with the third's 2 reflecting the still-open end-to-end and failure-mode questions rather than a technical error. Significance is set to 3 within the [2,3] reviewer range: the median leaned to 2 on the end-to-end/automation concern, but the meta-review's strong positive direction (compelling practical application, an under-studied problem deserving attention, and demonstrated end-to-end ConvNeXt gains) positions it upward. Overall recommendation is 5 within the [4,5] range, lifted from the median 4 by the clearly positive meta-review and spotlight decision, which state the contribution is strong and that the reviewers' concerns were convincingly addressed. Confidence is 4 because the three reviews are highly coherent and mutually corroborating on both the strengths and the core weaknesses."
+}

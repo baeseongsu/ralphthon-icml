@@ -1,0 +1,26 @@
+{
+  "forum_id": "iWJmW9mQpA",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_RKDT",
+      "weight": "high",
+      "reason": "The most thorough and specific review. Its strengths (procedural/substantive framing, the Theorem 4.1 decomposition, the adoption covariate) and weaknesses (ordinal-only LLM validation, indirect theory-to-empirics link, maxROR outlier sensitivity, cross-dataset LLM confounds) are directly echoed by the meta-review's praise of the theory and its noted concern about empirical significance and the theory-empirics connection. It drives the assessment."
+    },
+    {
+      "reviewer": "Reviewer_uFpF",
+      "weight": "high",
+      "reason": "Specific, substantiated, and aligned with the meta-review's praise of clarity and theoretical insight. Identified concrete, adoptable presentation gaps (no formal definition of equalized set size, unclear figure metrics, under-explained intro definitions) and a relevant related-work connection, with 3/3/3/3 and overall 4 consistent with acceptance."
+    },
+    {
+      "reviewer": "Reviewer_cVAY",
+      "weight": "medium",
+      "reason": "Partly on-target and corroborated on the central LLM-validation and generalizability concern, but thin and self-rated low confidence (2). Its significance=2/originality=2 downgrades reflect the acknowledged disagreement about the empirical/measurement contribution, but are not shared by the two high-weight reviewers, so they inform the prose rather than the dimension scores."
+    },
+    {
+      "reviewer": "Reviewer_5rk9",
+      "weight": "low",
+      "reason": "Extreme scores (presentation 1, significance 1, overall 1) are contradicted by the meta-review's explicit praise of clarity and its accept recommendation, and by every other reviewer's presentation=3. The uncorroborated proof-error claim is not mentioned by anyone else or the meta-review. Only its theory-versus-substantive-fairness disconnect point survives, and that is captured more carefully by the high-weight review."
+    }
+  ],
+  "score_rationale": "Scores are anchored on the two high-weight reviewers (RKDT, uFpF), who both rated 3/3/3/3 with overall 4, matching the meta-review's praise of clarity and theoretical insight and its accept recommendation. Presentation stays at 3 because the lone presentation=1 is contradicted by every other reviewer and by the meta-review's clarity praise. Significance and originality remain at 3 rather than dropping to the medium/low reviewers' 2 because the conceptual framing and theorem are the paper's strong, corroborated core; the acknowledged disagreement about empirical significance is reflected in the weaknesses prose but is not sufficient to lower the dimension given the accept outcome. Overall is 4 (top of the reviewers' range excluding the low-weight outlier's 1), and confidence is 4 given the coherent, mutually corroborating evidence across the high- and medium-weight reviews."
+}

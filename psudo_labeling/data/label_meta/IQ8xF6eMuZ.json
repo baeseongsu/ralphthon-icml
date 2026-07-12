@@ -1,0 +1,26 @@
+{
+  "forum_id": "IQ8xF6eMuZ",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_tPFh",
+      "weight": "high",
+      "reason": "Specific and substantiated. The uneven two-benchmark critique, the LP-vs-MILP scope concern, and the presentation/notation concern are concrete, and the request to benchmark existing OR-domain models (ORLM, solver-informed RL) is echoed independently by Qj1R. Consistent with the positive-but-revise meta-review."
+    },
+    {
+      "reviewer": "Reviewer_Qj1R",
+      "weight": "high",
+      "reason": "Most detailed and specific weaknesses: coverage/representativeness (LP-only debugging, newsvendor-only bias), missing comparisons with self-correction baselines (LLMOPT, OptiMUS), lack of end-to-end validation, and thin related work. Its scope and baseline points corroborate tPFh and are the paper's most actionable critiques."
+    },
+    {
+      "reviewer": "Reviewer_94Dj",
+      "weight": "high",
+      "reason": "Careful and specific: precise praise for the benchmark design (controlled sabotage, oracle verification, metrics beyond success) and a concrete, table-grounded observation about the RR@5-vs-DA trade-off, plus a well-posed seed/decoding sensitivity question. The most positive review but well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_T98M",
+      "weight": "medium",
+      "reason": "On-target but more generic. The 'benchmark rather than methodological advance' and 'diffuse takeaways' points are reasonable readings, and the figure-quality (raster/dense) concern corroborates tPFh's presentation critique, but the weaknesses are less specific and the questions defer entirely to the weaknesses list."
+    }
+  ],
+  "score_rationale": "The four reviews are highly consistent, all praising the important problem, the substantial multi-model empirical study, and the solver-in-the-loop benchmark design, while converging on scope/coverage limits (LP-centric debugging, newsvendor-only bias), missing comparisons to OR-domain baselines, and presentation density. I weighted tPFh, Qj1R, and 94Dj high for their specific, mutually corroborating points and T98M medium for on-target but more generic critiques. Soundness (3), significance (3), and originality (3) sit at the high-weight consensus within the reviewers' ranges, while presentation (2) reflects the specific, corroborated concerns about dense/raster figures and heavy notation. The generic but positive meta-review (Accept) and the modal overall recommendation of 4 anchor a weak-accept, with the coverage and baseline gaps keeping it from a higher mark."
+}

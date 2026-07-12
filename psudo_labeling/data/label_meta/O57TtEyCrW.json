@@ -1,0 +1,26 @@
+{
+  "forum_id": "O57TtEyCrW",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_fh9g",
+      "weight": "high",
+      "reason": "Specific and directly on-target with the meta-review's central concern: it clearly identifies that the theory establishes validity but does not characterize the detection-delay improvement, and also flags the modest empirical gains and the dependence on auxiliary-predictor quality. Well-articulated and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_Y3Uz",
+      "weight": "high",
+      "reason": "Detailed, substantiated empirical critique. The few-percent stopping-time gains over SRM, the observation that the setup is not truly label-limited, and the eta_t sliding-window reliability concern are corroborated by other reviewers and echoed by the meta-review's detection-delay and clarity concerns."
+    },
+    {
+      "reviewer": "Reviewer_SQyf",
+      "weight": "high",
+      "reason": "Careful technical reading (e.g., the Lemma 3.3 covariance-definition issue when labeled and unlabeled sizes differ) and a clear articulation of the originality concern that combining SRM and PPI appears straightforward, matching the meta-review's novelty concern and the presentation/clarity theme."
+    },
+    {
+      "reviewer": "Reviewer_L36E",
+      "weight": "medium",
+      "reason": "Corroborates the limited-novelty concern, the reliance on synthetic-label/predictor quality, and the eta_t predictability point, but several observations are generic and some are weakly grounded (e.g., the LLM prompt-word remark), so it is weighted below the more specific reviews."
+    }
+  ],
+  "score_rationale": "The meta-review anchors three concerns: presentation/clarity, the novelty of combining PPI with risk monitoring, and whether PPI yields a clear detection-delay improvement. I weighted fh9g, Y3Uz, and SQyf highest because each is specific and directly corroborates these points (fh9g on the missing detection-delay theory, Y3Uz on the modest gains and eta_t adaptation, SQyf on the straightforward combination and technical clarity), and L36E medium as it echoes novelty and predictor-robustness concerns but more generically. Originality is set to 2, the uniformly identified weak point (range 1-2), while soundness, presentation, and significance are set to 3, reflecting favorable-but-qualified high-weight assessments and the meta-review's positive tone about the practical usefulness of the semi-supervised extension. The overall recommendation of 4 (weak accept) is the modal and central position among the high-weight reviewers (4, 4, with one 5) and is consistent with the meta-review's positive-but-conditional framing."
+}

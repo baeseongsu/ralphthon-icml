@@ -1,0 +1,26 @@
+{
+  "forum_id": "t5cfrJfuzD",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_dDYc",
+      "weight": "high",
+      "reason": "Specific, substantiated review whose strengths (lightweight contrastive-covariance + SVD, causal-intervention validation, explicit failure-mode analysis) and weaknesses (dependence on hand-constructed contrasts, superposition rank failure, order-dependent attribution) are directly echoed by the meta-review and corroborated by the other detailed reviews. High confidence (4)."
+    },
+    {
+      "reviewer": "Reviewer_M86Q",
+      "weight": "high",
+      "reason": "Accurate, detailed summary with precise strengths (supervised framing as a genuine alternative to unsupervised SVD, every claim causally validated, transparency about weaknesses) and sharply stated weaknesses (contrastive cancellation of shared features, dependence on a well-designed supervised dataset and a human-defined feature) that the meta-review adopts almost verbatim. High confidence (4)."
+    },
+    {
+      "reviewer": "Reviewer_hXQ3",
+      "weight": "high",
+      "reason": "Technically precise and corroborating: identifies the analytical boundary conditions (r1 + r2 < d_head), cross-architecture applicability, and causal control as strengths, and the contrast-definition dependence, superposition limits, and incomplete attention transfer as weaknesses -- all aligned with the meta-review's remaining concerns. Lower self-rated confidence (2) and scores a notch below the two strongest reviews, but the content is on-target and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_hGtb",
+      "weight": "low",
+      "reason": "Largely generic and low-confidence (self-rated 2). The central complaints -- unclear contribution, poor organization, and a presentation score of 1 -- are contradicted by the other three reviewers and by the meta-review's affirmation of soundness and significance, and the novelty complaint is directly rebutted by another reviewer's supervised-vs-unsupervised framing. A few reproducibility questions (which layers, how the token sets are built) are legitimate and worth incorporating, but the overall read is off-base."
+    }
+  ],
+  "score_rationale": "The meta-review anchors a clean Accept, affirms the method's technical soundness and practical significance, and lists remaining concerns about the reliance on hand-designed supervised contrasts and generality under superposition/across heads. I weighted dDYc and M86Q most heavily (specific, confident, and echoed by the meta-review) and hXQ3 highly for its precise, corroborating technical read; hGtb was down-weighted as low-confidence and largely contradicted by the other three (its presentation = 1 is an isolated outlier). This yields soundness 4 (rigorous analytical derivations plus pervasive causal validation, credited by the two high-confidence reviewers and affirmed by the meta-review, with the disclosed failure modes treated as honest scope limitations rather than analytical flaws), presentation 3 (well-written for experts but dense with under-specified experimental details), and significance/originality 3 (essentially unanimous, bounded by the supervised/human-feature requirement). Overall 5 follows the two high-weight reviewers and the clear Accept, and stays within the reviewers' [3,5] range; confidence 4 reflects strong mutual corroboration among the three substantive reviews and the meta-review, tempered by hGtb's dissent and two low self-reported confidences."
+}

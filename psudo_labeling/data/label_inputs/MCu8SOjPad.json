@@ -1,0 +1,66 @@
+{
+ "forum_id": "MCu8SOjPad",
+ "title": "Weakly Supervised Cross-Modal Learning for 4D Radar Scene Flow Estimation",
+ "abstract": "Due to the difficulty of obtaining ground-truth data for 4D radar scene flow estimation, previous methods typically rely on either self-supervised losses or cross-modal supervision using 3D LiDAR data, 2D images, and odometry. However, self-supervised approaches often yield suboptimal results due to radar's inherently low-fidelity measurements, while existing cross-modal supervised methods introduce complex multi-task architecture and require costly LiDAR sensors to generate pseudo radar scene flow labels from pretrained 3D tracking models. To overcome these limitations, we propose a task-specific iterative framework for weakly supervised radar scene flow learning, using only images and odometry for auxiliary supervision during training. Specially, we establish two novel instance-aware self-supervised losses by exploiting off-the-shelf 2D tracking and segmentation algorithms to obtain tracked instance masks, which are back-projected into 3D space to provide instance-level semantic guidance; for static regions, we integrate vehicle odometry with radar's intrinsic motion cues to construct a rigid static loss. Extensive experiments on the real-world View-of-Delft (VoD) dataset demonstrate that our method not only surpasses state-of-the-art cross-modal supervised approaches that rely on 3D multi-object tracking on dense LiDAR point clouds but also outperforms existing fully supervised scene flow estimation methods. The code is open-sourced at \\href{https://github.com/FuJingyun/IterFlow}{https://github.com/FuJingyun/IterFlow}.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "Through the rebuttal and discussion process, the reviewers have reached a consensus to accept this paper. The AC concurs\n\nAC.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_G2Ph",
+   "summary": "This manuscript proposes a novel radar scene flow estimation framework, IterFlow, which adopts a GRU-based iterative refinement architecture, where the commonly used kNN-based grouping is replaced with the ball query-based cross-frame correlation to reduce mismatches caused by the sparsity of radar point clouds. Based on the same motivation, the paper further exploits instance segmentation and tracking information derived from 2D images, and restricts the computation of the Chamfer loss and smoothness loss to points within the same instance. For static points, the method employs a rigid loss derived from vehicle odometry. Compared with existing methods, IterFlow achieves better performance with significantly fewer parameters and GFLOPs, while avoiding the reliance for point-wise ground-truth flow annotations or pseudo-labels from expensive LiDAR sensors.",
+   "strengths_and_weaknesses": "Strengths\n1.\tThe paper is well written and easy to follow.\n2.\tThe performance is very impressive. Most of the proposed architectural choices and loss design are validated via careful ablation studies and cross-comparative experiments.\n3.\tThe paper identifies and addresses an important yet largely overlooked challenge in radar scene flow estimation: naïve kNN grouping is particularly vulnerable to noise and mismatches due to the sparsity of radar points. The proposes solution is reasonable and solid: it avoids mismatching by restricting the smoothness and chamfer loss with instance labels, whilst constraining cross-frame correlation within a fixed radius in the model.\n\n\nWeakness\n1.\tThe proposed method introduces additional instance-level information during training, so the comparison with existing methods is not very fair. But I don’t think it jeopardizes the contribution of the work. \n2.\tIt is suggested to cite PointNet and PointNet++ for equation (1), since its formulation looks like their set abstraction design.\n3.\tThe claimed advantage of the proposed ball query-based grouping over kNN is not supported by experiments. Moreover, the ball query-based grouping still considers only a fixed number L neighbors, so it essentially is a kNN with an additional search radius constraint. Such a hard spatial restriction may reduce flexibility across different motion velocities and introduces an extra dataset bias that requires manually tuning.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "see above",
+   "limitations": "see above",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_Qnsk",
+   "summary": "This paper proposes IterFlow, a weakly supervised cross-modal learning framework for 4D radar scene flow estimation. This method uses only images and odometry as supervision signals during training process, achieving high-precision radar scene flow estimation without the need for pseudo scene flow labels. The authors design two instance-aware loss functions and combine them as a unified loss for training. Experiments on the VoD dataset demonstrate that, this method outperforms existing cross-modal supervised methods, and in some cases even approaches or surpasses fully supervised methods.",
+   "strengths_and_weaknesses": "Strength\n\n1.\tThis paper is highly innovative: it is the first to propose a weakly supervised 4D radar scene flow estimation framework using only images and odometry.\n\n2.\tA refined solution was designed to effectively address the mismatch problem of the traditional KNN method on sparse data.\n\n3.\tThe experiments are comprehensive and reliable: This paper include comparisons with multiple baselines, experiments across network architectures, and complete ablation experiments.\n\nWeakness\n\n1.\tExperiments are conducted only on the VoD dataset., which weather conditions are good. More dataset experiments, especially the data with bad weather conditions (snow or rain) may be better, like K-Radar or RADIATE.\n\n2.\tThe method places high demands on the accuracy of the detection model and may lack robustness to such errors. Authors also notice this, and they provide a study of detection performance to show the detection performance is good enough for this task. However, same as weakness 1, the experiment is only deployed on a dataset with good condition. Moreover, the problem of potential error propagations still exists. For example, when camera data is blurred (which is common in autonomous driving tasks), the detection model's error may affect the estimation.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1.Please analyze the impact of potential errors on the pipeline, particularly in the detection model.\n\n2.Based on Table 4, $K=4$ seems to be closest to the time taken by the comparison method. What would the complete data shown in Table 1 look like under this setting?",
+   "limitations": "This method relies heavily on the detection performance and camera quality, which may limit its applicability in adverse conditions.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "This paper is highly innovative, well-written, and easy to understand. While the experiments are somewhat lacking, the supplementary experiments in the rebuttal stage compensate for this to some extent. The rebuttal addresses most concerns, and I maintain my rating of 5 Accept."
+  },
+  {
+   "reviewer": "Reviewer_Dbnd",
+   "summary": "This paper introduces weakly supervised cross-modal learning for 4D radar scene flow estimation. The key idea is to remove the dependence on dense LiDAR-based pseudo flow supervision and instead use only RGB images and vehicle odometry during training, while requiring only radar point clouds at inference. The proposed method combines a task-specific iterative radar scene flow network with ball-query-based cross-frame correlation, GRU-based iterative refinement, and three losses: a rigid static loss from odometry, an instance-aware Chamfer loss, and an instance-level flow smoothness loss. The latter two are built from 2D tracking and segmentation masks that are back-projected into 3D to assign instance labels to radar points.",
+   "strengths_and_weaknesses": "Strengths:\n\n* The paper tackles a well-motivated problem. For radar scene flow, dense ground-truth flow is very hard to obtain, and prior label-free cross-modal methods still rely on expensive LiDAR sensors and multi-stage pseudo-label generation.\n* The results are impressive. On the VoD dataset, IterFlow is better than previous radar-based methods while being much simpler and using a smaller model.\n\nWeaknesses:\n\n* My main concern is that the evaluation scope is narrow. The paper evaluates only on the VoD dataset, which collected under normal weather conditions. Given the paper’s broad claims about 4D radar scene flow learning, it is hard to know how well the approach would generalize across datasets or more diverse conditions.\n* In addition, the novelty at the modeling level is limited. Iterative refinement, GRU-style updates, and better-matched local correlation operators are all familiar ideas in scene flow",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Could the authors provide additional experiments to demonstrate that the method generalizes effectively beyond the VoD dataset?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "I appreciate the authors' rebuttal and the clarifications provided. The response addresses most of my initial concerns."
+  },
+  {
+   "reviewer": "Reviewer_dL2c",
+   "summary": "This paper proposes a weakly supervised cross-modal learning framework for 4D radar scene flow estimation by leveraging 2D image semantics and odometry instead of relying on LiDAR pseudo-labels.",
+   "strengths_and_weaknesses": "Strengths:\nThe problem setting is interesting. The proposed methods are effective and the writing is easy to follow.\nWeakness:\n1. The paper claims to achieve weak supervision by eliminating expensive LiDAR pseudo-labels. In reality, its supervision signal is highly dependent on massive 2D vision foundation models, such as SAM and YOLO11-x. Essentially, this is just shifting the burden of heavy supervision, transferring the cost of 3D annotation to computationally expensive, closed-source, or massive pre-trained 2D models.\n2. The most significant advantage of radar is its all-weather capability and robustness in adverse conditions (e.g., rain, snow, fog, night). However, the training of this method relies heavily on 2D semantics provided by cameras. Consequently, the model cannot be trained on data from nighttime or adverse weather where cameras fail. This strong dependency on cameras practically undermines the core value of radar sensors.\n3. The experiments are conducted exclusively on a single dataset, View-of-Delft (VoD), which is insufficient. The authors should include additional datasets such as K-Radar, TJ4DRadSet, or adapt nuScenes.\n4. Based on point 3, cross-dataset generalization tests must be conducted to properly validate the model's actual performance and robustness.\n5. The paper devotes considerable space to emphasizing how the instance-level losses L_ic and L_is assist dynamic objects. However, Table 1 reveals that the MRNE only shows a marginal improvement of 0.0005 (from 0.0838 to 0.0833). The massive improvement in overall EPE is almost entirely attributable to the significant drop in SRNE. This strongly suggests that L_stat might be the only component actually playing a core role, contradicting the paper's primary narrative.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The core methodology involves projecting 2D instance masks into 3D space to assign instance labels to radar points. However, 2D masks inherently lack depth information, meaning the back-projection forms a frustum in 3D space. When a 2D pedestrian bounding box is projected into 3D, the static background radar points located directly behind the pedestrian will inevitably be incorrectly assigned a dynamic \"pedestrian\" instance label. The authors do not explain how the proposed method resolves this fundamental issue.\n2. Does the extremely lightweight nature of the model (only 113K parameters) indicate that it is simply overfitting to the specific test dataset?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "I appreciate the authors' detailed response during rebuttal phase. All my concerns are resolved, so I am raising my score to weakly accept (4)."
+  }
+ ]
+}

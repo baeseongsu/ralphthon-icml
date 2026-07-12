@@ -1,0 +1,26 @@
+{
+  "forum_id": "bI9moH3UZw",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_furw",
+      "weight": "high",
+      "reason": "Specific, substantiated, and high-confidence (4). Its central concerns, the gap between the stylized setting and where STE is actually used and the difficulty of pinning down the technical novelty, are echoed by the meta-review and corroborated by the other reviewers, and it adds concrete technical points (the all-ones teacher breaking spherical symmetry, classification as a more natural target) that are plausible and constructive."
+    },
+    {
+      "reviewer": "Reviewer_Mco5",
+      "weight": "high",
+      "reason": "Detailed and well-substantiated on substance. The unjustified/unverified Assumption 5.1 closure is corroborated by q6CG, the universality-under-quantization and theory-practice-gap concerns are shared by furw and zcK8, and the absent limitations discussion is echoed broadly; the specific spelling/formatting errors are verifiable. Its soundness=2 and presentation=2 scores are pessimistic outliers contradicted by the two reviewers who found the derivations rigorous and the writing clear, so the underlying points weigh more than the numeric scores."
+    },
+    {
+      "reviewer": "Reviewer_zcK8",
+      "weight": "medium",
+      "reason": "Solid and partly on-target: its central point, that impact beyond the linear-regression model is not demonstrated, is exactly the theory-practice gap the meta-review adopts, and its isotropic-input question corroborates Mco5. Offers constructive presentational suggestions (plot simulations as curves with error bars, fix the uninformative impact statement), but some remarks are minor and confidence is moderate (3)."
+    },
+    {
+      "reviewer": "Reviewer_q6CG",
+      "weight": "medium",
+      "reason": "Enthusiastic and correct on the strengths (nontrivial SDE/stochastic-mechanics methods, quantization-as-regularizer) that furw also highlights, and its Assumption 5.1 question is corroborated by Mco5. However, confidence is low (2, self-declared non-expert) and its main weakness (density of exposition) is partly contradicted by reviewers who found the paper very clear, so it is weighted below the two high-weight reviewers."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on the paper's value as a novel and insightful theoretical account of STE dynamics while treating the theory-practice gap as understandable for theoretical work, so I positioned soundness, presentation, significance, and originality at 3 (good), above Mco5's pessimistic 2/2/2 outliers but below q6CG's most enthusiastic marks, reflecting genuine but non-fatal concerns about the unverified Assumption 5.1 closure, the density and language issues, and the limited practical validation. Overall recommendation is set to 4 (weak accept), the modal score among reviewers and consistent with the two high-weight reviewers (furw, Mco5), with the clearly positive meta-review keeping it firmly in accept territory within the reviewers' [4,5] range. Confidence is 4 because the reviewers strongly corroborate one another on the core strengths (rigorous high-dimensional framework, quantization-as-regularizer, two-phase dynamics) and weaknesses (theory-practice gap, absent limitations discussion, closure and isotropy questions), despite spread on the presentation and significance scores."
+}

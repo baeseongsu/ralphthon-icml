@@ -1,0 +1,26 @@
+{
+  "forum_id": "H0tMEp0ZmO",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_MvPW",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its core points—limited algorithmic novelty, need for additional hierarchical/multi-turn RL baselines, and multi-seed statistical reporting—are directly echoed by the meta-review (which notes added baselines AgentGym-RL/ArCHer and multi-seed statistics) and corroborated by the other reviewers. Highest confidence (4) among the panel."
+    },
+    {
+      "reviewer": "Reviewer_hpqy",
+      "weight": "high",
+      "reason": "The most technically detailed review. Its two sharpest concerns—the missing shared-vs-separate adapter ablation and the IQL out-of-distribution Q-query tension in the offline actor loss—were both adopted by the meta-review, which cites added adapter ablations and Q-value diagnostics as resolving the main technical issues. Deep and well grounded."
+    },
+    {
+      "reviewer": "Reviewer_DTRV",
+      "weight": "high",
+      "reason": "Concrete, load-bearing critiques—no controlled shared-vs-separate adapter ablation and ablations confined to ScienceWorld—were directly adopted by the meta-review (adapter ablations and cross-dataset experiments). The observation that the 'multi-agent' framing is really hierarchical (shared backbone, role-specific adapters) is a fair, precise point."
+    },
+    {
+      "reviewer": "Reviewer_Tcya",
+      "weight": "medium",
+      "reason": "On target but less detailed and more generic. Its attribution/component-contribution and online-RL cost/stability points overlap with and are corroborated by the higher-weight reviewers, but the review offers less specific grounding, and its significance/originality scores (3/3) sit above the panel consensus and the meta-review's emphasis on limited novelty."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the assessment: it endorses acceptance on empirical and systems grounds while naming limited algorithmic novelty as the main, universally shared limitation. Soundness and presentation are fixed at 3 (unanimous across reviewers). Significance is set to 2, matching all three high-weight reviewers. Originality is set to 2, positioned between the two high-weight 1s (MvPW, DTRV) and hpqy's 2, reflecting the meta-review's crediting of the integration as principled rather than treating it as poor. The overall recommendation of 4 (weak accept) reflects the high-weight reviewers' initial 5/4/3 spread under an accept-leaning meta-review, and confidence 4 reflects the strong mutual corroboration across the four reviews (adapter ablation, statistics, and novelty concerns recur consistently)."
+}

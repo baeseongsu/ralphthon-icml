@@ -1,0 +1,26 @@
+{
+  "forum_id": "xX8JgcSJqW",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_u72T",
+      "weight": "high",
+      "reason": "The most substantive and specific review; its central points (object-size breakdown, need for other dense tasks to support the broad claim, and transparency of baseline settings including the VisionZip collapse) are directly echoed by the meta-review's concerns about evaluation breadth and baseline details, and it is highly confident (5)."
+    },
+    {
+      "reviewer": "Reviewer_jziX",
+      "weight": "high",
+      "reason": "Well-organized and specific; its limited-novelty and shallow-analysis observations and its questions on runtime/FLOP quantification and video/dense-task extension map cleanly onto the meta-review's anchors of limited novelty, analysis depth, and runtime, corroborating u72T."
+    },
+    {
+      "reviewer": "Reviewer_94CR",
+      "weight": "high",
+      "reason": "Positive but specific and substantiated, praising the rigorous, well-motivated empirical analysis; its forward-looking 'evaluate on tasks beyond RES' question is adopted by the meta-review and corroborated by the other reviewers, and it anchors the upper end of the recommendation range."
+    },
+    {
+      "reviewer": "Reviewer_gtBS",
+      "weight": "medium",
+      "reason": "Raised the architectural/position-encoding generalization angle (learnable absolute vs RoPE/sinusoidal, video RES) that the meta-review partly adopts under architectural generalization, but the review is short, its named-architecture weakness misidentifies InstructSeg (already a tested framework), it is the least confident (3), and its significance score of 2 is an outlier."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the initial concerns as limited novelty, evaluation breadth, and analysis depth while crediting the method's simplicity, training-free nature, and empirical strength, so I weighted u72T and jziX most heavily (their object-size, dense-task, baseline-detail, novelty, and runtime points are all reflected in the meta-review) with 94CR corroborating the generalization question. Presentation is a unanimous 3, and originality a unanimous 3; soundness sits at 3 because three of four reviewers rated it good and the diagnostic analysis (Table 1, Figure 4) is well executed, with u72T's 2 reflecting addressable empirical gaps rather than fundamental flaws. Significance stays at 3, treating gtBS's 2 as an outlier against three 3s and the meta-review's emphasis on practical value. Overall recommendation is set to 4, the value shared by the three high-weight-adjacent reviewers and consistent with the positive meta-review direction, with 94CR's 5 as the upper anchor; confidence is 4 given how consistently the strengths and the novelty/breadth/depth concerns corroborate across reviewers and the meta-review."
+}

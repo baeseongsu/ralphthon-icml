@@ -1,0 +1,26 @@
+{
+  "forum_id": "CfqUMty4Ns",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_fsiq",
+      "weight": "high",
+      "reason": "Highly specific and substantiated with confidence 5. Virtually all four of its concerns are adopted almost verbatim by the meta-review: the expert-vs-class-imbalance experimental design (experts partitioned by class), the theory-vs-tuning gap in the prescribed per-expert margins, the missing LDAM/temperature-adjustment comparison, and the need to clarify the two-stage framing given fixed experts. Its reading of both the derivation chain and the experiments is accurate."
+    },
+    {
+      "reviewer": "Reviewer_VPF2",
+      "weight": "high",
+      "reason": "Specific and on-target, with an accurate summary and correct reading of the theory and the LLM routing results. Its main weaknesses (synthetic/semi-synthetic vision imbalance, sensitivity/tuning of the margin parameters, and narrow baselines) are echoed by the meta-review's primary concerns and independently corroborated by fsiq."
+    },
+    {
+      "reviewer": "Reviewer_8d7b",
+      "weight": "medium",
+      "reason": "Substantiated and accurate in its summary, but its emphasis (cost-matrix pre-computation/scalability, larger-model and larger-dataset scale, robustness to noise) maps to the meta-review's secondary 'some reviewers also wanted' concerns rather than the primary evaluation and originality issues, which the meta-review foregrounds."
+    },
+    {
+      "reviewer": "Reviewer_Kfug",
+      "weight": "low",
+      "reason": "Vague and generic, with key_questions and limitations duplicating the weaknesses text and a partial misread that frames the setting as human-expert collaboration rather than routing among fixed classifiers/LLMs. Only two of its points (single competitor / need for more baselines, and robustness to misestimated expert performance) are corroborated by others and the meta-review."
+    }
+  ],
+  "score_rationale": "fsiq and VPF2 are weighted highest because their specific critiques -- the expert-vs-class-imbalance experimental design, the narrow baseline set, the theory-vs-tuning gap in the margins, and the two-stage framing -- are exactly the primary concerns the meta-review adopts, while 8d7b is medium (its scalability/noise points match only the meta-review's secondary concerns) and Kfug is low (vague, duplicated fields, partial misread). The dimension scores sit at the upper end of the reviewers' ranges (soundness/presentation/significance/originality all 3) because the meta-review's direction is clearly positive and both high-weight reviewers plus the meta-review treat the rigorous theory and the LLM-routing results as genuine strengths, while the unresolved expert-vs-class and LDAM/originality concerns keep them short of 4. Overall recommendation of 4 reflects the cluster of 4s among the substantive reviewers (fsiq, 8d7b) and the accept direction, discounting Kfug's 3 and not fully adopting VPF2's 5. Confidence is 4 given strong mutual corroboration among the high-weight reviews and the meta-review, tempered by Kfug's misread and genuinely open scaling/robustness questions."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "G43CIfmmxh",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_F8Hh",
+      "weight": "high",
+      "reason": "Specific and substantiated. The critique of market/geographic breadth (single CSI market, missing U.S.) and of the input-length/noise-definition issue is directly echoed by the meta-review's noted concerns and the added U.S. and longer-input evidence, and the review balances this with a substantive read of the theory's strengths."
+    },
+    {
+      "reviewer": "Reviewer_A8Bm",
+      "weight": "high",
+      "reason": "Concrete and on-target. Its three main weaknesses (clarify vs. label smoothing, add profitability backtests, add stress tests beyond Sharpe) map almost one-to-one onto the meta-review's stated concerns and the rebuttal additions; also gives a clear account of the label-centric novelty."
+    },
+    {
+      "reviewer": "Reviewer_b59B",
+      "weight": "high",
+      "reason": "Corroborated by the meta-review on multiple axes: gains possibly attributable to extra proxy labels (naive use of multiple labels), simplistic/incremental machinery, and missing window-length experiments. Some sub-points are terse and confidence is moderate, but the core criticisms are substantiated and echoed."
+    },
+    {
+      "reviewer": "Reviewer_8aQE",
+      "weight": "medium",
+      "reason": "Correctly identifies the market-breadth limitation and the incremental nature of the bi-level optimization, both corroborated by other reviewers and the meta-review, but the review is brief, its strengths are stated generically, and the reviewer's own confidence is very low (1), so it is partly rather than fully weighted."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (F8Hh, A8Bm, b59B) converge on the same picture the meta-review anchors: a strong, original, label-centric problem formulation with theory and empirics that align, but narrow empirical breadth, an incremental optimization mechanism, and a need for label-smoothing clarification and profitability/stress evaluation. Soundness (3), significance (3), and originality (3) sit inside the reviewer ranges and reflect the meta-review's positive-but-qualified direction, crediting the contribution while discounting for scope and incremental machinery; presentation is unanimous at 3. The overall recommendation of 4 matches the modal high-weight vote and the acceptance direction, and confidence of 4 reflects the strong mutual corroboration among reviewers and the meta-review, with the self-declared low-confidence reviewer (8aQE) down-weighted to medium."
+}

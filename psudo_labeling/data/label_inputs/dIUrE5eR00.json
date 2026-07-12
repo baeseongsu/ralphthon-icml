@@ -1,0 +1,62 @@
+{
+ "forum_id": "dIUrE5eR00",
+ "title": "Mirror Mean-Field Langevin Dynamics",
+ "abstract": "The mean-field Langevin dynamics (MFLD) minimizes an entropy-regularized nonlinear convex functional on the Wasserstein space over $\\mathbb{R}^d$, and has gained attention recently as a model for the gradient descent dynamics of interacting particle systems such as infinite-width two-layer neural networks. However, many problems of interest have constrained domains, which are not solved by existing mean-field algorithms due to the global diffusion term. We study the optimization of probability measures constrained to a convex subset of $\\mathbb{R}^d$ by proposing the \\emph{mirror mean-field Langevin dynamics} (MMFLD), an extension of MFLD to the mirror Langevin framework. We obtain linear convergence guarantees for the continuous MMFLD via a uniform log-Sobolev inequality, and uniform-in-time propagation of chaos results for its time- and particle-discretized counterpart.",
+ "primary_area": "optimization",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper studies constrained optimization over probability measures and introduces Mirror Mean-Field Langevin Dynamics, a principled extension of mean-field Langevin methods to constrained convex domains through a mirror formulation. Its main contributions are a continuous-time convergence analysis with linear convergence under a uniform log-Sobolev inequality, uniform-in-time propagation-of-chaos guarantees for the discretized and particle-based algorithm, and an extension to the stochastic-gradient setting, complemented by experiments comparing the mirror approach to projection-based alternatives. The main strengths are the technical solidity of the work, the clarity of the presentation, and the fact that it fills a real gap in the literature on constrained mean-field optimization with meaningful non-asymptotic guarantees. The main weaknesses are that the conceptual novelty is somewhat incremental, since the method combines existing mean-field and mirror-Langevin ingredients, and that the empirical section remains more limited in scope than the theory; the rebuttal addressed these concerns to a large extent by clarifying the contribution, adding higher-dimensional experiments, and explaining the role of the assumptions and computational scaling, although some residual reservations about empirical breadth remain. Overall, the paper is rigorous, well written, and broadly supported by the reviewers, and I therefore recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_oHuk",
+   "summary": "Mirror mean‑field Langevin dynamics (MMFLD) extends both mirror Langevin dynamics and mean‑field Langevin dynamics to optimize entropy‑regularized objectives over probability measures constrained to a convex domain. It uses a mirror map to keep the dynamics inside the constraint set while still capturing mean‑field interactions, enabling a well‑defined constrained McKean-Vlasov process. The authors prove linear convergence of the continuous flow and uniform‑in‑time propagation of chaos for its discretized particle system.",
+   "strengths_and_weaknesses": "**Strengths**\n- The paper is well-written with clear motivations and contributions.\n- Theorems 4.1-4.3 provide non-asymptotic bounds for the proposed Mirror mean‑field Langevin dynamic algorithm, including approximation error, convergence rates, and stochastic‑gradient robustness.\n\n**Weaknesses**\n- The theory relies on $F$ being linearly convex in the measure, limiting applicability to more general nonconvex mean‑field objectives.\n- The analysis depends on uniform-in-N mirror log-Sobolev inequality, and smooth convex losses. These conditions may not hold in many practical settings.\n- Lack of numerical verifications.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "1. What intuition explains why the forward discretization scheme from Ahn & Chewi (2021) avoids bias while Euler-Maruyama does not? And why Euler-Maruyama is still preferred in Algorithm 1?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_vq2Z",
+   "summary": "The paper proposes a mirror extension of mean-field Langevin dynamics, provides a complete analysis under log-Sobolev inequality including its finite $N$ versions.",
+   "strengths_and_weaknesses": "Strengths: \n\n- The paper is sound: It provides a clean setting for the problem, its analysis, the assumptions are clearly laid out, the maths is clearly written.\n- Presentation is excellent: Well organized and well written, with clean structure.\n\nWeaknesses:\n- Significance and originality: While properly done, the paper is a straightforward merger of mean-field dynamics and mirror langevin dynamics. While no doubt an interesting problem, I am not sure if it can be considered as a very novel or original direction. This is clearly a somewhat incremental idea.\n- Experiments: Experiments show that the idea is potent but doesn't really show anything much more beyond simple cases.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "As I said in my original comment, most of this paper is a necessary (but incremental) step, combining mean-field Langevin dynamics with mirror Langevin dynamics. Here are my questions:\n\n1) Can you explain the intuition beyond Theorem 4.2 a bit? Why would you keep $(1/N)$ term on the LHS? Without this, it seems that the bound degrades as $N$ grows. Can you comment whether this is a practical issue as well?\n\n2) Is theory providing any practical guidelines how $N$ should scale with various quantities in the assumptions?\n\n3) Can you provide a full empirical analysis as to how the algorithm behaves with increasing number of particles $N$ for the experiment in Section 5.3?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_da7M",
+   "summary": "This paper looks at optimizing over probability measures when the support is constrained inside some convex set. The authors propose combining MFLD with mirror Langevin dynamics, calling the result mirror mean-field Langevin dynamics (MMFLD).",
+   "strengths_and_weaknesses": "I would like to note I am not an expert in this specific area, and largely dont understand the context here.\n\n### Strengths\n\n- The problem being addressed makes sense.\n- The paper is well organized and the writing is mostly clear. The authors build up from mirror Langevin to mean-field Langevin before introducing their combined method. \n- The simplex experiments do a nice job showing the qualitative problem with projection. \n- Seems rigorous\n\n### Weakness\n- There are a lot of assumptions stacked on top of each other. You need relative Lipschitz smoothness, etc; not sure how important this all is.\n- The experiments are small scale. Dimensions are 2, 3, and 10.\n- The cost of actually running the algorithm isnt discussed much. Step 5 of Algorithm 1 requires simulating an SDE with a Hessian-dependent diffusion coefficient. Is this an issue?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- What happens to the convergence rate as dimension grows?",
+   "limitations": "No potential negative societal impact",
+   "overall_recommendation": 4,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_n4th",
+   "summary": "The authors study the problem of minimizing an entropy-regularized nonlinear convex functional on Wasserstein space. Since many problems of interest have constrained domains which are not solved by existing mean-field methods, the authors propose an extension of Mean-field Langevin Dynamics, the Mirror Mean-field Langevin Dynamics. They obtain linear convergence guarantees for the continuous dynamics undear a uniform log-Sobolev inequality and also obtain uniform in time propagation of chaos for its time and particle discretization.",
+   "strengths_and_weaknesses": "Soundness: To my understanding, the claims are well supported and the authors cite the majority of relevant related literature.\n\nPresentation: The presentation is quite clear, the paper is written with a clear goal in mind, introducing a new algorithm. The authors present the related works and carefully describe the connections with Mirror Langevin algorithm. Later they present the roadmap for the convergence guarantees. The flow of presentation is very smooth.\n\nSignificance: The authors aim to fill a gap in the literature of mean-field Langevin dynamics, by introducing the Mirror analogous to tackle the case of constrained domains. I believe this contribution is important and could pave the way for new directions. The analysis of the algorithm using stochastic gradients is also an interesting addition.\n\nOriginality: The originality of the article stems from the fact that they introduce a new algorithm inspired by the Mirror Langevin discretization.\nTo my understanding, the proof section is mostly based on previous analyses for Mean-field Langevin dynamics, adapted to the Mirror setting.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "1. A strong assumption in the article is unifrom in time LSI. Could you please another example (beyond strong convexity) that such functional inequality holds?\n\n2. Many of the proofs seem quite standard. It be helpful if the authors could explain their novel contributions with respect to the proof roadmap (if any).\n\n3. It would be nice if the authors could compare the results with projection-based Langevin algorithms (and possible extensions in mean field setting). Are there any cases covered under the assumptions of the article that the Mirror algorithm is the better method?\n I believe that such a discussion could bring better insight for both theorists and practitioners.",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

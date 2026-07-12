@@ -1,0 +1,26 @@
+{
+  "forum_id": "VQt4w3lElX",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_7whr",
+      "weight": "high",
+      "reason": "Most detailed and substantiated review, with specific, correctly attributed points. Its core observations -- the relaxation resolves an open problem from Lu et al., the deterministic saddle-escaping FW is a genuine methodological contribution, the tightness is an incremental extension of Barman, the experiments lack baselines/scalability, and the unweighted-graph restriction is unacknowledged -- are directly echoed by the meta-review and corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_X2mn",
+      "weight": "high",
+      "reason": "Detailed and specific; praises the landscape geometry and monotonicity results and the O(m+n) per-iteration cost, while raising well-grounded experimental critiques (no SOTA/DkS comparison, datasets too small, lambda fixed with no ablation). These points align with the meta-review and are independently corroborated by the other reviews."
+    },
+    {
+      "reviewer": "Reviewer_Y2Jg",
+      "weight": "medium",
+      "reason": "On-target but brief. Correctly identifies the theory as the contribution and the experiments as limited (validation only, no comparison to the original FW on the full DkS pipeline), consistent with the consensus and the meta-review, but offers little additional substantiation."
+    },
+    {
+      "reviewer": "Reviewer_bCTa",
+      "weight": "medium",
+      "reason": "Concise with a few insightful specifics (the missing cost/benefit comparison against FW without saddle escaping; the redundant Lacoste-Julien step-size rule; graphs smaller than Lu et al.). However it is the outlier at overall=5 and thin on weaknesses, so it is weighted below the two most thorough reviews."
+    }
+  ],
+  "score_rationale": "Reviewer_7whr and Reviewer_X2mn gave the most detailed and substantiated assessments and were weighted highest; their shared emphasis on strong, rigorous theory alongside insufficient experimental validation is directly mirrored by the meta-review, anchoring soundness and presentation at 3 and significance at 3 (above 7whr's lone 2, in line with the meta-review's positive framing of the resolved open problem). Overall recommendation is set to 4, matching three of the four reviewers and the meta-review's 'accept, but limited experiments' stance, rather than the single outlying 5. Originality is placed at 3 within the [2,3] range to reflect the meta-review's explicit characterization of the algorithmic variant as novel and the genuinely new landscape analysis, while still acknowledging the incremental tightness result. Confidence is 4 given strong mutual corroboration across all four reviews on both the theoretical strengths and the experimental gaps."
+}

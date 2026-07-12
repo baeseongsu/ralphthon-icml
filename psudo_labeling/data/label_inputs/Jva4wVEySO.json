@@ -1,0 +1,66 @@
+{
+ "forum_id": "Jva4wVEySO",
+ "title": "Envisioning Beyond the Few: Disentangled Semantics and Primitives for Few-Shot Atypical Layout-to-Image Generation",
+ "abstract": "The layout-to-image (L2I) task enables fine-grained control over image generation via object categories and spatial layouts. However, existing L2I methods yield fragmented and distorted generations under few-shot atypical settings. We term this failure as representation fragmentation, arising from a granularity mismatch that entangles semantic identity with visual details. To address this issue, we propose a representation-driven framework that disentangles semantics from primitives for robust few-shot adaptation. Specifically, Semantic Anchoring aggregates categorical semantics into anchors for stable identity, while Primitive Imbuing models recomposable primitives for robust local detail modeling. Conceptual Steering further regulates optimization with a saliency-aware objective to preserve foreground semantic consistency. Extensive experiments demonstrate consistent improvements in the 5-shot regime over state-of-the-art L2I methods in both visual fidelity and alignment across diverse atypical domains. The source code is publicly available at https://github.com/iCVTEAM/DSP.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "All the reviewers agree that the manuscript addresses an important yet a less covered problem. The main original concerns regarded the fact that the authors rely on some existing tools (I don't think this is critical as this is a common practice) and that the distinction to the baselines should be better emphasized. After the rebuttal two of the reviewers are satisfied with the reply and have decided to increase their scores. The last reviewer is only partially satisfied with the reply indicating that the use of transformers should be considered. I think the reply of the authors is fine and it makes sense that they decided to use the UNet architecture. Overall, I think this is an interesting and valuable contribution and it deserves acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Pifm",
+   "summary": "This paper proposes a representation-driven framework for few-shot layout-to-image generation in atypical domains, comprising three components: Semantic Anchoring, Primitive Imbuing, and Conceptual Steering. The method demonstrates improvements on three atypical datasets (DIOR, RUOD, ExDark) in the 5-shot regime.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper explores an underexplored problem, namely few-shot L2I generation in atypical domains. The motivation for addressing domain gap and data scarcity simultaneously is practically relevant.\n\n2. The proposed disentanglement of semantic-level and primitive-level representations is conceptually reasonable.\n\nWeaknesses:\n1.\tAlthough Figure 1 shows qualitative failures, this paper introduces “Representation Fragmentation” as the primary motivation but provide no quantitative evidence. It remains unclear whether this phenomenon stems from the task setup itself, specifically whether it is induced by the few-shot setting or by atypical domains, or from a granularity mismatch between the model's perception and target concepts. Without disentangling these factors, the proposed solution risks being a symptomatic fix rather than addressing the root cause.\n\n2.\tThe paper relies on DINOv2 and GradCAM to extract and visualize representations, yet both tools are known to suffer from significant domain gap issues when applied to atypical data, which the authors neither acknowledge nor mitigate.\n\n3.\tThe paper compares against only three common L2I baselines. It’s necessary to include more few-shot generation baselines. \n\n4.\tNo ablation on different shot numbers (e.g. 1-shot, 10-shot, 20-shot) to demonstrate robustness across few-shot regime.\n\n5.\tLack failure case analysis.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1.\tHow do you quantitatively measure \"Representation Fragmentation\" and disentangle whether it stems from the few-shot setting, atypical domains, or granularity mismatch?\n\n2.\tCan you provide more comparisons against few-shot generation baselines?\n\n3.\tCan you provide more ablation studies on different shot numbers?",
+   "limitations": "The authors fail to honestly discuss the limitations of their baseline selection and neglect to mention the inherent risks of semantic drift and logical self-contradiction when relying on regular-domain pretrained models (e.g., DINOv2 and GradCAM) for atypical-domain data.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The paper has several merits, although the proposed method still relies on existing approaches. Overall, I believe the current score is appropriate."
+  },
+  {
+   "reviewer": "Reviewer_TS3C",
+   "summary": "The paper proposes a method for few-shot atypical learning by addressing the representation fragmentation arising due to granularity mismatch through a representation-driven framework.",
+   "strengths_and_weaknesses": "Strengths:\n\nThe paper tackles the representation fragmentation that occurs in few-shot atypical segmentation by proposing to address it at various levels: Semantic Anchors for better exemplar guidance, reducing cross-exemplar noise; Primitive Imbuing for recomposable visual primitives; and Conceptual Steering for foreground consistency\n\nWeaknesses\n\n1. The paper needs to clearly distinguish itself from prior work, especially CC-Diff++, which also generates images from layouts and performs text-to-layout generation. CCDiff++ also uses the top 5 exemplars for background reference, which should be stated and differentiated from the few-shot generation proposed. Most of the components, like the resampler and the utilisation of queries to condition generation, are explored in CC-Diff++. However, proper differentiation from each of these components or referencing them in the methodology section is missing.\n\n2. The task of few-shot layout-to-image generation seems to be newly introduced by this method. There is training on base classes and then few-shot adaptation. The details of what loss is used and how training happens on the base classes are not very clear, and how this differs from novel class adaptation is also unclear. This also deviates from standard few-shot training, where we train on base classes, which generally includes episodic training, and then evaluation on novel classes is done directly. Further clarification is required here.\n\n3. It would be good to see the effect of using models other than DINOv2 for visual primitives.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Please see weaknesses",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "Based on the rebuttal, I would be happy to increase my score to 4. The rebuttal has addressed all my concerns."
+  },
+  {
+   "reviewer": "Reviewer_YsCW",
+   "summary": "This paper tackles layout-to-image generation in the very data-scarce, atypical domains. The authors propose three modules, 1) semantic anchoring to aggregate cross-exempler semantic features, 2) primitive imbuing to enhance fine-grained details by optimizing visual primitives with ridge regression, 3) conceptual steering to enforce foreground consistency with GradCAM-based supervision. Experiments are carried out on various datasets, the result outperforms existing methods.",
+   "strengths_and_weaknesses": "Strengths:\n1. This is a challenging and valuable task. The challenges and research gap proposed in this paper are practical.\n2. Evaluating on atypical datasets such as aerial, underwater and low-light scenarios aligns with the paper's motivation.\n3. Using ridge regression for primitive minimization is efficient and mathematically sound.\n\nWeaknesses:\n1. The based model SD1.5 and the compared methods are outdated. Makes me wonder whether the propose methods also apply to recent models such as Flux/SD3.\n2. The compared methods, MIGC, CC-Diff are not designed for few-shot generation.\n3. The general layout to image could become a trivial task given the recent advances in image generation and editing area.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "What are the advantages of current pipeline compared to using a general model such as EMU3.5/Nano Banana, which can handle in context image editing/generation uniformly. In the long run will the layout to image task continue to be a standalone task?",
+   "limitations": "yes.",
+   "overall_recommendation": 4,
+   "confidence": 1,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_cQ91",
+   "summary": "This paper introduces a new method for few-shot atypical layout-to-image generation. The main motivation is the observation that existing layout-to-image generation methods often entangle semantic representation and low-level visual primitives. To resolve this issue, it proposes three modules including Semantic Anchoring (semantic features), Primitive Imbuing (low-level features), Conceptual Steering (saliency guidance), and inject them into the diffusion model architecture for few-shot finetuning. Experiments show that the proposed method outperforms existing methods on several metrics including bootstrap FID, mAP, AP, etc. and effectiveness of the modules through ablation studies.",
+   "strengths_and_weaknesses": "Strengths:\n(1) The proposed method of injecting exemplar info with decomposed semantics and primitives sounds reasonable. \n(2) Experimental results show the proposed method outperforms several existing methods.\n(3) Ablation studies shows usefulness the three proposed modules.\n\nWeaknesses:\n(1) The paper is difficult to read, and some terminologies are confusing, e.g. \"Anchoring\", \"Imbusing\", \"Steering\", there can be simpler words to make it easier to understand. Fig2 is very cluttered with missing information and is hard to understand details even after reading the text.\n(2) The methodology seems way too complicated. There are many other simpler ways to tackle this problem (LORA like methods, Average pooling on Dino-v2 features for semantic tokens, etc. \n(3) The authors only experimented the method on StableDiffusion-1.5. Does the method applicable to more recent architectures such as DiT or its variant, which is shown to be more powerful and allows full self-attention. \n(4) Evaluations are done on relatively small scale on very limited set of categories.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Do we need such complicated design for this problem? It would be great if authors can compare the proposed method with simpler methods such as LORA finetuning, simpler pooling like methods for 5 exemplar tokens for injecting to the cross-att layers?\n2. Does the proposed method work for more recent and better generative architectures, e.g. DiT?\n3. Could authors show results on more categories (even if they are non atypical), which will help justify more on the generalization of the method.",
+   "limitations": "yes. Limitations are discussed in Appendix.",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": "Thanks to authors for detailed rebuttal. While the rebuttal partially addressed some of my questions, but the poor presentation and lack of experiments or validation on more recent diffusion architectures still concerns me, so I am keeping my original score."
+  }
+ ]
+}

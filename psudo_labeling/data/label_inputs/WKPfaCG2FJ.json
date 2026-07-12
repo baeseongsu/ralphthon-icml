@@ -1,0 +1,66 @@
+{
+ "forum_id": "WKPfaCG2FJ",
+ "title": "Trajectory-Aware Heuristic Learning for Combinatorial Search",
+ "abstract": "Learning effective value heuristics for combinatorial search is difficult, as prior methods rely on surrogate supervision or costly downstream search to assess progress. We introduce a trajectory-aware probabilistic framework that models uncertainty in cost-to-go labels instead of treating them as fixed targets. Heuristic learning is cast as inference over state trajectories using an HMM-style model, where estimated depth-change dynamics define transitions and forward-backward inference yields soft supervision. To evaluate heuristic quality without search, we propose a large-scale local ranking metric that measures a model's ability to order neighboring states. On the Rubik's Cube, our approach consistently improves local ranking accuracy and downstream search performance under matched computational budgets.",
+ "primary_area": "probabilistic_methods->graphical_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers agree on Weak Accept, but not going beyond, to Accept or Strong Accept.\n\nHence, I suggest Weak Accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_WfsA",
+   "summary": "The paper tackles the problem of learning heuristics for combinatorial optimization. The work proposes a framework for heuristic that combines trajectory based with supervision. The work introduces a new dataset CubeLocalRank for evaluating heuristics, and provides empirical results for Rubik's cube puzzle. Empirical results indicate that the heuristics developed achieve better performance.",
+   "strengths_and_weaknesses": "Soundness: The claims all seem to be well supported. Empirical results also seem to be well designed by constructing Abelation studies However, the problem size bottleneck is not yet clear.\nPresentation: Adding an example to describe the methodology would be really helpful. I think Figure 1 does a good job of explaining, the overall procedure. Please fix E_t on the arrow from the teacher. It has some issue with a box highlighted around it.\nSignificance: The paper does address an important problem, and could influence future research.\nOriginality: The work introduces new method along with data.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Is it possible to obtain optimal solutions for bigger cubes like 4x4x4 etc, if so what do you think would be necessary?\n2. What is the bottleneck of this approach? Do you think this can scale to 11x11x11 cube?\n3. Mainly the Rubik's cube problem is considered, along with Global 6x10 puzzle, why was this particular puzzle chosen?\n\nAnswering these questions would improve my understandability of this paper.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_7t1G",
+   "summary": "This paper's main idea concerns learning better value heuristics for combinatorial search without costly search-in-the-loop training. A critical issue assessed by the study is that random-walk-generated training labels systematically overestimate true optimal depth, producing noisy supervision. To address this, the authors model depth as a latent trajectory variable and apply anchored HMM inference to refine noisy labels into consistent pseudo-labels, supplemented by a neighbor-consistency loss during training. They also introduce CubeLocalRank, a search-free benchmark for evaluating heuristic quality through local state ranking. Experiments on the Rubik's Cube show consistent improvements in solution optimality and solvability over strong baselines under matched computational budgets.",
+   "strengths_and_weaknesses": "Strengths\n- The probabilistic label refinement via anchored HMM is a principled and novel way to address the noisy supervision problem inherent in random-walk training data.\n- CubeLocalRank provides a practical, search-free diagnostic that decouples heuristic quality evaluation from expensive downstream search.\n\nWeaknesses\n- CubeLocalRank requires solver-labeled local neighborhoods, which may be unavailable or expensive in domains without efficient optimal solvers.\n- Scalability to larger puzzles such as 6×6×6 remains limited, with only partial results reported due to computational constraints.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- The neighbor-consistency loss is shown to be the most impactful training component, but it is unclear how much of this benefit depends on the specific single-step trajectory continuation strategy. Would similar gains be observed if trajectories were generated with goal-rooted restarts as in CayleyPy?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "The authors’ responses helped address my main concerns and clarified several aspects of the work."
+  },
+  {
+   "reviewer": "Reviewer_Awyg",
+   "summary": "This paper studies heuristic learning for combinatorial search under noisy supervision from random walks. The main idea is to model depth along a trajectory as a latent variable and refine pseudo-labels using an anchored HMM-style procedure that combines shallow exact-depth anchors, a depth-dynamics prior, and neural emissions from a teacher model. The paper also proposes CubeLocalRank, a search-free local ranking benchmark intended to measure heuristic quality without relying solely on downstream search performance. Experiments on Rubik’s Cube in HTM/QTM settings and on larger puzzles show improved local ranking metrics and competitive downstream search performance.",
+   "strengths_and_weaknesses": "### Strengths\n\nThe paper is well motivated and addresses a real issue in heuristic learning, namely that step-based supervision from random walks is noisy and becomes less reliable at greater depths. The trajectory-level probabilistic labeling framework is technically interesting, and CubeLocalRank is a useful attempt to separate heuristic quality from search budget and implementation details. The empirical section is fairly extensive, with scaling results across training sizes and beam budgets, and the HTM results under matched settings appear meaningfully stronger than the reproduced baseline.\n\n### Weaknesses\n\nMy main concerns are about attribution, comparability, and generality. First, it is still not fully clear how much of the gain comes specifically from the anchored HMM refinement versus other components such as consistency regularization and training heuristics. Second, some comparisons, especially under QTM, involve different search procedures or configurations, which makes strict matched-budget interpretation harder. Third, the broader significance of CubeLocalRank is not yet fully established beyond puzzle domains with access to solver-labeled local neighborhoods. These issues do not invalidate the paper, but they reduce my confidence in the strength and generality of the claims.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Can the authors better isolate the marginal contribution of the anchored HMM refinement relative to simpler pseudo-labeling or smoothing alternatives under matched settings?\n2. Can the authors clarify how search budgets are matched across different search algorithms/configurations, especially in the QTM comparisons?\n3. How expensive is the HMM-based refinement during training in terms of wall-clock and memory overhead?\n4. Do the authors have evidence that CubeLocalRank, or an approximate variant of it, remains predictive in domains without access to solver-labeled local neighborhoods?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The authors’ responses have addressed my main concerns and I appreciated their hard working during the rebuttal phase. I revise the score accordingly."
+  },
+  {
+   "reviewer": "Reviewer_U9FS",
+   "summary": "This paper proposes a framework for learning and evaluating heuristics for combinatorial problems where only a small set of exact optimal depths are available, such as the Rubik's cube. The framework treats depths along a trajectory as a latent sequence, using an anchored HMM to refine that combines sparse exact anchors and depth likelihoods from a teacher network. This yields smooth depth distributions, which a student model is trained on. The student model can then be used for down-stream search tasks. It also introduces CubeLocalRank, a benchmark that evaluates how well a heuristic ranks nearby successor states without running full search. Experiments show the resulting heuristic improves local ranking quality and solution quality on Rubik's cube benchmarks.",
+   "strengths_and_weaknesses": "**Strengths**\n- This work touches on important ideas, being how to strengthen the supervision signal while enforcing heuristic consistency without relying entirely on optimal labeled trajectories\n- I believe the framing of casting heuristic learning as probabilistic inference over trajectories via anchored HMM smoothing rather than per-state regression is novel\n- The search-free heuristic quality benchmark is useful as a tool for rapid iteration without having to repeatedly run expensive downstream search\n- Empirical results show an improvement over the main baseline in both the search-free and search benchmarks \n\n**Weaknesses**\n\nI feel that while this paper has a lot of good ideas, it needs quite a bit of review.\n- Missing important decision-relevant metrics of training overhead (its talked about but not quantified) and search effort in terms of expansions and wall-clock time, so its hard to tell where this method lies on the quality/compute frontier\n- There are several presentation issues that obstruct understanding\n    - Figure 1 has the selection box highlighted on $E_t(\\cdot)$, and grid background\n    - Figure 2 has incorrect letters when referring to the sub-figures, and is visually too small\n    - Missing space between \"algorithms,particularly\" online 260\n    - The concepts of Level-1 and level-2 neighbors are mentioned but never defined anywhere\n- You have several ablations which have a discussion about different tradeoffs, but some are missing data/results to justify the claims",
+   "soundness": 2,
+   "presentation": 1,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. For Table 1 (and any key downstream results), can you provide expansion counts, number of unique states visited, and wall clock time? This would resolve whether improvements to solution quality come via a larger computation cost.\n2. Can you share any data about the training cost? In Appendix D you state that its similar to baselines but specifics would help here, as well as if this include data generation time (BFS to find the initial trajectories for $d \\le d\\_\\text{ref}$)\n3. For ablations C3, C4 and C5, claims are made but I can't find what results data they are referring to. Can you help clarify what is being used to justify these claims?\n4. Is it possible to adapt your framework to environments which have deadlocks like Sokoban, where a single move could transition from a state with a low heuristic value to a state which can no longer have trajectories though it that lead to the goal? This transition no longer follows the $\\{-1,0,1\\}$ change in heuristic value.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "My main concerns about the paper have been addressed in the rebuttal response."
+  }
+ ]
+}

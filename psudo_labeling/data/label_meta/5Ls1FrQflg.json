@@ -1,0 +1,26 @@
+{
+  "forum_id": "5Ls1FrQflg",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_eKqc",
+      "weight": "high",
+      "reason": "The most specific and highest-confidence review. Its central concerns, distinguishing multiplexing from sampling and hierarchical neighborhood sampling and the missing theoretical bound on interference-induced degradation, are directly echoed by the meta-review and are grounded in concrete references."
+    },
+    {
+      "reviewer": "Reviewer_EKg4",
+      "weight": "high",
+      "reason": "Specific and substantiated. The concern about loose theory (quasi-orthogonality and approximate linearity) aligns with the meta-review's note on the rigor of the superposition mechanism, and its component-attribution, notation, and full-cost questions are precise and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_fLtb",
+      "weight": "medium",
+      "reason": "Partly on target. The ablation concern (MIMO architecture versus richer shared-subgraph context) and the disconnected-subgraph observation are specific and useful, but framing the method as a joint-prediction accuracy gain partly misreads a method whose claim is comparable accuracy with large speedups; the 2025-baseline point is corroborated by another reviewer."
+    },
+    {
+      "reviewer": "Reviewer_gBjk",
+      "weight": "low",
+      "reason": "Vague and generic. The claim that no accuracy-preservation experiments were conducted is contradicted by the paper's empirical study noted by other reviewers, and only its 2025-baseline point (also raised by fLtb) is corroborated."
+    }
+  ],
+  "score_rationale": "Scores follow the two high-weight reviewers (eKqc, EKg4), who both gave soundness 3, significance 3, originality 3, and overall 5, consistent with the meta-review's clearly positive, accept-leaning direction and its emphasis on a significant, model-agnostic efficiency contribution that opens a new direction distinct from sampling. Presentation is set to 3 rather than 4 because the strong writing is offset by concrete notation/formalism gaps flagged by the high-weight reviewer, and 3 is the modal score. Overall recommendation of 5 weights the high-confidence, on-target reviewers over the medium/low reviewers who gave 4, staying within the [4,5] range and matching the accept decision. Confidence is 4 because the reviews mutually corroborate on the core strengths (efficiency, generality, thorough experiments) and the two central weaknesses (theoretical rigor, distinction from sampling), with only minor divergence."
+}

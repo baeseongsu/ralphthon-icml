@@ -1,0 +1,66 @@
+{
+ "forum_id": "wxD4wTYQXt",
+ "title": "ParisKV: Fast and Drift-Robust KV-Cache Retrieval for Long-Context LLMs",
+ "abstract": "KV-cache retrieval is essential for long-context LLM inference, yet existing methods struggle with distribution drift and high latency at scale. We introduce **ParisKV**, a drift-robust, GPU-native KV-cache retrieval framework based on collision-based candidate selection, followed by a quantized inner-product reranking estimator. For million-token contexts, ParisKV supports CPU-offloaded KV caches via Unified Virtual Addressing (UVA), enabling on-demand top-$k$ fetching with minimal overhead. ParisKV matches or outperforms full attention quality on both **long-input** and **long-generation** benchmarks. It achieves state-of-the-art long-context decoding efficiency: it matches or exceeds full-attention speed even at batch size 1 for long contexts, delivers up to **2.8$\\times$** higher throughput within full attention’s runnable range, and scales to **million-token** contexts where full attention runs out of memory. At million-token scale, ParisKV reduces decode latency by **17$\\times$** and **44$\\times$** compared to MagicPIG and PQCache, respectively—two state-of-the-art KV-cache top-$k$ retrieval baselines; code is available at https://github.com/amy-77/ParisKV/tree/main.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This work proposes a GPU-native and drift-robust KV-cache retrieval framework for long-context LLM inference, combining a novel collision-based candidate selection with an efficient reranking mechanism. Overall, the reviewers agree that the work is technically strong, well-motivated, and practically relevant, with particular strengths in its system-algorithm co-design, efficiency gains, and robustness to distribution drift. While some reviewers raised concerns regarding baseline coverage, evaluation breadth, and analysis clarity, these issues were addressed during the rebuttal. Given the reviewer support, solid technical contributions, and demonstrated effectiveness in large-scale long-context settings, I recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_pA8H",
+   "summary": "This paper aims to tackle challenges with distribution drift and efficiency for existing KV retrieval methods. Their approach uses a GPU-based methodology which provides efficient retrieval. They use a randomized projection method to normalize queries and keys into a stable data-independent space, which limits the impacts of distribution drift, and they keep metadata resident in the GPU to facilitate retrieval without offloading the retrieval lookup process to CPU. They also provide support for CPU offloading with dynamic on-demand fetching of important tokens.",
+   "strengths_and_weaknesses": "Advantages:\n- System design enables on-GPU retrieval lookup, which substantially outperforms CPU-based lookup process\n- Random projection-based method enables use of data-independent representative centroids\n- Their method is compatible with long-context and long-generation tasks (e.g. reasoning / test-time scaling) as it compresses attention to the previously generated tokens\n- They also present ablations for each of their design decisions\n\nLimitations:\n- Not the first to tackle the drift issue with KV retrieval methods: [1] updates centroids iteratively as more KV entries are added,  [2] mitigates drift by using a windowed RoPE method, etc. (although the projection method is still a unique contribution)\n- The source of the latency gap between ParisKV and MagicPIG / PQCache is not fully explained. Is it due to needing to run the retrieval lookup CPU-side? Are some of the speedups due to other system/kernel improvements? It would be useful to get a breakdown of the runtime for this, given that the overhead is so large. \n\n[1] Multipole Attention for Efficient Long Context Reasoning\n[2] A2 ATS: Retrieval-based kv cache reduction via windowed rotary position embedding and query-aware vector quantization.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- What is the latency of the baseline with full KV cache offloading (or with spilling whatever KV won’t fit in GPU to the CPU)?\n- For DS-R1-Llama-8B, what is the reason for the improved accuracy relative to the baseline?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "The rebuttal has addressed all of my concerns. I will therefore maintain my positive score (Accept)."
+  },
+  {
+   "reviewer": "Reviewer_5xn6",
+   "summary": "This article targets the challenge of handling upto one million-token KV caches. The authors propose a two-stage, GPU-native retrieval pipeline that combines collision-based candidate selection with a quantized inner-product reranking estimator. By leveraging Unified Virtual Addressing (UVA), ParisKV enables on-demand fetching of salient KV blocks from CPU memory to GPU, aiming to mitigate both the distribution drift problem in long-context generation and the high latency associated with massive KV-cache IO.",
+   "strengths_and_weaknesses": "## Strengths\n- the two-stage dynamic retrieval mechanism in ParisKV provides better robustness and maintains higher accuracy for long-context tasks compared to static pruning methods.\n- The use of UVA for on-demand KV fetching is a practical and efficient solution to the memory bottleneck, allowing the system to handle much larger contexts without overwhelming GPU memory.\n- The paper includes detailed latency profiling and ablation studies that demonstrate the effectiveness of the proposed retrieval strategy and its components.\n- It's great to see the authors have their kernel implementation to really demonstrate the speedup on real hardware.\n## Weaknesses\n- For the latency analysis, the two baselines (MagicPig and PQCache) are not very competitive. It would be more convincing to compare with a stronger baseline, such as a well-optimized Top-K retrieval method that also uses GPU acceleration.\n- For accuracy evaluation, the paper mainly focuses on the QA and reasoning tasks. It would be interesting to see how ParisKV performs on more diverse long-context tasks, such as NIAH, RULER etc.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- What is the actual end-to-end decoding latency (tokens/sec) compared to a strong baseline like Quest or Twilight?\n- Could you provide a breakdown of the latency overhead of the proposed method? How does this overhead scale with increasing context length?",
+   "limitations": "- The baseline comparisons in the paper are somewhat limited, and it would be beneficial to see how ParisKV stacks up against more competitive retrieval methods that also leverage GPU acceleration.\n- The evaluation is focused on a certain set of tasks (QA and reasoning), and it remains to be seen how well ParisKV generalizes to a broader range of long-context applications.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The rebuttal addressed my main concerns."
+  },
+  {
+   "reviewer": "Reviewer_qwkG",
+   "summary": "This paper presents ParisKV, a distribution-drift-robust, GPU-native KV cache retrieval framework for long-context LLM inference. By co-designing algorithm and system components, ParisKV significantly improves efficiency. At the million-token scale, it reduces decoding latency by 17×–44× over prior methods while matching or even surpassing full attention in accuracy on long-context benchmarks.",
+   "strengths_and_weaknesses": "S1. The experimental results are strong and demonstrate significant performance improvements in both latency and accuracy.\n\nS2. The proposed technical solution appears interesting.\n\nW1. The baseline comparison is limited. The evaluation only includes MagicPIG and PQCache, without comparisons to more recent SOTA KV retrieval methods. A broader empirical study would provide a more comprehensive performance assessment.\n\nW2. While the paper emphasizes robustness to distribution drift in KV retrieval, it lacks a fine-grained quantitative analysis of how distribution drift affects different attention heads and layers. A deeper investigation at the per-head or per-layer level would strengthen the understanding of the claimed robustness.\n\nW3. In several experiments, ParisKV substantially outperforms full attention in terms of accuracy. This result is intriguing but insufficiently explained. The paper would benefit from a more thorough analysis clarifying why selective KV retrieval can outperform full attention.\n\nW4. The method operates at token-level granularity for selecting important KV cache entries, whereas mainstream industry systems (e.g., vLLM) manage KV caches at the block level. It is unclear whether ParisKV can be integrated into such block-based memory management frameworks, and this practical consideration warrants further discussion.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses",
+   "limitations": "N/A",
+   "overall_recommendation": 3,
+   "confidence": 5,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_JGZR",
+   "summary": "This paper introduces ParisKV, which applies GPU-native kv-cache retrieval and also UVA(unified Virtual Addressing). Key contributions are: a data-independent, drift-robust representation obtained by L2-normalization and random orthogonal rotation, which ensure the collision based coarse retrieval of kv-cache; and a compact, calibrated 4-bit subspace inner-product estimator (RSQ-IP) for on-GPU reranking that avoids accessing full-precision keys. By offloading full-precision KV to CPU memory and retrieving only the final top-k KV pairs via UVA, the method is high-efficient. Experiments show the method is more efficient than cpu-dominated retrieval in most models(7 vs. 2) even on 1M-token contexts.",
+   "strengths_and_weaknesses": "Strengths: The two stage-coarse to fine kv-cache retrieval design is effiecient in modern industry, espectially with RSQ-IP reranking just 4-bit performed on GPU. The normalization+rotation transformation with analytic, uniformly distributed subspace centroids is a simple yet elegant way, this mitigates decoding drift without data-dependent clustering. The paper tested both on long-reasoning such as AIME25, GPQA-Diamond, MATH500 and also long-input i.e. LongBench-V2, making the usage of ParisKV more practical.\nWeaknesses: The paper mentioned the CPU-assisted retrieval methods but didnot make clear comparison on the same platform, baseline coverage omits several strong, recent systems, for example, RetroInfer, ShadowKV, RetrievalAttention, SOCKET. In RSQ-IP with quant method 4-bit is not clarified, Appendix B2.2.2 settings is 1-bit sign, 3-bit digits but whether this is e2m1 or e3m0 is not clear, which is not reproducible. Besides, hardware details are omitted  in context.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. 4-bit quant for kv-cache footprint is still a costly burden, please show the cost with request increase, can you give us a comprehensive memory usage analysis?\n2. Can you provide additional empirical validation that SRHT induces the Beta-like priors assumed in Proposition 4.1?\n3. Baseline with other long-context KV-cache methods are also needed, how does ParisKV compare empirically to RetroInfer, ShadowKV, RetrievalAttention, or SOCKET on both accuracy and throughput under comparable budgets/hardware? If unavailable, can you discuss expected tradeoffs and plans for such comparisons?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 5,
+   "final_justification": "Dear Program Chairs and Area Chairs,\n\nThis paper has successfully addressed all my previous questions, along with active feedback on the open-source code. I believe the work meets the standard acceptance bar and I recommend it for acceptance.\n\nBest regards,\n\nReviewer JGZR"
+  }
+ ]
+}

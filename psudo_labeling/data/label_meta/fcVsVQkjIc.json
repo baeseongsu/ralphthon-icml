@@ -1,0 +1,21 @@
+{
+  "forum_id": "fcVsVQkjIc",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_hvcr",
+      "weight": "high",
+      "reason": "The most detailed and on-target review. The questions about the technical delta relative to Panaganti et al. and the lack of a formal lower bound directly anchor the meta-review's 'standard techniques / limited novelty' conclusion, and the information-bottleneck question maps onto the meta-review's suggestion to explain why the setting is intrinsically challenging. Self-rated confidence is low (2), but the content is specific and strongly corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_fRbL",
+      "weight": "high",
+      "reason": "Expert reader (confidence 4) with specific, substantiated points: unclear motivation for why robust online RL does not reduce to standard fitted learning, an unclear advantage of the functional optimization over the dual, poor self-containment, the robust-vs-distributionally-robust MDP conflation, and weak single-domain experiments. The motivation-of-hardness and experimental concerns are echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_jcDS",
+      "weight": "medium",
+      "reason": "Partly on-target: the experimental-limitation and computational-complexity/scalability concerns are corroborated by the other two reviewers and by the meta-review's emphasis on strengthening the experiments. Otherwise the review is fairly generic (limited to CartPole, need more ablations, no continuous settings), and its lower originality (2) and overall (4) scores align with the meta-review's tempering of novelty."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the two substantive, expert reviews (hvcr and fRbL) as high weight: both stress that the technical ingredients are fairly standard and that the paper under-motivates why online robust RL is hard, which the meta-review adopts as its central reservation, so I set originality to 3 (novel setting and complexity measure but largely standard machinery) and significance to 2 (contribution currently theoretical with weak experiments). Soundness is 3 rather than fRbL's 2 because no reviewer identified an actual error and the majority plus the meta-review treat the results as solid; presentation is a unanimous 3. Overall recommendation is a considered weak accept (4): the two high-weight reviewers gave 5 with concerns already priced in, but the medium-weight reviewer's 4 and the meta-review's clearly tempered tone (standard techniques, single-domain experiments) pull the synthesized score to the cautious end of the accept range. Confidence is 4 because the reviews are coherent and mutually corroborating on novelty, computational tractability, and experimental limitations."
+}

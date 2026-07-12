@@ -1,0 +1,21 @@
+{
+  "forum_id": "tDft0AHhzH",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_gwmy",
+      "weight": "high",
+      "reason": "Specific and substantiated; its two weaknesses (contribution is systems-only with limited conceptual novelty, and applicability restricted to deterministic environments) and its GRPO-vs-other-algorithms generality question are directly echoed by the meta-review's lingering novelty concern, its generality-beyond-GRPO point, and the rebuttal's TTL addition for non-deterministic settings."
+    },
+    {
+      "reviewer": "Reviewer_JLzu",
+      "weight": "high",
+      "reason": "Highly on-target and concrete; its two central asks -- missing end-to-end/overall training time and the absence of a stateless baseline (with its effect on RL correctness) -- are exactly the concerns the meta-review foregrounds and that the rebuttal addressed (end-to-end metrics, and the finding that >25% of stateless hits corrupt reward)."
+    },
+    {
+      "reviewer": "Reviewer_jVkv",
+      "weight": "medium",
+      "reason": "Points on lack of baseline comparisons and generality across models/hardware/RL algorithms are corroborated by the meta-review, but the review is comparatively generic (key questions simply defer to 'see Weaknesses'), and the reviewer's escalated generality concern was ultimately judged satisfactorily resolved."
+    }
+  ],
+  "score_rationale": "The two high-weight reviewers (gwmy, JLzu) anchor the assessment: their concerns about limited conceptual novelty, missing end-to-end timing, the absent stateless baseline, and generality are precisely the axes the meta-review identifies, so presentation stays at the unanimous 3 and soundness at 3 (reflecting the initial evaluation gaps before rebuttal, within the [3,4] range). Significance and originality are set to 3, at the upper end of the [2,3] range, following the meta-review's strong endorsement of the problem's importance and practical impact while acknowledging the novelty concern in prose. Overall recommendation is 4 (weak accept), matching the two 4s, the AC's explicit 'advocating for a weak accept,' and staying within [4,5]; confidence is 4 given how strongly the three reviews mutually corroborate on both strengths and the same core weaknesses."
+}

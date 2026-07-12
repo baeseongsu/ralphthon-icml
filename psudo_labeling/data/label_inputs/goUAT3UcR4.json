@@ -1,0 +1,52 @@
+{
+ "forum_id": "goUAT3UcR4",
+ "title": "*MemPot*: Defend Against Memory Extraction Attack with Optimized Honeypots",
+ "abstract": "Large Language Model (LLM)-based agents employ external and internal memory systems to handle complex, goal-oriented tasks, yet this exposes them to severe extraction attacks, and corresponding defenses are currently lacking.\nIn this paper, we propose *MemPot*, the first theoretically verified defense framework against memory extraction attacks by injecting optimized honeypots into the memory. \nThrough a two-stage optimization process, *MemPot* generates trap documents that maximize the retrieval probability for attackers while remaining inconspicuous to benign users. \nWe model the detection process as Wald’s Sequential Probability Ratio Test (SPRT) and theoretically prove that *MemPot* achieves a lower average number of sampling rounds compared to optimal static detectors. \nEmpirically, *MemPot* significantly outperforms state-of-the-art baselines, achieving a 50% improvement in detection AUROC and an 80% increase in True Positive Rate under low False Positive Rate constraints. \nFurthermore, our experiments confirm that *MemPot* incurs zero online inference latency and preserves the agent's utility on standard tasks, verifying its superiority in safety, harmlessness and efficiency.",
+ "primary_area": "social_aspects->security",
+ "decision": "Accept (regular)",
+ "decision_comment": "I agree with the reviewers that the work studies a well-motivated problem in a rigorous way. Some of the evaluations are limited (e.g., simulated/synthetic experiments) and this should be addressed clearly in the paper's discussion as an area for future work. Nevertheless, the contributions are clearly novel, and positioned in relation to prior work. The empirical evidence supports the claims, and there is some useful theoretical analysis for why the proposed approach is useful.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Frbj",
+   "summary": "This paper proposes MemPot, a defense against memory extraction attacks on LLM agents. By inserting trap documents into the memory base, it increases the probability of attackers retrieving these trap documents, thereby protecting the real files or memory. Experiments against both external and internal memory extraction attacks demonstrate the effectiveness and low latency of this method.",
+   "strengths_and_weaknesses": "**Strengths:**\nThis paper investigates how to defend against memory extraction attacks in LLM agents. The proposed method, MemPot, employs a two-stage optimization strategy to optimize trap documents. Compared to baseline methods, MemPot demonstrates better defense performance with zero-online latency.\n\n**Weaknesses:**\nLimitations in dynamic memory base. Although MemPot achieving zero online latency, it essentially shifts massive computational costs to the offline phase. This poses significant maintenance challenges for real-world agents with high-frequency dynamic memory updates. The paper lacks a robustness evaluation under such long-term, high-frequency update conditions.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weakness.",
+   "limitations": "No. Please add the limitations of this method.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The rebuttal has addressed my concerns, and the paper can now be considered for acceptance."
+  },
+  {
+   "reviewer": "Reviewer_Y7cC",
+   "summary": "This paper introduces MemPot, a pioneering active defense framework designed to secure memory systems in LLM-based agents. The core contribution lies in generating highly alluring honeypots through a two-stage optimization strategy and modeling the detection process as a sequential hypothesis testing problem. By employing Wald's Sequential Probability Ratio Test (SPRT), MemPot identifies covert memory extraction behaviors with a theoretically optimal number of detection rounds.",
+   "strengths_and_weaknesses": "Strengths:\n-This paper proposes MemPot, the first general defense framework against agent memory extraction attacks. It generates and implants harmless but highly persuasive honeypots through a two-stage optimization strategy, shifting the strategy from passive monitoring to active baiting.\n- It innovatively models attack identification as a sequential hypothesis testing problem and introduces Wald's SPRT algorithm. Theoretical proofs demonstrate that this scheme minimizes the expected number of detection rounds at a preset error rate and outperforms static detectors without honeypots.\n- Extensive experiments demonstrate that MemPot achieves near-perfect detection accuracy against state-of-the-art (SOTA) extraction attacks with zero online inference overhead. \n\nWeaknesses:\n- The evaluation lacks diversity in both attack and defense baselines. It is recommended to add several mainstream methods to enhance credibility. For example, on the attack side, Fine-Grained Privacy Extraction from Retrieval-Augmented Generation Systems by Exploiting Knowledge Asymmetry[1] could be added, and on the defense side, SAGE[2] could be compared.\n- The offline process of building a honeypot has a high computational cost. The paper should clearly explain the offline computational cost (such as training cost).\n- The paper utilizes a neural network and a corresponding dataset to train an \"attacker agent\" for simulating attack behaviors. Consequently, the honeypot's effectiveness inherently depends on this specific \"attacker agent.\" If an attack method outside the training dataset is employed, would the protection performance of these honeypots, which built based on a specific proxy, decrease? Furthermore, the implementation details regarding the \"attacker agent\" should be more clearly articulated.\n- Converting the optimized embedding vectors into natural language text is very challenging. Could we convert the natural language text back into vectors to verify the accuracy of the method in constructing natural language text?\n- The current evaluation is restricted to a single base model (DeepSeek) and one embedding model (all-mpnet-base-v2). Testing across different models is essential to verify the framework's generalizability.\n-The experimental metrics lack clarity; specifically, the paper does not rigorously define the criteria for what constitutes a \"successful extraction\".\n\n[1]https://openreview.net/pdf?id=B6ILMPPKnK\n\n[2]https://arxiv.org/pdf/2406.14773v2",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- The method claims zero online inference overhead, but what is the offline cost of honeypot construction in terms of time, compute, and model calls?\n\n- How accurate is the mapping from optimized embedding vectors back to natural language text? Can the authors verify this by re-encoding the generated text and measuring embedding similarity?\n\n- The experiments are limited to one base model and one embedding model. Does the method remain effective across other LLMs and embedding models?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_YJja",
+   "summary": "This paper proposes MemPot, a defense framework against memory extraction attacks targeting LLM agents. The framework injects optimized honeypot documents into the agent’s memory and leverages SPRT to identify adversarial behaviors. Experimental results demonstrate the effectiveness of the proposed method, achieving a 50% improvement in detection AUROC while preserving the agent’s original QoS.",
+   "strengths_and_weaknesses": "**Strengths:** \n\n- MemPot departs from conventional passive defense strategies by proactively shaping the memory distribution to enhance attack detection.\n- The paper provides a rigorous mathematical formulation, modeling the detection process under Wald’s SPRT.\n\n**Weaknesses:**\n\n- The first-stage optimization in MemPot, based on the InfoNCE loss, heavily depends on the fidelity of the assumed “attacker proxy.”\n- The framework assumes that the attacker has no prior knowledge of the defense configuration, which may limit its applicability under more informed adversarial settings.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. If an attacker becomes aware of the existence of MemPot, they may adapt their strategy to circumvent the SPRT-based detection logic.\n2. In scenarios where memory is frequently and dynamically updated, it remains unclear how previously injected honeypot documents can maintain separability from newly incorporated data distributions.\n3. Although the framework incurs zero online latency, the feasibility of the two-stage offline optimization under large-scale data settings requires further examination.\n4. If the attacker adopts a novel and previously unseen query distribution, it is uncertain whether the trained honeypot representations would remain effective.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The rebuttal has adequately addressed my main concerns, and I now believe the paper can be considered for acceptance"
+  }
+ ]
+}

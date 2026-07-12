@@ -1,0 +1,66 @@
+{
+ "forum_id": "sseBmS2MGa",
+ "title": "DriveWorld-VLA: Unified Latent-Space World Modeling with Vision–Language–Action for Autonomous Driving",
+ "abstract": "End-to-end (E2E) autonomous driving has recently attracted increasing interest in unifying Vision–Language–Action (VLA) with World Models to enhance decision-making and forward-looking imagination. However, existing methods fail to effectively unify future scene evolution and action planning within a single architecture due to inadequate sharing of latent states, limiting the impact of visual imagination on action decisions. To address this limitation, we propose DriveWorld-VLA, a novel framework that unifies world modeling and planning within a latent space by tightly integrating VLA and world models at the representation level, which enables the VLA planner to benefit directly from holistic scene-evolution modeling and reducing reliance on dense annotated supervision. Additionally, DriveWorld-VLA incorporates the latent states of the world model as core decision-making states for the VLA planner, facilitating the planner to assess how candidate actions impact future scene evolution. By conducting world modeling entirely in the latent space, DriveWorld-VLA supports controllable, action-conditioned imagination at the feature level, avoiding expensive pixel-level rollouts. Extensive open-loop and closed-loop evaluations demonstrate the effectiveness of DriveWorld-VLA, which achieves state-of-the-art performance with 91.3 PDMS on NAVSIMv1, 86.8 EPDMS on NAVSIMv2, and 0.16 3-second average collision rate on nuScenes. Code and models are released at https://github.com/liulin815/DriveWorld-VLA.",
+ "primary_area": "applications->robotics",
+ "decision": "Accept (regular)",
+ "decision_comment": "After rebuttal, this submission received all four weak accept, so there is a consensus of accept for this submission from the reviewers. AC has checked the submission, the reviews, the rebuttal, and the discussion, and agreed with the consensus, thus accept is recommended. The core strength identified by all reviewers is the unified latent-space architecture. Unlike existing paradigms that treat world models as external modules or simple feature-sharers, DriveWorld-VLA integrates VLA and world models at the representation level, thus it is a good contribution to the community.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_MkKx",
+   "summary": "The authors bring VLA-based understanding and decision-making together with World Model-based future imagination within a unified framework, and propose DriveWorld-VLA, where the VLA states are reused as a shared latent space for both decision-making and future imagination. Overall, the method shows strong performance across a range of benchmarks.",
+   "strengths_and_weaknesses": "### Stengths\n\n1. The motivation figure and the visualization results are helpful.\n\n2. The paper is clearly organized and easy to follow.\n\n\n\n### Weaknesses\n\n1. DriveWorld-VLA uses the VLM hidden states for semantic understanding, future imagination, and action prediction at the same time. However, just because these hidden states are trained with multiple objectives does not necessarily mean they form a truly unified representation or that they are causally sufficient for decision-making.\n\n2. The model takes textual prompts as input, but it is not clear whether the final decision process is actually guided by language-level reasoning or logical constraints, unlike methods such as NavGPT-2 [1]. It would be helpful if the authors could clarify whether the text mainly serves as additional context, rather than as an explicit reasoning signal, and also discuss whether chain-of-thought-style supervision might further improve interpretability or decision consistency.\n\n[1] Navgpt-2: Unleashing navigational reasoning capability for large vision-language models\n\n3. The three-stage progressive training strategy seems reasonable, but in the current version it comes across more like an engineering trick than a clearly motivated high-level design choice. Since the overall performance appears to depend quite a lot on the training schedule, the ablation in Table 5 feels a bit limited, and it would be helpful to include more variants to better explain where the improvements actually come from.\n\n4. The tokenizer design should be explained more clearly. The paper says that image and text tokenization follow InternVL, but the details of the BEV tokenizer and the action tokenizer are still  unclear -- for example, how the BEVFormer outputs are turned into BEV tokens, what the token format looks like, and whether the action tokenizer is borrowed from OpenVLA or implemented in a different way.\n\n5. For the metrics where DriveWorld-VLA performs worse than previous methods in Tables 1 and 2, it would be helpful to provide more analysis of the underlying reasons. If there is not enough space in the main paper, this discussion could be moved to the appendix.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see Weaknesses",
+   "limitations": "N/A",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "All of my concerns have been addressed, and I am inclined to raise my recommendation to Weak Accept."
+  },
+  {
+   "reviewer": "Reviewer_mEFN",
+   "summary": "The paper introduces DriveWorld-VLA, a framework that unifies Vision-Language-Action (VLA) models and World Models (WM) within a shared latent space for autonomous driving. The authors identify a \"structural bottleneck\" in existing methods that either treat world models as external simulators or share features without enabling action-conditioned causal reasoning.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. It utilizes a structured three-stage training process (Joint Training, Controllability Fine-tuning, and Reward-based Refinement) to stabilize the complex task of joint optimization. The use of a DiT-based architecture for action-conditioned flow-matching provides a rigorous mathematical framework for modeling future environmental evolution.\n\n2. The paper clearly defines the limitations of current \"disentangled\" and \"feature-sharing\" paradigms. The transition to the proposed \"unified\" approach is logical, and the technical illustrations (Figures 2 and 3) effectively communicate the model's internal architecture.\n\n3. It addresses a critical bottleneck in autonomous driving: the gap between reactive planning and long-horizon causal reasoning. Achieving state-of-the-art results on major benchmarks like NAVSIM (91.3 PDMS) and nuScenes (0.16 collision rate) demonstrates high practical utility for the industry.\n\nWeaknesses:\n\n1. While the paper claims to reduce reliance on dense supervision, it still requires heavy data inputs, including semantic BEV maps and expert trajectories. Furthermore, the complexity of the three-stage pipeline creates a potential \"cascade of failure,\" where errors in the initial latent representation phase could significantly compromise the final policy.\n\n2. There is a concern regarding computational efficiency. The process of performing prospective \"what-if\" rollouts using a Diffusion Transformer for multiple candidate actions is likely computationally expensive, which may hinder its deployment on real-time vehicle hardware where low latency is critical.\n\n3. While the unification is novel, the individual building blocks (BEVFormer, InternVL, Diffusion Transformers) are well-established in the literature. The contribution is more of a sophisticated architectural synthesis rather than the invention of a new fundamental learning primitive.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. How does the \"what-if\" reasoning process (generating multiple latent rollouts via Euler sampling) impact the real-time inference speed (Hz) of the model?\n\n2. To what extent does the reward-driven refinement in Stage 3 contribute to the final PDMS score compared to a model trained only through Stage 2?\n\n3. How does the model perform in out-of-distribution scenarios (e.g., extreme weather or rare traffic maneuvers) that were not well-represented in the imitation learning data?",
+   "limitations": "Yes.\n\nThe authors mention that DriveWorld-VLA cannot form closed-loop reasoning without the specific fine-tuning stages and discuss the transition from reactive to proactive planning.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I am satified with the rebuttal and would like to raise the initial score."
+  },
+  {
+   "reviewer": "Reviewer_mFBs",
+   "summary": "This paper proposes a joint VLA and diffusion architecture. Hidden states from the final layer of the VLA and BEV features are fed into a DiT to generate future BEV features.\nTraining has three stages: (1) joint training; (2) training the BEV feature generator conditioned on future ground-truth actions; and (3) training the reward model and action head.\nThe three-stage training improves performance on the NAVSIM and nuScenes benchmarks.",
+   "strengths_and_weaknesses": "### Strengths\n\nThis paper explores how a world model (on BEV features) and a VLA planner can collaborate to improve driving performance.\n\nThe ablation studies demonstrate the necessity of incorporating three-stage training. The three-stage training is feasible and well motivated.\n\n### Weaknesses\n\nUsing BEV features encoded by BEVFormer as input to the VLM may be unreasonable, or at least requires more careful design and justification.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Since the world model predicts future BEV features encoded by BEVFormer, does this limit the potential of the world model?\n\n2. In Table 5, why does “Non-progressive” perform worse than training without three-stage training (Table 4)?\n\n3. In Section 3.1, how are the BEV features projected into the VLM space?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "My main concern has been resolved, so I maintain my recommendation."
+  },
+  {
+   "reviewer": "Reviewer_RbMc",
+   "summary": "This paper proposed DriveWorldVLA, a three-stage VLA model that performs planning for autonomy tasks based on 2D image sequence and BEV data. The highlight of the model is the integration of world models and planning directly in latent space, utilizing spatial reasoning and simulators for future state prediction to enhance training. Some weaknesses include the over-reliance of BEV features, potential limitations of over-reliance on simulators and clean urban datasets, and hallucinations from both LLMs and diffusion models. Through thorough experiments, the model achieved sota performance on two datasets, leading me to believe the novelty and contribution of the paper.",
+   "strengths_and_weaknesses": "Strengths: \n1. the integration of world models introduced more domain knowledge and reasoning capabilities to aid the decision-making process without more data.\n2. the \"what-if\" situations could improve the model's reliability when it comes to edge cases in autonomous driving. The model might be able to provide more considered decisions rather than relying on data distribution.\n3. the model achieved sota performance across two datasets.\n\nWeakness: \n1. the reward refinement process might introduce bias towards specific datasets, leading to credibility issues. \n2. the model relies heavily on BEV data and 2D images; in stage 2, the model needs multi-view data to form BEV ground truth, which might not benefit the inference stage where such data is not available. \n3. The model is not necessarily grounded to 3D geometries as the simulators used and the lack of 3D data might introduce additional unreliability. Furthermore, the hallucination of LLM and diffusion models are not explicitly handled.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Is the denoiser and diffusion model accurate and reliable enough? Do we have method to confirm this?\n2. What dataset is used for training? Can you provide more details of the training process?\n3. The debate of feature level vs. pixel level rollouts have been focused on efficiency rather than performance. Since you are already using expensive hardware, does using pixel level rollout improve the performance?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  }
+ ]
+}

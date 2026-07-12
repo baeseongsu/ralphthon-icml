@@ -1,0 +1,26 @@
+{
+  "forum_id": "lRZmoqiAPg",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_rbRk",
+      "weight": "high",
+      "reason": "Specific and substantiated. Raises the exact concern anchored by the meta-review, that the LLM-as-judge evaluation lacks independence because GPT-5.2 is both the judge and one of the baseline sources, and adds well-grounded points on missing inference-latency/computational analysis, absent sampling-hyperparameter sensitivity, and the fairness of self-constructed baselines. Its low overall score does not diminish the review's quality; its content is directly corroborated by the meta-review and the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_GSkh",
+      "weight": "high",
+      "reason": "On-target and specific. Echoes the shared LLM-as-judge robustness concern (suggesting human evaluation), flags missing training-time/memory reporting and scalability to large HKGs, and constructively points to a relevant missing related work (triple set prediction). Aligns with the meta-review's positive framing of the task and its central evaluation caveat."
+    },
+    {
+      "reviewer": "Reviewer_F9Cj",
+      "weight": "high",
+      "reason": "Detailed and well-substantiated. Corroborates the LLM-as-judge reliability concern, articulates the moderate-novelty point (combining message passing and masked diffusion), questions the simplicity of the LLM baselines, and raises the incisive observation that the diffusion objective is equivalent to any-order autoregressive, asking how much gain comes from diffusion versus the architecture. Consistent with the meta-review's direction."
+    },
+    {
+      "reviewer": "Reviewer_iwrf",
+      "weight": "high",
+      "reason": "The most technically incisive review. Corroborates the LLM-as-judge concern and adds the memorization/rejection-sampling failure mode, the observation that relation-prediction MRRs are near-solved given a small relation vocabulary, a request to clarify the diffusion forward process and inference schedule, and calls for controlled non-LLM generative baselines. Specific, substantiated, and mutually reinforcing with the other high-weight reviews."
+    }
+  ],
+  "score_rationale": "All four reviews were treated as high-weight: they are specific, mutually corroborating, and their central shared concern, the robustness and independence of the LLM-as-judge evaluation (GPT-5.2 serving as both judge and baseline), is the exact concern anchored by the meta-review. Presentation (3) was unanimous, and soundness (3) follows the 3-of-4 majority, with the method itself judged sound and evaluation methodology being the main caveat that the meta-review notes the authors addressed. Significance (3) is positioned at the top of the split [2,3] range by the meta-review's clearly positive framing of the new task and its future-work potential, while originality (2) follows the 3-of-4 majority, reflecting that the method adapts existing message-passing and masked-diffusion components rather than introducing a fundamentally new technique. Overall recommendation (4, weak accept) sits at the top of the [3,4] reviewer range, consistent with the meta-review's confident acceptance, and confidence is 4 because the reviewers' strengths and weaknesses are highly consistent and mutually corroborating."
+}

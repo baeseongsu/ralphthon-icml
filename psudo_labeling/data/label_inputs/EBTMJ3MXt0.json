@@ -1,0 +1,62 @@
+{
+ "forum_id": "EBTMJ3MXt0",
+ "title": "Local-Minima-Preserving Polynomial Relaxation of Ising Problems",
+ "abstract": "The generalized Ising problem captures a broad spectrum of hard combinatorial problems, including MAX-CUT, Number Partitioning (NPP), and Maximum Independent Set. In this work, we consider the notion of one-flip local minima for this problem. We construct a polynomial relaxation and prove the landscape equivalence theorem: there exists a one-to-one correspondence between the local minima of the relaxation and the one-flip local minima of the original Ising problem. This guarantee reduces the Ising problem to finding the local minima of a smooth function, allowing us to leverage scalable gradient-based optimizers such as ADAM. We demonstrate that our method achieves strong performance across challenging benchmarks, including spin-glass models, MAX-CUT, and NPP.",
+ "primary_area": "optimization->discrete_and_combinatorial_optimization",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper considers the Ising optimization problem and proposes a novel approach, namely finding local minima via a fractional relaxation of the problem. The main result establishes a correspondence between the local minima of the fractional relaxation and the 1-neighborhood local minima of the discrete problem. Based on this result, the authors propose a gradient-descent-type algorithm for solving such Ising minimization problems.\n\nAll reviewers (and I) agree that the approach is novel, the idea is interesting, and the correspondence result is indeed surprising. However, some reviewers expressed concerns regarding both the significance of the results (i.e., the focus on local minima) and the extent of the experimental evaluation, including the difficulty of the considered datasets. Despite the authors’ responses, some of these concerns remain not fully addressed, in my opinion.\n\nAdditionally, although not explicitly raised by the reviewers, I note that the same guarantee—convergence to a local neighborhood minimum—can be achieved by a trivial local search algorithm in the discrete space. In this sense, it remains unclear what additional benefits the proposed approach provides, given that the same guarantee can be obtained via simpler methods.\nOverall, I believe the paper has clear merits, but another round of revision would be beneficial before publication.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_UYjV",
+   "summary": "The paper studies the problem of solving general Ising (QUBO) optimization via a continuous relaxation that preserves the discrete structure of the problem at the level of local optimality. The main result shows that, under suitable conditions on the choice of an attractor function and parameters, there is a one-to-one correspondence between the local minima of the continuous objective and the one-flip local minima of the original discrete problem. In particular, the authors design a polynomial relaxation (MiP-CRIP) whose minimas align exactly with discrete solutions, thereby avoiding spurious local minima that typically arise in standard relaxations. Building on this, they propose a gradient-based optimization method that provably converges to discrete local minima while operating in the continuous domain. Empirically, the approach achieves competitive performance on standard benchmarks such as MAX-CUT and spin glass instances, often matching or outperforming existing heuristics while offering improved scalability.\n\nMy main concern is that the theoretical guarantees rely on a robustness condition involving a global margin parameter \\gamma (see definition  (19)), which captures the minimum discrete improvement under single-bit flips. While the authors provide lower bounds on \\gamma in finite-precision settings, computing or tightly estimating this quantity is itself intractable in general, and it appears to me that the correctness of the reduction hinges on choosing parameters that depend on it.  As a result, the framework appears to shift the core difficulty of the problem into verifying or implicitly satisfying this condition, which is handled heuristically via parameter tuning in practice. Additionally, the focus on one-flip local minima only provides local optimality and it is unclear whether one can use it to find global optimal solutions.",
+   "strengths_and_weaknesses": "From a theoretical perspective, the reliance on \\gamma makes the result less compelling to me. I should note, however, that I do not have significant experience on the practical aspects of working at the interface of discrete and continuous optimization, so I may be underestimating the practical relevance of this contribution. Accordingly, I assign my rating with low confidence.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "NA",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_HXZ2",
+   "summary": "In this submission, the authors consider discrete Ising optimization and propose a continuous relaxation framework, namely MiP-CRIP, based on polynomial attractors. The main goal is to address the misalignment between the local minima of smooth relaxations and the original discrete problem. The key novelty is an equivalence theorem proving that, under *admissibility* conditions on the attractor. The authors then translate the theoretical analysis into a practical, scalable, differentiable solver. The method is evaluated on standard benchmarks, including spin-glass, MAX-CUT, and number partitioning. The results demonstrate improved solution quality and better synchronization with valid discrete states compared to existing baselines.",
+   "strengths_and_weaknesses": "Overall, I think the paper considers an important optimization problem. The theoretical contribution of this paper is solid. However, I also have some concerns. The three strong points and weak points are listed as follows:\n\nstrong points:\n\n- 1. The theoretical result is interesting and fairly clean. The authors formalize admissibility conditions for the attractor and prove that local minima of the relaxed objective coincide with scaled one-flip local minima of the original Ising problem.\n\n- 2. The proposed method is quite general, which can be applied to different versions of Ising problems. For example, the algorithm can be applied to MAX-CUT and NPP, rather than being tailored to only one application.\n\n- 3. The experimental results are competitive compared with baseline methods.  The efficiency of the proposed method is promising as shown in Figure 4.\n\nWeak points:\n\n- 1. To me, the main contribution is mainly in the local minima sense. The theory preserves one-flip local optimality, which is useful, but this is still a relatively weak notion compared with approximation global guarantees. If the local minima are bad, then the theoretical guarantee also could be very bad.\n\n- 2. There are several parameters in the proposed algorithm ($\\alpha, \\beta, \\lambda$). The authors may need to justify how hard to specify these parameters in a reasonable and efficient way.\n\n- 3. The improvements of the proposed method are not very significant. The authors show the results in Table 1. However, it seems that the FEM method is the most efficient. Also, these datasets are not large-scale. I was wondering the efficiecny can be achieved in large-scale problems.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please check the questions in my weak points.",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_iKh6",
+   "summary": "The paper considers the problem of finding minimal energy of Ising models. The paper proposes a minima-preserving continuous relaxation of the problem where the local minima of the relaxation have a one-to-one correspondence to the local minima of the original problem. This allows for an easy implementation of scalable gradient-based optimization methods such as ADAM optimizers.",
+   "strengths_and_weaknesses": "The paper addresses an important problem in combinatorial optimization and general machine learning. It is well written and technically sounds with appropriate structure and decent literature reviews. Both technical and empirical results are well presented and support the main claims of the paper. The paper provides an interesting formulation with rigorous guarantees, allowing the use of scalable gradient-based mainstream optimization. Ultimately, the proposed approach is a heuristic, not always winning against a variety of competing methods, but nonetheless an interesting one. One weakness in the comparison is in the evaluation for spin glasses, namely, the SK model: the comparison methods should include the state of the art (https://arxiv.org/abs/1812.10897) which is message-passing algorithm that achieves the minima.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Can the authors comment on the SK instance and the method of https://arxiv.org/abs/1812.10897?\n\nWhile the paper establishes a correspondence between continuous local minima and discrete local minima, it would be interesting to understand how these relate to global optimality. For example, is it possible to bound the error between local minima and global minima for important instances (such as MAX-CUT or NPP) of this problem?",
+   "limitations": "The paper would benefit from a more explicit discussion of limitations.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_4ZdA",
+   "summary": "This work introduces the generalized Ising problem, a combinatorial optimization objective which captures MAX-CUT, the number partition problem and maximizing the Hamiltonian of the Sherrington-Kirkpatrick model among others. The authors analyze the problem of finding one-flip local minima of this objective using first order-methods, achieving an algorithm that is significantly faster than existing methods in the literature.",
+   "strengths_and_weaknesses": "**Strengths**\n>- This paper is well-written and easy to follow. The related work is sufficiently discussed and the primary contributions are clear.\n>- The novel generalized Ising problem is amply motivated, with applications to classical problems such as MAX-CUT and NPP, and of interest to the optimization community. \n>- The battery of experiments is thorough and demonstrates the superiority of their methods on a variety of NP-Hard combinatorial optimization problems. Ablation studies found in the appendix give a comparison between hyperparameters. \n\n**Weaknesses**\n>- The paper would benefit from discussing the theoretical limitations of the work. Namely, the problem of finding a local minimum of MAX-CUT or NPP is well-known to be PLS-Complete and on the surface it seems the authors have leveraged the stationary points first-order continuous methods to reformulate the problem, which is a problem within CLS, which is known to be a strict subset of PLS, yielding an apparent contradiction. To avoid this discrepancy, the authors use a key lemma from [1], which posits that first order methods avoid saddle points almost surely, implying that gradient descent when run on this objective will converge to a minima. However, what this analysis leaves out, is that this rate of this convergence could be exponential or even worse making it difficult to provide theoretical convergence guarantees, as it is well known that finding a local minima of a non-convex continuous function is NP-HARD.\n\n\nPanageas, Ioannis, Georgios Piliouras, and Xiao Wang. \"First-order methods almost always avoid saddle points: The case of vanishing step-sizes.\" Advances in Neural Information Processing Systems 32 (2019).",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": ">- How does this method scale to arbitrary (non-quadratic) objectives? Does the logic behind the regularizer need to be modified? Does cycling behavior begin to develop?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

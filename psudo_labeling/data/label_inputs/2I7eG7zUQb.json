@@ -1,0 +1,66 @@
+{
+ "forum_id": "2I7eG7zUQb",
+ "title": "DiscoForcing: A Unified Framework for Real-Time Audio-Driven Character Control with Diffusion Forcing",
+ "abstract": "We study real-time audio-responsive character control as a deployment-faithful problem: strictly causal, bounded-latency streaming that must generate coherent full-body motion at interactive frame rates while the audio condition can change abruptly (tempo shifts, drops, or user edits). Prior music-to-motion systems are largely optimized for offline generation with global context, and degrade in streaming rollouts where conditioning history becomes stale or unreliable. We introduce DiscoForcing, a streaming audio-driven diffusion framework that combines a causal music encoder that captures rhythmic structure and phase dynamics with a diffusion-forcing sequence model trained under heterogeneous noise levels across the temporal horizon. Building on this, we design a hybrid temporal schedule and a history-guided streaming sampler to explicitly trade off responsiveness against long-horizon consistency under non-stationary audio. Implemented in an end-to-end real-time interactive system with online avatar playback and humanoid deployment workflows, DiscoForcing delivers more stable long-horizon rollouts and sharper audio–motion alignment than prior baselines under matched causality and latency constraints while maintaining real-time throughput.Project Page: https://discoforcing.github.io",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper studies real-time audio-driven dance generation in a causal streaming setting. The problem is practically important and clearly differentiated from existing offline music-to-motion generation. Reviewers generally appreciated the deployment-faithful formulation, the emphasis on strict causality and latency, and the end-to-end system demonstration, including avatar playback and humanoid deployment.\n\nThe rebuttal effectively addressed most of the reviewers’ concerns, as also reflected in their follow-up comments. In particular, the authors strengthened the paper through adding human evaluation, clearer positioning of the contribution, and additional clarification of the evaluation setting and deployment claims. While I agree with Reviewer mGnp that the perceptual quality of the generated dance motions remains somewhat limited, such as shaky patterns, this weakness is understandable to some extent given the strict real-time and compute constraints of the targeted setting.\n\nOverall, although the final version should moderate some claims and acknowledge the remaining qualitative limitations more explicitly, I believe the paper makes a worthwhile contribution to the area and recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Q7Vc",
+   "summary": "This paper studies real-time music-to-motion generation in a causal streaming setting. The proposed DiscoForcing framework combines causal music encoding, diffusion-forcing training, and history-guided streaming sampling to improve responsiveness and long-horizon motion coherence. The paper also includes an online deployment system for avatar animation and humanoid control.",
+   "strengths_and_weaknesses": "Strengths：\n1.Addresses an important and practical problem: real-time audio-driven motion generation under causal and low-latency constraints.\n2.The deployment-oriented setting is a clear strength, especially the inclusion of online avatar and humanoid results.\n3.The method is reasonably motivated and seems effective at balancing responsiveness and temporal consistency.\nWeakness：\n1.The algorithmic novelty is somewhat limited/unclear, as much of the contribution appears to come from combining existing ideas.\n2.It is not fully clear why diffusion forcing is necessary in this streaming setting compared with simpler teacher-forced causal AR training.\n3.The paper claims TG \"adaptively balances reliance on history versus refreshing toward new audio evidence\" but the mechanism is not actually adaptive, it applies the same trapezoid corruption regardless of whether the music has changed.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1.Can the authors disentangle the contributions of the causal music encoder, diffusion-forcing training, and the history-guided / hybrid temporal sampling strategy? This would help determine which part is primarily responsible for the reported improvements.\n2.Why is diffusion forcing preferable to a strong teacher-forced causal AR baseline in this setting?\n3.Can the authors provide clearer ablations and confirm that all baselines are evaluated under strictly matched causal/latency constraints?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I still think some claims should be stated carefully in the final version, but overall the rebuttal resolves enough of my concerns. My overall stance is now closer to a weak accept."
+  },
+  {
+   "reviewer": "Reviewer_Ppm6",
+   "summary": "The paper adopts the Diffusion Forcing framework to train a real-time interactive system for audio-driven character control. It incorporates a large amount of prior work and involves substantial engineering development.",
+   "strengths_and_weaknesses": "#### Strengths\n\nThe engineering is quite solid. The paper includes extensive experiments, achieves strong results, and is able to support real-time audio-driven character control, making the overall system quite sound from an engineering perspective.\n\n\n#### Weaknesses\n- The paper contains many phrases such as *inspired by* and *following*, which suggests that a substantial portion of its techniques are inherited from prior work. This makes the paper feel more engineering-driven than technically original. Although different people may value this differently, in my view, such a paper still lacks the level of technical depth and novelty expected for ICML.\n\n- The paper does not seem to adopt the most advanced techniques. For example, Tab. 2 of the Self Forcing paper shows that Self Forcing outperforms Diffusion Forcing. Then why does this paper use Diffusion Forcing rather than Self Forcing? I did not see any experiments addressing this pissue.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- Could the authors clarify why Diffusion Forcing is preferred over Self Forcing for this specific task? Why did they choose the former rather than the latter as the basic framework? Have they conducted any experiments comparing the two in this setting, and if so, what were the results?\n\n- Have the authors tried to extend this work to long-video generation? Or how do existing methods perform on minute-long video generation?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Thank you for your detailed and thoughtful response.\n\nYour clarifications have addressed my concerns. Overall, I am satisfied with the clarifications provided and will increase my score to weak accept."
+  },
+  {
+   "reviewer": "Reviewer_mGnp",
+   "summary": "This paper proposes DiscoForcing, a streaming diffusion-based framework for real-time audio-driven character control. The system aims to generate full-body human motion from streaming music under strict causality and latency constraints. The method combines a causal music encoder with a diffusion-forcing motion generation model and integrates the system into an end-to-end interactive pipeline supporting avatar visualization and humanoid robot deployment. The evaluation is conducted on the FineDance and AIST++ datasets with standard motion synthesis metrics such as FID, diversity, and beat alignment.",
+   "strengths_and_weaknesses": "Strengths:\n1. Interesting problem settings. The focus on real-time streaming generation rather than offline generation is interesting and practical.\n2. System-level integration. The paper goes beyond proposing a model and builds a full pipeline including streaming inference, Unity visualization, and a humanoid robot interface, which is a valuable direction for deployment-focused research.\n\nWeaknesses\n1. Generated motion quality appears limited. Although the quantitative results show improvements in metrics such as FID and beat alignment, the perceptual quality of generated motion appears relatively weak based on the qualitative results. In particular: The character motion appears unstable and somewhat jittery in some examples. The body movement sometimes exhibits noticeable shaking artifacts, which harms the realism of the animation.\n2. Limited synchronization with music rhythm. I watched through the video and I feel that the motion generated through the music does not follow the beats and rhythm very well.  Most of the time the body just shaking or do noting between two songs, or just have very few motion variations on the hand.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "I am honestly not an expert at motion generation but I am familiar with the audio part. I feel the overall network deisgn and everything looks good to me and the performance seems good. However, I just feel that the generated results are not very good. And I will discuss this with other reviewer.",
+   "limitations": "Seas weaknesses.",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": "I still want to keep a weak reject towards the paper. While the system is good, I still feel that the generated motion has lots of shaky patterns, and the author did not provide justification and reasoning on this (whether it is dataset issue, VAE issue and so on). While I look at some other music to motion generation demo, their motion seems smooth. In the same time, I respect other reviewer's comments and appreciate the novelty of the paper."
+  },
+  {
+   "reviewer": "Reviewer_YK4Q",
+   "summary": "This paper tackles real-time streaming music-to-dance generation, where the system must produce dance motions causally from audio with bounded latency. The proposed DiscoForcing combines a causal VQ-PAE music encoder with a latent diffusion forcing model using heterogeneous noise levels across the temporal horizon. A hybrid temporal schedule is used for training and a history-guided sampler with temporal guidance for inference. Experiments on FineDance and AIST++ show large FIDk improvements over offline baselines, and the full pipeline is demonstrated with Unity avatar and Unitree G1 humanoid deployment.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper addresses a real gap, most dance generation methods assume offline access to full audio, which does not hold in deployment. The five desiderata in Table 1 are a useful framework, and the authors show clearly that existing methods fail on streaming requirements.\n\n2. FIDk improvements are strong, roughly halving the gap to next-best method. Ablation is done carefully. Showing full pipeline from audio to physical robot is also a plus.\n\nWeaknesses:\n\n1. All baselines (FACT, Bailando, EDGE, Lodge, MEGADance) are offline methods. Comparing them under streaming constraints they were not designed for naturally favors DiscoForcing.\n\n2. No human evaluation. For a system targeting interactive use, FID and BAS alone are not enough.\n\n3. Foot skating ratio on FineDance (0.142) is ~5x worse than Lodge (0.028). For a paper claiming robot deployment, this gap is concerning and not discussed.\n\n4. Latency budget does not add up, generative path totals ~34.6ms, already over the 33ms budget at 30 FPS before I/O.\n\n5. Robot deployment has no quantitative evaluation at all. More like a demo than a validated contribution.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Can you include at least one streaming-native baseline?\n\n2. What is actual end-to-end latency from audio input to rendered frame, including pipelining overhead?\n\n3. Have you tried any post-processing to reduce foot skating, especially for the robot deployment?",
+   "limitations": "Authors discuss distribution shift and user control as future work. FSR issue and latency tightness are not acknowledged as limitations.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "My concerns have been adequately addressed"
+  }
+ ]
+}

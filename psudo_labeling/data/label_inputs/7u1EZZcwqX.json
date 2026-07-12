@@ -1,0 +1,62 @@
+{
+ "forum_id": "7u1EZZcwqX",
+ "title": "Elign: Equivariant Diffusion Model Alignment from Foundational Machine Learned Force Fields",
+ "abstract": "Generative models for 3D molecular conformations must respect Euclidean symmetries and concentrate probability mass on thermodynamically favorable, mechanically stable structures. However, E(3)-equivariant diffusion models often reproduce biases from semi-empirical training data rather than capturing the equilibrium distribution of a high-fidelity Hamiltonian. While physics-based guidance can correct this, it faces two computational bottlenecks: expensive quantum-chemical evaluations (e.g., DFT) and the need to repeat such queries at every sampling step. We present Elign, a post-training framework that amortizes both costs. First, we replace expensive DFT evaluations with a faster, pretrained foundational machine-learning force field (MLFF) that estimates molecular energies and forces. Second, we eliminate repeated run-time queries by shifting physical steering to the post-training phase. To achieve the second amortization, we formulate reverse diffusion as a reinforcement learning problem and propose to use Group Relative Policy Optimization (GRPO) to fine-tune the denoising policy. Our objective combines a potential-based energy reward and a force-based stability reward, which are optimized in a disentangled fashion. Experiments show that Elign generates conformations with lower gold-standard DFT energies and forces, while improving stability. Crucially, inference remains as fast as unguided sampling, since no energy evaluations are required during generation.",
+ "primary_area": "applications->chemistry_physics_and_earth_sciences",
+ "decision": "Accept (regular)",
+ "decision_comment": "In this submission, the authors post-trained an equivariant diffusion model with machine learning-based force fields, which leads to better generation results of ground-state molecular conformations. All reviewers acknowledged the contributions of this work and three of them leaned towards weak acceptance. AC agreed with this decision.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_pDWa",
+   "summary": "The paper proposes a method to improve the generation of 3D molecular conformations/ molecule. The method utilizes the MLFF to give guidance for the reverse diffusion during sampling, which is also modeled as a reinforcement learning problem. The experimental results on small-molecule generation showcase the effectiveness of the proposed method.",
+   "strengths_and_weaknesses": "Strengths:\nUsing the LLM-similar pipeline to improve the molecular generative model's generative ability in terms of structural stability sounds interesting and promising.\n\nWeaknesses:\n- The paper is hard to read. 1. Too many abbreviations; 2. Too many mathematical symbols 3. The description of the technical details is too complex， like sec 3.2. The authors can only put the consequence in the main paper to improve readability.\n- The experimental improvement is marginal. QM9 and the drugs dataset are small (#atoms). Many baselines achieve very good performance on the metrics. So the limited experimental results on these two datasets are not very convincing. The authors can consider using more datasets to better support the methods, such as protein. \n- The proposed pipeline will introduce many additional operations and will also use the big model UMA. So the reader will care about the sampling time if they use the proposed method (compared to w.o guidance). In addition, the model relies on the pretrained UMA, so it would also be important to know the proposed method's sensitivity to the UMA.  Actually, the author can consider using the ground truth force and energy instead of predicting by UMA to better verify the robustness of the proposed method. Also, EDM can be replaced with another optional backbone to make the proposed pipeline convincing.",
+   "soundness": 3,
+   "presentation": 1,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "I wonder whether the method can be used for conformation generation or molecular dynamics generation, such as MDgen or Bioemu.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_jndb",
+   "summary": "Elign is a multi-stage computational framework designed to align three-dimensional molecular diffusion models with fundamental physical principles through post-training reinforcement learning. The approach implements a double amortization strategy to resolve the conflict between structural fidelity and generation speed. Initially, the method amortizes expensive quantum chemical calculations by utilizing a foundational machine learning force field to act as a learned preference model for providing physical signals. Subsequently, it eliminates the need for repeated runtime queries by shifting physical steering into a dedicated training phase where the reverse diffusion policy is fine-tuned. This optimization is conducted via Force-Energy Disentangled Group Relative Policy Optimization, which formulates the denoising process as a finite-horizon Markov decision process. By integrating potential-based energy rewards with force-based stability rewards, the sampler learns to prioritize configurations that exhibit both thermodynamic stability and mechanical equilibrium.",
+   "strengths_and_weaknesses": "Strengths: \n1. The model maintains the same inference speed as unguided samplers because no physics oracles are queried during generation.\n2. Potential-based reward shaping converts sparse terminal rewards into dense signals that facilitate optimization over long horizons.\n3. The dual reward system of energy and force signals improves both thermodynamic stability and mechanical equilibrium. \n\nWeaknesses:\n1. The alignment objective requires the terminal law to be absolutely continuous with respect to the pretrained law, which restricts optimization to the manifold learned during pre-training. This constraint may prevent the model from discovering stable configurations in chemical regions that the base model never observed.\n2. Theorem 2 establishes that distributional error is sensitive to the product of force field bias and effective inverse temperature. Consequently, aggressive alignment toward low-energy states can inadvertently amplify small biases present in the machine learning force field proxy.\n3. Reward shaping relies on plug-in estimates of clean geometry derived from noisy intermediate states using the diffusion posterior mean. These estimates are inherently unstable and prone to high variance during high-noise diffusion steps.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. I was wondering how memory is managed during the parallel rollouts, particularly when storing intermediate activations for backpropagation through long denoising trajectories.\n2. Could you explain how group-relative statistics are standardized when molecules of different sizes and energy scales are included in the same batch?\n3. Since the molecular state includes discrete atom types, I would be interested to know if any specific techniques were used to reduce variance in the policy gradient during training.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_CGkP",
+   "summary": "This paper studies post-training alignment for equivariant diffusion models for molecular conformation generation. The main idea is to use a pretrained MLIP (UMA) as a preference model, which provides energy and atomic forces during reinforcement learning. This paper aims to make the reverse diffusion process generate structures with lower energy and smaller forces, expecting that the generated conformations will be more physically stable. The paper proposes a force- and energy-disentangled GRPO objective and uses potential-based reward shaping to improve training. Experiments on benchmark datasets show improved stability, competitive validity, and uniqueness.",
+   "strengths_and_weaknesses": "Strengths： The main idea is interesting. Using a pretrained MLIP as a preference model is a practical way to inject physical knowledge into the generator. Although many diffusion models can generate reasonable 3D structures, physical stability remains a major concern.\n\nWeaknesses： The paper assumes that the preference model is reliable in intermediate reverse states. However, these intermediate states can be highly noisy and unstable, and may not have been trained during the pretraining stage of foundation MLIPs. Only energy and force signals with high accuracy serve as trustworthy rewards during alignment.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1) On the reverse diffusion trajectory. The reverse process is a learned denoising trajectory, not a real molecular dynamics trajectory, right? Can the reverse generation process be viewed as a multi-step relaxation process?\n\n2) On the ablation study. This paper uses EDM as the generator and UMA as the preference model. However, it is unclear whether the gain mainly comes from post-training alignment or stronger MLIP integrated into the diffusion models. I suggest adding the following experiments.\nSetting 1: Replace the EDM backbone with a stronger equivariant MLIP architecture, such as NequIP or MACE, and train the generative model from scratch. Setting 2: Keep EDM as the generator but use a pretrained NequIP or MACE model as the preference model for reinforcement learning alignment, similar to the current UMA-based setup. This comparison would make the paper much more convincing and would clarify where the performance gain really comes from.\n\n3) On the generalization of this method. Whether this reinforcement learning idea also works for flow-based generative models. If the same idea can also improve a flow model, this paper would be more solid.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_SzcA",
+   "summary": "This paper addresses the conformational distribution gap between low-fidelity training data used for molecular diffusion models and the distribution implied by higher-fidelity quantum mechanical methods. The authors use a transferable machine learning force fields (MLFF) trained on DFT-level data as a reward signal to correct the diffusion model via post-training reinforcement learning based on GRPO. This amortizes the cost of the MLFF at training time, eliminating the need for expensive energy evaluations during inference. The approach is evaluated on minimum-energy conformer generation using the QM9 and GEOM-Drugs benchmarks.",
+   "strengths_and_weaknesses": "Strengths:\n- The motivation of this work, showing whether diffusion models pre-trained on low-fidelity data (e.g. empirical force field MD) could be post-trained to align with higher-fidelity MLFFs, is a timely and significant scientific question.\n- The paper is well-written and easy to follow.\n- The proposed multi-stage training approach is sound.\n- The ablations are helpful and the DFT-based evaluation is solid.\n\nWeaknesses:\n- The authors motivate their method with Boltzmann-distributed data, but evaluate their method only on datasets containing energy-minimized conformations (it is a stretch to argue this is 0-temperature Boltzmann-distributed). Finite-temperature Boltzmann distributed data (even just dipeptides) would be far more interesting and would allow to answer the main hypothesis of the paper (see motivation above).\n- Similarly, the metrics considered here for QM9 and GEOM-drug are fairly saturated, making it difficult to draw definitive empirical conclusions. These two benchmarks also have very limited practical significance.\n- As the authors note themselves under related works, there are many existing works that proposed very similar approaches, including RL for diffusion post-training and diffusion guidance based on MLFFs.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "- Did the authors try to apply their method to proper Boltzmann-distributed data?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

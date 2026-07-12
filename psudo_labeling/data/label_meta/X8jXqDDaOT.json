@@ -1,0 +1,26 @@
+{
+  "forum_id": "X8jXqDDaOT",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_R7KR",
+      "weight": "high",
+      "reason": "Most detailed and technically sophisticated review; its three main concerns — insufficient large-scale validation of the Path LL proxy, unquantified looseness of the optimistic bound / ranking fidelity, and the mismatch between the uniform-rollout value function and the actual non-uniform proposal policy — are specific, substantiated, and directly echoed by the meta-review (proxy reasonableness, bound tightness, LLaDA-only generalization)."
+    },
+    {
+      "reviewer": "Reviewer_CB8o",
+      "weight": "high",
+      "reason": "Specific and substantiated; its two headline concerns — that Path LL may reward confident-but-wrong trajectories and that the Lemma 5.2 marginal-entropy bound is untested for tightness — are exactly the issues the meta-review lists as initially raised. The meta-review notes this reviewer's initial lean was weak reject (later raised), so its critical points carry real anchoring weight."
+    },
+    {
+      "reviewer": "Reviewer_FP6X",
+      "weight": "high",
+      "reason": "Accurate, substantive review with high self-reported confidence; corroborates the importance of the problem and the soundness of the information-theoretic analysis, and its concern that the SMC component is under-explained is independently echoed by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_z8qw",
+      "weight": "medium",
+      "reason": "Partly on-target — its call to extend evaluation beyond LLaDA (e.g., to Dream) is directly echoed by the meta-review, and its heavy-notation concern is partially corroborated — but its presentation score of 1 is an outlier, its summary is thin, its dismissal of Lemma 5.2 conflicts with reviewers who value the analysis, and its ~1% marginal-gains framing is not corroborated by the other reviews or the reported 2%-3% results."
+    }
+  ],
+  "score_rationale": "High-weight reviewers R7KR, CB8o, and FP6X converge on an important problem, a meaningful Path LL contribution, and principled analysis, while raising substantiated concerns about proxy validation, bound tightness, the uniform-rollout mismatch, and limited architectures — the same issues the meta-review anchors on. Originality is set at 3 (unanimous) and overall recommendation at 4 (all reviewers weak accept, consistent with the accept decision). Soundness (3) reflects a principled but incompletely validated method, balancing R7KR's 4 against CB8o's 2 and the live proxy/estimator concerns; presentation (3) follows the three high-weight reviewers over z8qw's outlier 1; significance (3) reflects the unanimously important problem and the more thorough reviewers' reads despite modest gains. Confidence is 4 given the strong mutual corroboration across the reviews."
+}

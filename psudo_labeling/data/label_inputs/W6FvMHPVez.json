@@ -1,0 +1,52 @@
+{
+ "forum_id": "W6FvMHPVez",
+ "title": "Temporal Preference Optimization for Unsupervised Retrieval",
+ "abstract": "Unsupervised dense retrievers offer scalability by learning semantic similarity from unlabeled documents via contrastive learning, but they struggle to capture the temporal relevance, retrieving semantically related but temporally misaligned documents-an important aspect when a document collection spans multiple time periods (*e.g.,* retrieving documents from 2018-2025 for \"Who is the president in 2019?\" introduces temporal ambiguity). \nExisting methods rely on supervised training with explicit timestamps, which are not always feasible.\nWe propose TPOUR (*Temporal Preference Optimization for Unsupervised Retriever*), which uses our novel training method *Temporal Retrieval Preference Optimization* (TRPO). TRPO reinterprets preference learning in the temporal dimension, guiding the retriever to favor temporally aligned documents. TPOUR further generalizes to unseen time periods via interpolation in a learned time embedding, enabling continuous temporal alignment. Experiments on temporal information retrieval (T-IR), TPOUR outperforms both unsupervised and supervised baselines. Compared to Qwen-Embedding-8B, despite being about 72.7$\\times$ smaller, TPOUR Contriever improves average nDCG@5 by +4.04 (+12.15%) on explicit and +4.98 (+15.21%) on implicit queries. We provide our code at https://github.com/agwaBom/TPOUR.",
+ "primary_area": "applications",
+ "decision": "Accept (regular)",
+ "decision_comment": "This work attempts to retrieve semantic meaning that is sensitive to temporal information in an unsupervised fashion. This is achieved by integrating a temporal retrieval method to guide the retriever to favor temporally aligned documents. Experiments show promising results.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_qX27",
+   "summary": "This work proposes TPOUR, a framework designed to tackle the temporal mismatch problem inherent in unsupervised dense retrievers. By introducing Temporal Preference Optimization (TRPO), the model learns to prioritize temporally aligned documents. Furthermore, it employs temporal embedding interpolation to generalize to unseen time periods. The approach demonstrates substantial gains on Temporal QA tasks over strong baselines.",
+   "strengths_and_weaknesses": "Strengths\n- **Addresses a Critical Flaw:** The \"temporal hallucination\" or mismatch in semantic dense retrieval is a well-known but under-explored issue. The problem formulation is highly motivated.\n- **Elegant Adaptation:** Adapting preference optimization (TRPO) to the temporal dimension is intuitively sound and theoretically well-grounded.\n- **Strong Generalization:** The use of embedding interpolation to handle unseen timestamps shows good generalization capabilities, making the model practically viable.\n\nWeaknesses\n- **Handling Abrupt Concept Drifts:** Temporal interpolation assumes a relatively smooth evolution of semantic meaning. It is unclear how the model performs during sudden events or abrupt concept drifts where interpolation might fail.\n- **Scalability of Timestamps:** The continuous representation and interpolation of time might face scalability issues when applied to ext",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. How robust is the embedding interpolation method when faced with sudden, unpredictable real-world events (e.g., a sudden crisis changing the semantic context of a keyword overnight)?\n2. Can the authors comment on the computational overhead introduced by the temporal embedding alignments during the large-scale indexing phase?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_7vgB",
+   "summary": "This paper addresses temporal misalignment in retrieval with TPOUR, which adds a preference-based temporal loss (TRPO) to unsupervised contrastive retrieval training and then uses time-vector interpolation to generalize across periods. The problem is real and the reported gains on the custom temporal QA benchmarks are meaningful, but the overall contribution feels more specialized.",
+   "strengths_and_weaknesses": "Strengths:\n- The paper focuses on a real retrieval failure mode. The motivation that time-unaware retrievers can retrieve semantically related but temporally wrong documents is clear, and the examples in the introduction are easy to follow.\n- The empirical gains on SituatedQA and RealTimeQA are non-trivial. Main results show clear improvements over Contriever and other baselines on both explicit and implicit temporal queries, especially when the retrieval model is aligned to the relevant period.\n- The paper goes beyond a single result table by looking at timestamp prediction and interpolation behavior, which helps show that the model is learning some temporally structured representation rather than only overfitting the benchmark.\n\nWeakness:\n- On the modeling side, the contribution appears limited because TPOUR mainly combines existing contrastive retrieval with a preference-style objective over temporally constructed pairs, so the novelty seems closer to a specialized data construction and training setup than to a substantial new ML method. The paper would be stronger if it more clearly isolated what TRPO contributes beyond standard pairwise ranking or supervised contrastive learning using the same aligned/misaligned pairs.\n- The baseline comparison is also incomplete for the claimed problem setting, since practical alternatives such as query rewriting, document rewriting, or metadata-aware reranking are not evaluated. Adding these baselines would clarify whether the gains come from a better retrieval objective or simply from introducing temporal grounding that simpler pipeline methods may already provide.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- Do recent large embedding models (such as Qwen3-Embedding-8B or other strong embedding models) already mitigate temporal misalignment?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "All my concerns have been addressed."
+  },
+  {
+   "reviewer": "Reviewer_L6CF",
+   "summary": "This paper identifies a temporal misalignment issue in unsupervised dense retrievers when applied to mixed-timestamp document collections: retrievers may return semantically relevant but temporally inconsistent documents. To address this problem, the paper proposes TPOUR, an unsupervised training framework that incorporates temporal preference into contrastive learning via Temporal Retrieval Preference Optimization (TRPO). The method encourages the retriever to favor temporally aligned documents while preserving semantic similarity. Experiments on temporal QA tasks show that TPOUR outperforms existing baselines and that the learned temporal embeddings allow continuous generalization to unseen intermediate time periods through interpolation.",
+   "strengths_and_weaknesses": "Strengths\n1.  Meaningful problem. The paper highlights the temporal misalignment issue in current retrieval models, which is a practical and relevant problem.\n2. Clear presentation. The paper is well written and easy to follow, with a clear progression from problem formulation to experiments.\n3. Informative visualizations. The figures (e.g., architecture diagrams and interpolation heatmaps) effectively illustrate the proposed ideas.\n\nWeaknesses\n1. Missing comparisons with instruction-aware retrievers. The experiments do not include recent LLM-based and instruction-tuned retrieval models [1-2], which may be able to control temporal alignment through simple instructions. \n2. Unclear motivation for TRPO. Temporal alignment is a deterministic binary signal rather than a subjective preference, making the use of a preference optimization framework [3] insufficiently motivated.\n3. Insufficient ablation for TRPO. The paper does not provide enough ablation experiments to verify whether TRPO is necessary compared to simpler alternatives such as a temporal contrastive loss.\n4. Weak theoretical support for temporal interpolation. The interpolation method relies on the “distributional similarity” assumption in Appendix B.2, but the paper does not verify whether this assumption holds in the training data.\n\n\nReferences\n\n[1] FollowIR: Evaluating and Teaching Information Retrieval Models to Follow Instructions. NAACL 2025. \n\n[2] Towards Better Instruction Following Retrieval Models. arXiv 2025. \n\n[3] Direct Preference Optimization: Your Language Model is Secretly a Reward Model. NeurIPS 2023.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. Comparison with instruction-aware retrieval.\nIf LLM-based and instruction-tuned dense retrievers can enforce temporal alignment through simple instructions, does the proposed training framework still provide advantages?\n2. Motivation for TRPO.\nGiven that temporal alignment is a deterministic binary signal, why is TRPO preferable to adding a temporal contrastive objective on top of standard contrastive learning?\n3. Validity of the interpolation assumption.\nHow do the authors verify that the training data satisfies the “distributional similarity” assumption required for the proposed time-embedding interpolation method?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The author's two rebuttals effectively alleviated most of the weaknesses I previously mentioned, so I ultimately adjusted the score to 4."
+  }
+ ]
+}

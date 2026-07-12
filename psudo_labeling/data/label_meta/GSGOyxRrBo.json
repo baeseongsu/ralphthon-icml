@@ -1,0 +1,26 @@
+{
+  "forum_id": "GSGOyxRrBo",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_zg4i",
+      "weight": "high",
+      "reason": "Specific, substantiated, and high-confidence (4). Its central point -- the asymmetry between the certified infeasibility bound (N < 94,000) and the numerically supported feasibility claim (N = 90,000) -- is explicitly adopted by the meta-review, and its requests to clarify the algorithmic setting and the numerics-to-guarantee translation are on-target and corroborated by EG8d."
+    },
+    {
+      "reviewer": "Reviewer_EG8d",
+      "weight": "high",
+      "reason": "Detailed and well-reasoned assessment that accurately captured the SDP-to-OSP grounding, the validation-on-k<=5 methodology, and the dual-certificate/spectral-repair certification. Its high significance (4) and originality (4) scores align with the meta-review's note of 'high scores for significance and originality,' and its feasibility-rigor and computational-cost caveats are corroborated."
+    },
+    {
+      "reviewer": "Reviewer_pTiV",
+      "weight": "medium",
+      "reason": "Articulates the systems contribution well and its standard-ALM / implementation-novelty framing is echoed by the meta-review. However, confidence is low (2), and two of its weaknesses (absence of convergence guarantees and lack of a thorough empirical comparison) are reasonable but not picked up by the meta-review, so it is only partly determinative."
+    },
+    {
+      "reviewer": "Reviewer_k39S",
+      "weight": "low",
+      "reason": "Very thin review (a single-sentence strengths/weaknesses), self-identified as new to the field, with the lowest confidence (1). Its one substantive observation -- the ~16-day k=6 runtime -- is valid and corroborated by others, but the review is otherwise generic and low-effort."
+    }
+  ],
+  "score_rationale": "Soundness (3) and overall recommendation (4) were unanimous across all four reviewers and directly supported by the positive meta-review, so both were fixed. For significance and originality the human scores spanned 2-4; I positioned both at 3, following the meta-review's explicit mention of 'high scores for significance and originality' and the high-weight reviewers (EG8d at 4, zg4i at 3) while honoring the valid concern that the advance is a constant-factor, non-exact, implementation-level contribution (pTiV and zg4i at 2). Presentation was set to 3, between the high-weight reviewers' 3 and 4, discounting the low-confidence 2 from the thin review. Confidence (4) reflects strong mutual corroboration on the core contribution and its principal limitations across all reviewers and the meta-review, despite the spread in the secondary-dimension scores."
+}

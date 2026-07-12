@@ -1,0 +1,26 @@
+{
+  "forum_id": "mVsb2MZ7LA",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_N1Uv",
+      "weight": "high",
+      "reason": "The most corroborated review: the Points2Surf positioning, marching-cubes resolution for thin shells, 1-Lipschitz backbone comparison, and the open-surface/thin-shell approximation are all specific, substantiated, and explicitly reappear in the meta-review; the Proposition 3.2 precision issue is a concrete, well-grounded soundness point."
+    },
+    {
+      "reviewer": "Reviewer_ZxGX",
+      "weight": "high",
+      "reason": "Thorough and highest-confidence (5). Its requests for field visualizations, thin-structure/thickness sensitivity analysis, scene-level and real-scan generalization, and noise robustness are all specific and directly credited by the meta-review as the additions that resolved concerns."
+    },
+    {
+      "reviewer": "Reviewer_ZPji",
+      "weight": "medium",
+      "reason": "Well-substantiated concerns about the large number of losses/overconstrained optimization and loss-weight sensitivity, plus the marching-cubes-resolution and limitations points, are on target and partly echoed by the meta-review (cleaner ablation, explicit limitations); slightly weakened by an incomplete weakness bullet."
+    },
+    {
+      "reviewer": "Reviewer_piyY",
+      "weight": "medium",
+      "reason": "The thin-structure-as-thin-layer observation connects to the thin-shell approximation concern in the meta-review, but the review is comparatively generic on motivation and originality, and its 2/2 soundness and presentation scores sit below the otherwise positive consensus."
+    }
+  ],
+  "score_rationale": "N1Uv and ZxGX are weighted highest because essentially all of their concerns (Points2Surf positioning, marching-cubes resolution, the 1-Lipschitz comparison, field visualizations, thickness-sensitivity, and scene-level/noise evaluation) reappear in the meta-review, and both are specific and well-grounded (ZxGX at confidence 5). ZPji's overconstrained-loss and limitations concerns are substantiated and partly echoed, giving medium weight; piyY is medium, as its motivation and originality objections are more generic and its 2/2 soundness and presentation scores sit below the positive consensus. Following the high-weight reviewers and the meta-review's positive but minor-revision tone, I keep soundness, presentation, and significance at 3, set originality to 2 (the corroborated Points2Surf overlap and straightforward construction), and hold the overall recommendation at the unanimous 4 (Weak Accept)."
+}

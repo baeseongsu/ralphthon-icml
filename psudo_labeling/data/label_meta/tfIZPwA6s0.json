@@ -1,0 +1,21 @@
+{
+  "forum_id": "tfIZPwA6s0",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Les7",
+      "weight": "high",
+      "reason": "Detailed and specific. Its two central concerns -- limited methodological novelty and missing comparison/discussion of avatar/face-specific texturing pipelines (e.g., AvatarTex) -- are echoed directly by the meta-review, and its point about the underspecified pretrained texturing diffusion is independently corroborated by Reviewer_5j24."
+    },
+    {
+      "reviewer": "Reviewer_5j24",
+      "weight": "high",
+      "reason": "Substantiated and precise. The novelty and reliance-on-pretrained-components concerns corroborate the other reviews, the Marching Cubes vs. 'production-grade/topology-regular' observation is a sharp technical point, and the missing failure-case discussion is echoed by Reviewer_EhpM."
+    },
+    {
+      "reviewer": "Reviewer_EhpM",
+      "weight": "high",
+      "reason": "Highest confidence and well-grounded. Its main criticism -- that comparisons are only against general-purpose object generators (Trellis2, Hunyuan) and lack avatar/face-specific reconstruction and generation baselines -- is exactly the evaluation gap flagged as central in the meta-review."
+    }
+  ],
+  "score_rationale": "All three reviewers are specific, mutually corroborating, and aligned with the meta-review's emphasis on limited novelty and the absence of avatar-specific comparisons, so each carries high weight. Soundness (unanimous 3), significance (unanimous 2), and originality (two 2s reflecting the novelty concern the meta-review echoes) are set at the corroborated values, and presentation is placed at the majority 3. Overall recommendation is set to 4 (weak accept), matching the two high-weight reviewers at 4 and reflecting the genuine novelty and comparison concerns while respecting the meta-review's accept direction; confidence is 4 given the strong agreement across the reviews."
+}

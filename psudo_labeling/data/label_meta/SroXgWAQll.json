@@ -1,0 +1,26 @@
+{
+  "forum_id": "SroXgWAQll",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Gbff",
+      "weight": "high",
+      "reason": "The most thorough and confident review (confidence 4). Its central point, that the synergy claim requires direct per-sample positive-transfer validation rather than aggregate accuracy, is the lead item in the meta-review, and its clarity/positioning observations (pilot-study details, hard-vs-soft targets and the distillation relation, the upper-bound framing, continual-learning connection) are specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_MNZH",
+      "weight": "high",
+      "reason": "Its core concern, that the gains may reflect the added trainable capacity of a full task-specific layer rather than the synergy mechanism and therefore need matched-parameter and isolation comparisons, is explicitly adopted by the meta-review and corroborated by jMhd. Substantive and well-argued, though its significance score of 2 is a lone outlier against a positive meta-review."
+    },
+    {
+      "reviewer": "Reviewer_uvfn",
+      "weight": "high",
+      "reason": "Both concerns are directly echoed by the meta-review: robustness of self-labeling when experts are biased or corrupted (addressed via corruption and backdoor stress tests) and the cached-vs-on-the-fly computational cost of expert supervision and its scaling with K (addressed via a runtime analysis with caching). Specific and on-target, though the originality score of 2 is below the consensus."
+    },
+    {
+      "reviewer": "Reviewer_jMhd",
+      "weight": "medium",
+      "reason": "The confounded-ablation point, that the setting meant to isolate the single-layer contribution still co-optimizes coefficients and layer, is a real and useful observation corroborated by MNZH and the meta-review's capacity-vs-synergy discussion. However, the review's main thrust, questioning whether cross-task alignment is a valid motivation, is not supported by the meta-review, which ultimately validates the synergy framing; the memory question is minor."
+    }
+  ],
+  "score_rationale": "Soundness and presentation were unanimous at 3 across all reviewers and are set there. Significance and originality are held at 3 because the majority scores and the meta-review's clearly positive framing (an original, well-motivated perspective, comprehensively evaluated) outweigh the lone low scores from MNZH (significance 2) and uvfn (originality 2). The overall recommendation of 5 reflects the high-weight reviewers' broadly positive stance and the meta-review's decisive, upward-trending accept in which every concern was judged addressable, positioning it at the top of the initial [4,5] band. Confidence is 4 because the reviewers strongly corroborate one another on the two core issues, validating synergy directly and disentangling capacity from mechanism, and the meta-review confirms both."
+}

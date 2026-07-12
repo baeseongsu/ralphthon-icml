@@ -1,0 +1,26 @@
+{
+  "forum_id": "26JHfF3tk7",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Gk8u",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its headline strengths - the practical significance of the core question and the four-setting design cleanly separating architectural capacity, pretraining benefit, frozen-representation quality, and fine-tuning benefit across structure, function, and OOD - are echoed almost verbatim in the meta-review, and its weaknesses (last-layer-only probing, biased/qualitative loss landscape, cross-model confounds, single unified protocol without multi-seed coverage) are corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_THX7",
+      "weight": "high",
+      "reason": "Specific and on-target. Praises the diversity of the nine-task suite and the dynamic block-wise L2 plus loss-landscape analysis, and its central weakness - restriction to small-to-medium encoder-only models - is adopted directly by the meta-review. The concrete request to include structure-infused or non-MLM models (RiNALMo, ERNIE-RNA) is a useful, evaluation-relevant point."
+    },
+    {
+      "reviewer": "Reviewer_A3Bg",
+      "weight": "medium",
+      "reason": "Offers technically substantive soundness and scope concerns (intermediate-layer probing, quantitative flatness metrics, the RNA-BERT capacity-vs-misalignment confound) that are valuable and partly corroborated, and I adopt several as questions. However, its central confirmatory/unsurprising framing and its reject-level significance (2), originality (2), and overall (2) scores are explicitly acknowledged and then overruled by the meta-review and the regular-accept decision, so its headline judgment is downweighted."
+    },
+    {
+      "reviewer": "Reviewer_ZBJQ",
+      "weight": "high",
+      "reason": "Thoughtful, positive assessment aligned with the accept decision and the meta-review's view of the paper's strengths (comprehensive benchmarking, good baselines and sanity checks). Its main criticism - a constructive, specific request to refactor the Section 4.2 block-wise L2 analysis with formal notation, summary statistics, and a table rather than heatmaps alone - is actionable and consistent with milder concerns elsewhere about the qualitative analyses."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as a positive regular Accept, praising the four-setting design and the block-wise L2 analysis and explicitly pushing back on the confirmatory/unsurprising framing, so I weighted Gk8u, THX7, and ZBJQ (specific and meta-review-echoed) highly and treated A3Bg as medium - adopting its concrete soundness questions (last-layer probing, quantitative flatness, capacity confound) while not following its reject-level significance/originality/overall scores that the decision overrules. Presentation is fixed at 3 by unanimous consensus; soundness sits at 3 (three reviewers at 3, one high at 4, with real but non-fatal confound and qualitative-analysis concerns). Significance and originality land at 3, reflecting the meta-review's emphasis on importance against the partly-valid confirmatory critique and the paper's analysis-rather-than-method nature. Overall is 4 (weak accept), matching the two high-weight reviewers at 4 and the accept decision, above A3Bg's overruled 2 and below ZBJQ's 5; confidence is 4 given the strong mutual corroboration across reviews on both the strengths and the main soundness/presentation weaknesses."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "8XC5ebkGII",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_rj7i",
+      "weight": "high",
+      "reason": "Specific, high-confidence (5) assessment from a reviewer with domain experience in mobile DNN scheduling. The 'elegant ILP-based 2D strip-packing solution' framing is directly echoed by the meta-review, and the concrete significance concern that the evaluated CNN models are 8-12 years old is substantiated and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_xGtX",
+      "weight": "high",
+      "reason": "The core critique that the memory constraint is artificially created is quantified via an explicit peak-memory calculation and is directly adopted by the meta-review's memory-vs-SM assumption point. This is the most load-bearing weakness in the set, even though its soundness score of 1 is more extreme than the method itself warrants."
+    },
+    {
+      "reviewer": "Reviewer_PdR1",
+      "weight": "medium",
+      "reason": "Contributes the most technically penetrating questions (accuracy inflated by assigning 0% to deadline-missed tasks, uncharacterized online ILP latency, serial-only baselines vs concurrent schedulers like REEF, driver-level memory determinism). Discounted from high because the presentation score of 1 is a clear outlier and some weaknesses (NPUs, other GPUs) are speculative, and the review is heavily hedged."
+    },
+    {
+      "reviewer": "Reviewer_RZAD",
+      "weight": "medium",
+      "reason": "The offline/online generalization question is on-target, and the observation that baselines reaching near-100% miss rates may indicate unusually harsh conditions corroborates xGtX and the meta-review. Discounted from high because confidence is low (2) and the concerns are framed tentatively as questions rather than substantiated weaknesses."
+    }
+  ],
+  "score_rationale": "The two high-weight reviewers (rj7i, xGtX) anchor the assessment: rj7i's 'elegant solution' framing and xGtX's memory-constraint critique are both echoed by the meta-review, so the review foregrounds the questioned experimental premise while crediting the clean formulation. Soundness (2) reflects the corroborated concern that the memory-bound regime may be artificial (xGtX=1, RZAD/PdR1=2, rj7i=3) balanced against a well-constructed method the meta-review found convincing. Significance and originality (2) follow the three-reviewer majority and rj7i's dated-models and classical-problem points over xGtX's 3s, since demonstrated significance is limited by the questioned setup. Presentation (3) reflects the specific, high-confidence praise for clarity from rj7i (conf 5) and RZAD, treating PdR1's 1 as an outlier; overall (4) matches the unanimous initial recommendations and the accept-leaning meta-review, and confidence (4) reflects strong corroboration on the memory-premise weakness despite spread in the numeric soundness scores."
+}

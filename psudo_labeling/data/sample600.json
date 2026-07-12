@@ -1,0 +1,4802 @@
+[
+ {
+  "forum_id": "en3Ws2v1Ts",
+  "primary_area": "theory->domain_adaptation_and_transfer_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Smoegnco1C",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "TH6pLxCOQ3",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "f2CGTzHQ4E",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "U63l7Uyeel",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "YqTodSrPPB",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "UlFOINq6SY",
+  "primary_area": "probabilistic_methods->monte_carlo_and_sampling_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "GfSwkDSr8J",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "39650lCGDP",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "f0RjWJig9V",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "H0tMEp0ZmO",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "tSKDiqiCJ4",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "538sn0p2Ek",
+  "primary_area": "general_machine_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "PLB2r0ioYN",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "pXF0puBofz",
+  "primary_area": "optimization->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "pLIJx2cFib",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EPL2YoeGow",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "ROFqW86Dca",
+  "primary_area": "deep_learning->selfsupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "wuWRCajFj8",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "sJ7ngz2eQx",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5.25,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "XgvVGrvhuv",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "O5xoqSmNzc",
+  "primary_area": "optimization->stochastic",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "z31fdV4WRu",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "5Zp3m9Uetz",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "1rSqVUl7l3",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5EIKSU0IOK",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "sUTC7JE781",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1aKQ70B8IX",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EKmiOtjZjI",
+  "primary_area": "theory->online_learning_and_bandits",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "fVso2kGVrF",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "mMQuxqbXlU",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0tgzJK50Jz",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Ocx8Ccodt9",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "pPfyQujFgG",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "PrM9JAYDF6",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Qr8Zvwoi88",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "trn64znfNx",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "40fUEdwvH3",
+  "primary_area": "general_machine_learning->hardware_and_software",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "UnjxMTe57e",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "tJP3FxzSPs",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Ytfn0uxhOX",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "XcJk9un0Tb",
+  "primary_area": "probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "rDNCWfRd69",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "sI5pTdXuXc",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Z15BvlGl1S",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "FXKhOhbgEz",
+  "primary_area": "theory->deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Zyjrz6R7zn",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ojghzKHmLw",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "W5e8c9nwNo",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5Q4hoiHhoU",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1U0lhpW0VL",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "bkn1a9spwP",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "wqQam1muOQ",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "lbppqtDUKn",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "CwjK5eUzcI",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Z9cuAhhIbU",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "kpJIOi10TX",
+  "primary_area": "optimization->large_scale_parallel_and_distributed",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "0AdFs0O8xv",
+  "primary_area": "theory->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "asec7Zx8C6",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "nqmb8hv39b",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "8XC5ebkGII",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "MbmhB3KqKU",
+  "primary_area": "theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "CMeeyJzWZ5",
+  "primary_area": "general_machine_learning->sequential_network_and_time_series_modeling",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "klUTVUyqw7",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "YVk8EDxBWx",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "P0lcBIhzv0",
+  "primary_area": "probabilistic_methods->graphical_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "xGfnQajGPQ",
+  "primary_area": "social_aspects",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "IeJRsIoR2t",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "VQt4w3lElX",
+  "primary_area": "optimization->nonconvex",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "XHZK5abtw2",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "QwtmbKAOZU",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "l4Q8dGGHVC",
+  "primary_area": "reinforcement_learning->batchoffline",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "7FF8g7hCre",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "PQqbcFehs4",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "PeFSCRulgy",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "zU2ZZB5wmF",
+  "primary_area": "optimization->discrete_and_combinatorial_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "CXsD6Ygc8e",
+  "primary_area": "theory->reinforcement_learning_and_planning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "x9Cy1wydfo",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "GjfStlzQiC",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ugjBMARbyt",
+  "primary_area": "theory->online_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "GmeK95WQQ4",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "g95mt3KBRd",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "XfejyJ9nc4",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "2tsdSKz3Yi",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ZZNKx9eZMB",
+  "primary_area": "general_machine_learning->supervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "nIK0JgJc81",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tHY0G4PhCR",
+  "primary_area": "reinforcement_learning->multiagent",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GQ4zj5YiyC",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "26JHfF3tk7",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "mWBxEAq9lv",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "ePFvXPdvhM",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "BjMsVqss9N",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "RB4V5TkIOz",
+  "primary_area": "social_aspects->alignment",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Nyk5TF8H5x",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "kcyOjXoUZu",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "XzsZK1hvpv",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "LTp4Q9aNJP",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "pB6WAdnRDR",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "XLc102wbnT",
+  "primary_area": "optimization->zeroorder_and_blackbox_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5w6jwlRehY",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "u2o6hPE8ik",
+  "primary_area": "general_machine_learning->hardware_and_software",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "f3q85c5wkg",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "byZ7DoyDNd",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "z2en0iqxwo",
+  "primary_area": "social_aspects->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "yTeVcvtkbI",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "aCZY76ltpg",
+  "primary_area": "probabilistic_methods->bayesian_models_and_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "RNDJpm1kUW",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "E0wwKfaTE0",
+  "primary_area": "theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "RUgiEJJ9Fo",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "IOUmfPYShr",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3u1M9wokD7",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "8UzZ0CbPsk",
+  "primary_area": "theory->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "lkGnJhXUNu",
+  "primary_area": "optimization->zeroorder_and_blackbox_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "jjHZnkDk5l",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "TLroFiKilA",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "JKMZyCghr4",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "YqI1tp78Ei",
+  "primary_area": "general_machine_learning->hardware_and_software",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "22XF7II0Hd",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tQaBS1vS3N",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "7xO0ADKJu8",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "mVsb2MZ7LA",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "re9NtTb1Dy",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ya4nicrVDf",
+  "primary_area": "theory->deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "dIhYhrVTCO",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "dIUrE5eR00",
+  "primary_area": "optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "NJ9MZkCLAG",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "0MVEJk4dhE",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "b7P2WegaBY",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "rbQ8zrlyIi",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "fl93PQfTT6",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "c3BVcHcSiR",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "O57TtEyCrW",
+  "primary_area": "probabilistic_methods->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "5NKJHteKPZ",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "phG3K0m7xt",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "5SMn6N9SXq",
+  "primary_area": "social_aspects->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "VtVNCB7VRW",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "hyw7WLPZae",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "pt7x2tJm4L",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "P7RGcAOZZ3",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "SGTLVjx3MN",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "a7ZTOzb2nl",
+  "primary_area": "probabilistic_methods->monte_carlo_and_sampling_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "HgRxoHLIwb",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "V0OaAHqBUy",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "2azIa9tfl3",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ZLraoxBly2",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "UEeBGrOGa8",
+  "primary_area": "probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "N7hNbQ8o5Q",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "znV8JHv8b8",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "I0RgZXTO53",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "j6gXeiPJ3z",
+  "primary_area": "theory->reinforcement_learning_and_planning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "MPwD9hhJoa",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "KmDPaiwdZh",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Vbj1jSaqTo",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ANVg7NnupP",
+  "primary_area": "theory->deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "FN20iuPnEU",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "tiPoSBaOiY",
+  "primary_area": "theory->probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "4oeFD3fG5E",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "M0LllT3KX0",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "7NOuDCtuMs",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "3NQSeJOfkz",
+  "primary_area": "probabilistic_methods->variational_inference",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "CfqUMty4Ns",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5M6NoV6Hs6",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "79TgfXHbsK",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "viOFFYQPgL",
+  "primary_area": "social_aspects->fairness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "p8Mi1PCsDT",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "96VOwRWMQr",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "xX8JgcSJqW",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "iWJmW9mQpA",
+  "primary_area": "social_aspects->fairness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "sLVaNS2DS3",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "OTKdKRLXf7",
+  "primary_area": "general_machine_learning->clustering",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "bBylXHoUTl",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "UgPfadSsaA",
+  "primary_area": "reinforcement_learning->multiagent",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ClBpWdkPZd",
+  "primary_area": "probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "oWjx6SZVKn",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "h6vKAlSWJw",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "R4W0oOjCKG",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1Facirbj0t",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5WwoJ2W0nL",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "QaHFVheV8X",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ff4b0ELdU0",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "9UohNmtqK5",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "gl5xoOJJ22",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ZuzygE5nsT",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "XaexH2TroX",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "oUGeAcxuz5",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "oZqOS1N6Ag",
+  "primary_area": "reinforcement_learning->batchoffline",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "eeoU8iz7w1",
+  "primary_area": "reinforcement_learning->online",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3WsZ9s9oaN",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "TWxFLz7xen",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "KBCWS6OBnD",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "t5cfrJfuzD",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "OQ6jQHJPTT",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "IU9dsf2LZA",
+  "primary_area": "reinforcement_learning->multiagent",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "sWW6lvti8X",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EOSV5tlpqg",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "qeeD6aZLLX",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "9LtTZQZxgd",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "DSZ36ji3Y6",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "vGeNaFHdET",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1Rh9assFy5",
+  "primary_area": "probabilistic_methods->bayesian_models_and_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "7y6a5ouziq",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "ScLLtpPoaE",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "iJmqu7GMRq",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "VrI9sWkJB1",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "vsErYkgeeU",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "fOpKd5S9Bw",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "jxdjDmWpNX",
+  "primary_area": "reinforcement_learning->batchoffline",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "K1EPPO9t2c",
+  "primary_area": "optimization->nonconvex",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "o2H3TE1F0g",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "r4GbYGbWM5",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "2HlW5mj6Ch",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "WFdQSjmchK",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "UdpIy1ndTX",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "e6hVbhHEXh",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Xn8kmKvO9g",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "kovWCrgHxo",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "MqhcqHVc8l",
+  "primary_area": "probabilistic_methods->bayesian_models_and_methods",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "jqlNq5JpJ4",
+  "primary_area": "social_aspects",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "grSvnNlEUU",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "9klc62KROH",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "IalpB5Mzaz",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "2kKk6W6oOF",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "1FhY0Wkb6W",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "o54x4zOWuy",
+  "primary_area": "general_machine_learning->online_learning_active_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "tb2aPbeg86",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Fy2HkFMYH6",
+  "primary_area": "general_machine_learning->unsupervised_and_semisupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "AuiUlu3OmT",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "gGx6DyI6Xv",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "r8qbhgGHnC",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "vGnsSTcebc",
+  "primary_area": "social_aspects->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Uf3SMkP2Wd",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3urFJKbmYN",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Jui4miI76g",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "UCAda9kS57",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Mkal0hTCnh",
+  "primary_area": "applications",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "WcsBsGO6SW",
+  "primary_area": "theory->domain_adaptation_and_transfer_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "4doFQgswAu",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "vzrmVSAe1X",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "jPVGiAUlNa",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "fi4gh4Syka",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Z5BE8RFKZk",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ZFOA8DZqhl",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "aOL0RPDfTQ",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "BJUEgspMUt",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GSGOyxRrBo",
+  "primary_area": "optimization->large_scale_parallel_and_distributed",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "v7rYbRR9Zw",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "JnuwpwbZ8D",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "YGIG0gViul",
+  "primary_area": "social_aspects->alignment",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "qNlU88p8lP",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 4.2,
+  "score_bin": 1
+ },
+ {
+  "forum_id": "JrVfxa6aLL",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "no9dQDBxsu",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "iQjyBjSDFp",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "s3atUwqKHs",
+  "primary_area": "optimization->discrete_and_combinatorial_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "M5hGwjZCs0",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IPeIlnJzYa",
+  "primary_area": "reinforcement_learning->inverse",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "JcjRShiRQz",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "CEnPJAQTUu",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "LYBcBH3Y76",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EVnMERXEvC",
+  "primary_area": "general_machine_learning->clustering",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "CPN5KsCpiE",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "emv2qsi3TG",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "vvke6mnh3Z",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Z3xgDd5B2L",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tNvmMTsRqh",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "l1PVCATRCx",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0Moj0YgFEF",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "rfIFRFon5W",
+  "primary_area": "theory->online_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "nG9823VW2W",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 3.8,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "9sg34nj13o",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "s49fw3BVU0",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GeYKOC4BzB",
+  "primary_area": "general_machine_learning->online_learning_active_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "VLWuEuQkCF",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "jNO4iYhZUu",
+  "primary_area": "optimization->zeroorder_and_blackbox_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "weMYE1B16x",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "5pQiAaDN7E",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EAH54wIQNb",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Ys66H59k8m",
+  "primary_area": "optimization->stochastic",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "KibOuVwmor",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Y2lYfMD0z8",
+  "primary_area": "probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0wPUeZOZ9o",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "aYUmbbRVbJ",
+  "primary_area": "optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "tqTNOpkP5j",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Hn81xuLaXY",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "hCY1J253Kf",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6OMZEKarO7",
+  "primary_area": "social_aspects->alignment",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "sDfu0qN6Y6",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "OjXimqfwlX",
+  "primary_area": "reinforcement_learning->batchoffline",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "2jpCo5lnSZ",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "997oprE4sh",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "uyRIOjFgOn",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "DXnLu7qu75",
+  "primary_area": "general_machine_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "y4uR1LFClc",
+  "primary_area": "deep_learning->selfsupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gCzECKhOgN",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 3.6,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "wJeR4HQQWy",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "fyae4jQ9Lw",
+  "primary_area": "theory->optimization",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "wvQjM6G4Hh",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "kCJ9kaebgd",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "eYwCaFakq6",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "hZKBJ2zdpM",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "iPjuUQbkfl",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "2fPbFUJ87k",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gtmyFnvXAW",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "YhEWC2HiJl",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "1CQZbl24wp",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.333,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "mNOx4mKh3F",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GxSB5ZYfM4",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tcPZvRXQhX",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ANVPCRmZQQ",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "IYSBJvVRTx",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "1OPGcMM2Xt",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "O0gI00yRnm",
+  "primary_area": "probabilistic_methods->gaussian_processes",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "NWApJP7UKT",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "7ZicVirxBC",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "2Nw6JjbwfG",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "XgVv56Y829",
+  "primary_area": "optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "RIase6VpF6",
+  "primary_area": "optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "x21YkF1UfR",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Jk4zLorDUx",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gvWsViQBYB",
+  "primary_area": "optimization->nonconvex",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "bI9moH3UZw",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "3HPAnV6LdO",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "73YmKB7KpW",
+  "primary_area": "probabilistic_methods->structure_learning",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "4C5lHAIWiF",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "k9DhP16RZt",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "yUEFOa32CG",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "CHIsZDgdb6",
+  "primary_area": "theory->game_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "SxsyLjIfWB",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "zWStW3hrfW",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "GFnLVeSyfZ",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "7Xiv7Hszi7",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "iB1x9F6n3p",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gQXkbQSZWS",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "I5IMkvVKd7",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "u0LjAArXHi",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "XjSd2CtV20",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "M78xLFN7EJ",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "VYTU8l8WO9",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Y6zDYJcxM0",
+  "primary_area": "social_aspects->fairness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "WtgQOtmw9N",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "wZMdhuTXoz",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "bS8qU2wJxu",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "wz57SLSTk3",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5RMsiXvUqS",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "w1j6MujWuh",
+  "primary_area": "general_machine_learning->supervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Fqhwxyh4VN",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Wfe1iJocjF",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "ImD44h0ADA",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "2XMLJj67yY",
+  "primary_area": "theory->online_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "d8jyUp19OE",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "BSY7jhBxM1",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "76iNFmvmBa",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "c88GPpURN8",
+  "primary_area": "optimization->discrete_and_combinatorial_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GgN0wlHcdI",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IBDryWLx87",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "jEBkuuETjr",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "94sQrbiUeI",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "yopy1zxFFM",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "OUtgFOscnh",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6ER1mP51np",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "xI364qxvhX",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0RBjF3JSXG",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "nVKKypiE52",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "zru3OX8jVU",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "l8RBjihPFk",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "B7y6S08fgc",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gxxOL0iXpr",
+  "primary_area": "theory->probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "yZAbtq7Srt",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "AYy0lOycql",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "WgIwr2k861",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "7u1EZZcwqX",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "g0wATpD4Ic",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gYBeaguAN5",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.25,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tAcVihAkb3",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "42RDNNJdWf",
+  "primary_area": "theory->online_learning_and_bandits",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "iIWMjdBZ20",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "icRbM5ArwW",
+  "primary_area": "optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "C0NCLB6ZGY",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3XXb2MK02l",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "p8vZ7TuyKm",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "zSKSZm46DO",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "G43CIfmmxh",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "v5f3KAjVEF",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "H2Wueh9MMy",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "SObheoDzU8",
+  "primary_area": "social_aspects->alignment",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Eio2pEtbg4",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "f51haqkwRQ",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "NN4DoPVYT2",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "FA7n9adGKc",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "sPIXjSkDFG",
+  "primary_area": "theory",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "RKVsEuwbJ0",
+  "primary_area": "theory->reinforcement_learning_and_planning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "0xiTAhvLj6",
+  "primary_area": "applications->social_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5Cvh976L09",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "0TRMWCwKRo",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0GlXVAmy7b",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "mURSJDd7hU",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "5yXKRaNI2R",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "txdOohIkYJ",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "RUheyL9bb9",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gRzdGEtn3T",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "fDZZXgdx2F",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "oR2LJhbClR",
+  "primary_area": "applications->social_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "xLnzdfOS6r",
+  "primary_area": "general_machine_learning->kernel_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "SNRYGh6n69",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0SGle5hjIf",
+  "primary_area": "optimization->convex",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "VzriJqD0h7",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "R49XZi14YH",
+  "primary_area": "deep_learning->other_representation_learning",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "64HmKFCaq6",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "fcVsVQkjIc",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "dUsQj7QFvs",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "hQWwTWGAyu",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "eschjhO6uw",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "UZF4ssK12K",
+  "primary_area": "reinforcement_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "qNsrhcCe4y",
+  "primary_area": "social_aspects->alignment",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "r5PfcYvYEE",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "gLRqqQOM9K",
+  "primary_area": "probabilistic_methods->monte_carlo_and_sampling_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5.25,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "SroXgWAQll",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Tz69nG4l87",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "vNPkcJj46N",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "I2nCwyGK6k",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "HJ0JFzdwUo",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ub9PwBtHqD",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ZhSS3msLRj",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "ao1SgPdAQm",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "62GA9BSI5t",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "BnduUW8izq",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "wSfc8mDEjM",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "tDft0AHhzH",
+  "primary_area": "reinforcement_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "AKrhb31pI7",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "XAp0VUy20q",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "lRZmoqiAPg",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "aLnPza1dyT",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "hRyilopCCT",
+  "primary_area": "theory->reinforcement_learning_and_planning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "YwuZqvMQ7o",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0CiahYXWsk",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "omRyEle4jZ",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "ktQsqAjXsX",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "2hQBG2ZlFb",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "QNYVYUa3aa",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "xqc05bgrDk",
+  "primary_area": "theory->game_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3gf0MK7LTk",
+  "primary_area": "general_machine_learning->unsupervised_and_semisupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "2dzU8sTOO3",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "nn5hJFwMPu",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "8obMsWKFRJ",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "GyRMbsYFiG",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "ktRyGKpt9U",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5cLRC1hrTP",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "RESRoG7nvd",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "x2CHpqD6L8",
+  "primary_area": "reinforcement_learning->policy_search",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "48gKYE2ReP",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "32XNOcwH1z",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Hc1G5UDPxc",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "DZiuKVvrJW",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6Qu03WGp6x",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Ir9AuzGbMB",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "0Qudez0gLp",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "1hBJuMSEKs",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "MhMoUuoA1g",
+  "primary_area": "general_machine_learning->everything_else",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "NvJPE1oiKd",
+  "primary_area": "probabilistic_methods->monte_carlo_and_sampling_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gc7Gg18ejz",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "Gf6HXrfq2c",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "W6qfbvysDh",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "BeOkRax4pN",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6dI31vzkqT",
+  "primary_area": "theory->probabilistic_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "CVXqBkLF5y",
+  "primary_area": "theory->deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "43QdwsbcNM",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Jo7Mt1XbuQ",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "o3gN27ITWV",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "3qX5RS8kpJ",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Hk8MqQNAAm",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "akfJfpUEBj",
+  "primary_area": "reinforcement_learning->batchoffline",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "SKXkGLbXdB",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "H8KE7sudq5",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "coINrhVRkL",
+  "primary_area": "optimization->large_scale_parallel_and_distributed",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "jiNw5AgBbw",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "O6tuJZIv0u",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "J8lkAoQeYK",
+  "primary_area": "reinforcement_learning->planning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "D1JSZDVnxG",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "pd6GY2x8FG",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "shdJbVmwrp",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "qbe18sZPWS",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3LA6VvtC22",
+  "primary_area": "applications->neuroscience_cognitive_science",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EBTMJ3MXt0",
+  "primary_area": "optimization->discrete_and_combinatorial_optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Y54eyjHFqJ",
+  "primary_area": "social_aspects->security",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "3tlaoBZrSg",
+  "primary_area": "theory->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "deuc2n0fGN",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Gy0C1ykv2o",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Ki0eWT1sFS",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "19AbP986bv",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "wjQw9XVSEt",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1Je3o7cf1N",
+  "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "0EANaZfd1l",
+  "primary_area": "general_machine_learning->clustering",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "4bAPXdeTbb",
+  "primary_area": "deep_learning->selfsupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "qugRvYjaFx",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "u9U8yDOOVm",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "GdqrQ75Gg8",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "5kv79PBBy3",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "JoJUWsQBp0",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "yU6X1XZl8t",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "fbabBXNeqw",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "JPbp2S9yTO",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "kCGGQfZyaE",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "KJq0iScNM6",
+  "primary_area": "probabilistic_methods->bayesian_models_and_methods",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "AWPKhE1dbc",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5ntMrdtnTu",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "xTkYT79CRB",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "aJVkQAd7tv",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6j88qckao7",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0oVPf178N4",
+  "primary_area": "general_machine_learning->clustering",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "xM56OFSUaN",
+  "primary_area": "general_machine_learning->causality",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "CciWEZZDVb",
+  "primary_area": "deep_learning->algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "rVvzGfBIGL",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5Ls1FrQflg",
+  "primary_area": "deep_learning->graph_neural_networks",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "OnmYXKZ6oa",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "YC1Otscjbs",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IAE5vKJUeY",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "X8jXqDDaOT",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IQ8xF6eMuZ",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "MSQq78w3JN",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "FHMsceUzfS",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "4vztmTrGhd",
+  "primary_area": "theory->deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "63o9EmYHXt",
+  "primary_area": "theory->optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "iJNYi8dwr4",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "mLVSIefyWj",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Xxq7fcQUNR",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "A7LiBHEsOo",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "PlHlnsoaJc",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "5fm6XlWpiY",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "8As2E4z9qt",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "eKfWG67mZB",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "q2kihJvzqC",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "IvoZENu6qG",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "oWOYBP7uFd",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "uvSU4dNYv3",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "igB9562BZJ",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "2kSBDoP1rE",
+  "primary_area": "deep_learning->theory",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "XfmTSEvETM",
+  "primary_area": "social_aspects->privacy",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "XAyI76nJRt",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "pZiQlweASP",
+  "primary_area": "general_machine_learning->unsupervised_and_semisupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "gMwcZb18s7",
+  "primary_area": "deep_learning->selfsupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "tfIZPwA6s0",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.333,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "kWxN36TDN8",
+  "primary_area": "general_machine_learning->unsupervised_and_semisupervised_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "0BVhmHnYb7",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "xpIUvw8ANa",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "M8l3MmWaQB",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "KhAUoBv0dJ",
+  "primary_area": "reinforcement_learning",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "zrVSSx6348",
+  "primary_area": "deep_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "oTRMveQEzW",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "OfXpAituJ9",
+  "primary_area": "deep_learning->robustness",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "yGEllPWlnM",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "lk5T4FMxlm",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "uIi5FfjtwR",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "AjP1yvCyoG",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "IoZL3DVSHT",
+  "primary_area": "deep_learning->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "FfrpNZofIk",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "wknFUdE3MH",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "7oDHX5WIa8",
+  "primary_area": "reinforcement_learning->multiagent",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "F5ULzUwZrv",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "x5xKTcGemE",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "XXYhEGXPPF",
+  "primary_area": "theory->optimization",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "rvCehcts1v",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "CYh8wTyRkZ",
+  "primary_area": "general_machine_learning->sequential_network_and_time_series_modeling",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IMH7K8Jn6A",
+  "primary_area": "deep_learning->sequential_models_time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "1e3gI1ibcn",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "xnap60lY3b",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 5,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "E0ZB8QdZYE",
+  "primary_area": "general_machine_learning->sequential_network_and_time_series_modeling",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4.667,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "pwf3iLt9Wr",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "BXE3Z0EHCs",
+  "primary_area": "theory->learning_theory",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "oHxq8g8Wy1",
+  "primary_area": "general_machine_learning->scalable_algorithms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "bl2EkyUDEn",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "rWTqAgyZcd",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "yTFTLj7MoN",
+  "primary_area": "optimization->large_scale_parallel_and_distributed",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "v0DWbfP3b9",
+  "primary_area": "applications->health_medicine",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "OvLnVkV14P",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "uPpo1RsI2d",
+  "primary_area": "theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "wfHCePoAed",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "kny606LUdl",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (spotlight)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "2Oj6fg0m1j",
+  "primary_area": "applications->language_speech_and_dialog",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "XGxBnVqK63",
+  "primary_area": "deep_learning->attention_mechanisms",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "3vNaSvdEAc",
+  "primary_area": "applications->robotics",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "HvBHq4Ycvn",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "OIhwTkpkS1",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "6GpYUWbqOQ",
+  "primary_area": "general_machine_learning->evaluation",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "iE0m4NE5qb",
+  "primary_area": "theory->game_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "zAuh9CGr9R",
+  "primary_area": "general_machine_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "IxpVGcg39J",
+  "primary_area": "deep_learning->foundation_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "bcN12UkftY",
+  "primary_area": "general_machine_learning->representation_learning",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 3.667,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "e41bikBTnV",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "Q1XTVVwJZ9",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "Leijxx6Czi",
+  "primary_area": "social_aspects->safety",
+  "decision": "Accept (regular)",
+  "num_reviews": 3,
+  "mean_overall_recommendation": 4,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "SldP4LGjdz",
+  "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "BWhC4ezzeE",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.75,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "kHPIJ7KVCw",
+  "primary_area": "applications",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.5,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "euv8IoKFbh",
+  "primary_area": "deep_learning->generative_models_and_autoencoders",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "yUOnI5IAuT",
+  "primary_area": "deep_learning->large_language_models",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "xgK2ePxFO1",
+  "primary_area": "theory->game_theory",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.25,
+  "score_bin": 2
+ },
+ {
+  "forum_id": "SbOzVVh3kr",
+  "primary_area": "reinforcement_learning->deep_rl",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "NOHlqCnYot",
+  "primary_area": "applications->time_series",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "EPKdX56JSc",
+  "primary_area": "applications->chemistry_physics_and_earth_sciences",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 4.75,
+  "score_bin": 3
+ },
+ {
+  "forum_id": "lvGs543gBK",
+  "primary_area": "applications->computer_vision",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ },
+ {
+  "forum_id": "FQNYtjPBxv",
+  "primary_area": "applications->everything_else",
+  "decision": "Accept (regular)",
+  "num_reviews": 4,
+  "mean_overall_recommendation": 3.5,
+  "score_bin": 0
+ }
+]

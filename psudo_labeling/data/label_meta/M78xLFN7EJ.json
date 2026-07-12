@@ -1,0 +1,26 @@
+{
+  "forum_id": "M78xLFN7EJ",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_MVZK",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review. Its central points are all echoed by the meta-review and corroborated by the other reviewers: environment design as the key finding, ESMFold serving as both selection criterion and evaluation metric (circularity), the imbalanced ProteinMPNN compute comparison, single-run static protocols framed as an 'expert' baseline, the unexplained staged-vs-one-shot reversal, and the standard ReAct architecture. Specific, well-controlled, and on-target throughout."
+    },
+    {
+      "reviewer": "Reviewer_NTmc",
+      "weight": "high",
+      "reason": "Specific and well-substantiated, and anticipates exactly the concerns the meta-review foregrounds: ESMFold circularity, a matched-compute best-of-N ProteinMPNN comparison, a missing automated-search control to isolate the LLM's contribution, and fixed single-run human baselines with an unequal evaluation budget. Strongly corroborates MVZK and directly maps to the points the program chairs highlight."
+    },
+    {
+      "reviewer": "Reviewer_NewJ",
+      "weight": "medium",
+      "reason": "Concise but domain-aware; its substantive points (ESMFold intermediate signal circularity and human-baseline fairness, weak human baseline, poor generalization from fewer than ten proteins, and a unique memorization/data-leakage concern) are specific and corroborated by the meta-review and other reviewers. Discounted somewhat because the review is brief and its overall recommendation (5) is the most lenient and more positive than the meta-review's tone."
+    },
+    {
+      "reviewer": "Reviewer_aYPJ",
+      "weight": "low",
+      "reason": "Generic and template-like despite high stated confidence, with little domain-specific engagement. It correctly flags the systems-integration nature, limited ML novelty, and the need for ablations separating the environment from LLM reasoning, but these are better and more concretely articulated by the high-weight reviewers, and it does not engage with the specific circularity, matched-compute, or non-canonical evaluation issues. Its lone significance score of 2 is outweighed by the others and the meta-review's emphasis on the application's importance."
+    }
+  ],
+  "score_rationale": "Soundness and presentation were unanimous at 3 across all reviewers, so both are fixed there. Significance is set to 3, matching the two most detailed reviewers and the meta-review's emphasis on the importance of the application domain and the transferable environment-design lesson, over the single low-weight 2. Originality is set to 2, the lower end of the [2,3] range, following the meta-review's repeated emphasis on limited ML novelty and the standard ReAct architecture, a point led by the strongest reviewer. Overall is 4 (weak accept): both high-weight reviewers and the meta-review converge on an accept whose merits outweigh substantial, corroborated weaknesses, so I discount the single more lenient 5 from the briefer, more positive review; confidence is 4 given how strongly the reviews mutually corroborate one another and the meta-review."
+}

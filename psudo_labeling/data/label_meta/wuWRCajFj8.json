@@ -1,0 +1,26 @@
+{
+  "forum_id": "wuWRCajFj8",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_tYPo",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its two main concerns, the omitted SVD compute/memory cost and the blurry OOD definition for the language experiments, are exactly the concerns the meta-review anchors on, and are independently corroborated by nMaW. Also flagged the hyperparameter-free vs. threshold-R confusion echoed by others."
+    },
+    {
+      "reviewer": "Reviewer_nMaW",
+      "weight": "high",
+      "reason": "Detailed and on-target. Corroborates the OOD-validation and missing-FLOPs/overhead concerns and adds a substantive, well-grounded point on PEFT/LoRA compatibility. Recommendation (4) aligns with the meta-review's weak-accept direction."
+    },
+    {
+      "reviewer": "Reviewer_BK7A",
+      "weight": "high",
+      "reason": "Highest confidence, specific and constructive. Points on the overstated single-checkpoint framing (needs both W_0 and W_FT), the hyperparameter-free/threshold-R clarity issue, and the unstated reconstruction step are concrete and corroborated by tYPo; positive overall assessment consistent with the acceptance direction."
+    },
+    {
+      "reviewer": "Reviewer_kFeL",
+      "weight": "medium",
+      "reason": "Partly on-target. The LoRA-Pro overlap concern was explicitly addressed and downweighted by the meta-review (LoRA-Pro is training-time, MonoSoup is post-hoc; different application scenarios) and judged not a technical flaw or grounds for rejection, overruling the reject stance. The underlying constructive points, weak theoretical justification for the boundary-condition reweighting rule and the need to position against prior spectral analyses of task vectors, remain fair and were folded in as a soundness/positioning weakness."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (tYPo, nMaW, BK7A) and the meta-review converge on a positive-but-measured assessment, driving soundness/presentation/significance/originality to 3 within the reviewers' ranges: the method is well-formulated and empirically thorough, but genuine gaps remain (unquantified SVD overhead, weak language OOD definition, hyperparameter-free clarity). The single dissenting reject (kFeL, 2) rested on LoRA-Pro overlap, which the meta-review explicitly downweighted as a different application scenario and not a technical flaw, so its reject stance was not adopted while its theoretical-justification point was retained. The overall recommendation of 4 (weak accept) tracks the meta-review's explicit weak-acceptance recommendation and sits within the reviewers' [2,5] range, weighting the high-weight accepts most. Confidence is 4 because the strengths and the principal weaknesses are strongly mutually corroborated across reviewers and consistent with the meta-review."
+}

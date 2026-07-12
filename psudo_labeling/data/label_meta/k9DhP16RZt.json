@@ -1,0 +1,26 @@
+{
+  "forum_id": "k9DhP16RZt",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_2rLU",
+      "weight": "high",
+      "reason": "The core weakness raised — low Krippendorff's alpha (0.38/0.45) undermining the reliability of CMI-Pref as benchmark ground truth — is exactly the subjectivity/reliability concern the meta-review says criticisms centered on. The review is specific and substantiated, with concrete praise for the data-engineering pipeline and a concrete remediation suggestion (high-agreement subset / confidence weighting). Note its scores run high (overall 5) relative to the weak-accept consensus."
+    },
+    {
+      "reviewer": "Reviewer_VKFf",
+      "weight": "high",
+      "reason": "The most thorough and confident review (confidence 5), with specific, substantiated concerns. Its central point — heavy dependence on a single proprietary pseudo-labeler with risk of bias transfer and possible contamination given the same judge family appears in evaluation — is a precise instance of the meta-review's reliability theme, and it is corroborated by the annotation-reliability concern from another reviewer."
+    },
+    {
+      "reviewer": "Reviewer_abPN",
+      "weight": "medium",
+      "reason": "Constructive and specific in places (simple frozen-encoder architecture, missing audio samples, the modality-interaction analysis on fully-conditioned subsets, dataset release, reward hacking), and several points are corroborated by other reviewers. However, the review is briefer and less substantiated than the two high-weight reviews."
+    },
+    {
+      "reviewer": "Reviewer_ZX5Q",
+      "weight": "medium",
+      "reason": "Partly on-target: the dataset-description clarity issues (what CMI-Pref vs CMIPref-Pseudo contain, which resources are proposed vs external, Table 1 restructuring) and the ~20% gap to human ratings are useful and echoed elsewhere. But the presentation score (2) is an outlier against the other reviews (3/3/4), and the novelty/clarity criticisms are comparatively generic."
+    }
+  ],
+  "score_rationale": "Soundness is unanimous at 3 and adopted as-is. Presentation, significance, and originality all sit at 3, the value shared by the two highest-weight, most substantiated reviews and consistent with the meta-review, which is positive about the problem's importance while noting a regular rather than strong accept; this pulls presentation off the single low outlier (2) and significance off the high-weight split (4 vs 2) toward the corroborated middle, and originality toward the high-weight reviewers' 3. Overall recommendation is 4, matching the majority of reviewers and the meta-review's explicit note that most were weak accepts. Confidence is 4 because the core themes — a valued dataset/benchmark contribution offset by concerns about annotation reliability and single-judge pseudo-label bias — are coherent, mutually corroborated, and directly echoed by the meta-review."
+}

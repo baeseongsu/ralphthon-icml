@@ -1,0 +1,66 @@
+{
+ "forum_id": "eNvxTIZugB",
+ "title": "DAL: A Practical Prior-Free Black-Box Framework for Piecewise Stationary Bandits",
+ "abstract": "We introduce a practical, black-box framework termed Detection Augmented Learning (DAL) for the problem of piecewise stationary bandits without knowledge of the underlying non-stationarity. DAL accepts any stationary bandit algorithm with order-optimal regret as input and augments it with a change detector, enabling applicability to all common bandit variants. Extensive experimentation demonstrates that DAL consistently surpasses all state-of-the-art methods across diverse non-stationary scenarios, including synthetic benchmarks and real-world datasets, underscoring its versatility and scalability. We provide theoretical insights into DAL's strong empirical performance, complemented by thorough empirical validation.",
+ "primary_area": "general_machine_learning->online_learning_active_learning_and_bandits",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a black-box framework for piecewise stationary bandits that combines change detection with a stationary bandit algorithm as a plug-in base learner. A major strength of the paper is its strong empirical performance, supported by extensive experiments across a diverse set of datasets and environments. The main concern raised by the reviewers is that the theoretical guarantees rely on assumptions on change-point separation, and the analysis does not directly extend to the drifting setting. The authors are encouraged to clarify these limitations more explicitly in the final version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_jdRw",
+   "summary": "The authors consider piecewise-stationary (PS) bandit framework without the prior knowledge of underlying non-stationarity and propose a DAL (black-box) method which achieves order-optimal regret under certain assumptions. The claims made in the paper are supported with strong empirical performance validated using synthetic and real-world experiments.",
+   "strengths_and_weaknesses": "Strengths:\n1.\tThe proposed DAL method is free from prior knowledge of non-stationarity, with theoretical guarantees and strong empirical performance.\n2.\tThe framework is also versatile, covering a wide range of bandit settings, increasing its applicability.\n\nWeakness: Some limitations are: \n1.\tThe practical applicability of the proposed method/algorithm seem very challenging.\n2.\tThe paper shows empirical performance for drifting case. However, no theoretical guarantee for this case is provided. \n3.\tThe theoretical results rely on assumptions such as sufficient separation between change-points and the detectability of reward shifts, which may not always hold in practical settings, especially in environments with frequent or subtle changes.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "NA",
+   "limitations": "The paper does not adequately discuss the  limitations of method.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Fully resolved. My concerns have been adequately addressed. I have updated the scores. My final recommendation is weak accept."
+  },
+  {
+   "reviewer": "Reviewer_HhGQ",
+   "summary": "This paper introduces DAL, a prior-free black-box framework for piecewise stationary bandits that augments any order-optimal stationary bandit algorithm with change detection and forced exploration. It addresses non-stationarity without prior knowledge, outperforming baselines in synthetic and real-world settings.",
+   "strengths_and_weaknesses": "Strengths:\n+ Paper addresses a practical and important problem and covers most of the important references as far as I can understand\n+ The introduction of the change point detector regardless of the input bandit algorithm can be quite useful for many practical scenarios and can be a bridging path between many theoretical Bandit algorithms and real-world applications\n+ Empirical results validate their claims\n\nWeaknesses:\n- How costly can be computing Proposition 4.2?\n- The paper is a quite dense, and makes it a little hard to understand",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weaknesses",
+   "limitations": "Yes they discuss sufficient limitations and future work in the conclusion",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_dm3c",
+   "summary": "This paper introduces Detection Augmented Learning (DAL), a modular black-box framework designed for piecewise stationary bandits where the timing and nature of environment changes are unknown. The framework augments any order-optimal stationary bandit algorithm with a change detector and a forced exploration scheme to handle non-stationarity. Unlike existing methods that monitor regret violations, DAL detects shifts in mean rewards through a carefully selected finite covering set of actions. The authors provided theoretical regret bounds for DAL, as well as empirically evaluated it across various datasets to show its effectiveness.",
+   "strengths_and_weaknesses": "Strength:\n- The introduced DAL framework here is very flexible as it can be paired with any stationary bandit algorithm, making it applicable to a wide array of bandit variants.\n- The authors conducted very extensive numerical evaluations here that considered a number of non-stationary bandits settings, including synthetic piecewise stationary & drifting regimes and a suite of real-world benchmarks.\n\nWeakness:\n- The theoretical optimality of DAL still relies on Assumption 4.6, which requires a minimum spacing between change-points. \n- The framework requires forced exploration on a covering set $\\mathcal{A}_e$, and in complex action spaces where the required size of $\\mathcal{A}_e$ is large, the computational overhead can be large.\n- The authors suggested that small drift can be “absorbed into noise\", but there’s no formal regret guarantee for drift. Is there a formal way to characterize the \"critical\" drift rate at which a restart-based method like DAL becomes mathematically superior to a sliding window type of method?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_Sib7",
+   "summary": "This paper studies piecewise stationary bandits and proposes Detection Augmented Learning (DAL), a practical, prior-free black-box framework. DAL modularly couples stationary bandit algorithm with a change detector (e.g., GLR/GSR) and a forced exploration scheme over a carefully constructed action covering set . Compared with existing order-optimal black-box methods (e.g., MASTER), DAL offers several advantages: it is easy to implement, requires no hyperparameter tuning, and can be directly applied across various bandit settings. The authors validate the approach on both synthetic and real-world datasets, showing lower dynamic regret than competing algorithms, and provide theoretical guarantees that match or improve best known regret bounds.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The paper aims to provide a practical framework for non-stationary bandits. Existing frameworks such as MASTER are highly complex and difficult to deploy, so this direction is valuable for the community.\n2. The paper includes extensive experiments demonstrating that the proposed algorithm achieves lower regret. The code is available, and after running it, I found that the overall conclusion that the method achieves competitive or lower regret is valid.\n\n---\n\n**Weaknesses:**\n\n1. The current manuscript could benefit from substantial refinement to improve overall readability. For instance, the paper uses too many abbreviations. While this may not hinder readers who are very familiar with the non-stationary bandits literature, it is unnecessary and increases the cognitive burden for readers. In addition, the organization makes it difficult to identify the true contributions. The introduction spends substantial space on related work that is not closely connected to the paper, while the core contributions and challenges are not clearly articulated, such as why practical frameworks are lacking, what the real design and analysis challenges are, and what exactly the methodological and theoretical contributions of the paper are.\n2. The theoretical analysis relies on Piecewise Stationary Bandits under Assumption 4.6, rather than addressing general non-stationary bandits.\n3. Partially due to the presentation issues mentioned above, the precise technical novelty of the paper appears somewhat incremental. Because the framework leverages existing change detection tests (e.g., GLR/GSR) and focuses on a somewhat simplified version of piecewise stationary bandits, it is difficult to isolate the new technical developments. The authors could more explicitly highlight what novel analytical tools or algorithmic mechanisms they introduce beyond the modular combination of existing techniques.\n\n---\n\nMinor comment: The provided code records runtime, but it is unclear why runtime is not reported in the paper.",
+   "soundness": 3,
+   "presentation": 1,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Could the authors discuss why practical frameworks have been lacking and elaborate on the specific challenges involved in designing the proposed algorithm? I believe addressing this would help clarify the core contributions of the paper.\n2. The framework appears less practical for the contextual setting, since the covering set must span the entire action space. How does DAL scale in real-world scenarios (e.g., recommendation systems) with massive action spaces? Is there any potential to construct a smaller covering set, or is the framework inherently limited in this regard?\n3. Could the authors clarify whether the algorithm remains valid when the total time horizon T is unknown in advance?",
+   "limitations": "N/A",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I appreciate the authors' response to my concerns. I have increased my score to 4."
+  }
+ ]
+}

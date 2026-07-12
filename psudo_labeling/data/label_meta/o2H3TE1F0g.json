@@ -1,0 +1,21 @@
+{
+  "forum_id": "o2H3TE1F0g",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_a1a1",
+      "weight": "high",
+      "reason": "Specific and substantiated, with strengths (general plug-and-play framework, the diffusion-interpolation problem) and weaknesses (limited novelty, expensive DDIM-inversion pair collection and modest scale, lack of insight into why contrastive alignment fits diffusion). The novelty concern is explicitly echoed by the meta-review ('the novelty concern is real'), and the overall recommendation of 4 (weak accept) matches the meta-review's landing at borderline accept."
+    },
+    {
+      "reviewer": "Reviewer_rGMX",
+      "weight": "high",
+      "reason": "Raises the single most substantive, well-argued technical critique, the brittleness of the kNN decoder and its implicit local-linearity assumption, backed by a concrete PCA/dimensionality argument. The meta-review identifies this as the core disagreement of the discussion. I weighted the technical point highly but did not let the soundness-1/overall-2 scores dominate, since the meta-review judged the method sound and consistent across all evaluated domains and the remaining objection was about out-of-scope validation rather than a demonstrated in-scope failure."
+    },
+    {
+      "reviewer": "Reviewer_17dw",
+      "weight": "medium",
+      "reason": "Positive and its identified strengths (plug-and-play interpretability layer, thorough five-domain evaluation, well-reasoned ablation) are directly echoed by the meta-review's framing, but the review surfaces no substantive weakness and its overall recommendation of 5 overshoots the borderline-accept landing. Its baseline-breadth question is useful and adopted."
+    }
+  ],
+  "score_rationale": "I anchored on the meta-review, which lands at borderline accept, treats the general-purpose cross-domain framework as the central contribution, and acknowledges a genuine novelty concern. I weighted Reviewer_a1a1 highly (novelty and scale concerns corroborated by the meta-review; overall 4 matches the borderline direction) and Reviewer_rGMX highly for the specific, well-argued kNN-decoder critique that formed the core disagreement, while declining to let rGMX's soundness-1/overall-2 dominate because the meta-review judged the method sound and consistent across all evaluated domains. Reviewer_17dw was medium: its strengths are corroborated but it engages no real weakness and its overall 5 overshoots. Net result is uniformly good (3) sub-scores with a weak-accept (4) overall, reflecting a solid, broadly validated method tempered by real but non-fatal concerns about decoder design, novelty, and scale; confidence is 4 given the coherent picture once the decoder debate is understood."
+}

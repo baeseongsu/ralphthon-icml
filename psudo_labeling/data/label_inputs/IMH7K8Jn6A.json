@@ -1,0 +1,62 @@
+{
+ "forum_id": "IMH7K8Jn6A",
+ "title": "DITING: A Weak Degradation Listener for Battery Lifetime Early Prediction",
+ "abstract": "Battery lifetime early prediction is crucial for safety assessment and decision planning, yet early-stage degradation signals are extremely weak and difficult to distinguish from stochastic noise. Existing methods primarily rely on denoising or signal decomposition, which may lose critical degradation cues. In nature, most organisms exhibit the binaural effect, exploiting discrepancies between left and right auditory inputs to enhance perceptual reliability. Inspired by this, we propose DITING, a weak degradation listener for battery lifetime early prediction. We first employ optimal-transport-based selective matching to extract a robust health template from initial cycles, and further design a tri-coupled degradation manifestation mechanism to distinguish degradation signals from noise. By exploiting the randomness of noise, matched responses under symmetric coupling suppress stochastic fluctuations, while degradation-driven cumulative deviations propagate through the coupling process to form stable bilateral discrepancies, thereby amplifying weak early-stage cues for lifetime prediction. Experiments on various datasets demonstrate that DITING achieves state-of-the-art performance and provides more reliable early support for full-lifecycle battery management.",
+ "primary_area": "deep_learning->sequential_models_time_series",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes DITING, a bio-inspired method for early battery lifetime prediction that extracts weak degradation signals via a health prototype and a tri-coupled discrepancy manifestation mechanism, offering a novel alternative to traditional denoising. The four reviews ranged from Weak Reject to Accept, with consensus on the problem's importance, comprehensive experiments, and solid ablations. Main concerns regarding biological analogy, theoretical mechanism, and noise cancellation evidence were largely addressed through additional fine-grained ablations, new datasets, visualization, and an extension to C-MAPSS. Two reviewers raised their scores, and the remaining concerns do not undermine the technical contribution. A minor anonymity issue in the code LICENSE file was clarified and does not affect the review. Overall, the paper is technically solid and empirically strong.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_q4Q1",
+   "summary": "The author in this paper focused on the problem of early battery lifetime prediction from limited and early-cycle data under strong stochastic noise. It investigates the and further propose to tackle this challenge in battery prognostics from a novel perspective: extracting weak degradation signals that are easily masked by measurement fluctuations, and the learning paradigm is further based on discrepancy-aware and phase-sensitive the biological binaural effect. The proposed method, dubbed DITING, constructs a prototype by Sinkhorn optimal transport and further extracts degradation residuals from the input. Afterwards, it further employs a tri-coupled dynamical mechanism to suppress stochastic noise and amplify the degradation signals. The authors further run experiments across six public battery datasets. By experiments, they show improved prediction accuracy/robustness of their framework when compared with other deep learning based baselines.",
+   "strengths_and_weaknesses": "**Strength**\n\n1. **Bio-inspired Framework Design**: This paper draws inspiration from human binaural hearing system (like we human binarual auditory system) to design the batterylife prediction framework.  This design is internally a simple yet effective to amplify weak signal from battery.\n\n2. **Comprehensive Experiments**: The authors validate their proposed framework on large comprehensive benchmarks.\n\n**Weakness**\n\n1. The proposed tri-coupled architecture is motivated by biological binaural effect. The authors claim that symmetric comparison between two branches helps amplify weak signals. However, after reaching the whole paper carefully, this analogy appears to be conceptually weak and weakly justified. In human auditory perception, binaural cues (e.g., interaural time and level differences) are primarily used for spatial localization, not for weak signal amplification. The auditory system exploits correlated multi-channel (in this case, binaural) observations to infer spatial disparities, not to cancel stochastic noise via symmetric dynamics. Moreover, the proposed framework has two branches with anti-phase excitation, with the assumption of symmetric noise cancellation. The paper failed to show that such symmetry improves the signal-to-noise ratio of early degradation signals. Therefore, to me, the biological inspiration seems metaphorical. The connection between binaural perception and the proposed mechanism remains unclear and unconvincing, remains more clarification from the authors.\n\n2. Not enough sufficient training and implementation details to guarantee reproducibility. Although in Appendix D.6, it provides environment setting and training configuration, it just include high-level pseudocode and several hyperparameters without specifying their actual values or tuning strategy. Details such as number of training epochs, regularization, and hardware configuration are missing.\n\n3. The paper natually draws inpiration from the biological binaural system, but it does not explain how a battery system naturally produces two correlated signals that are analogous to the left and right channels. If I understand it correctly, the input consists of single-stream cycling measurements (e.g., voltage, current, temperature), the “binaural” signals are artificially constructed, not from physical sensing. Therefore, the relationship between the biological inspiration and the battery lifetime task related signal remains unclear and require more detailed information.\n\n4. possible author information leak: see https://anonymous.4open.science/r/Batt_DITING/DITING/LICENSE",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "See the weakness section. I advise the authors to provide one-one rebuttal for each of the weakness points.",
+   "limitations": "See weakness section. While the paper overall is sound, there are several severe points need to address thoroughly.",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_wu71",
+   "summary": "The paper proposes DITING, a method for early battery lifetime prediction using data from the first 100 cycles. The approach avoids explicit denoising and instead attempts to reveal weak degradation signals through a discrepancy-based dynamical mechanism. The model consists of a hierarchical embedding module, a health prototype built from early cycles using Sinkhorn optimal transport, and a tri-coupled dynamical module with two anti-phase branches designed to suppress noise and highlight consistent degradation trends. The method is evaluated on six datasets from the BatteryLife benchmark. Experiments include in-domain evaluation, ablations, zero-shot cross-dataset transfer, and reduced-cycle prediction.",
+   "strengths_and_weaknesses": "Strengths\n1. The paper addresses an important practical problem: predicting battery lifetime from very early cycles. This has clear relevance for battery screening and reliability analysis.\n2. The proposed framework introduces an interesting idea of using discrepancy manifestation instead of traditional denoising approaches.\n3. The experimental evaluation includes multiple datasets, ablations, and transfer experiments.\n4. The paper provides additional materials such as pseudocode and implementation details that could help reproducibility.\n\nWeaknesses\n1. The ablation study does not fully isolate the core mechanism (e.g., the anti-phase dynamics or the symmetry constraint).\n2. The results are strong overall but not consistently best across all datasets and metrics.\n3. The manuscript contains several editorial and formatting issues, including leftover template text and typos.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Would it be possible to include additional ablations isolating the anti-phase dynamics or symmetry constraint to better validate the proposed mechanism?\n2. Since several datasets are rather small, could the authors provide standard deviations or statistical significance tests for the baseline methods as well?",
+   "limitations": "1. The evaluation is limited to the datasets used in the BatteryLife benchmark, and additional validation on other battery datasets would strengthen the results.\n2. Some datasets in the benchmark are relatively small, which makes variance and statistical significance important when comparing methods.",
+   "overall_recommendation": 5,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_AtfZ",
+   "summary": "The paper proposes DITING, an early predictor of battery lifetime, attempting not to remove noise signals but to \"real\" consistent signal from various changes.",
+   "strengths_and_weaknesses": "## Strengths\n\n- The paper addresses important and impactful task closely related to our daily life, battery lifetime prediction, where there are challenges due to noises in its early phase of life.\n\n- DITING imitate animal's right and left ears, comparing right and left signal noises and extract early change precursors.\n\n- The approach is orthogonal to conventional approaches that remove noise, with which it is difficult to predict lifetime in the early phase; thus, DITING is novel and effective, and motivation is clear.\n\n- DITING is effective even when the number of cycles is small.\n\n- Experiments demonstrate that DITING outperforms baselines. Ablation and comparison studies reveal its limitations, providing benefits for practitioners.\n\n- The code is presented.\n\n## Weaknesses\n\n- The underlying mechanism/reason why DITING works well is yet to be explored. The effectiveness is empirical, providing a limited contribution to the community.\n\n- Error bars are missing.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See Weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_qPqx",
+   "summary": "The authors propose DITING, which aims to achieve battery lifetime early prediction under weak degradation signals and heavy noise. DITING constructs a robust health prototype using Sinkhorn optimal transport to extract degradation residuals, and uses a tri-coupled manifestation mechanism to cancel stochastic noise and amplify consistent degradation as a stable left-right discrepancy. Experiments on six BatteryLife datasets demonstrate the superiority of this method.",
+   "strengths_and_weaknesses": "Strengths:\n1. The bio-inspired idea is interesting and seems to work well for this scenario.\n2. Experiments are rather comprehensive, including multiple datasets, multiple baselines, ablations, zero-shot, fewer cycles, and noise injection.\n3. Figures are clean and nice to read.\n\nWeaknesses:\n1. The method is quite complex with many hyperparameters, but sensitivity analysis is limited.\n2. The paper claims noise could be cancelled out with the tri-coupled manifestation mechanism but no direct evidence is provided.\n3. Assumptions in the theory may not match real battery noise. The cancellation argument relies on noise being approximately zero-mean, directionally inconsistent and symmetric across branches. In practice, these may not always hold.\n4. There are some noticeable typo and language issues.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.\n\nCan authors also explain if the method can be applied to other areas beyond battery lifetime prediction?",
+   "limitations": "The authors should discuss limitations, including assumptions behind noise cancellation, sensitivity to hyperparameters, computational overhead, and failure cases where DITING does not outperform baselines.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "forum_id": "s3atUwqKHs",
+ "title": "Instance-Specific Approximation Ratios for Correlation Clustering and Max-Cut",
+ "abstract": "For many NP-hard optimization problems, strong theoretical inapproximability results exist. However, in practice, heuristics regularly outperform these pessimistic worst-case results on real-world datasets.  Assessing the quality of these algorithms' outputs is often difficult since we lack good lower bounds on the optimal solution.  In this paper, we present efficient algorithms for computing lower bounds on the optimal solutions for correlation clustering, which is a popular problem in social-network analysis. Our lower bounds allow us to provide empirical certificates that bound the solution quality of practical algorithms by obtaining instance-specific approximation ratios. Our main technical contribution is an algorithm that approximates an LP relaxation of a related triangle covering problem in near-linear time on sparse graphs; the algorithm is based on the multiplicative weights update framework and runs on graphs with millions of edges in a few minutes. For the concrete problem of correlation clustering, our lower bounds certify that state-of-the-art heuristics achieve almost optimal approximation ratios of 0.94 for the agreement version and 1.97 for the disagreement version (averaged over 7 real-world datasets).  We also show similar results for the fundamental max-cut problem.",
+ "primary_area": "optimization->discrete_and_combinatorial_optimization",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper proposes an algorithm that computes lower bounds for several optimization problems: correlation clustering, max-cut, and likely (following from the discussion with reviewers) any sparse packing-covering LP. Such lower bounds are useful when the only algorithms we have for the problem are heuristics with no worst-case upper bound on approximation ratio, because with lower bounds one can at least estimate per instance empirical approximation ratio.\n\nThe algorithm is a somewhat natural generalization of previous work, but its analysis becomes much more technical, and empirical results are better.\n\nThe reviewers are unanimous that the paper should be accepted.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Bkut",
+   "summary": "While theoretical inapproximability results for NP-hard optimization problems suggest limited performance guarantees for heuristics, these results often fail to predict how such methods perform on real-world instances. To bridge this gap, the authors propose studying instance-specific approximation ratios by deriving instance-wise lower bounds (for minimization problems) and comparing them to the best feasible solutions found.\n\nThe work centers on three optimization problems: Correlation Clustering, Max-Cut, and MinETCover (Min Edge Triangle Cover problem). The authors introduce two algorithms to compute lower bounds for the MinETCover problem:  a simple greedy packing algorithm, and a method based on the Multiplicative Weights Update framework (MWU). These algorithms also yield direct bounds for Correlation Clustering and Max-Cut.\n\nThe authors evaluate their approach on 16 real-world datasets, comparing their lower bounds to the best solutions obtained using state-of-the-art heuristics. Their results reveal two key findings: Their bounds significantly outperform existing theoretical guarantees from the literature. ​​Existing heuristics often produce solutions very close to optimal (typically within 15%), even for large-scale graphs.",
+   "strengths_and_weaknesses": "Strengths\n\nSignificance and Contributions. \n- The paper addresses Correlation Clustering, a fundamental problem widely studied in the machine learning community and at venues like ICML.\n- It introduces novel bounds for classical optimization problems and shows that they are better than the ones of the literature. \n- The authors provide a rigorous theoretical analysis of their bounds, particularly those derived from the Multiplicative Weights Update (MWU) framework.\n- A key insight is that existing heuristics, despite their worst-case bounds, perform exceptionally well on real-world instances, often producing near-optimal solutions. This finding is highly valuable and suggests the potential for broader applicability to other optimization problems.\n\nPresentation. \n- The paper is well written and a pleasure to read. \n\n\nWeaknesses: \n\nOn originality: \n- The proposed MWU-based algorithm for MinETCover builds upon a prior approach introduced in:\nFischer, N., Kipouridis, E., Klausen, J., & Thorup, M. (2025), A faster algorithm for constrained correlation clustering in STACS. \nWhile the prior work updates the weight of a single triangle at each iteration, the current submission updates the weight of all triangles. The authors’ algorithm achieves better lower bounds and is faster, but it represents a small update of the existing method.\n- The theoretical analysis of the algorithm, though new, follows standard techniques\n- The other lower bound, GreedyPacking, is conceptually trivial. Surprisingly, however, it performs nearly as well as the MWU-based bound across a wide range of graphs. This suggests that even this simple approach could have sufficed to support the authors’ conclusions about instance-specific approximations.\n\n\nSmall comments: \n\nOn Gurobi and optimality. \nPage 7, line 367: The statement \"Gurobi... as it computes exact LP solutions\" could be clarified. While Gurobi aims to compute exact solutions, it returns the best feasible solution found and its best lower bound when a time limit is imposed. This is evident in Figure 1, where Gurobi does not reach optimality for the largest instances.\n\nSuggestion: Explicitly indicate in the table when the optimal solution is proven (e.g., by marking confirmed optimality).\n\nPage 6: The phrase \"To obtain solutions..., we use state-of-the-art heuristics... in Appendix B.1\" would benefit from specificity. Since these heuristics are referenced later in the main text, it would be clearer to name them upfront (e.g., SCMLvo) to improve readability.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "One aspect that would further clarify the paper’s contributions is the originality of the analytical approach for your MWU-based algorithm. While the algorithm builds on the framework introduced by Fischer et al. (2025), your work updates the weights of all triangles simultaneously, leading to improved lower bounds and computational efficiency. Could you elaborate on the novelty in the analysis itself?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_4W9a",
+   "summary": "This paper presents efficient algorithms for computing lower bounds on the optimal solutions for correlation clustering.They develop an algorithm that approximates an LP relaxation for a related triangle covering problem in nearly linear time on sparse graphs, utilizing the multiplicative weights update framework. Although Algorithm 1 and the one proposed by Fischer et al. (2025) theoretically have the same runtime, the algorithm presented in the paper is significantly faster in practice. The key distinction lies in that Algorithm 1 updates the weights for the entire triangle packing during each iteration, while Fischer et al.'s algorithm only refreshes the weight of a single triangle per iteration.",
+   "strengths_and_weaknesses": "The experiments are well-designed and the improvement of the proposed method is apparent. The theoretical results is relatively not enough. Overall, the paper addresses an important and  relevant problem for fast algorithms of correlation clustering.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I am wondering if the authors could provide more theoretical results.",
+   "limitations": "Did not discuss the limitations. \n\nI am wondering if the authors could provide more theoretical results.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_k8Y3",
+   "summary": "This paper provides a more efficient lower/upper bound scheme for some classic clustering problems: correlation clustering (both min disagreement and max agreement objectives), max cut and min triangle deletion. They use this new scheme to obtain empirical approximation ratios for a number of large real world instances.",
+   "strengths_and_weaknesses": "Their approach to getting bounds on the optimal value starts with some known observations to “reduce” the task to a linear program (LP) relaxation for min triangle deletion, where we need to select edges so that all triangles in a given set T are “hit”. This is fractional covering LP for which there are “efficient” combinatorial approximation schemes using multiplicative weight updates (MWU),  see [Plotkin + 1995, survey by Arora+ ]. The authors make use of this framework but add some additional insights which lead to a practical speedup \n\n(1) they select more triangles in the “oracle” for the dual packing problem (in the usual MWU which applies broadly to any covering/packing LP the oracle would use just one packing variable). \n\n(2) They do not need to perform binary search on the optimal value. \n\n(3) They stop early if the gap between feasible primal & dual solutions are small enough. \n\nIdea #1 seems the most interesting one and this relies on the fact that their packing constraints are “3 sparse”, as seen in the proof of Lemma 3. This is a nice application of MWU that needs a slight modification of the classic framework. The new ideas/proofs are not surprising but turn out to be quite useful for their application. \n\nThey also report a lot of  experimental results on large instances with ~100k nodes. They compare known heuristics to the bounds produced by their approximate LP method (and a previous method [Balkanski] and the Gurobi solver). Their LP solver takes around 6 minutes for approx. parameter \\eps=0.1 and is much faster than Gurobi. It provides empricial approximation ratios of around 2 for min disagreement, around 0.95 for max-agreement and around 0.9 for max-cut.\n\nMinor comments:\nIn line 80, 2nd column: you compare your empirical finding on max-cut to various theoretical results. It is misleading to state “we bypass this theoretical limitation by..” Indeed, you provide instance-specific empirical approximation ratios. But what is the theoretical limit that was bypassed? Your method does not provide any theoretical approximation results at all. There is no reason to expect your instances to behave like worst-case instances for max-cut.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Can you phrase your result as something that applies to any \"sparse\" covering/packing problem, where the #nonzeros/row of the covering problem is small? Then the triangle cover problem is just one special case, but your efficient MWU may be more broadly useful.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_vznk",
+   "summary": "This paper is on instance specific approximation ratios for max cut and correlation clustering. They develop fast algorithms that provide lower bounds given an instance, using the relationship between min edge triangle cover problem, max cut and correlation clustering. They  prove theoretically that their lower bounds are valid, show that they are fast and confirm this on experiments.",
+   "strengths_and_weaknesses": "The paper is well written. The specific ideas are not original (MWU, using min edge triangle cover, LP), but they use these ideas nicely to get the speed up they want.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- what is the memory usage of your algorithm? for large scale graphs, memory is as important as computation time.\n\n- in the intro you mention that you approximate the optimal LP solution for min edge triangle cover (which is OPT_LP), however your bound is in terms of OPT_ILP.",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 2
+  }
+ ]
+}

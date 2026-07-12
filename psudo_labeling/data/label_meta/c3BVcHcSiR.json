@@ -1,0 +1,26 @@
+{
+  "forum_id": "c3BVcHcSiR",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_wrhp",
+      "weight": "high",
+      "reason": "Substantive and specific. Its central points -- the vague unification/fragmentation framing, the missing detailed design-and-formulation comparison with OpenVLA-OFT, the added inference complexity from thresholding and re-masking, the weak efficiency advantage, and the unclear articulation of the scientific contribution (method section reads like an experimental report) -- are directly echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_rxNo",
+      "weight": "high",
+      "reason": "Identifies the meta-review's central reservation -- no clearly demonstrated advantage over strong baselines and no clear conceptual benefit of discrete versus continuous diffusion -- and proposes a precise isolation experiment (train without OpenVLA pretrained weights). Well-substantiated and on-target."
+    },
+    {
+      "reviewer": "Reviewer_NHPb",
+      "weight": "high",
+      "reason": "The strong supporter explicitly acknowledged in the meta-review; a detailed, precise review whose strengths and its thorough weakness/question set (reproducibility of reproduced-vs-cited numbers, tokenization/bin-count sensitivity, design-choice sensitivity sweeps, full-pass efficiency, minimal impact statement) corroborate the other reviewers. Weighted for its substance, but its optimistic overall=5 and significance=4 are discounted against the meta-review's borderline stance."
+    },
+    {
+      "reviewer": "Reviewer_3vdz",
+      "weight": "medium",
+      "reason": "Raises the 256-bin quantization/tokenization concern and the heuristic-versus-diffusion-theory point, both corroborated by others (NHPb on tokenization; wrhp and NHPb on complexity). Its real-world-experiments concern was shared by rxNo and valid at initial-review time. Shorter and less deep than the high-weight reviews, and the categorical real-robot framing is partly overtaken by added validation."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as a borderline weak accept whose main unresolved concerns are the lack of a consistently demonstrated advantage over OpenVLA/OpenVLA-OFT, the added inference complexity, and the under-substantiated unification/fragmentation framing -- points raised most specifically by the high-weight Reviewer_wrhp and Reviewer_rxNo. Soundness (3) and originality (3) follow the reviewer consensus, while significance (2) reflects the meta-review's dominant reservation that the paradigm's advantage is not yet established, aligning with the two lowest significance scores. Presentation (3) sits below the two enthusiastic 4s because the meta-review flags positioning/framing as needing substantial improvement and one reviewer found the method section read like an experimental report. Overall recommendation (4) follows the meta-review's explicit lean toward weak accept, discounting Reviewer_NHPb's more optimistic 5 while staying within the reviewer range."
+}

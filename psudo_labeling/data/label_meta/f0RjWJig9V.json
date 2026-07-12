@@ -1,0 +1,26 @@
+{
+  "forum_id": "f0RjWJig9V",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_wrEJ",
+      "weight": "high",
+      "reason": "Most detailed and substantiated review; specific, corroborated points on incremental gains, absence of statistical analysis, missing runtime/latency metrics, the FLOPs-versus-parameters gap, weak causal attribution in ablations, and thin failure-case/domain limitations. Its originality-as-integration argument is well argued and its generalization concern aligns with the meta-review anchor."
+    },
+    {
+      "reviewer": "Reviewer_bdqW",
+      "weight": "high",
+      "reason": "Raises the generalization concern that the meta-review foregrounds and does so with high confidence, plus a sharp, specific methodological critique that the GBST-vs-Q-shift comparison may not control for effective receptive field, and a valid efficiency/MAC question about the heavy local operations. Its ICML field-mismatch objection is off-base (contradicted by the acceptance) and was dropped."
+    },
+    {
+      "reviewer": "Reviewer_pmTD",
+      "weight": "high",
+      "reason": "Directly on-target with the meta-review: domain-specific evaluation (generalization) and insufficient failure-case analysis (robustness) are its two central weaknesses, stated specifically and constructively, and independently corroborated by the other high-weight reviewers."
+    },
+    {
+      "reviewer": "Reviewer_Zzdb",
+      "weight": "medium",
+      "reason": "Reasonable, corroborating points (missing theoretical complexity analysis, latency-measurement conditions, additional datasets, absent limitations discussion, zero-shot generalization) that reinforce others, but the review is lower-effort with low self-reported confidence (2) and the lowest significance score, so it is weighted below the three detailed reviews."
+    }
+  ],
+  "score_rationale": "Soundness is unanimous at 3 and adopted directly. Presentation sits at 3 within the [3,4] range: high-weight reviewers split evenly, but the specific, substantiated criticisms of acronym overload and dense, hard-to-map notation, backed by the medium-weight reviewer, pull it to the lower end of good. Significance (3) and originality (3) follow the three high-weight reviewers and the meta-review's positive framing of GBST/DSCD, while respecting the ranges and reflecting the real reservations about incremental gains and integration-of-known-techniques. Overall recommendation is set at 4 (weak accept), the modal initial score among high-weight reviewers, matching the pre-rebuttal consensus of genuine but addressable reservations centered on generalization and robustness. Confidence is 4 given the strong mutual corroboration across reviewers and the meta-review on the same core concerns."
+}

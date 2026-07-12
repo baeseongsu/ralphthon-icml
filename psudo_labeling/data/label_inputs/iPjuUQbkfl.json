@@ -1,0 +1,62 @@
+{
+ "forum_id": "iPjuUQbkfl",
+ "title": "A Random Matrix Perspective on the Consistency of Diffusion Models",
+ "abstract": "Diffusion models trained on different, non-overlapping subsets of a dataset often produce strikingly similar outputs when given the same noise seed. We trace this consistency to a simple linear effect: the shared Gaussian statistics across splits already predict much of the generated images. To formalize this, we develop a random matrix theory (RMT) framework that quantifies how finite datasets shape the expectation and variance of the learned denoiser and sampling map in the linear setting. For expectations, sampling variability acts as a renormalization of the noise level through a self-consistent relation $\\sigma^2\\to\\kappa(\\sigma^2)$, explaining why limited data overshrink low-variance directions and pull samples toward the dataset mean. For fluctuations, our variance formulas reveal three key factors behind cross-split disagreement: \\textit{anisotropy} across eigenmodes, \\textit{inhomogeneity} across inputs, and overall scaling with dataset size. Extending deterministic-equivalence tools to fractional matrix powers further allows us to analyze entire sampling trajectories. The theory sharply predicts the behavior of linear diffusion models, and we validate its predictions on UNet and DiT architectures in their non-memorization regime, identifying where and how samples deviates across training data split. This provides a principled baseline for reproducibility in diffusion training, linking spectral properties of data to the stability of generative outputs.",
+ "primary_area": "deep_learning->theory",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "This paper studies the consistency of diffusion models using a linear Gaussian model and random matrix theory (deterministic equivalence).\nThe authors show finite data realizations act as renormalization of the noise level and the renormalization effect behaves differently in different noise regimes and along different covariance eigendirections.\nThe reviewers agreed upon positive ratings. Overall I recommend accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_vuve",
+   "summary": "This paper considers the consistency question for linear denoising diffusion models. Specifically, if we use a linear denoiser at each step, if we train the network on two independent data samples from the same distributions. Then starting from the same noise seed the models produce similar images. \n\nThe paper analyzes this setting using Random Matrix Theory to provide theoretical evidence for the linear case. There is also some numerical evidence to extend to the non-linear case.",
+   "strengths_and_weaknesses": "**Strengths**\n\nI think the paper has quite a few strengths. \n\n1. The paper is very well written and easy to follow.\n\n2. The problem studied by the paper is of significant importance. \n\n3. Finally, the results obtained in the linear case are clean, interpretable and interesting. Progressing from one step consistency to consistency of the whole trajectory is an important result. \n\n**Weaknesses**\n\nI think the empirical evidence that tries to extend the analysis to the non-linear case is a bit weak. This is acknowledged in the paper\n\nSecond, I wished the paper had a deeper discussion of related works. I believe that there are many works that consider provide theoretical analysis of linear denoisers using random matrix theory (see [A,B,C,D,E]). This leads me to two questions \n\na. First can such an analysis be extended to deeper linear networks?\n\nb. Can we incorporate the role of training into this analysis?\n\n[A] Raj Rao Nadakuditi, OptShrink: An Algorithm for Improved Low-Rank Signal Matrix Denoising by Optimal, Data-Driven Singular Value Shrinkage (2014).\n\n[B] Chinmaya Kausik, Kashvi Srivastava, and Rishi Sonthalia, Double Descent and Overfitting under Noisy Inputs and Distribution Shift for Linear Denoisers (TMLR 2024).\n\n[C] Hugo Cui and Lenka Zdeborová, High-dimensional asymptotics of denoising autoencoders (NeurIPS 2023).\n\n[D] Jonghyun Ham, Maximilian Fleissner, and Debarghya Ghoshdastidar, Impact of Bottleneck Layers and Skip Connections on the Generalization of Linear Denoising Autoencoders (arXiv:2505.24668, 2025).\n\n[E] Gavish and Donoho, Optimal Shrinkage of Singular Values",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses",
+   "limitations": "Discussed",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_eYh8",
+   "summary": "The paper investigates the empirical observation that diffusion models trained\non disjoint subsets of a given dataset (and possibly also employing different architectures) tend to generate very similar images when started from the same\nGaussian noise seed. It employs Random Matrix Theory to study a linear simplification of diffusion models and analyzes how properties of the data samples\n(respectively their underlying distribution) influences the behavior of this linear\nmodel. A range of empirical results are provides to illustrate these theoretical\nconsiderations.",
+   "strengths_and_weaknesses": "Strengths:  \n1. The approach of considering optimal linear denoising steps (instead of\nlearned) ones in order to make the problem mathematically tractable\nseems sensible.\n2. Random matrix theory is well established and it seems reasonable to apply\nit to this problem. There are no obvious flaws in the application of the\ntheory.\n  \nWeaknesses:  \n1. While the simplification to a linear model is a reasonable approach in\nprinciple, it is important to either theoretically or empirically consider\nhow this simplified model is related to actual (non-linear and trained)\ndiffusion models. This is missing from the paper.\n2. A key modeling claim of the paper is that the linear theory already captures the behavior of diffusion models (at least with regards to consistency). In light of this, it is concerning that the generated image in, e.g.,\nFigures 1 and 6 are of very noticeably lower quality than is possible in\nthe EDM framework (for the FFHQ64 case a pretrained network, which\ngenerated significantly better images, can be found via the EDM github),\nlikely due to insufficient training iterations. Despite the length of the paper there is only very limited evidence presented that the linear model is\na reasonable approximation of diffusion models (note that I did not check\nall 50+ Appendix pages in detail).\n3. While is is common to put some technical proofs and additional illustrations in the Appendix, 64 total pages seems excessive, when the page limit\nfor the main paper is 8. It is important to pick and choose which aspects\nare important and assemble you results into a concise presentation. If\nyou want to make additional illustrations and numerical results available\nputting them on, e.g., github and adding a link seems more appropriate.\nSimilarly if extensive proofs and calculations are needed, a longer form\npublication like a journal seems more appropriate.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. To what extent does the similarity of the output of diffusion model to the\noutput of the linear model rely on the diffusion model being insufficiently\ntrained, i.e. when properly trained does it simply produce similar outputs with less artifacts and\nmore refined details or does it diverge further from the linear model?\n2. Can you provide a theoretical argument why your linear theory already\ncaptures important aspects of diffusion models?\n3. Can you condense the paper to a more reasonable (under 30 pages) length?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_QzAN",
+   "summary": "The paper explains why diffusion models trained on different data splits generate similar outputs from the same noise seed. Using a random matrix theory framework, it shows shared Gaussian statistics largely determine samples. The theory quantifies finite-data effects, sampling variability, and cross-split differences, and matches experiments on linear models, UNet, and DiT.",
+   "strengths_and_weaknesses": "Pros:\n\n1 The paper studies a instereting phenomenon: diffusion models trained on different dataset splits producing nearly identical outputs when given the same noise seed. This problem is striking but under-discussed.\n\n2 The use of RMT to analyze finite-dataset effects in diffusion models is really elegant. The derivation of self-consistent noise renormalization and variance formulas provides a clear theoretical explanation for the observed behavior.\n\n3 The paper provides Insightful decomposition of variability including spectral anisotropy, input inhomogeneity, and dataset size scaling.\n\n4 Importantly, despite being a theory-heavy paper, it  includes extensive empirical evaluations across several benchmarks. I appreciate the authors’ effort in conducting a broad empirical study.\n\nCons:\n\n1 The explanation relies heavily on Gaussian statistics shared across dataset splits.\n\n2 The experiments validate theoretical predictions but appear mainly focused on confirming the theory rather than demonstrating or inspiring  new methods.\n\n3 Not a weakness but a suggestion. The paper focuses primarily on the analysis of the mean estimator. Extending the analysis to a consistent estimator of the covariance of the generated data could potentially lead to more interesting and informative results. Just like many previous RMT works on the consistent estimator for the sample coviance.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "How sensitive are the theoretical predictions to non-Gaussian (but i.i.d) data distributions? Can we extend the results to the sub-Gaussian case?",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_KkST",
+   "summary": "The authors investigate the phenomenon, first observed by Zhang et al 2024, that diffusion methods tend to generate very similar images, when initiated with the same “generative noise”, regardless of methods and architectures. They provide a convincing theoretical explanation for this phenomenon. They investigate the problem as estimating the population statistics given limited data and analyze the inaccuracies occurred, specifically for the covariance matrix, in this setting. A complete analysis is performed for s linear generator using tools from random matrix theory. They basically conclude that lower image frequencies, which are determined early on in the generative process, are estimated more accurately using limited data. The authors partition the variance of denoisers across datasets into 3 components: anisotropy, inhomogeneity and global scaling and explain the tradeoffs. The paper is well written, claims and propositions are followed by comprehensive proofs in the appendix and experiments appear to support the main claims of the paper.",
+   "strengths_and_weaknesses": "The paper is sound and well written. It is of significance to the community. No major weaknesses.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Can you expand more on higher statistical moments, beyond covariance?\n2. How different architectures play a role in your setting and assumptions?\n3. What are the reasons according to your analysis that these properties hold for diffusion generative models but not for other models?",
+   "limitations": "Essential analysis is limited to the linear denoiser / generator setting, but it seems to generalize well.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

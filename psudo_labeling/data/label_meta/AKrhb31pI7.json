@@ -1,0 +1,26 @@
+{
+  "forum_id": "AKrhb31pI7",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_hJXJ",
+      "weight": "high",
+      "reason": "Detailed and substantive review whose two main concerns — the fixed 20k training-step budget confounding the memorization/generalization transition, and the sufficiency of a single SD3 fine-tune for real-world validity — are both explicitly listed among the concerns the meta-review says were addressed (training/checkpoint selection and more realistic settings). Positive recommendation aligned with the accept decision."
+    },
+    {
+      "reviewer": "Reviewer_tRq1",
+      "weight": "high",
+      "reason": "Specific, well-argued review; its two concerns — the overly simple one-hot conditioning mechanism and the paper stopping at diagnosis without a mitigation — map directly onto the meta-review's 'conditioning design' and 'primarily diagnostic rather than methodological' points. Accept-level and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_fx97",
+      "weight": "high",
+      "reason": "Its one concrete concern — how the data are generated and how dataset precision is verified — is explicitly echoed by the meta-review's 'dataset precision' item. Aligned, positive, and consistent with the majority, though the review is otherwise thin (generic strengths, no questions)."
+    },
+    {
+      "reviewer": "Reviewer_r8Ty",
+      "weight": "medium",
+      "reason": "This is the reviewer the meta-review identifies as continuing to question conceptual novelty and framing; the scope-of-claims and multi-factor causal-confound points are legitimate and partly adopted (claims should stay aligned with the controlled setting). However, the uniform 2 scores and reject recommendation are out of step with the accept decision, and presentation=2 is contradicted by the other reviewers' consistent praise for the writing, so the review is only partly on-target."
+    }
+  ],
+  "score_rationale": "The three positively-inclined reviewers (hJXJ, tRq1, fx97) are weighted high because each raised a concern the meta-review explicitly lists as addressed — training/checkpoint selection, conditioning design, and dataset precision — and their consistent 3s anchor soundness, significance, and originality at 3, with presentation set to 3 (between the majority 3 and hJXJ's 4). r8Ty is weighted medium: its scope, causal-confound, and novelty concerns are substantive and partly echoed by the meta-review, but its uniform 2s and reject recommendation are contradicted by the accept decision and its presentation=2 is at odds with the other reviewers' praise for the writing, so it pulls the overall recommendation to a weak accept (4) without dragging the dimensional scores down to 2. Overall recommendation of 4 reflects a solid, well-executed diagnostic study whose central limitation — no methodological contribution and claims broader than the controlled setting — is real and echoed by the meta-review, keeping it clearly on the accept side but short of the two high-weight 5s. Confidence is 4 given the strong qualitative agreement across reviewers on both the contribution and the weaknesses."
+}

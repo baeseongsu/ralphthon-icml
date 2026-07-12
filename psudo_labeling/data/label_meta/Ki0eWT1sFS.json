@@ -1,0 +1,26 @@
+{
+  "forum_id": "Ki0eWT1sFS",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_DBJG",
+      "weight": "high",
+      "reason": "The most directly adopted review: its three questions (cross-layer decoding vs. added capacity, generalization to larger/other pLMs, circuit stability across inputs) map one-to-one onto the additions the meta-review credits as decisive (ESM2-35M results, capacity-controlled comparison, stability analyses). Specific, substantiated, and identifies the O(L^2) scaling cost."
+    },
+    {
+      "reviewer": "Reviewer_19gg",
+      "weight": "high",
+      "reason": "Detailed, technically engaged, and well-reasoned; its asks for a raw-ESM/fitness ablation and for additional ESM sizes (ESM2-650M) are echoed by the meta-review's added fitness comparisons and larger-model results. Positive, careful, and engages directly with the method's core motivation."
+    },
+    {
+      "reviewer": "Reviewer_PSZb",
+      "weight": "medium",
+      "reason": "Clear and on-target on the quadratic scaling bottleneck and on whether circuits are global functional rules vs. localized epistatic approximations, both of which corroborate the meta-review and other reviewers, but light on substantiation (a single stated weakness)."
+    },
+    {
+      "reviewer": "Reviewer_1Xrd",
+      "weight": "medium",
+      "reason": "Its downstream SOTA-comparison and fitness-oracle questions are valid and align with the meta-review's call for stronger downstream comparisons, but its central premise, that the method is not useful unless it beats the original model, is reframed by the meta-review, which notes an interpretable replacement is not meant to fully match the original's performance."
+    }
+  ],
+  "score_rationale": "The two most specific and technically engaged reviews (DBJG and 19gg) anchor the scores; their concerns about scale, cross-layer-versus-capacity, circuit stability, and stronger downstream comparisons are exactly the points the meta-review credits as decisive, so I weighted them highest. Soundness stays at 3 because the meta-review states the limitations are about scope rather than basic soundness, and I discounted the lone soundness-2 rating whose premise (that the method must beat the original model) the meta-review reframes. Significance and originality sit at 2, matching the consensus that the contribution is a valuable but scoped application of an existing interpretability technique to pLMs. The overall 4 reflects the positive-but-bounded meta-review direction and the high-weight reviewers' weak-accept-to-accept range, discounting the single weak-reject."
+}

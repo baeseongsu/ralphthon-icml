@@ -1,0 +1,66 @@
+{
+ "forum_id": "cQD2wxFhFG",
+ "title": "Offline Two-Player Zero-Sum Markov Games with KL Regularization",
+ "abstract": "We study the problem of learning Nash equilibria in offline two-player zero-sum Markov games. While existing approaches often rely on explicit pessimism to address distribution shift, we show that KL regularization alone suffices to stabilize learning and guarantee convergence. We first introduce Regularized Offline Sequential Equilibrium (ROSE), a theoretical framework that achieves a fast $ \\widetilde{\\mathcal{O}}(1/n) $ convergence rate under *unilateral concentrability*, improving over the standard $ \\widetilde{\\mathcal{O}}(1/\\sqrt{n}) $ rates in unregularized settings. We then propose Sequential Offline Self-play Mirror Descent (SOS-MD), a practical model-free algorithm based on least-squares value estimation and iterative self-play updates. We prove that the last iterate of SOS-MD attains the same $ \\widetilde{\\mathcal{O}}(1/n) $ statistical rate up to a vanishing optimization error of order $ \\widetilde{\\mathcal{O}}(1/\\sqrt{T}) $ in the number of self-play iterations $T$.",
+ "primary_area": "theory->reinforcement_learning_and_planning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper studies the problem of learning Nash equilibria in offline two-player zero-sum Markov games. The authors show that KL regularization can stabilize learning and ensure convergence to the equilibrium, avoiding the need to use pessimism. The paper develops an algorithm called ROSE (Regularized Offline Sequential Equilibrium) which converges under an assumption of unilateral concentrability, improving known rates of convergence. The authors prove that the ROSE framework has statistical guarantees.\n\nOverall, the Reviewers were slightly positive on this paper. I personally believe that the paper provides a nice contribution to the literature on learning in games, even though the significance of the obtained results is somehow limited by the assumption needed (unilateral deviation policies), which may be hard to be met in practice. I also think that some synthetic experiments would have helped to strengthen the paper (as also suggested by some Reviewers). Thus, given the above observations, I suggest (weakly) acceptance of the paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_1Cq3",
+   "summary": "This paper studies the problem of learning Nash equilibria in offline two-player zero-sum Markov games. The authors show that KL regularization can stabilize learning and ensure convergence to the equilibrium, avoiding the need to use pessimism.\n\nThe paper develops an algorithm called ROSE (Regularized Offline Sequential Equilibrium) which converges under an assumption of unilateral concentrability, improving known rates of convergence. \nROSE Can be broken into two steps, estimation of the Q-function (using least squares) and computation of the regularized equilibrium, a value update follows. \nUnilateral concentrability corresponds to a distributional shifts of a policy pair where at least one of the policies must adhere to a Nash equilibrium policy.  The authors prove that the ROSE framework has $1/n$ statistical guarantees",
+   "strengths_and_weaknesses": "Strengths:\nI found the paper by and large well written with in-depth discussion on many of the choices made in the algorithm and their consequences. I think the overall results are solid and the paper makes a technical contribution to the field.\n\nWeaknesses: The paper suggests that it can be used when the number of states go to infinity. The computation of $\\hat{Q}$ on page 4 (possibly in several other places) shouldn't work when the number of states is infinite.\n\nThis paper seems to in line with other works that perform NPG updates such as \"Faster Last-iterate Convergence of Policy Optimization in Zero-Sum Markov Games\" by Cen et al. The results in this paper seem to be of the same order as the current work. I did not see a comparison with this work even though it appears highly relevant to me.\n\nIn section 4, the paragraph on implicit pessimism under equation (2) is very vaguely written. I think it can be written more concretely after an exposition on unilateral concetrability. The assumption prevents the reference policy from being \"too small\" in actions that are close to the equilibrium actions, which implies that if they are too small, they must be so for actions that aren't going to appear in the equilibrium policy.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "None",
+   "limitations": "None",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "I will maintain my score of accepting this paper, my opinion was largely reinforced by the authors reply."
+  },
+  {
+   "reviewer": "Reviewer_BaNj",
+   "summary": "This paper studies how to learn a NE in offline two-player zero-sum Markov games. The authors show that when the equilibrium includes a KL regularization term (i.e., a regularized NE), it is possible to achieve a faster $O(1/n)$ convergence rate using the ROSE algorithm. They further propose a more practical algorithm, SOS-MD, by approximating the equilibrium computation oracle in ROSE with mirror descent. The theoretical analysis shows that SOS-MD achieves the same $O(1/n)$ convergence rate.",
+   "strengths_and_weaknesses": "### Strength\n\n1. The writing of the paper is good. The technical introduction and the proofs are easy to follow. \n\n2. It is appealing that the authors use mirror descent to approximate the equilibrium computation in SOS-MD and derive the corresponding convergence guarantee, rather than fully relying on an equilibrium computation oracle which is generally difficult to guarantee.\n\n### Weakness\n\n1. Although the main contribution of the paper is theoretical, the paper does not provide any experiments to demonstrate the effectiveness of the algorithm. In particular, the authors claim that one advantage of their approach is the ability to handle multi-step dynamics, but this benefit remains unclear without practical scenarios or empirical results that illustrate the advantage of modeling multi-step dynamics. Also, since the author proposes a more practical SOS-MD algorithm, it would be helpful if they could provide some preliminary empirical implementation approaches or guidance.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. In my opinion, offline zero-sum Markov Game settings usually do not require many novel techniques to solve, given the established techniques in single-agent setting. Could the author clarify what the main challenge is for extending the single-agent setting to the zero-sum two-player Markov Game?\n\n2. Is it possible to apply similar techniques to solve the general-sum Markov Game?\n\n3. Could the authors further explain why KL regularization induces implicit pessimism? In prior work on online KL-regularized RL like [1], optimism is still typically required for exploration. I am therefore curious about the key reason why optimism is no longer necessary in this setting.\n\n[1]. Zhao et al. Logarithmic Regret for Online KL-Regularized Reinforcement Learning, 2026.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "I maintain my score."
+  },
+  {
+   "reviewer": "Reviewer_A4ge",
+   "summary": "Authors examine the problem of finding optimal strategies for two player stochastic games from offline information.\nThey use various techniques, including kl regularization to find optimal policies with respect to the reference policies.\nThe convergence is faster than the results from the literature.",
+   "strengths_and_weaknesses": "Soundness is good provided that the authors clarify some of my questions.\n(My questions are mainly about some choices of the model and techniques, not about the soundness).\n\nPresentation is good.\n\nSignificance is ok, some choices of the model seems restrictive (like time horizon).\n\nOriginality is very good.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "You talk about Nash equilibria, why? Based on the results of Shapley 1953, stochastic games have an optimal strategy. Is it true or some small choice of the model invalidates the result?\n\nHow would the results change if the objectives were a discounted sum with no time horizon H.\n\nWhy do you add noise (line 180), does it make the problem more interesting? (model should give deterministic reward)",
+   "limitations": "There should be a paragraph about limitation, about the choice in the model and something about relationship of \\eta, n, and the optimality of policies.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_P8MJ",
+   "summary": "This paper investigates learning Nash Equilibrium in offline two-player zero-sum game using KL-regularization as implicit pessimism. Compared to previous algorithms with $\\tilde{O}(1/\\sqrt{n})$ convergence rate, the authors introduce the Regularized Offline Sequential Equilibrium (ROSE) framework and a more practical Sequential Offline Self-play Mirror Descent (SOS-MD), both with $\\tilde{O}(1/n)$ convergence rate.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper provides solid analysis on the duality gap of the proposed algorithms. It is nice to see that the algorithms improve the convergence rate from $1/\\sqrt{n}$ to $1/n$. \n\n2. The authors provide a clear presentation of the algorithms, the analysis and the literature review.\n\nWeaknesses:\n\n1. Lack of novelty. The Mirror Descent framework with KL divergence has been widely studied in the literature of multi-agent alignment(e.g. Munos et al.). The paper seems more of its counterpart analysis in offline Markov games. \n\n2. The comparison in Tabel 1 is not complete. The table only shows the convergence rate dependece on $n$, while other dependences are missing.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Compared to Ye et al., can you explain the algorithmic difference of your algorithm and intuitively how the error rate is improved.\n\n2. Can you do some experiments to show your algorithm behaves better than the state of the art, e.g. in LLM alignment?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The authors listed the complete regret bound comparison with previous works in the rebuttal. While the regret bounds improve its dependence on $n$, other dependencies (e.g. $C$, $H$) make the regrets worse. Therefore, I raised my score to be 4."
+  }
+ ]
+}

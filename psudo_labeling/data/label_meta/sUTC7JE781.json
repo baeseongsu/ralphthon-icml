@@ -1,0 +1,26 @@
+{
+  "forum_id": "sUTC7JE781",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_td2E",
+      "weight": "high",
+      "reason": "Most specific and best-substantiated review, with concrete citations. Its concerns about the opaque empirical 'true LLM distribution', the lack of long-context evaluation, and the majority-vote-only aggregation are all echoed by the meta-review and corroborated by other reviewers; highest confidence (4)."
+    },
+    {
+      "reviewer": "Reviewer_dsX4",
+      "weight": "high",
+      "reason": "Technically detailed and specific. Its points on approximation/assumption gaps (top-k truncation, finite-sample distribution), simulation-based evaluation realism, incremental-novelty positioning, and broader cost metrics are all adopted by the meta-review and mutually corroborated by td2E and WUJP."
+    },
+    {
+      "reviewer": "Reviewer_WUJP",
+      "weight": "medium",
+      "reason": "The 'linear interpolation of ASC and PPR-1v1' novelty concern is corroborated (novelty positioning) and the concrete figure/typo catches (Figure 3 axes, line 307, Figure 4 curves) are useful and specific, but the strengths section is thin and largely restates the method."
+    },
+    {
+      "reviewer": "Reviewer_7ifP",
+      "weight": "medium",
+      "reason": "The dataset-wide optimization insight and the open-ended / semantically-equivalent answer-distribution limitation both align with the meta-review's 'novel dataset-level perspective' and 'simplified evaluation settings'. Held to medium because the prose is informal and vague in places and the model-cascading suggestion is not independently corroborated."
+    }
+  ],
+  "score_rationale": "td2E and dsX4 were weighted highest because their concerns (empirical-distribution reliance, simulation realism, majority-vote/aggregation scope, long-context gap, and novelty positioning) are exactly the ones adopted by the meta-review and mutually corroborated across reviews. Soundness (3), significance (3), and originality (3) follow the meta-review's positive direction on the theoretical grounding, the dataset-level framing, and the substantial efficiency gains, with only dsX4 dissenting at 2 on each; presentation is held at 2 given the concrete figure/typo issues and the opaque distribution-extraction description flagged by three of four reviewers. Overall recommendation is 4, the unanimous reviewer value and consistent with the accept decision, and confidence is 4 given how tightly the reviews corroborate one another."
+}

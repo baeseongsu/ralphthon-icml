@@ -1,0 +1,26 @@
+{
+  "forum_id": "22XF7II0Hd",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_i3Fh",
+      "weight": "high",
+      "reason": "Detailed, specific, and substantiated review with the highest overall score. Its appreciation of the non-naive combination of physics, optimization evidence, and temporal causality aligns with the meta-review's affirmation of novelty (KKT/Lagrange multipliers for future constraints). Its concrete concerns -- null-input-only counterfactual, single-active-constraint selection, and the scattered/mixed method presentation in Section 3 -- are technical and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_vgwQ",
+      "weight": "high",
+      "reason": "Very specific and well-substantiated. Its central concerns -- the convex-only theoretical guarantee versus non-convex core experiments, the low inter-rater reliability of the expert evaluation, the knowledge-graph construction cost, and the hard-coded priority heuristic -- are concrete and directly corroborate ipz4. Consistent with the acceptance direction."
+    },
+    {
+      "reviewer": "Reviewer_ipz4",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its praise for the KKT grounding matches the meta-review's highlighted contribution, and its weaknesses (theory-practice gap on convex vs. nonlinear MPC, very low Krippendorff's alpha, and integration-based novelty) are cross-corroborated by vgwQ and i3Fh."
+    },
+    {
+      "reviewer": "Reviewer_nmpE",
+      "weight": "medium",
+      "reason": "The XAI 'branding'/framing concern is the one explicitly referenced by the meta-review (mitigated via promised presentation changes), and the point that the HCA method is under-explained is corroborated by i3Fh and ipz4, so these specific observations are valuable. However, the broader stance (significance = 1, wrong venue, 'hammer looking for a nail') is contradicted by the acceptance decision and by the meta-review's affirmation that the paper contributes, so the negative overall verdict was down-weighted."
+    }
+  ],
+  "score_rationale": "Scores are anchored to the three high-weight reviewers (i3Fh, vgwQ, ipz4), whose specific and mutually corroborating concerns -- the convex-only guarantee versus non-convex experiments, the null-input-only counterfactual, and the very low inter-rater reliability -- pin soundness at 3, while their common view that novelty lies in integration plus the KKT-for-future-constraints idea (echoed by the meta-review) places originality at 3. Significance is set at 3 rather than lower because the meta-review affirms the paper's contribution and nmpE's significance = 1 (tied to a wrong-venue stance) is contradicted by the accept decision. Presentation is 3, reflecting the two high-weight reviewers who rated it 3 and the followable-but-reorganizable nature of the issues, though the prose fully documents the scattered method description and the branding concern that the meta-review flagged. The overall recommendation of 4 stays within the reviewers' [3,5] range and follows the clear acceptance direction, weighing the 4/4/5 cluster of the high-weight reviewers over nmpE's down-weighted weak-reject; confidence is 4 given the strong cross-corroboration among the substantive concerns."
+}

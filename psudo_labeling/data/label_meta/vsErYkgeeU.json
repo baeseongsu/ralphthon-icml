@@ -1,0 +1,26 @@
+{
+  "forum_id": "vsErYkgeeU",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Vxuc",
+      "weight": "high",
+      "reason": "Raises the theory-rigor concern that the meta-review explicitly anchors on ('one of the reviewers was initially concerned with the rigor of the theory'), with precise, proof-level questions (Proposition 6's Pass@N versus Pass@1 framing; Theorem 4's missing logical link between the KL/accuracy argument and the diversity claim). Also corroborates the cross-domain generalization point (e.g., code). Specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_NJaH",
+      "weight": "high",
+      "reason": "Substantive, well-structured review whose multimodal-generalization request is explicitly echoed by the meta-review ('one reviewer asking for a multi-modal example, which was then provided'). Adds two further concrete, on-target weaknesses: Pass@K measures outcome breadth rather than intermediate-trajectory diversity, and the theory/verifier setup does not cover noisy reward models."
+    },
+    {
+      "reviewer": "Reviewer_NNxA",
+      "weight": "medium",
+      "reason": "Provides specific, corroborated points — missing compute-cost reporting and missing hyperparameter analysis (both echoed by yfBd), plus concrete presentation feedback on Figure 1 and a fair scope note that the method is confined to GRPO/RLVR. Tempered by lower self-reported confidence (3) and significance/originality scores of 4/4 that sit above the panel consensus and the meta-review's framing of the novelty."
+    },
+    {
+      "reviewer": "Reviewer_yfBd",
+      "weight": "medium",
+      "reason": "Accurate summary and two corroborated practical concerns (hyperparameter selection and training-cost comparison, both shared with NNxA), but assigns presentation=2 and significance=2 that fall below the consensus of the other three reviewers and the accept decision, making its lower scores somewhat off-anchor."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on two concerns — theory rigor (Vxuc) and empirical breadth including a multimodal case (NJaH) — so I weighted those two reviews most heavily; both nonetheless keep soundness at 3 and recommend weak acceptance, consistent with the regular-accept outcome. Soundness is a unanimous 3, and the overall recommendation is a unanimous 4, so both are fixed at those values. Presentation, significance, and originality settle at 3 following the two high-weight reviewers and the panel majority, discounting yfBd's off-anchor lows (presentation 2, significance 2) and NNxA's highs (significance 4, originality 4). Confidence is 4, reflecting strong mutual corroboration across the reviews (compute cost and hyperparameters each raised twice, generalization and theory-detail concerns echoed by the meta-review) and a coherent, unanimous overall verdict."
+}

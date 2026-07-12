@@ -1,0 +1,26 @@
+{
+  "forum_id": "64HmKFCaq6",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_kQ7T",
+      "weight": "high",
+      "reason": "Most rigorous quantitative critique: derives the FLOPs gap (8ND vs 6ND, ~33% more per step) and 2x memory overhead, and poses a sharp theoretical question (what does the objective provably have that MDLM lacks). The FLOPs-matching concern is directly adopted by the meta-review, and its assessment is specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_hixn",
+      "weight": "high",
+      "reason": "Comprehensive and specific; independently hits all three central meta-review concerns (components largely known / limited theoretical novelty, non-FLOPs-matched comparison, 110M-only scope) and accurately characterizes the special-case unification and empirical strengths."
+    },
+    {
+      "reviewer": "Reviewer_CB2B",
+      "weight": "high",
+      "reason": "Raises the distinct theoretical limitation the meta-review explicitly singles out: the factorized predictor's token-independence assumption bounds genuine one-step generation. Its presentation critiques (semigroup composition, ordering of the expected-loss definition) are specific, though its strengths discussion is comparatively thin."
+    },
+    {
+      "reviewer": "Reviewer_c4BZ",
+      "weight": "medium",
+      "reason": "Specific and highest-confidence; corroborates the strengths and raises the reliance on analytic posterior bridges (adopted by the meta-review). However, its signature asks (systematic max-step / EMA / JSD sensitivity studies) are exploratory and less central, and it does not surface the FLOPs, scale, or independence concerns that anchor the decision."
+    }
+  ],
+  "score_rationale": "The four reviews are tightly corroborating, so soundness (all 3), significance (all 3), and presentation (three 3s versus one 2, and the meta-review calls the paper clearly written) sit at 3. Originality is set to 2 following the meta-review's framing of novelty as the primary concern and two high-weight reviewers (hixn, CB2B) scoring it 2, despite the genuine unifying contribution. The overall recommendation of 5 weights the two most comprehensive high-weight reviews (kQ7T and hixn, both 5) and the clean Accept decision, while acknowledging the two 4s, one of which is explicitly conditional. Confidence is 4 given how coherently the strengths and the four clustered concerns corroborate across the reviews and the meta-review."
+}

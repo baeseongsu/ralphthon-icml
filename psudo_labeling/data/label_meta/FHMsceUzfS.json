@@ -1,0 +1,26 @@
+{
+  "forum_id": "FHMsceUzfS",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_iy9R",
+      "weight": "high",
+      "reason": "Hits all four concerns the meta-review anchors on (limited novelty, audio-video scope, missing baselines, implementation/data transparency) with specific, substantiated points. The rebuttal directly addressed this reviewer's requests (ViStoryBench-V4, multi-identity stress tests, implementation details), confirming the review's relevance."
+    },
+    {
+      "reviewer": "Reviewer_1VT1",
+      "weight": "high",
+      "reason": "The core request - a vanilla Bagel baseline to isolate the contribution from the backbone - was explicitly adopted in the rebuttal (additional vanilla Bagel comparisons) and its novelty/backbone-isolation concern is echoed by the meta-review. Specific and on-target."
+    },
+    {
+      "reviewer": "Reviewer_hRjb",
+      "weight": "high",
+      "reason": "The data-sourcing/rights/reproducibility concern is directly echoed by the meta-review's implementation-transparency point and addressed by the rebuttal's clarifications on data sourcing and reproducibility. The audio-consistency observation is specific and substantiated via the supplementary videos. Well-articulated, and the most positive assessment."
+    },
+    {
+      "reviewer": "Reviewer_eFyf",
+      "weight": "medium",
+      "reason": "Contributes several corroborated, on-target points (audio-video scope overclaim, missing recent baselines, absence of a quantitative narrative-coherence metric, under-specified ID-prompting details) that align with the meta-review. However, one weakness bullet is a clear copy-paste from an unrelated paper (references to 'neuroscience findings' and 'multimodal temporal reasoning'), indicating a lapse in care, so the review is weighted below the others."
+    }
+  ],
+  "score_rationale": "The four reviewers converge on a coherent picture that the meta-review confirms: a strong, useful system with limited architectural novelty, an overstated audio-video scope, missing baselines, and transparency/reproducibility gaps. Originality is set to 2 following the meta-review's explicit flag of limited novelty (three of four reviewers scored it 2). Soundness, presentation, and significance are positioned at 3, reflecting the higher-weighted positive assessments (iy9R and hRjb) and the meta-review's view of a strong system contribution while staying within the reviewers' ranges. Overall recommendation is 4, which was unanimous; confidence is 4 given the strong mutual corroboration among reviewers and the meta-review, tempered by the eFyf copy-paste anomaly."
+}

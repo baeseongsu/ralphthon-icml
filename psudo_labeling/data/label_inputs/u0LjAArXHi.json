@@ -1,0 +1,62 @@
+{
+ "forum_id": "u0LjAArXHi",
+ "title": "LineageFlow: Flow Matching for High-Fidelity Family-Aware Protein Sequence Generation",
+ "abstract": "Protein sequence generation for engineering requires samples that are biophysically plausible and, when targeting a family/domain, remain recognizable members while exploring within-family diversity.\nCurrent discrete generative models typically start from uniform or masked-token noise, which discards strong position-specific constraints induced by evolution and forces the model to reconstruct conserved residues from scratch, leading to weak family control and low foldability. We propose \\emph{LineageFlow}, a simplex-valued flow-matching model that initializes generation from lineage priors derived from ancestral sequence reconstruction, turning generation into structured mutation from an evolved scaffold.\nAcross diverse protein families, LineageFlow achieves family validity close to held-out natural sequences and improves predicted structural confidence over uniform-/mask-initialized baselines while maintaining substantial within-family novelty and diversity, even surpassing a large pretrained baseline trained on substantially more data.\nFinally, we introduce \\emph{rerouting}, a single intermediate-time mutate--select--amplify intervention that enables objective-guided sampling without per-step predictor guidance and yields further gains in plausibility, including a zero-shot enzyme generation case study.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "LineageFlow introduces a novel and effective approach to family-aware protein sequence generation by replacing standard uniform noise priors with biologically grounded ancestral sequence reconstruction. During the rebuttal phase, the authors successfully resolved initial concerns regarding the method's computational overhead and generalization capabilities. Given its strong empirical performance across foldability, novelty, and structural plausibility metrics, this paper offers a significant contribution.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_6Bek",
+   "summary": "This paper introduces LineageFlow, a Dirichlet flow-matching model. It initializes generation from lineage priors encoded from ancestral sequence reconstruction. The generation process is a structured mutation from an evolved scaffold. The single-step rerouting steers samples toward objectives while empirically preserving family validity. Experimental results demonstrate the efficiency of the proposed method.",
+   "strengths_and_weaknesses": "Strength:\n\n1. The method is novel and well-motivated. For proteins, many sites are highly conserved to maintain structural integrity and biochemical function, so replacing the generic priors with the ancestral priors is reasonable.\n\n2. The experimental settings are fairly comprehensive, and the analysis study is promising. \n\n\n\nWeakness:\n\n1. As mentioned in the strength, the lineage prior is the core of the method. A complete sensitivity analysis for its construction choices is needed.\n\n2. “Zero-shot” of enzyme generation is somehow overclaimed. Although the authors froze the denoiser on the held-out enzyme families, LineageFlow still constructs family priors from the target family MSA and phylogenetic tree during inference.\n\n3. As described in Table 1, the comparison to ProtBFN is informative but not controlled (ProtBFN uses an 8x larger corpus). If feasible, the authors could add a larger-scale pretraining ablation study for the LineageFlow backbone.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "See weakness",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_eYYd",
+   "summary": "The paper proposes flowmatching based a protein sequence generation metho. It incorporates evolutionary information into discrete flow matching by initializing generation from ancestral sequence reconstruction-based priors rather than uniform noise. The model learns to generate sequences within protein families using dirichlet flow matching, and introduces a rerouting procedure at inference time that applies a mutate-select-amplify step to guide generation toward desired objectives. Experiments on large Pfam datasets show that the approach generates diverse sequences that remain consistent with the target protein family while improving structural plausibility and novelty compared to several baseline models.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The authors emphasize of leveraging explicit biological prior (in the form of ASR), which is interesting and a potentially helpful direction.\n2. The usage of \"rerouting\", which is a form of filtering less scoring samples and amplifying the higher scoring ones, is often an effective one for iterative (e.g., diffusion and flow matching based) approaches.\n3. They conducted evaluation on a large-scale benchmark.\n4. experimental results show improvement in a wide range of metrics and settings.\n\nWeakness:\n1. My main concern is the limited methodological novelty. The paper uses flow matching based seq generation with guidance from external/additional tools, with the prior from ASR. I would suggest the authors clarify on their actual methodic novelty. \n2. While the authors conducted a good set of experiments and evaluations, the metrics they emphasized come from predictive models (the foldability metrics related for examples) or are heuristics based.\n3. It is not clear if the improvements come from the proposed method or more enriched datasets used for optimization.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please see the weaknesses above.",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_FMCV",
+   "summary": "This paper proposes a Dirichlet flow-matching model defined on the probability simplex. It discards traditional uniform noise or mask initialization in favor of phylogenetic priors derived from Ancestral Sequence Reconstruction (ASR). It also introduces a training-free _rerouting_ mechanism for target guidance.",
+   "strengths_and_weaknesses": "Strength\n\n- Framing sequence generation as _structured mutation from an evolved scaffold_ rather than _denoising from scratch_ drastically improves the fidelity of family-conditioned generation.\n\n- Introducing a \"mutation-selection-amplification\" (akin to directed evolution) mechanism at intermediate timesteps elegantly achieves guided sampling without requiring classifier gradients at every step.\n\nWeakness\n\n- Heavy reliance on MSA quality and the computational overhead of ASR limits the framework's utility for de novo design of entirely novel folds or orphan proteins.\n\n- The approach is strictly family-aware, meaning it cannot easily traverse the fitness landscape between distinct protein families to invent new multi-domain architectures.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- For highly engineered scaffolds or targets with distinct evolutionary trajectories, natural MSAs are often either too broad or heavily biased. How robust is the ASR prior when the target falls into a sparsely populated or highly skewed region of the phylogenetic tree?\n\n- The rerouting mechanism is elegant, but does the mutation-selection-amplification step introduce any bias toward local sequence minima, potentially reducing the global diversity of the generated family?",
+   "limitations": "NA",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_84Mh",
+   "summary": "The authors propose a novel approach called LineageFlow, which enables the generation of family-specific protein sequences by starting from a lineage prior instead of random or mask tokens. They also propose a rerouting strategy that guides the sampling towards high plausibility.",
+   "strengths_and_weaknesses": "Pros\n  1. This is an innovative application of a specialized flow matching on protein sequences with good motivation.\n\nCons\n  1. The training of the model requires family-specific PSSMs, which is a strong prior and may introduce additional biases compared to purely data-driven sequence language models, which may limit the utility of this method.\n  2. There are missing baselines for the sequence generation benchmarks. For example, ESM3 and DPLM are competitive baselines for sequence generation.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. From Table 1, it seems the proposed rerouting improve the family validity, foldability, diversity and ppl but hurt the novelty. Could the author explain why?\n  2. Could the lineageFlow generalize to unseen protein family not in the training set?\n  3. Could you add more recent sequence generation baselines (such as ESM3[1], DPLM[2], DPLM2[3], etc) to comparison to contextualize the LineageFlow? \n  4. The inference speed in Table 2 of LineageFlow looks not very attractive. Could the authors explain what cause the proposed model being slower than most of the baselines except for ProtBFN[4]? Any idea to improve this?\n\n[1] Hayes, Thomas, Roshan Rao, Halil Akin, Nicholas J. Sofroniew, Deniz Oktay, Zeming Lin, Robert Verkuil et al. \"Simulating 500 million years of evolution with a language model.\" Science 387, no. 6736 (2025): 850-858.\n\n[2] Wang, Xinyou, Zaixiang Zheng, Fei Ye, Dongyu Xue, Shujian Huang, and Quanquan Gu. \"Diffusion language models are versatile protein learners.\" arXiv preprint arXiv:2402.18567 (2024).\n\n[3] Wang, Xinyou, Zaixiang Zheng, Fei Ye, Dongyu Xue, Shujian Huang, and Quanquan Gu. \"Dplm-2: A multimodal diffusion protein language model.\" arXiv preprint arXiv:2410.13782 (2024).\n\n[4] Atkinson, Timothy, Thomas D. Barrett, Scott Cameron, Bora Guloglu, Matthew Greenig, Charlie B. Tan, Louis Robinson, Alex Graves, Liviu Copoiu, and Alexandre Laterre. \"Protein sequence modelling with Bayesian flow networks.\" Nature Communications 16, no. 1 (2025): 3197.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

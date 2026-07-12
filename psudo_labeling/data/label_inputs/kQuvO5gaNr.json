@@ -1,0 +1,66 @@
+{
+ "forum_id": "kQuvO5gaNr",
+ "title": "Certifying Graph Neural Networks Against Label and Structure Poisoning",
+ "abstract": "Robust machine learning for graph-structured data has made significant progress against test-time attacks, yet certified robustness to poisoning – where adversaries manipulate the training data – remains largely underexplored. For image data, state-of-the-art poisoning certificates rely on partitioning-and-aggregation schemes. However, we show that these methods fail when applied in the graph domain due to the inherent label and structure sparsity found in common graph datasets, making effective graph-partitioning difficult. To address this challenge, we propose a novel semi-supervised learning framework called deep Self-Training Graph Partition Aggregation (ST-GPA), which enriches each graph partition with informative pseudo-labels and synthetic edges, enabling effective certification against node-label and graph-structure poisoning under sparse conditions. Our method is architecture-agnostic, scales to large numbers of partitions, and consistently and significantly improves robustness guarantees against both label and structure poisoning across multiple benchmarks, while maintaining strong clean accuracy. Overall, our results establish a promising direction for certifiably robust learning on graph-structured data against poisoning under sparse conditions.",
+ "primary_area": "deep_learning->robustness",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a new method named Self-Training Graph Partition Aggregation (ST-GPA). The proposed method aims to incorporate graph partition, pseudo-labeling, and synthetic edges for robustness certification. The proposed method is evaluated across different datasets and architectures. \n\nAfter the rebuttal, all the reviewers gave positive ratings for the paper. The reviewers' comments, such as novelty concerns, performance explanation, and more baselines, have been resolved by the authors. Therefore, I recommend the acceptance of this paper. \n\nPlease include all the rebuttal content, such as additional experiments, in the final revision.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_tR59",
+   "summary": "The paper proposes Self-Training Graph Partition Aggregation (ST-GPA). ST-GPA is a certified robustness framework for graph poisoning based on partitioning the graph into disjoint subsets and training and aggregating the sub-models on them. It studies the challenges of extending pertaining based robustness method from images (iid) to graphs (non-iid). First, it resolves the issue in semi-supervised learning, and then it proposes self-training and co-training to address the issues of sparse labels and links.",
+   "strengths_and_weaknesses": "## Strengths\n\nThe paper addresses an interesting problem: obtaining robustness guarantees for graph-based models under label poisoning or structural perturbations.\n\nThe paper correctly explores all of the shortcomings of the partitioning method for graph poisoning (or, more generally, the semi-supervised learning setting).\n\nThe method seems to provide stronger certificates than a simpler non-co-training baseline, which suggests that the proposed training strategy has some value.\n\n\n\n## Weaknesses\n\n\n1- The partitioning component does not seem fundamentally new, and the core empirical gains appear to come from self-training or co-training across sub-models. Since similar ideas have been explored before on robustness [1] aside the next concern in practicality of the method it make its contribution limited.\n\n2- Although the method seems to improve over non-co-training in terms of certified robustness, the guarantee still appears weak in practice on at least some datasets. In particular, based on Figure 12(b), the certified performance on OGBN-arXiv seems to degrade under a tiny perturbation budget which approaches MLP-level performance (55% based on the OBGN-arxiv leaderboard). particularly based on figure ~15 edges out of 1,166,243 is enough to break it certificate to MLP level performance.\n\n3- It would be nice to see the gap between certified robustness and actual robustness under a strong attack for understanding whether the certificate is meaningful or overly conservative. I suggest PRBCD which explored for poisoning in [2].\n\nMinor issues:\n\n- In several figure (for example figure 4) the performance “Clean accuracy w/o partitioning” show as vertical line at zero perturbation and horizontal line for higher budget which can misinterpret that model performance is zero even with 1 poisoning edge budget.\n\n- Reproducibility: The paper does not provide code. \n\n[1] Li, Kuan, et al., Revisiting graph adversarial attack and defense from a data distribution perspective. ICLR 2023\n\n[2] Mujkanovic, Felix, et al. \"Are defenses for graph neural networks robust?.\" Advances in Neural Information Processing Systems 35 (2022)",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. How tight are the certificates relative to empirical robustness under strong adaptive attacks?\n2. Does the method remain effective under denser or differently structured graphs such as Amazon-Photo, Amazon-Computers",
+   "limitations": "Partially: They discuss that their method depend on graph homophily.",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The authors provide several new experimental result which convinced me to raise my score."
+  },
+  {
+   "reviewer": "Reviewer_hbbX",
+   "summary": "The paper focuses on data poisoning attacks for Graph Neural Networks (GNNs). In particular, they propose a new, certified defense against label and structure poisoning for node-level GNNs. They introduce a framework called Self-Training Graph Partition Aggregation and evaluate it experimentally.",
+   "strengths_and_weaknesses": "Strengths:\n- The paper covers an important topic - data poisoning attacks for GNNs.'\n- They base their solution on Deep Partition Aggregation (DPA; Levine & Fezi, 2021). However, they correctly identify its limitations for the graph domain, and propose their extended solution - Generalized DPA.\n- The Appendix includes a proof for the Generalized DPA Theorem.\n- The proposed method is interesting, and each component is tested with ablations.\n- The experiments show decent results in every studied setting.\n\nWeaknesses:\n- The experiments were run on only 4 fairly small datasets.\n- Section Related Works mentions multiple graph-domain certifiable defenses. The authors claim that none of them is applicable to this setting (each of the works is either not applicable to the perturbation models, or infinite-width GNNs, or scaling only to very small datasets). As a result, the authors only compare their method to an MLP baseline, which seems very simple. I would double-check if any of the related works can be extended or adapted to compare the results.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "- The paper mentions that \"our insights ...  may be of interest beyond graph learning\". Can you provide some concrete examples for applications (or potential experiments to run) for different domains?\n- Can you provide a comparison with other works' baselines and elaborate further on why they are not adaptable? Even running and seeing a very poor result compared to this work would be valuable if verified experimentally.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The rebuttal answers addressed my main concerns. I maintain my positive score."
+  },
+  {
+   "reviewer": "Reviewer_7PuY",
+   "summary": "The paper shows that directly utilizing popular robustness method from the image domain and applying to graph learning tasks fail owing to label/structure sparsity after data partitioning. To address this, the paper proposes ST-GPA, a semi-supervised learning framework that augments partitions with pseudo-labels and/or synthetic edges and enable certified poisoning robustness for GNNs.",
+   "strengths_and_weaknesses": "**Strengths**\n1. The paper is well written. It exposes the limitations of directly applying poisoning robustness guarantees based on data partitioning and aggregation to graph structures.\n2. To addresses the previous shortcoming, the paper generalizes the partition and aggregate robustness guarantees to non-i.i.d structured data. \n3. The proposed framework, ST-GPA, addresses the sparsity issue in graph partitioning by augmenting pseudo labels/synthetic edges. Empirical experiments over homophilic graphs validate the effectiveness of the proposed framework. \n\n**Weaknesses**\n1. While noted in limitations that the proposed framework primarily works for homophilic graphs, it is unclear what threshold of homophily is required for the assumptions to hold. It would help if the authors conducted experiments on synthetic graphs with increasing levels of homophily, total nodes/edges/classes to empirically establish the generality of the robustness.\n2. The choice of GNNs used in the experiments still feature old and popular methods. It would help strengthen the claims if the authors also included more recent GNN baselines like [1] (and including a transformer based GNN e.g., [2])\n\n---\n\n**References**\n\n[1] Revisiting Heterophily For Graph Neural Networks, Luan et. al., NeurIPS 2022\n\n[2] Rethinking Tokenized Graph Transformers for Node Classification, Chen et. al., NeurIPS 2025",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. Did the authors try applying their framework to node classification tasks with higher class labels than 40? This could either include a synthetic graph or existing datasets like ogbn-mag.\n2. See weaknesses above.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The additional experiments presented by the authors during rebuttal provides additional insights about the proposed model; the SBM experiments highlight both the strengths and limitations of the proposed of ST-GPA. Overall, I incline towards accepting this paper."
+  },
+  {
+   "reviewer": "Reviewer_7Vyy",
+   "summary": "The paper introduces deep Self-Training Graph Partition Aggregation (ST-GPA), a novel semi-supervised learning framework designed to provide certified robustness for Graph Neural Networks (GNNs) against label and structure poisoning attacks. The authors identify that existing partition-and-aggregate schemes, which are effective in the image domain, fail when applied to graphs due to inherent label and structure sparsity. To address this, the ST-GPA framework enriches the partitioned, sparse subgraphs by generating synthetic labels and edges utilizing self-training, label propagation, and link prediction. Extensive evaluations across multiple datasets demonstrate that this architecture-agnostic approach significantly improves certified accuracy against poisoning attacks while maintaining strong clean accuracy.",
+   "strengths_and_weaknesses": "Strengths:\n1. The manuscript clearly identifies and characterizes a critical failure, structural and label sparsity, that occurs when directly applying traditional partitioning certification methods to graph data.\n2. The proposed ST-GPA framework is an innovative application of semi-supervised learning. By explicitly generating pseudo-labels and synthetic edges, it directly mitigates the fundamental sparsity constraints within graph partitions.\n3. The experimental evaluation is robust, demonstrating state-of-the-art certified poisoning robustness across multiple benchmark datasets and different GNN architectures.\nWeaknesses:\n1. The link prediction component introduces considerable computational and memory overhead, making the certification process difficult to scale efficiently to very large or dense datasets like ogbn-arxiv.\n2. The framework relies fundamentally on the homophily assumption, which restricts its applicability and effectiveness on heterophilic graphs.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Questions:\n1. The hyperparameter ϵ dictates the addition of pseudo-edges within partitions. How sensitive is the certified robustness to the variance of this parameter across datasets with vastly different underlying structural densities?\n2. Given the scalability issues associated with the current link prediction method, could more lightweight, sparsity-aware link prediction algorithms be integrated to reduce the time complexity for large-scale graphs?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Thank you for addressing my concerns, and I will retain my original score."
+  }
+ ]
+}

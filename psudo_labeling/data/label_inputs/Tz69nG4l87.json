@@ -1,0 +1,62 @@
+{
+ "forum_id": "Tz69nG4l87",
+ "title": "A Solver-Free Training Method for Predict-then-Optimize",
+ "abstract": "We propose a scalable method for training prediction (machine learning) models in the predict-then-optimize paradigm, where model outputs serve as coefficients for a subsequent linear optimization task. Directly minimizing the empirical decision regret is intractable for linear programming and combinatorial optimization since the decision mapping is piecewise constant, and the gradients are zero almost everywhere. While existing methods address this by smoothing the differentiation process, they suffer from scalability issues, since a computationally expensive solver call is required for every gradient evaluation. To address this, we propose a decision-focused learning pipeline based on a measure transformation principle, which yields a new surrogate loss that is completely optimization-solver-free during training. We establish theoretical guarantees, including Fisher consistency and excess risk bounds. Empirically, our method achieves decision quality competitive with state-of-the-art methods while reducing training time by orders of magnitude.",
+ "primary_area": "general_machine_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper introduces a scalable, optimization-solver-free surrogate loss  for decision-focused learning.\nI recommend for acceptance since during the review and rebuttal phase it was agreed that the approach is original, theoretically grounded, and practical: it provides substantial speedups over standard pipelines while maintaining mathematically rigorous guarantees.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_FTGh",
+   "summary": "The authors propose a solver-free approach for producing decision-focused learning models. To do so, they introduce a two-step methodology that i. first, scales the data and, ii. projects it onto the unit ball.  They provide a well-grounded theory to show that these two steps are necessary to generate a prediction model with desirable properties. Based on this idea, they define a surrogate loss function called WISE, which is, to some extent, a weighted squared error measure. The authors establish Fisher consistency for this surrogate loss function and demonstrate the effectiveness of their method.",
+   "strengths_and_weaknesses": "The authors propose a solver-free approach for decision-focused learning. Specifically, they introduce a two-step methodology based on scaling the data and projecting it onto the unit ball. Building on this idea, they define a surrogate loss function called WISE, which can be interpreted, to some extent, as a weighted squared-error measure. The paper establishes Fisher consistency for this surrogate loss and provides computational evidence supporting the effectiveness of the approach.\n\nOverall, the paper is technically sound, although I still have some concerns regarding the correctness of some proofs (see my questions to the authors).\n\nI find the central idea of modifying the data in a principled way to train decision-focused models to be original and interesting. However, the paper is written in a way that suggests this is the first solver-free predict-then-optimize method, which is not accurate. There are already several related contributions in the literature. I recommend that the authors position their work more carefully with respect to prior research, including the following surveys:\n\nMandi, J., Kotary, J., Berden, S., Mulamba, M., Bucarey, V., Guns, T., & Fioretto, F. (2024). Decision-focused learning: Foundations, state of the art, benchmark and future opportunities. Journal of Artificial Intelligence Research, 80, 1623–1701.\n\nSadana, U., Chenreddy, A., Delage, E., Forel, A., Frejinger, E., & Vidal, T. (2025). A survey of contextual optimization methods for decision-making under uncertainty. European Journal of Operational Research, 320(2), 271–289.\n\nIn particular, the idea of solver-free approaches has already been discussed extensively in works such as:\n\nTang, B., & Khalil, E. B. (2024, May). CAVE: A cone-aligned approach for fast predict-then-optimize with binary linear programs. In International Conference on the Integration of Constraint Programming, Artificial Intelligence, and Operations Research (pp. 193–210). Springer Nature Switzerland.\n\nBerden, S., Mahmutoğulları, A. İ., Tsouros, D., & Guns, T. Solver-Free Decision-Focused Learning for Linear Optimization Problems. In The Thirty-Ninth Annual Conference on Neural Information Processing Systems.\n\nFurthermore, the proposed WISE loss function appears closely related to the losses introduced in\n\nI therefore encourage the authors to better clarify the novelty of their contribution, especially in relation to existing solver-free approaches and surrogate losses.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "The assumption of the existence of a consistent tie-breaking rule it is necessary, however, once the rule is established to optimize considering this rule could be quite difficult? \n\nActually, many papers considers the pessimistic assumption (amongs all the way of selecting one optimal solution, w^* chooses the one that worsen the most the regret). What rule do you choose in your implementation?\n\nWhat kind of model are you training with your approach? A linear one?",
+   "limitations": "Yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_2x3J",
+   "summary": "The paper derives a new surrogate loss function in contextual stochastic optimization that is Fisher consistent and does not need an optimization solver for training. The paper derives an excess regret bound for the empirical risk minimizer. Finally, the paper demonstrates the effectiveness and computational efficiency of the proposed approach numerically.",
+   "strengths_and_weaknesses": "Soundness: the theoretical results and their proofs make sense to me.\n\nPresentation: the writing is clear and well-articulated.\n\nSignificance: the paper addresses an important problem in optimization (contextual stochastic optimization) and the proposed concept is innovative and a departure from the main-stream, numerically challenging approaches.\n\nOriginality: I appreciate that the paper proposes a new, solver-free surrogate function that can be applied efficiently in implementation.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "Do the measure transformation and the corresponding theoretical results hold the same if Steps 1 and 2 are swapped?",
+   "limitations": "yes",
+   "overall_recommendation": 6,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_F581",
+   "summary": "The paper proposes an optimization-solver-free method for scalable predict-then-optimize training by measure transformation. They propose a surrogate regret function the Weight Integrated Spherical Error (WISE), and propose a two-step transformation of the original probability measure: a reweighting based on cost magnitude, and a projection onto the unit sphere.They further provide some theoretical guarantees for the WISE loss, including Fisher consistency, calibration bounds, and finite sample excess regret bounds.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. The paper detects the scalability limitation of DFL, which is important to address.\n\n2. The writing is generally clear.\n\n3. The theoretical properties of the WISE loss are investigated and clearly stated.\n\nWeaknesses:\n\n1. The application scope of the proposed method is limited, only covering linear optimization problem with unknowns only in the objective.\n\n2. All experiments are conducted on simulated datasets. However, realistic datasets for some problems, for example, knapsack problem, are available and widely used in DFL research.\n\n3. The seleced baseline should include more recent works, for example, LAVA [1] is also a solver-free DFL approach and applicable for LP, experiment comparison with [1] would be beneficial.\n\n[1] Berden, Senne, et al. \"Solver-Free Decision-Focused Learning for Linear Optimization Problems.\" NeurIPS 2025.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1.How easy is it to meet the assumptions that enable O(n^{−1}) convergence? Are these assumptions approximately satisfied in the experiments conducted?",
+   "limitations": "See “Weaknesses”.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_rf1r",
+   "summary": "This paper addresses the computational bottleneck in the so-called \"predict-then-optimize\" setting. In contrast to costly existing decision-focused methods, which require expensive solver calls, the authors propose a solver-free training objective named WISE (Weight Integrated Spherical Error). This method exploits the scale invariance and loss scaling properties of linear optimization, thereby incorporating the geometry of optimization problems into the training process, while avoiding the need for solver calls.\n\nTheoretically, the authors prove that WISE is Fisher consistent with the decision regret, and also provide excess risk bounds following the setup of prior work. Finally, experiments demonstrate that WISE achieves competitive or superior decision quality compared to existing methods while being as fast as the standard two-stage method.",
+   "strengths_and_weaknesses": "S1. The paper presents an efficient solver-free method that would be useful in practice. It is also easy to implement, given that datasets include complete information of objective coefficients $y$ and contextual features $x$.\n\nS2. The paper is well-written, and the main concept is clearly explained. \n\nW1. The paper is missing a comparison with a relevant work: Berden et al. (NeurIPS 2025) \"Solver-Free Decision-Focused Learning for Linear Optimization Problems.\" While their method is specialized for linear programs, the \"solver-free\" concept is close to the current paper, and it is important to compare the two methods in terms of both decision quality and computational efficiency.\n\nW2. Regarding the excess risk bound (Theorem 3.7), Hu et al. establish a fast rate of MSE under the low-noise condition (without strong convexity of level sets). This is not mentioned when discussing Theorem 3.7, and it is only stated that Theorem 3.7 matches the classic $O(n^{-1/2})$ order. Given this, the theoretical advantage of WISE over the standard two-stage method is not clear.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Q1. How does WISE compare with the method proposed by Berden et al. (NeurIPS 2025) in the linear program setting (e.g., the shortest path problem)?\n\nQ2. Is it possible to establish a fast rate of WISE under the low-noise condition, similar to Hu et al. Furthermore, is there any theoretical advantage of WISE over the standard two-stage method?\n\nQ3. In the knapsack and shortest path experiments, WISE's performance degrades as the misspecification level increases, compared to SPO+ and PFY. Can you explain why this happens? In particular, is there any insight into how solver-free and solver-based methods are affected differently by misspecification?\n\nMinor comment:\nIn Figure 3, the polynomial degrees shown in the images and the caption are inconsistent.",
+   "limitations": "The proposed method requires labels of objective coefficients $y$ for training, which may not be available in many real-world applications. In contrast, papers in related areas, such as Mishra et al. (ICML 2024) \"From Inverse Optimization to Feasibility to ERM\" and references therein, only require observing solutions of optimization problems. This limitation should be clearly discussed.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

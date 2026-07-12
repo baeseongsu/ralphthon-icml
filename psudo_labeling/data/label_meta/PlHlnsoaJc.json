@@ -1,0 +1,26 @@
+{
+  "forum_id": "PlHlnsoaJc",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_AKMm",
+      "weight": "high",
+      "reason": "The most detailed and specific review, with well-substantiated points. Its central concerns, the theory-to-practice proxy gap, the math-only evaluation, the untested tau threshold, and the position-agnostic detector, are directly echoed by the meta-review (which notes the proxy gap, math focus, and position awareness) and corroborated by the other reviewers. The correctness-gating critique is a distinctive, well-argued observation."
+    },
+    {
+      "reviewer": "Reviewer_iQFR",
+      "weight": "high",
+      "reason": "Well-structured, substantive review that covers all four dimensions carefully. Its emphasis on the proxy gap, the missing tau ablation (which the meta-review flags as addressed in rebuttal), math-concentrated generalization, and reward-hacking risk is corroborated by other reviewers and aligns with the meta-review's assessment."
+    },
+    {
+      "reviewer": "Reviewer_drmm",
+      "weight": "medium",
+      "reason": "Correct on the two recurring themes (the loosely bridged theoretical condition and the math-heavy evaluation), which the meta-review echoes. However, its soundness score of 2 is an outlier against the other three reviewers and against the meta-review's judgment that the empirics are strong, and its emphasis on seed variance and significance testing is not independently corroborated."
+    },
+    {
+      "reviewer": "Reviewer_9sw3",
+      "weight": "medium",
+      "reason": "On-target on the position-aware variant (explicitly echoed by the meta-review), the need for clearer baseline descriptions, and failure-case analysis. But the summary conflates high-probability with high-entropy segments, indicating a partial misreading of the method's core mechanism, which lowers confidence in the assessment."
+    }
+  ],
+  "score_rationale": "All four reviewers converged on weak accept (overall 4) with presentation and originality unanimously at 3, and the meta-review affirms a solid, practical contribution, anchoring overall at 4 and presentation/originality at 3. Soundness is set to 3 following the two most detailed high-weight reviews (AKMm, iQFR) and the meta-review's read that the empirical results are strong despite the acknowledged proxy gap, rather than the lone soundness-2 outlier from a medium-weight reviewer. Significance is set to 3, the majority view reinforced by the meta-review's emphasis on practical usefulness, rather than the single 2 from AKMm. Confidence is 4 because the reviews strongly corroborate one another on the core themes, the proxy gap, math-only evaluation, tau sensitivity, and position-awareness, which the meta-review independently echoes."
+}

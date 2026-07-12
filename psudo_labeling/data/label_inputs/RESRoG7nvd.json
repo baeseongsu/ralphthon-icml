@@ -1,0 +1,62 @@
+{
+ "forum_id": "RESRoG7nvd",
+ "title": "RefChess: Training-Free Contextual Search for Zero-Shot Referring Image Segmentation",
+ "abstract": "Recent advances in zero-shot referring image segmentation (RIS), driven by foundation models such as SAM and CLIP, have improved cross-modal alignment between visual regions and natural language expressions. Nevertheless, selecting the correct segmentation proposal remains challenging, as existing methods typically score proposals independently and can be distracted by visually similar candidates that partially satisfy the expression. To address this limitation, we propose RefChess, a training-free contextual search framework for robust proposal selection. Instead of treating proposal selection as a single-step ranking problem, RefChess evaluates candidate masks under sampled distractor contexts and uses Monte-Carlo Tree Search as a budgeted mechanism to explore the combinatorial space of contextual perturbations. The search is guided by a stability-aware reward that integrates language decomposition, vision--language similarity, object-centric cues, and spatial guidance signals. Experiments on standard RIS benchmarks show that RefChess consistently improves robustness and referring segmentation performance without task-specific training. Code is available at \\url{https://github.com/Tongshiyan/RefChess}.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a training-free contextual search framework based on MCTS for zero-shot RIS and shows strong empirical results on several standard benchmarks. Reviewers generally found the method practically meaningful and the experimental results solid, and most concerns were largely addressed during the rebuttal.\n\nThe main remaining issue concerns the framing of the method, especially the role of MCTS. One reviewer raised a remaining concern about whether RIS naturally fits a sequential decision-making formulation, while another noted that some of the main claims could be stated more carefully. In the rebuttal, the authors clarified that the core idea is proposal selection through contextual search over distractor subsets, with MCTS serving as a practical search mechanism within this framework. The authors also indicated that they are willing to revise the title, abstract, and method description to substantially soften the main claim.\n\nAfter the rebuttal and subsequent discussion, the remaining concern appears to be more about framing and positioning than about technical soundness or empirical validity. Therefore, the AC recommends acceptance. If accepted, the final version should revise the title and some of the main claims, and present the method more precisely as a contextual search framework, so that the presentation better matches both the current empirical support and the actual scope of the technical contribution.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_KEf6",
+   "summary": "This paper studies training-free zero-shot referring image segmentation. Instead of selecting SAM proposals via one-step ranking, it reformulates proposal selection as a robust decision-making problem under contextual perturbations. The proposed method, RefChess, combines CLIP-based proposal scoring, language decomposition, object/spatial priors, and Monte Carlo Tree Search to select proposals that remain stable under distractor contexts. Experiments on RefCOCO, RefCOCO+, and RefCOCOg show substantial gains over prior zero-shot baselines, especially on RefCOCO and RefCOCO+.",
+   "strengths_and_weaknesses": "Strengths.\nThe paper has a clear and well-motivated problem statement: proposal selection in zero-shot RIS is brittle when visually similar distractors satisfy partial parts of the referring expression. Reformulating proposal selection as robust search rather than independent scoring is intuitive and practically meaningful. The method is training-free, easy to implement on top of existing foundation models, and empirically strong. The greedy-vs-MCTS ablation is particularly convincing, showing that the search component matters.\n\nWeaknesses.\nThis article is more like a well-designed reasoning system rather than a new learning method. What remains unclear is whether it is the contextual reasoning of MCTS that is effective, or stronger scoring combined with heatmap/object priors. Particularly, since the language term weight is much smaller than the object/heatmap term, the narrative of 'language-driven robust decision-making' is not as cleanly supported by experiments. Another practical issue is that the additional latency introduced by MCTS is significant.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to the Weaknesses section.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_5ern",
+   "summary": "This paper works on zero-shot referring image segmentation (RIS), and tries to prevent from the failure of existing SAM+CLIP methods to account for contextual interactions among visually similar segmentation proposals. Specifically, authors propose RefChess, a training-free framework that reformulates proposal selection as a decision-making problem via Monte-Carlo Tree Search (MCTS). RefChess models each SAM-generated proposal as a \"chess move\" and evaluates its robustness under simulated distractor perturbations using a stability-aware reward, which integrates language decomposition (subject, attribute, relation parsing), CLIP-based semantic compatibility, object-centric cues, and spatial guidance (location, size heatmaps). Extensive experiments have been conducted to show the effectiveness of each module design.",
+   "strengths_and_weaknesses": "**Strengths**:\n\n1. The chess-inspired MCTS framework introduces a novel way to model contextual perturbations, filling a gap in existing zero-shot RIS methods that ignore inter-proposal interactions.\n2. The integration of linguistic structure, semantic similarity, and spatial cues provides a more comprehensive evaluation of proposals than single-scale CLIP scoring.\n3. The paper effectively justifies the need for robustness evaluation, with Figure 1 and Section 1 highlighting the failures of greedy CLIP-based ranking in complex scenes.\n\n**Weaknesses**:\n\n1. The paper does not explore the impact of some hyperparameters (e.g., rollout depth​), leaving uncertainty about the framework's sensitivity to parameter tuning.\n2. The lightweight language parser's accuracy is not validated across diverse referring expression types (e.g., highly relational or ambiguous phrases), raising questions about its generalizability.\n3. The MCTS simulation process may introduce significant latency, but no efficiency analysis is provided.\n4. Please include some failure cases for discussion.\n5. The examples in Figure 3 are instance segmentation, I'm interested if the model can handle semantic segmentation as well, e.g., segment all cars in the first row.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_8YuJ",
+   "summary": "The paper proposes RefChess, a training-free framework for zero-shot referring image segmentation. Instead of ranking segmentation proposals independently, it models proposal selection as a decision-making process and applies Monte Carlo Tree Search (MCTS) to evaluate competing regions. By combining language cues, vision–language similarity, and spatial information, the method selects more reliable segmentation results. Experiments show it improves robustness and accuracy over existing proposal-ranking approaches.",
+   "strengths_and_weaknesses": "Strengths:\n1. Formulate proposal selection in RIS as a decision-making problem and using Monte-Carlo Tree Search to solve it is a novel idea.\n2. Good results are achieved for referring image segmentation.\n3. The paper is generally easy to understand.\n\nWeaknesses:\n\n1. The motivation for using Monte Carlo Tree Search is not sufficiently clear. For example, the paper should better explain what advantages MCTS provides and which specific limitations of previous methods it is intended to address.\n2. In Table 2, why the proposed method does not show a clear advantage in oIoU, and even performs worse on some datasets?\n3. In Table 1, most of the compared training-free methods are relatively outdated. Only one method was published in 2025, while the others were published before 2023. \n4. Could the authors clarify the specific innovations related to the use of Monte Carlo Tree Search in this work? For example, is the method based on a standard MCTS framework, or are there task-specific modifications designed for the RIS problem?",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Please see the previous section.",
+   "limitations": "Please see the previous section.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_ynba",
+   "summary": "This paper introduces RefChess, a training-free framework for zero-shot RIS task. The method reformulates mask selection as a decision-making process using Monte Carlo Tree Search (MCTS). To guide this search process, the model designs a composite score that integrates fine-grained language-aware cue decomposition and multiple visual priors to compute the rollout rewards.",
+   "strengths_and_weaknesses": "## Strengths:\n\n1. The paper reformulates proposal selection in RIS as a decision-making problem.\n2. The paper designs a unified, constraint-aware proposal score that aggregates heterogeneous evidence.\n\n## Weaknesses:\n\n1. Misalignment between Motivation and MCTS Application.\n\n   The application of MCTS appears overclaimed for the problem being solved. MCTS is designed for sequential decision-making tasks where early actions directly influence future states and available choices. However, in this paper, the \"chain\" of proposals is essentially an unordered subset. The order in which the distractor proposals are sampled and appended does not fundamentally influence the final reward. Consequently, framing this as a \"game tree\" traversal may be an over-formulation. \n2. Theoretical Ambiguity in the Stability-Aware Reward\n\n   The paper claims distractors create \"randomized contexts\" to measure a primary proposal's stability. However, Eq. 7 merely adds the mean and subtracts the standard deviation of **uniformly sampled, independent** distractor scores. The authors should further clarify how this independent formulation meaningfully captures \"contextual stability.\" For example, how can a true mask with a lower initial score outcompete the incorrect ones with higher initial scores?\n3. Flawed Ablation Study Design\n\n   The empirical validation of the MCTS module in Table 2 lacks a fair baseline comparison. The text indicates that the \"Greedy\" baseline directly selects the proposal with the **highest CLIP score** . In contrast, the MCTS method relies on a much more comprehensive and robust scoring function **Si (eq5)**. To rigorously prove the efficacy of MCTS, the authors should provide a fair comparison.",
+   "soundness": 2,
+   "presentation": 1,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1.How were the default non-zero weights (e.g., lamda_hot, lamda_obj) determined for this zero-shot, training-free framework?\n\n2.What would be the performance if RefChess uses CLIP+SAM as HybridGL does?",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  }
+ ]
+}

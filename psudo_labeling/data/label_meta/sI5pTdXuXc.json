@@ -1,0 +1,26 @@
+{
+ "forum_id": "sI5pTdXuXc",
+ "reviewer_stances": [
+  {
+   "reviewer": "Reviewer_XFgM",
+   "weight": "high",
+   "reason": "Most specific, substantiated, and technically engaged review. Its concrete concerns (K^2 dependence in Theorem 5.5, the questionable FedSAM coefficient comparison, the strength of Assumption 5.3, and Theorem 5.6 notation) and its detailed presentation catches are the backbone of the technical assessment, and its conclusion that the paper is above threshold aligns with the meta-review's 'sound and novel'."
+  },
+  {
+   "reviewer": "Reviewer_Hb9z",
+   "weight": "medium",
+   "reason": "Contributes valuable, specific weaknesses -- the missing head-to-head comparison with FedGF, the stateful/cross-silo scoping implied by the per-client history term, and the vision-only evaluation. However, its uniformly harsh scores (all 2s) are out of step with the positive meta-review and the other reviews, indicating some overall miscalibration; the value is in its concrete points rather than its calibration."
+  },
+  {
+   "reviewer": "Reviewer_hkiV",
+   "weight": "medium",
+   "reason": "Positive and high-confidence, with an originality emphasis that directly corroborates the meta-review's 'novel'. The prose is somewhat effusive and less critically engaged with the theory, but the constructive asks (a Taylor-expansion bridge to Eq. 3 and a forgetting-factor sensitivity analysis) are useful and were folded in."
+  },
+  {
+   "reviewer": "Reviewer_9RK9",
+   "weight": "medium",
+   "reason": "Corroborates the practical efficiency and no-extra-communication claims and offers useful reproducibility asks (timing hardware, communication-overhead basis, partition visualization). Its tone is promotional and its soundness score of 4 seems generous given the open theoretical questions, so it is weighted for its corroborating practical points rather than its overall calibration."
+  }
+ ],
+ "score_rationale": "The meta-review anchors on an important problem with a sound and novel method, which aligns most closely with Reviewer_XFgM (weighted high) -- the most specific and technically engaged review -- who rated the paper above threshold while flagging concrete theory-clarity concerns. I kept soundness, presentation, significance, and originality at 3, within the reviewers' [2,4] ranges: the meta's 'sound and novel' and Reviewer_hkiV's originality emphasis pull up from Reviewer_Hb9z's uniformly harsh 2s, while the corroborated notation issues and unresolved theoretical questions keep them from 4. Overall recommendation is set to 4 (weak accept), matching the high-weight reviewer and Reviewer_Hb9z and reflecting genuine open issues (missing FedGF comparison, vision-only evaluation) despite the two medium-weight 5s and the clear accept decision. Confidence is 4 given strong corroboration on the problem's importance, presentation gaps, and theory-clarity needs, tempered by the divergence between the harsher and the more effusive reviews."
+}

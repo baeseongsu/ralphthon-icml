@@ -1,0 +1,66 @@
+{
+ "forum_id": "9HyDFcKhLV",
+ "title": "Think in Cloud, Look at Edges: Semantic-Driven Query Decomposition for Efficient Video Reasoning",
+ "abstract": "Long video understanding faces a critical dilemma: cloud-based Large Multimodal Models (LMMs) offer superior reasoning but suffer from prohibitive bandwidth costs and latency, while edge-based solutions sacrifice perception accuracy for speed. Current collaborative approaches attempt to bridge this gap via similarity-based filtering, yet they treat complex queries as flat semantic vectors. We identify this as a fundamental flaw leading to \"Semantic Submergence,\" where dominant visual features drown out subtle but logically critical cues. To solve this, we introduce SCOPE (Semantic Cloud-Orchestrated Perception at Edge). Shifting the paradigm to \"Think in Cloud, Look at Edges,\" SCOPE utilizes a cloud LMM to decompose complex queries into a structured Directed Acyclic Graph (DAG). This \"observation plan\" guides the edge to retrieve evidence based on logical necessity rather than mere statistical similarity. Experiments on Video-MME and LongVideoBench demonstrate that SCOPE redefines the Pareto frontier, matching cloud-level accuracy with significantly lower transmission costs and outperforming state-of-the-art baselines on complex reasoning tasks.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "All reviewers are in favor of acceptance, praising the method for its unique approach to query decomposition, its efficiency, the thoroughness of the experiments and the accuracy of the results. The paper should generate interest and could have significant impact on the video reasoning research community.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Wr6x",
+   "summary": "The paper addresses the challenge of efficient long video understanding by proposing SCOPE, a semantic-driven edge-cloud collaborative framework. It introduces a paradigm shift from video-centric compression to query-centric planning, where a cloud-based LMM decomposes complex queries into a structured directed acyclic graph of atomic sub-queries. The edge node then utilizes this observation plan to execute budget-aware keyframe selection using the largest remainder method and parallel semantic matching. Experiments on Video-MME and Long VideoBench demonstrate that SCOPE matches cloud-level reasoning accuracy while reducing end-to-end latency by approximately 85% compared to pure cloud solutions.",
+   "strengths_and_weaknesses": "**Strengths**\n1. The paper identifies and formalizes the semantic submergence problem, where dominant visual features mask subtle but logically critical cues in traditional flat matching strategies.\n2. The proposed DAG-based query decomposition effectively captures complex temporal and causal dependencies, leading to superior evidence retrieval in narrative-heavy videos.\n3. SCOPE demonstrates exceptional efficiency, advancing the pareto frontier by providing cloud-grade accuracy with significantly lower transmission costs and latency.\n\n**Weaknesses**\n1. There is a marginal latency overhead introduced by the sub-query matrix operations and DAG generation at the edge/cloud compared to simpler semantic matching baselines.\n2. The system's performance is heavily dependent on the quality of the cloud planner, and an incorrect decomposition could lead to a starvation of critical evidence despite the budget allocation.\n3. The importance scoring is discrete and heuristic-based, and the paper does not deeply explore how sensitive the final accuracy is to small variations in these scores.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "1. What is the average token count and generation time for the DAG decomposition on the cloud, and how does this scale with the complexity of the user query?\n2. How does the framework handle ambiguous queries where atomic sub-queries might overlap semantically, potentially leading to redundant keyframe selection?\n3. Have you evaluated the impact of using a continuous or higher-resolution importance score instead of the discrete 1-10 scale?\n4. How does SCOPE perform when the edge-side visual encoder is significantly less capable than the one used in your experiments?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_CpUx",
+   "summary": "Using LLM (cloud) to decompose an LLM query into subqueries organized in a graph with importance scores. Then select frames based on the subqueries. The selected frames are sent to the cloud for processing.",
+   "strengths_and_weaknesses": "soundness: Experiments are thorough tested on multiple scales of VLM and multiple frame budgets. However, key details like video resolution and total candidate frame counts are missing.\n\nPresentation: Fig 4 & table 4 could be improved if it shows the total latency of all the methods (UNI,TOPK,AKS, Pure Edge, Pure Cloud) in the same graph. Specifically, is the latency saving from uniform selection enough to increase frame budget under the same latency constraint?\n\nSignificance: Accuracy performance of SCOPE under same frame budget is mostly above other approaches. However, the paper only explores frame selection as a means of bandwidth reduction, without considering the straightforward alternative of reducing frame resolution or applying compression. also see comments in limitations.\n\nOriginality: The paper claims that existing approaches mainly aim to understand the video and select frames this way instead of focusing on decomposing the query. I’m not familiar enough with recent papers in this area to assess originality.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1.\tWhat is the distribution of total candidate frames at the default 1 FPS sampling rate?\n2.\tCan you report the accuracy when the cloud model processes all sampled frames with no selection or budget constraint? Or would this be too much for the MLLM to handle? This upper-bound result is essential for understanding how much accuracy is sacrificed by any frame selection approach. \n3.\tWhat resolution are the keyframes transmitted at between edge and cloud? Can the authors discuss whether downsampling spatially would make sense in reducing transmission cost and processing cost as an alternative to low frame budget? \n4.\tIn Figure 4 and Table 4, the latency comparisons use different subsets of methods. Could you provide a unified end-to-end latency comparison across all methods? Specifically, is the latency saving from Uniform selection sufficient to allow a larger frame budget under the same latency constraint?",
+   "limitations": "not discussed. for example, the evaluation assumes RTX 4080 at the edge node, how would it impact the trade-off if the edge node is less powerful compute-wise?",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Thanks for the clarification, I maintain the score of weak accept, as my primary concerns remain largely unchanged."
+  },
+  {
+   "reviewer": "Reviewer_vf61",
+   "summary": "Long video understanding faces a trade-off: cloud-based large multimodal models provide strong reasoning but incur high bandwidth and latency costs, while edge-based systems are efficient yet less accurate. Existing collaborative methods rely on similarity-based filtering, reducing complex queries to flat semantic vectors. This can cause dominant visual features to overshadow subtle but logically important cues. This paper proposes SCOPE (Semantic Cloud-Orchestrated Perception at Edge) addresses this by shifting to a “Think in Cloud, Look at Edges” paradigm. A cloud model decomposes complex queries into a structured Directed Acyclic Graph (DAG), forming an observation plan that guides the edge to retrieve evidence based on logical requirements rather than surface similarity.",
+   "strengths_and_weaknesses": "Strengths: The method is reasonable. The idea of decomposing complex queries into a structured observation plan is interesting and brings a certain level of novelty compared to conventional similarity-based approaches.\n\nWeaknesses: \n1. The gap between existing methods such as AKS and the cloud-only large model is already small, so the improvement brought by SCOPE over these approaches is also limited.\n2. The motivation states that previous work is mainly video-centric, but existing methods already select frames for upload based on the similarity between the query and the video. It would be helpful to more clearly explain what fundamentally distinguishes the proposed “Think in Cloud, Look at Edges” idea from similarity-based approaches such as AKS.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "In Table 5, why do SCOPE and Pure Cloud achieve exactly the same accuracy, even without randomness?",
+   "limitations": "The DAG-based observation plan may work well for structured queries, but it is unclear how well it generalizes to more open-ended questions where the required evidence is harder to decompose.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "This is a solid submission that clearly advances the accuracy–latency frontier on this meaningful problem. However, as the performance is already near the practical ceiling. I therefore maintain my initial assessment of weak accept."
+  },
+  {
+   "reviewer": "Reviewer_yB2A",
+   "summary": "This paper proposes SCOPE, a semantic-driven edge–cloud collaborative framework for long video reasoning. The key idea is to shift reasoning to the cloud: a large multimodal model decomposes a complex query into a structured Direct acyclic graph of atomic sub-queries with associated importance scores, all done via prompting engineering. These weighted sub-queries guide the edge device in selecting keyframes under a transmission budget using a Largest Remainder-based allocation strategy. The selected frames are then sent back to the cloud for final reasoning.",
+   "strengths_and_weaknesses": "### Strengths\n\n* The paper is well motivated, sound, clear and well written.\n* The approach is clear and well formulated.\n* Algorithmic clarity.\n* Results on VideoMME reveal improved performance in SCOPE methodology.\n* The paper presents and cloud-edge hybrid framework with a good trade-off between accuracy and latency empirically validated over pure edge and pure cloud methods.\n* The paper presents ablation studies and qualitative results which is always a must have.\n\n\n---\n\n### Weaknesses\n\n* Authors present results with Qwen2.5VL, however, the Qwen3VL is already available. This is not a main criticism but more a suggestion to include in the main paper.\n* The method could benefit from more baselines and extremely long datasets such as LVBench [1] or MF2 [2] to better access its capabilities.\n* In line 378, the manuscript argues that Uniform sampling suffers from suboptimal accuracy due to its context-agnostic nature. However, the reported improvements of SCOPE over Uniform sampling are comparatively small. It may be more accurate to temper this statement or quantify the practical significance of the observed gains.\n* Section 5.3 misses experimental details. For instance which data you are using, etc. \n* I've found the related work a bit outdated and incomplete. While this is not a critical criticism it would benefit from a thoughtful reconsideration.\n\n\n[1] LVBench: An Extreme Long Video Understanding Benchmark, Wang et al. 2024.\n\n[2] Movie Facts and Fibs (MF2): A Benchmark for Long Movie Understanding, Zaranis et al. 2025",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1) Why is uniform sampling almost always superior to top-K? This looks a bit counter-intuitive. Do you have any justification for this?\n2) Table 5) and Table 6) are based on which data? Could you clarify? Is it based on a single data sample or is it an average over multiple samples?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 5,
+   "final_justification": "The rebuttal thoroughly addresses my concerns with clear and concrete improvements. In particular, the additional experiments on newer backbones (e.g., Qwen3-VL) and datasets (e.g., LVBench) strengthen confidence in the generalizability of the approach, while the planned revisions to clarify experimental details and moderate claims improve the paper’s clarity and rigor. While the explanation of Uniform vs. Top-K is not convincing, my concerns have been satisfactorily resolved, and I have accordingly increased my score."
+  }
+ ]
+}

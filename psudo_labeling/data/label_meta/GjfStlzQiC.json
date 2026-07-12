@@ -1,0 +1,26 @@
+{
+  "forum_id": "GjfStlzQiC",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_ofqf",
+      "weight": "high",
+      "reason": "The most thorough review, with well-substantiated points that align closely with the meta-review's experimental and theoretical themes: the undersupported 'unifying' claim (no combined LT+NL experiments), CIFAR-N named in the abstract but missing from tables, the ambiguous gradient dimensionality/implementation, the conditional convergence and unproven controller stability (C_eff < 1), and the idealistic unimodal vMF assumption. Specific, corroborated, and directly relevant to evaluation."
+    },
+    {
+      "reviewer": "Reviewer_9NYZ",
+      "weight": "high",
+      "reason": "Detailed, high-confidence review with concrete, well-targeted concerns: early-training gradient instability causing hard tail classes to be down-weighted as noise, risk of PI-feedback oscillation/oversuppression under SGD noise, numerical dominance within cognitive entropy, unclear per-class gradient computation, and insufficiently justified hyperparameters. These points are corroborated by ofqf and echo the meta-review's emphasis on technical solidity."
+    },
+    {
+      "reviewer": "Reviewer_s6iV",
+      "weight": "high",
+      "reason": "Sharp articulation of the 'scalar ambiguity' insight and specific, high-confidence concerns on generalization across architectures (ViT) and scale (ImageNet-LT, Clothing1M), class/instance-dependent noise, and the T-proportional-to-1/kappa derivation. Its experimental-scope critique aligns with the meta-review's stress on extensive evaluation; the lone overall score of 4 among 5s reflects appropriate caution rather than being off-base."
+    },
+    {
+      "reviewer": "Reviewer_mx8u",
+      "weight": "medium",
+      "reason": "Engages specifically with the theory (Remark 4.3, the timing of when Eq. 12 holds, the L-smoothness assumption in Lemma 4.1, derivation of Eq. 3), which aligns with the meta-review's 'sound theoretical analysis' emphasis. However, the reviewer's own confidence is low (2) and the presentation score of 2 is an outlier below the other three reviewers, so its scoring is down-weighted while its theory questions are retained."
+    }
+  ],
+  "score_rationale": "Soundness (3) and significance (3) are set directly, as all four reviewers agreed on 3 and the meta-review corroborates both a technically solid method and an important problem. Presentation ranges [2,4]; I placed it at 3 with the two high-weight reviewers who scrutinized the text-vs-results discrepancies (missing CIFAR-N, ambiguous gradient state), discounting the single outlier 2 from the low-confidence reviewer. Originality ranges [3,4]; I placed it at 3 with the majority, acknowledging the meta-review's 'novel' framing without over-weighting the lone 4. The overall recommendation (5) stays within the reviewers' [4,5] range and follows the accept decision and the clearly positive, mutually corroborating meta-review, with three of four reviewers at 5; the single high-confidence 4 keeps me from going higher. Confidence (4) reflects the strong agreement across reviews on both the core strengths (white-box control, validation-free design, scalar-ambiguity insight, theory-plus-experiments) and the recurring weaknesses (combined LT+NL evaluation, implementation clarity, controller stability, vMF unimodality)."
+}
