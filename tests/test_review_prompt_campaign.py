@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "skills" / "auto-research" / "assets" / "review-optimization"
 P0 = ASSETS / "smoke-prompt.md"
 P1 = ASSETS / "smoke-prompt-calibration-v2.md"
+P2 = ASSETS / "smoke-prompt-calibration-v3.md"
 SCRIPTS = ROOT / "skills" / "auto-research" / "scripts"
 BATCH = SCRIPTS / "review_prompt_batch.py"
 TRACKING = SCRIPTS / "review_prompt_tracking.py"
@@ -75,6 +76,19 @@ class PromptCandidateContractTest(unittest.TestCase):
             "section, table, figure, equation, or reported result",
         ):
             self.assertIn(required, normalized_addition)
+
+    def test_p2_preserves_p0_and_separates_significance_calibration(self) -> None:
+        baseline = P0.read_text(encoding="utf-8")
+        candidate = P2.read_text(encoding="utf-8")
+
+        self.assertTrue(candidate.startswith(baseline))
+        addition = " ".join(candidate[len(baseline) :].split())
+        self.assertIn(
+            "Calibrate significance independently from soundness and originality",
+            addition,
+        )
+        self.assertIn("positive impact evidence is established", addition)
+        self.assertIn("do not raise significance merely because", addition)
 
 
 class BatchCampaignContractTest(unittest.TestCase):
@@ -221,6 +235,69 @@ class BatchCampaignContractTest(unittest.TestCase):
         )
         self.assertEqual(wandb_metrics["ops/sample_count"], 5)
         self.assertEqual(wandb_metrics["ops/completed_count"], 5)
+
+    def test_discard_becomes_persistent_meta_experience_for_next_candidate(self) -> None:
+        batch = load_module(BATCH, "review_prompt_batch_experience_test")
+        records = [
+            {
+                "candidate_id": "p0",
+                "parent_candidate_id": "none",
+                "composite": 0.895111,
+                "human_agreement": 0.901333,
+                "judge_quality": 0.888889,
+                "human_dimension_agreement": {
+                    "soundness": 0.8,
+                    "presentation": 1.0,
+                    "significance": 0.933333,
+                    "originality": 0.933333,
+                    "overall_recommendation": 0.84,
+                },
+            },
+            {
+                "candidate_id": "p1",
+                "parent_candidate_id": "p0",
+                "composite": 0.926889,
+                "human_agreement": 0.909333,
+                "judge_quality": 0.944444,
+                "human_dimension_agreement": {
+                    "soundness": 0.866667,
+                    "presentation": 1.0,
+                    "significance": 0.866667,
+                    "originality": 0.933333,
+                    "overall_recommendation": 0.88,
+                },
+            },
+        ]
+        decisions = [
+            {
+                "candidate_id": "p0",
+                "parent_candidate_id": "none",
+                "decision": "baseline",
+                "rejection_reason": "none",
+            },
+            {
+                "candidate_id": "p1",
+                "parent_candidate_id": "p0",
+                "decision": "discard",
+                "rejection_reason": "dimension_regression",
+            },
+        ]
+        specs = {
+            "p1": {
+                "hypothesis": "Explicit evidence calibration improves review quality.",
+                "change_summary": ["Add evidence-to-score boundaries."],
+            }
+        }
+
+        memory = batch.render_experience_memory(records, decisions, specs)
+
+        self.assertIn("p1 — discard", memory)
+        self.assertIn("dimension_regression", memory)
+        self.assertIn("Explicit evidence calibration", memory)
+        self.assertIn("Composite delta: +0.031778", memory)
+        self.assertIn("significance: -0.066666", memory)
+        self.assertIn("Preserve observed gains", memory)
+        self.assertIn("Next-candidate constraint", memory)
 
 
 if __name__ == "__main__":

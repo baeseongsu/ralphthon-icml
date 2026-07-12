@@ -664,6 +664,159 @@ def _candidate_order(path: Path) -> int:
     return int(match.group(1)) if match else 10**9
 
 
+def write_candidate_spec(
+    *,
+    campaign_root: Path,
+    candidate_id: str,
+    parent_candidate_id: str,
+    hypothesis: str,
+    change_summary: Sequence[str],
+) -> dict[str, Any]:
+    if not hypothesis.strip():
+        raise ValueError("candidate hypothesis must be nonempty")
+    normalized_changes = [item.strip() for item in change_summary if item.strip()]
+    if not normalized_changes:
+        raise ValueError("candidate change_summary must be nonempty")
+    value = {
+        "candidate_id": candidate_id,
+        "parent_candidate_id": parent_candidate_id,
+        "hypothesis": hypothesis.strip(),
+        "change_summary": normalized_changes,
+    }
+    path = campaign_root / "candidates" / candidate_id / "candidate-spec.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        existing = _load_json(path, "candidate spec")
+        if existing != value:
+            raise ValueError("candidate spec changed after it was recorded")
+        return existing
+    write_json(path, value)
+    return value
+
+
+def _candidate_specs(campaign_root: Path) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    for path in sorted((campaign_root / "candidates").glob("p*/candidate-spec.json")):
+        value = _load_json(path, "candidate spec")
+        candidate_id = str(value.get("candidate_id", ""))
+        if candidate_id:
+            result[candidate_id] = value
+    return result
+
+
+def render_experience_memory(
+    records: Sequence[Mapping[str, Any]],
+    decisions: Sequence[Mapping[str, Any]],
+    specs: Mapping[str, Mapping[str, Any]],
+) -> str:
+    if len(records) != len(decisions):
+        raise ValueError("experience records and decisions must align")
+    by_id = {str(record["candidate_id"]): record for record in records}
+    lines = [
+        "# Review Prompt Optimization Experience Memory",
+        "",
+        "This cumulative memory is an input to every next-candidate reflection. ",
+        "It preserves both successful rules and discarded failure modes; a higher ",
+        "Composite alone never erases a component or dimension regression.",
+        "",
+    ]
+    baseline = records[0]
+    lines.extend(
+        [
+            "## Baseline — " + str(baseline["candidate_id"]),
+            "",
+            f"- Composite: {float(baseline['composite']):.6f}",
+            f"- Reference-score agreement: {float(baseline['human_agreement']):.6f}",
+            f"- Judge review quality: {float(baseline['judge_quality']):.6f}",
+            "",
+        ]
+    )
+    for decision in decisions[1:]:
+        candidate_id = str(decision["candidate_id"])
+        parent_id = str(decision["parent_candidate_id"])
+        candidate = by_id[candidate_id]
+        parent = by_id[parent_id]
+        spec = specs.get(candidate_id, {})
+        verdict = str(decision["decision"])
+        reason = str(decision["rejection_reason"])
+        composite_delta = float(candidate["composite"]) - float(parent["composite"])
+        human_delta = float(candidate["human_agreement"]) - float(
+            parent["human_agreement"]
+        )
+        judge_delta = float(candidate["judge_quality"]) - float(
+            parent["judge_quality"]
+        )
+        candidate_dimensions = candidate["human_dimension_agreement"]
+        parent_dimensions = parent["human_dimension_agreement"]
+        dimension_deltas = {
+            dimension: float(candidate_dimensions[dimension])
+            - float(parent_dimensions[dimension])
+            for dimension in parent_dimensions
+        }
+        gains = [
+            dimension
+            for dimension, delta in dimension_deltas.items()
+            if delta > 1e-12
+        ]
+        regressions = [
+            dimension
+            for dimension, delta in dimension_deltas.items()
+            if delta < -1e-12
+        ]
+        lines.extend(
+            [
+                f"## Experience — {candidate_id} — {verdict}",
+                "",
+                f"- Parent: {parent_id}",
+                f"- Hypothesis: {spec.get('hypothesis', 'not recorded')}",
+                f"- Decision: {verdict} (`{reason}`)",
+                f"- Composite delta: {composite_delta:+.6f}",
+                f"- Reference-score agreement delta: {human_delta:+.6f}",
+                f"- Judge review-quality delta: {judge_delta:+.6f}",
+                "- Dimension agreement deltas:",
+            ]
+        )
+        for dimension, delta in dimension_deltas.items():
+            lines.append(f"  - {dimension}: {delta:+.6f}")
+        changes = spec.get("change_summary", [])
+        if isinstance(changes, list) and changes:
+            lines.append("- Prompt intervention:")
+            lines.extend(f"  - {item}" for item in changes)
+        lines.extend(
+            [
+                "- Meta-level experience:",
+                "  - Preserve observed gains: "
+                + (", ".join(gains) if gains else "none measured"),
+                "  - Do not repeat unmodified behavior affecting: "
+                + (", ".join(regressions) if regressions else "none measured"),
+                "  - Next-candidate constraint: preserve the current parent and "
+                + (
+                    "explicitly recover " + ", ".join(regressions)
+                    if regressions
+                    else "seek a new bounded improvement without regressions"
+                )
+                + ".",
+                "  - Selection lesson: optimize the gated objective, not Composite "
+                "in isolation.",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def update_experience_memory(
+    campaign_root: Path,
+    records: Sequence[Mapping[str, Any]],
+    decisions: Sequence[Mapping[str, Any]],
+) -> Path:
+    path = campaign_root / "experience-memory.md"
+    path.write_text(
+        render_experience_memory(records, decisions, _candidate_specs(campaign_root)),
+        encoding="utf-8",
+    )
+    return path
+
+
 def decide_campaign(campaign_root: Path, campaign_id: str) -> dict[str, Any]:
     records = [
         _load_json(path / "candidate-record.json", "candidate record")
@@ -688,6 +841,7 @@ def decide_campaign(campaign_root: Path, campaign_id: str) -> dict[str, Any]:
             break
     value["consecutive_discards"] = consecutive_discards
     write_json(campaign_root / "campaign.json", value)
+    update_experience_memory(campaign_root, records, decisions)
     return value
 
 
@@ -725,6 +879,12 @@ def _parser() -> argparse.ArgumentParser:
     publish_parser.add_argument("--project", required=True)
     publish_parser.add_argument("--source-git-sha", required=True)
     publish_parser.add_argument("--kept-git-sha")
+    spec_parser = subparsers.add_parser("record-spec")
+    spec_parser.add_argument("--campaign-root", type=Path, required=True)
+    spec_parser.add_argument("--candidate-id", required=True)
+    spec_parser.add_argument("--parent-candidate-id", required=True)
+    spec_parser.add_argument("--hypothesis", required=True)
+    spec_parser.add_argument("--change-summary", action="append", required=True)
     return parser
 
 
@@ -752,7 +912,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     elif args.command == "decide":
         value = decide_campaign(args.campaign_root, args.campaign_id)
-    else:
+    elif args.command == "publish-offline":
         value = publish_candidate_offline(
             sample_manifest_path=args.sample_manifest,
             campaign_root=args.campaign_root,
@@ -762,6 +922,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             project=args.project,
             source_git_sha=args.source_git_sha,
             kept_git_sha=args.kept_git_sha,
+        )
+    else:
+        value = write_candidate_spec(
+            campaign_root=args.campaign_root,
+            candidate_id=args.candidate_id,
+            parent_candidate_id=args.parent_candidate_id,
+            hypothesis=args.hypothesis,
+            change_summary=args.change_summary,
         )
     print(json.dumps(value, ensure_ascii=False, sort_keys=True))
     return 0
