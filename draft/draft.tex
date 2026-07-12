@@ -1,0 +1,145 @@
+%%%%%%%% ICML 2026 PAPER DRAFT %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage[preprint]{icml2026}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\icmltitlerunning{Building Reliable Review Agents from Multiple Human Reviews}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{Building Reliable Review Agents from\\
+    Multiple Human Peer Reviews}
+
+  \icmlsetsymbol{equal}{*}
+  \begin{icmlauthorlist}
+    \icmlauthor{Seongsu Bae}{equal,kaist}
+    \icmlauthor{Kyunghoon Hur}{equal,keti}
+    \icmlauthor{Gyubok Lee}{equal,kaist}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{kaist}{KAIST}
+  \icmlaffiliation{keti}{Korea Electronics Technology Institute (KETI)}
+  \icmlkeywords{scientific peer review, review agents, pseudo-labeling, automated research}
+  \vskip 0.3in
+]
+
+\printAffiliationsAndNotice{\icmlEqualContribution}
+
+\begin{abstract}
+AI agents increasingly automate experimentation and scientific writing, creating a corresponding need for scalable and reliable evaluation. Existing LLM reviewers are commonly prompted directly or evaluated against individual reviews, although reviews of the same paper can be inconsistent, complementary, or uneven in quality. From 6,341 accepted ICML 2026 papers, we draw a 600-paper stratified sample and construct consolidated pseudo-labels for an initial subset of 175 papers. We implement a label-blind review agent that reads PDF-derived manuscript text, produces an evidence trace and rubric-specific rationales, and returns schema-validated ICML scores. On a fixed five-paper development smoke test, prompt calibration increases the development objective from 0.895 to 0.947 and is selected by predefined non-regression gates. These preliminary results establish operational feasibility, not performance on unseen papers or parity with human reviewers.
+\end{abstract}
+
+\section{Introduction}
+
+Scientific agents are beginning to support increasingly large portions of the research lifecycle, including idea generation, coding, experimentation, analysis, and manuscript writing. Systems such as The AI Scientist and Agent Laboratory demonstrate end-to-end workflows that produce complete research artifacts with limited human intervention \cite{lu2024aiscientist,schmidgall2025agentlab}. AutoResearch-style systems further increase the rate at which experimental candidates can be generated and evaluated. As scientific generation becomes more scalable, scientific evaluation risks becoming a bottleneck.
+
+Automated peer review is not simply a summarization or acceptance-prediction task. A useful reviewer must identify the main claims, connect them to evidence, distinguish soundness from significance and presentation, formulate actionable questions, and keep numerical scores consistent with the written assessment. Directly prompted LLMs can produce fluent reviews, but fluency does not guarantee specific or supported criticism. Recent work therefore explores reasoning models and proactive reviewer agents that maintain explicit review evidence \cite{zhang2025critical,fang2026proreviewer}.
+
+Human review data also presents a supervision problem. Reviews of the same paper often emphasize different aspects and assign different scores. Treating every review as an independent target exposes a model to conflicting supervision, while choosing one review discards complementary observations. Moreover, some reviews may be cursory or insufficiently grounded. We therefore study the following question: \emph{How can multiple, partially inconsistent human reviews be converted into coherent supervision for a scientific review agent?}
+
+We build a paper-level dataset that links multiple initial reviews, rubric scores, and a meta-review, and use an LLM-based procedure to consolidate them into one ICML-style pseudo-review. The procedure is a quality-control mechanism, not a claim of objective ground truth: it asks the labeling model to prioritize specific, mutually corroborated concerns, remove duplication, and write from a single-reviewer perspective. It also restricts each synthesized score to the minimum--maximum range of the corresponding human scores.
+
+Our contributions are:
+\begin{itemize}
+  \item a distribution-matched sample of 600 papers, stratified from 6,341 accepted papers by research area and review-score quartile;
+  \item 175 consolidated pseudo-labels, including separate audit metadata for 163 labels and verified score-range compliance for all 175; and
+  \item an end-to-end, manuscript-only review agent with strict structured output, bounded prompt optimization, and a reproducible preliminary development evaluation.
+\end{itemize}
+
+\section{Related Work}
+
+\subsection{LLM-based Scientific Peer Review and Reviewer Agents}
+
+Recent reviewer systems range from reasoning-based manuscript quality checkers to agents that actively investigate suspicious claims. The former focus on critical problems rather than imitating a complete human review \cite{zhang2025critical}; ProReviewer instead maintains a structured review log during evidence collection \cite{fang2026proreviewer}. Our work is complementary: we construct paper-level supervision from multiple reviews and optimize an evidence-bound structured reviewer against it.
+
+\subsection{AutoResearch and AI-Generated Scientific Papers}
+
+Research agents now automate literature exploration, hypothesis generation, experimental iteration, and paper writing. The AI Scientist generates ideas, executes experiments, writes a manuscript, and invokes an automated review stage \cite{lu2024aiscientist}; Agent Laboratory organizes literature review, experimentation, and report writing with optional human feedback \cite{schmidgall2025agentlab}. AutoResearch-style loops narrow this workflow to rapid, metric-driven modification and evaluation of experimental code \cite{karpathy2025autoresearch}. These systems motivate our setting: increasing the throughput of research generation also increases the need for independent, evidence-grounded evaluation. A reviewer agent should therefore complement generation systems rather than merely reproduce their self-evaluation.
+
+\section{Dataset Construction}
+
+\subsection{Source Records}
+
+We group public ICML 2026 OpenReview records by paper forum identifier. The accepted-paper collection contains 6,341 papers and 24,378 official reviews. We sample 600 papers (9.5\%) using largest-remainder allocation over primary areas and, within each area, quartiles of mean reviewer overall recommendation (seed 42). The sample covers 81 of 84 areas; its mean score is 4.144 versus 4.147 in the population, and its spotlight share is 7.7\% versus 8.5\%. We generated consolidated labels for 175 sampled papers (166 regular and 9 spotlight). \Cref{fig:pipeline} summarizes the workflow.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.66\textwidth]{../psudo_labeling/figure/pipeline/pseudo_labeling_pipeline.png}
+  \caption{Pseudo-labeling workflow. A stratified ICML review sample is processed one paper at a time. Reviewer evidence is prioritized and deduplicated before producing a single structured review whose scores remain within the human-review range. Reviewer-priority metadata is retained for analysis only; the pseudo-review is the downstream supervision target.}
+  \label{fig:pipeline}
+\end{figure*}
+
+Our input construction excludes explicit rebuttal and post-rebuttal score-change fields. A meta-review may nevertheless refer to the rebuttal or decision, so we prohibit such references in the synthesized review. The review agent receives only the manuscript at inference time; human reviews, meta-reviews, rebuttals, and decisions are unavailable to it.
+
+Multiple reviews provide complementary expertise but do not form a consistent training target. Reviewers can focus on different contributions, disagree about severity, or assign substantially different scores. Review effort can also vary: a detailed, evidence-backed review and a cursory review should not necessarily influence a consolidated target equally. We use pseudo-labeling to reduce contradictions and duplication while retaining well-supported observations across reviews. This procedure cannot guarantee that the output is correct or unbiased; it is an auditable quality-control step for constructing supervision.
+
+\subsection{Constrained Consolidation}
+
+For each paper, the labeling model reads the initial reviews and the meta-review. It is prompted to assign each source review a qualitative priority (high, medium, or low) using specificity, cross-review corroboration, and agreement with concerns reflected in the meta-review. These priorities and their rationales are stored separately as labeling metadata. They are neither numerical reliability estimates nor included in the final review text.
+
+The model then produces one review in the voice of a single reviewer. It may merge and rephrase supported observations, but it is instructed not to invent criticisms absent from the source reviews or mention reviewers, the meta-review, rebuttal, or decision. The final JSON contains exactly the ten review fields listed above; reviewer priorities and the score rationale are stored in a separate audit file.
+
+For paper $i$, review dimension $d$, and human reviews $R_i$, the synthesized score $\hat{s}_{i,d}$ is constrained by
+\begin{equation}
+  \min_{r\in R_i}s_{r,d}\leq \hat{s}_{i,d}\leq\max_{r\in R_i}s_{r,d}.
+\end{equation}
+This constraint covers soundness, presentation, significance, originality, and overall recommendation. We checked all 175 current pseudo-labels and found no score-range violations. The constraint prevents extrapolation beyond observed judgments, but does not imply a true consensus score.
+
+\section{Review Agent and Development Evaluation}
+
+\paragraph{Manuscript-only reviewer.}
+The runner extracts text and metadata from a PDF, places the text in a delimited untrusted-data block, and invokes a no-tools reviewer through Codex authentication. Web search, external memory, and paper-embedded instructions are disabled. The selected P2 prompt asks GPT-5.4 to produce a descriptive summary, strengths, severity-ordered weaknesses, decision-relevant questions, limitations, ethical concerns, and an evidence trace. It also requires six ICML scores and paper-grounded rationales. A strict JSON schema and runtime validator reject unknown fields, missing prose, and out-of-range scores. During inference, the reviewer cannot access pseudo-label prose, reference scores, candidate identity, or Judge output.
+
+\paragraph{Optimization objective.}
+We optimize only the reviewer prompt on a frozen five-paper development sample. A separate GPT-5.4 Judge receives the manuscript, generated review, and reference pseudo-review prose, but not numeric reference scores or candidate identity. The local evaluator combines normalized agreement with consolidated pseudo-label scores ($A$), nine-dimension Judge quality ($J$), and penalties $P$ for hallucination, missing evidence, schema failure, and API failure:
+\begin{equation}
+  C=\operatorname{clip}_{[0,1]}(0.5A+0.5J-0.25P).
+\end{equation}
+A candidate is kept only if $C$ improves and neither aggregate component nor any score dimension crosses a predefined regression threshold. Discarded prompts remain reproducible artifacts but cannot become the next optimization parent.
+
+\paragraph{Development results.}
+P2 adds an evidence-to-ordinal calibration pass and separates significance from soundness and originality. Relative to P0, it improves composite score by 0.051, reference-score agreement by 0.064, and Judge quality by 0.039, while passing every gate. All five papers completed with ten Reviewer/Judge calls and no retries or failures. P3 attains a slightly higher raw composite but is discarded because score agreement and dimension gates regress; P4 also fails to improve on P2. We therefore freeze P2 as the development default. Because this selection uses only five development papers, no holdout, and the same model version for Reviewer and Judge, it does not establish general review quality.
+
+\section{Limitations}
+
+The current pseudo-labeled subset is small and contains only accepted papers, limiting both score coverage and variation in manuscript quality. Although the 600-paper sample preserves the population's area and mean-score distributions, three very small areas receive no sample and the accepted-only population contains few low-score papers. Meta-reviews are not objective ground truth, and consolidation can suppress legitimate disagreement. The agent evaluation is a five-paper development smoke with no sealed-holdout result, uncertainty estimate, or human-expert comparison; using GPT-5.4 as both Reviewer and Judge also risks correlated preferences. Finally, rejected papers and their reviews can be difficult to collect because they may remain inaccessible unless authors voluntarily make them public. Publicly available rejected papers may therefore be an unrepresentative subset.
+
+\section{Conclusion and Future Directions}
+
+We introduced a data construction framework and operational review agent for evaluating scientific manuscripts against consolidated human-review supervision. The framework converts partially inconsistent reviews into an auditable pseudo-review, while the label-blind agent produces evidence-traced, schema-validated assessments. A bounded five-paper development campaign selects P2 over P0, but this result remains preliminary.
+
+We will next evaluate the frozen P2 prompt once on a larger sealed holdout, report paired uncertainty, and conduct blinded human-expert comparisons with independent Judge models. On the data side, we will expand beyond 175 labels, strengthen stratification for rare areas and score tails, and incorporate voluntarily disclosed rejected papers while measuring availability-driven selection bias. These extensions are required before making claims about general ICML reviewing performance.
+
+\bibliography{bibliography}
+\bibliographystyle{icml2026}
+
+\newpage
+\appendix
+\onecolumn
+
+\section{Label-Construction Prompt}
+We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. Each input contains the paper title, abstract, primary area, initial reviews, rubric scores, and meta-review; explicit rebuttal and post-rebuttal \texttt{final\_justification} fields are excluded. The prompt first asks the model to classify source reviews as high, medium, or low priority using specificity, cross-review corroboration, and agreement with the meta-review. It then instructs the model to write one first-person ICML review, merge repeated observations and questions, exclude low-quality or unsupported criticisms, and avoid any mention of other reviewers, the meta-review, rebuttal, score changes, or the decision. The complete prompt used for label construction is included in the repository at \texttt{psudo\_labeling/docs/pseudo\_labeling\_prompt.md}.
+
+\section{Output Schema}
+The review output is stored separately from labeling metadata. Each record contains \texttt{forum\_id} plus ten review fields: \texttt{summary}, \texttt{strengths\_and\_weaknesses}, four quality scores, \texttt{key\_questions\_for\_authors}, \texttt{limitations}, \texttt{overall\_recommendation}, and \texttt{confidence}. The quality scores use the ICML 1--4 scale, overall recommendation uses 1--6, and confidence uses 1--5. A separate audit record stores \texttt{reviewer\_stances} and \texttt{score\_rationale}; these are not included in the review target.
+
+\section{Additional Data Statistics}
+The parent ICML 2026 accepted-paper collection contains 6,341 papers, 24,378 official reviews, and 84 primary areas. It comprises 5,805 regular accepts and 536 spotlight accepts. Papers have $3.84\pm0.40$ reviews on average (median 4), and an official review contains $484.51\pm246.42$ words on average. The stratified 600-paper sample covers 81 areas, has mean review score 4.144 (population: 4.147), and includes 46 spotlight papers. The current artifact contains 175 consolidated reviews and 163 separate audit records; the labeled subset consists of 166 regular and 9 spotlight papers. All six numerical fields are complete in the parent review collection. Because the source collection contains accepted papers only, these statistics do not represent the full ICML submission or rejection distribution.
+
+\section{Review-Agent Implementation}
+The deployment artifact freezes P2 at \texttt{skills/auto-research/assets/review-optimization/smoke-prompt-calibration-v3.md} and pairs it with \texttt{generated-review.schema.json}. Under \texttt{skills/auto-research/scripts/}, \texttt{review\_prompt\_codex.py} implements inference; adjacent \texttt{review\_prompt\_*} scripts implement dataset freezing, batching, scoring, reflection, selection, and privacy-aware tracking. The deployment manifest records prompt and schema hashes. P3 and P4 remain opt-in experimental prompts.
+
+\end{document}
