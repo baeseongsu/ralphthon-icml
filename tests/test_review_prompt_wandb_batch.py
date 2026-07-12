@@ -791,6 +791,9 @@ class WandbBatchTest(unittest.TestCase):
             "reference_id",
             "reference id",
             "reference-id",
+            "reference_review",
+            "reference review",
+            "reference-review",
         )
 
         for marker in markers:
@@ -812,6 +815,74 @@ class WandbBatchTest(unittest.TestCase):
                 self.assertEqual(fake.settings_calls, [])
                 self.assertEqual(fake.init_calls, [])
                 self.assertFalse(output.exists())
+
+    def test_explicitly_redacts_reference_review_marker_from_judge_rationale(
+        self,
+    ) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking_judge_marker")
+        judge = judge_result(0)
+        judge["rationale"] = (
+            "The generated assessment is stronger than the reference review, "
+            "while the reference-review remains only a comparison anchor."
+        )
+
+        sanitized = tracking.redact_judge_reference_review_markers(judge)
+
+        self.assertEqual(sanitized["scores"], judge["scores"])
+        self.assertEqual(
+            sanitized["rationale"],
+            "[REDACTED_COMPARISON_RATIONALE]",
+        )
+        self.assertIn("reference review", judge["rationale"].casefold())
+
+    def test_redacted_judge_marker_payload_passes_while_reviewer_marker_fails(
+        self,
+    ) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking_judge_publish")
+        bundles = publish_bundles()
+        for bundle in bundles:
+            bundle["judge"]["rationale"] = (  # type: ignore[index]
+                "Compared with the reference review, this assessment is grounded."
+            )
+        original_rationales = [
+            bundle["judge"]["rationale"] for bundle in bundles  # type: ignore[index]
+        ]
+        fake = FakeWandb()
+
+        with tempfile.TemporaryDirectory() as directory:
+            self.call_batch(
+                tracking,
+                fake,
+                directory,
+                publish_bundles=bundles,
+                forbidden_terms=[],
+            )
+        self.assertEqual(len(fake.init_calls), 1)
+        logged_reviews = fake.log_calls[0]["reviews/all"]
+        for row in logged_reviews.rows:
+            logged_judge = json.loads(row[2])
+            self.assertEqual(
+                logged_judge["rationale"],
+                "[REDACTED_COMPARISON_RATIONALE]",
+            )
+        self.assertEqual(
+            [bundle["judge"]["rationale"] for bundle in bundles],  # type: ignore[index]
+            original_rationales,
+        )
+
+        bundles[0]["generated_review"]["summary"] = (  # type: ignore[index]
+            "The reference review is unavailable to the Reviewer."
+        )
+        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
+            ValueError, "privacy scan"
+        ):
+            self.call_batch(
+                tracking,
+                FakeWandb(),
+                directory,
+                publish_bundles=bundles,
+                forbidden_terms=[],
+            )
 
     def test_boundary_sensitive_category_scan_does_not_reject_originality(
         self,

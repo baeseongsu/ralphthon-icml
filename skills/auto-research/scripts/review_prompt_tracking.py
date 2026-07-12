@@ -173,6 +173,28 @@ SENSITIVE_WANDB_CATEGORY_MARKER_PATTERN = re.compile(
     r"scores?|labels?|review|text)"
     r"(?![a-z0-9])"
 )
+JUDGE_REFERENCE_REVIEW_MARKER_PATTERN = re.compile(
+    r"(?<![a-z0-9])reference(?:[_\s-]+)review(?![a-z0-9])",
+    flags=re.IGNORECASE,
+)
+
+
+def redact_judge_reference_review_markers(
+    judge: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Redact only Judge meta-markers before the fail-closed W&B scan.
+
+    The Judge is allowed to compare against reference prose locally, so its
+    rationale may name that comparison source without copying it. The marker is
+    not useful in W&B and is removed explicitly. Reviewer text and every other
+    sensitive category remain subject to rejection by the privacy scanner.
+    """
+
+    validated = validate_judge(judge)
+    result = dict(validated)
+    if JUDGE_REFERENCE_REVIEW_MARKER_PATTERN.search(str(validated["rationale"])):
+        result["rationale"] = "[REDACTED_COMPARISON_RATIONALE]"
+    return result
 
 
 @contextmanager
@@ -669,7 +691,10 @@ def record_wandb_batch_offline(
         ("candidate_id", candidate_id),
     ):
         _batch_text(field, value)
-    validated_bundles = _validated_publish_bundles(publish_bundles)
+    validated_bundles = [
+        (paper_id, review, redact_judge_reference_review_markers(judge))
+        for paper_id, review, judge in _validated_publish_bundles(publish_bundles)
+    ]
     validated_config = _validate_batch_config(
         config,
         campaign_id=campaign_id,
