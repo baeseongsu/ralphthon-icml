@@ -117,6 +117,11 @@ Composite = clamp(
 | P3 | 0.948556 | 0.936000 | 0.961111 | discard: component regression |
 | P4 | 0.939111 | 0.922667 | 0.955556 | discard: no Composite gain |
 
+![W&B autoresearch objective comparison across review-prompt candidates](figures/review-prompt-autoresearch-wandb-objectives.png)
+
+위 W&B snapshot에서 이 campaign의 비교 대상은 P0–P4이며,
+`baseline`과 `candidate-001`은 이전 smoke run이다.
+
 - **P0**는 campaign baseline이다.
 - **P1**은 Composite와 두 component가 개선됐지만, significance agreement가 P0 대비 `-0.066667` 악화되어 `0.05` dimension gate를 넘었다. 따라서 discard되었다.
 - **P1에서 얻은 경험**은 “공통 scoring rule이 한 dimension의 과대평가를 만들 수 있으며, Composite 상승만으로 이를 덮으면 안 된다”는 것이다.
