@@ -1,9 +1,12 @@
-# N=5 Review Prompt Campaign — P3/P4 Final Decision
+# N=5 Review Prompt Campaign — P0–P4 Final Results
 
 ## Outcome
 
 - Campaign: `n5-001`
 - Frozen development sample: `N=5`
+- `p0`: baseline
+- `p1`: discard (`dimension_regression`)
+- `p2`: keep and final deployment winner
 - Current and final parent: `p2`
 - `p3`: discard (`component_regression`)
 - `p4`: discard (`no_composite_gain`)
@@ -12,9 +15,23 @@
 
 | Candidate | Composite | Reference-score agreement | Judge review quality | Decision |
 | --- | ---: | ---: | ---: | --- |
+| `p0` | 0.895111 | 0.901333 | 0.888889 | baseline |
+| `p1` | 0.926889 | 0.909333 | 0.944444 | discard |
 | `p2` | 0.946556 | 0.965333 | 0.927778 | keep / deploy default |
 | `p3` | 0.948556 | 0.936000 | 0.961111 | discard |
 | `p4` | 0.939111 | 0.922667 | 0.955556 | discard |
+
+## P0–P2 trajectory
+
+- P0 established the frozen baseline.
+- P1 added shared evidence-to-ordinal calibration. Although all aggregate
+  components improved, significance agreement regressed by `-0.066667`, beyond
+  the `0.05` dimension gate, so P1 was discarded.
+- P2 retained the useful evidence calibration while separating significance
+  from soundness and originality and requiring direct positive impact evidence.
+  Relative to P0, Composite improved by `+0.051444`, reference-score agreement by
+  `+0.064000`, and Judge review quality by `+0.038889`, with no gate regression.
+  P2 therefore became—and remained—the kept parent.
 
 ## P3 decision
 
