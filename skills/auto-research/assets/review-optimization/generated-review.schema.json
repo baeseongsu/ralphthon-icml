@@ -32,12 +32,12 @@
         "confidence"
       ],
       "properties": {
-        "soundness": {"type": "number", "minimum": 1, "maximum": 4},
-        "presentation": {"type": "number", "minimum": 1, "maximum": 4},
-        "significance": {"type": "number", "minimum": 1, "maximum": 4},
-        "originality": {"type": "number", "minimum": 1, "maximum": 4},
-        "overall_recommendation": {"type": "number", "minimum": 1, "maximum": 6},
-        "confidence": {"type": "number", "minimum": 1, "maximum": 5}
+        "soundness": {"type": "integer", "minimum": 1, "maximum": 4},
+        "presentation": {"type": "integer", "minimum": 1, "maximum": 4},
+        "significance": {"type": "integer", "minimum": 1, "maximum": 4},
+        "originality": {"type": "integer", "minimum": 1, "maximum": 4},
+        "overall_recommendation": {"type": "integer", "minimum": 1, "maximum": 6},
+        "confidence": {"type": "integer", "minimum": 1, "maximum": 5}
       }
     },
     "score_rationales": {
