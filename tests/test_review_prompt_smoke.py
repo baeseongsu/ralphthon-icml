@@ -211,6 +211,48 @@ class ReviewPromptSmokeTest(unittest.TestCase):
         self.assertNotIn("human_scores", payload)
         self.assertNotIn("pdf", payload.lower())
 
+    def test_cli_writes_recomputable_evidence_with_wandb_disabled(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "run"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(RUNNER),
+                    "--fixture",
+                    str(FIXTURE),
+                    "--prompt",
+                    str(PROMPT),
+                    "--output-dir",
+                    str(output),
+                    "--campaign-id",
+                    "smoke-001",
+                    "--candidate-id",
+                    "baseline",
+                    "--wandb-mode",
+                    "disabled",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            metrics = json.loads(
+                (output / "metrics.json").read_text(encoding="utf-8")
+            )
+            self.assertIn("composite", metrics)
+            self.assertEqual(
+                len(
+                    (output / "experiments.jsonl")
+                    .read_text(encoding="utf-8")
+                    .splitlines()
+                ),
+                1,
+            )
+            self.assertTrue((output / "generated-review.json").is_file())
+            self.assertTrue((output / "judge.json").is_file())
+            self.assertTrue((output / "reflection.md").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()
