@@ -122,6 +122,14 @@ Composite = clamp(
 위 W&B snapshot에서 이 campaign의 비교 대상은 P0–P4이며,
 `baseline`과 `candidate-001`은 이전 smoke run이다.
 
+### Autoresearch trajectory
+
+![P0–P4 autoresearch trajectory with objective metrics and gated decisions](figures/review-prompt-autoresearch-trajectory.png)
+
+이 trajectory는 동일한 W&B aggregate metrics를 iteration 순서로 재구성한
+것이다. P3는 raw Composite가 가장 높지만 regression gate로 discard되었고,
+모든 gate를 통과한 P2가 parent와 deployment winner로 유지된다.
+
 - **P0**는 campaign baseline이다.
 - **P1**은 Composite와 두 component가 개선됐지만, significance agreement가 P0 대비 `-0.066667` 악화되어 `0.05` dimension gate를 넘었다. 따라서 discard되었다.
 - **P1에서 얻은 경험**은 “공통 scoring rule이 한 dimension의 과대평가를 만들 수 있으며, Composite 상승만으로 이를 덮으면 안 된다”는 것이다.
