@@ -25,7 +25,7 @@
   literate={—}{{--}}1
 }
 
-\icmltitlerunning{Optimizing Evidence-Bound Review Agents with Consolidated Human Reviews}
+\icmltitlerunning{\smash{Evidence-Bound Review Agents}}
 
 \begin{document}
 
@@ -143,7 +143,7 @@ We will next evaluate the frozen P2 prompt once on a larger sealed holdout, repo
 \section{Label-Construction Prompt}
 We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. The exact prompt supplied to each labeling agent is reproduced below; \texttt{\$\{id\}} is replaced with the paper forum identifier at runtime.
 
-\lstinputlisting[firstline=27,lastline=61]{../psudo_labeling/docs/pseudo_labeling_prompt.md}
+\lstinputlisting{pseudo_labeling_prompt_excerpt.txt}
 
 \section{Output Schema}
 The review output is stored separately from labeling metadata. Each record contains \texttt{forum\_id} plus ten review fields: \texttt{summary}, \texttt{strengths\_and\_weaknesses}, four quality scores, \texttt{key\_questions\_for\_authors}, \texttt{limitations}, \texttt{overall\_recommendation}, and \texttt{confidence}. The quality scores use the ICML 1--4 scale, overall recommendation uses 1--6, and confidence uses 1--5. A separate audit record stores \texttt{reviewer\_stances} and \texttt{score\_rationale}; these are not included in the review target.
