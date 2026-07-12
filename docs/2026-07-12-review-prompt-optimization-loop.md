@@ -21,23 +21,35 @@
 
 ```mermaid
 flowchart TD
-    A["현재 kept parent<br/>P2"] --> B["누적 experience memory"]
-    A --> C["Allowlisted aggregate metrics"]
-    B --> D["Reflection meta-prompt"]
-    C --> D
-    D --> E["일곱 Review sections 재작성"]
-    E --> F["Bounded compiler<br/>Review sections 구간만 교체"]
-    F --> G["고정 N=5 Reviewer inference"]
-    G --> H["Reference-score agreement"]
-    G --> I["Reference-based Judge 평가"]
-    H --> J["Composite + regression gates"]
-    I --> J
-    J -->|"keep"| K["Memory 갱신<br/>검증 · commit · push"]
-    J -->|"discard"| L["Memory에 실패 경험 보존<br/>parent는 그대로 유지"]
-    K --> M["다음 candidate 또는 stop"]
-    L --> M
-    M -->|"budget이 남음"| B
-    M -->|"P4에서 사용자 중지"| N["P2 deployment winner"]
+    A["P0: ICML baseline review template"] --> B["Freeze the development set<br/>N=5"]
+    B --> C["Reviewer inference"]
+    C --> D["Reference-score agreement"]
+    C --> E["Reference-based Judge evaluation"]
+    D --> F["Aggregate metrics and score distributions"]
+    E --> F
+    F --> G{"Baseline / composite + regression decision"}
+
+    G -->|"P0 baseline"| H["Set P0 as the initial parent"]
+    G -->|"Keep"| I["Promote candidate to parent<br/>Verify · commit · push"]
+    G -->|"Discard"| J["Keep the current parent<br/>Preserve the failure"]
+
+    H --> K["Update cumulative experience memory"]
+    I --> K
+    J --> K
+    F --> L["Allowlisted aggregate metrics"]
+    H --> M["Current kept parent prompt"]
+    I --> M
+    J --> M
+
+    K --> N["Reflection meta-prompt"]
+    L --> N
+    M --> N
+    N --> O["Rewrite all seven Review sections"]
+    O --> P["Bounded compiler<br/>Replace Review sections only"]
+    P --> Q["Next candidate<br/>P1, P2, P3, ..."]
+    Q --> C
+
+    G -->|"Stop after P4"| R["Final deployment winner: P2"]
 ```
 
 ## 고정된 실험 경계
