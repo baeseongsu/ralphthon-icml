@@ -4,6 +4,14 @@
 
 **Goal:** Build a credential-free end-to-end smoke that consumes frozen Reviewer/Judge response fixtures, computes mean-based human agreement and Judge quality, writes reproducible local evidence, and records one offline W&B run containing every anonymized generated review.
 
+> **2026-07-12 addendum:** After the fixture smoke passed, the approved first
+> live adapter became two isolated `codex exec` calls using cached ChatGPT auth.
+> The implementation uses `review_prompt_codex.py` for one candidate and
+> `review_prompt_loop.py` for a bounded sequence. The current input is a local
+> structured human-review JSON plus its PDF; only numeric labels reach the local
+> evaluator. Codex receives deterministic PDF-derived text with shell, apps,
+> subagents, MCP, plugins, and web search disabled.
+
 **Architecture:** Keep the optimization decision local and deterministic. A pure scoring module validates ICML score ranges and computes the composite objective; a tracking module appends one immutable JSONL record and optionally mirrors allowlisted data to W&B offline; a thin CLI binds frozen prompt/config/input hashes into one candidate run. The smoke uses fixtures at the LLM API boundary so it can run in CI without credentials or network access.
 
 **Tech Stack:** Python 3.9+ standard library, `unittest`, optional `wandb` SDK executed with `uv run --with wandb`, Markdown prompt assets, JSON fixtures, JSONL local ledger.

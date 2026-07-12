@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scores", "rationale"],
+  "properties": {
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rubric_coverage",
+        "evidence_grounding",
+        "major_issue_detection",
+        "score_rationale_consistency",
+        "specificity_actionability",
+        "summary_faithfulness",
+        "hallucination_avoidance",
+        "question_quality",
+        "limitations_ethics"
+      ],
+      "properties": {
+        "rubric_coverage": {"type": "number", "minimum": 1, "maximum": 5},
+        "evidence_grounding": {"type": "number", "minimum": 1, "maximum": 5},
+        "major_issue_detection": {"type": "number", "minimum": 1, "maximum": 5},
+        "score_rationale_consistency": {"type": "number", "minimum": 1, "maximum": 5},
+        "specificity_actionability": {"type": "number", "minimum": 1, "maximum": 5},
+        "summary_faithfulness": {"type": "number", "minimum": 1, "maximum": 5},
+        "hallucination_avoidance": {"type": "number", "minimum": 1, "maximum": 5},
+        "question_quality": {"type": "number", "minimum": 1, "maximum": 5},
+        "limitations_ethics": {"type": "number", "minimum": 1, "maximum": 5}
+      }
+    },
+    "rationale": {"type": "string"}
+  }
+}

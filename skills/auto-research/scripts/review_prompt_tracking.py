@@ -26,6 +26,24 @@ ALLOWED_WANDB_CONFIG_FIELDS = frozenset(
         "objective_penalty_weight",
         "campaign_id",
         "candidate_id",
+        "pdf_sha256",
+        "sample_manifest_sha256",
+        "reviewer_prompt_sha256",
+        "judge_prompt_sha256",
+        "reviewer_model",
+        "judge_model",
+        "codex_cli_version",
+        "parent_candidate_id",
+        "paper_text_sha256",
+        "human_review_sha256",
+        "review_schema_sha256",
+        "judge_schema_sha256",
+        "judge_reference_sha256",
+        "generated_review_sha256",
+        "judge_sha256",
+        "wandb_generated_review_sha256",
+        "wandb_judge_sha256",
+        "auth_mode",
     }
 )
 ALLOWED_WANDB_METRIC_FIELDS = frozenset(
@@ -34,6 +52,14 @@ ALLOWED_WANDB_METRIC_FIELDS = frozenset(
         "objective/human_agreement",
         "objective/judge_quality",
         "objective/penalty",
+        "usage/reviewer_input_tokens",
+        "usage/reviewer_cached_input_tokens",
+        "usage/reviewer_output_tokens",
+        "usage/reviewer_reasoning_output_tokens",
+        "usage/judge_input_tokens",
+        "usage/judge_cached_input_tokens",
+        "usage/judge_output_tokens",
+        "usage/judge_reasoning_output_tokens",
     }
 )
 

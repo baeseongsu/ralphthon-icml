@@ -103,7 +103,12 @@ Human reviewer가 남긴 아래 score를 weak supervision으로 사용한다.
 
 ### 5.3 Judge LLM
 
-Judge LLM의 absolute evaluation은 PDF와 candidate generated review만 받는다. Pairwise evaluation은 PDF, candidate review, frozen parent review를 받되 두 review의 순서를 무작위화하고 candidate 이름, prompt version, human score, 기존 승패는 노출하지 않는다. 고정된 judge prompt와 model configuration으로 다음 항목을 평가한다.
+Judge LLM의 evaluation은 PDF, candidate generated review, human reference
+review의 prose section을 받는 reference-based metric이다. Numeric human
+scores는 별도 HumanAgreement에서만 사용하고 Judge에는 노출하지 않는다.
+Reference review는 절대적 정답이 아니라 비교 anchor이며, paper evidence로
+정당화되는 경우 candidate가 reference를 보완하거나 능가할 수 있다. 고정된
+judge prompt와 model configuration으로 다음 항목을 평가한다.
 
 - ICML rubric coverage
 - Paper evidence grounding
@@ -294,7 +299,7 @@ v0 환경은 다음 조건을 만족하면 준비된 것으로 본다.
 
 1. 동일 prompt/version/configuration으로 재실행했을 때 결과 provenance를 재구성할 수 있다.
 2. HumanAgreement, JudgeQuality, CompositeScore를 frozen output에서 다시 계산할 수 있다.
-3. Reviewer와 Judge가 human labels 또는 candidate identity를 보지 않았음을 manifest로 확인할 수 있다.
+3. Reviewer가 human review/labels를 보지 않고, Judge는 reference prose만 보며 numeric label/candidate identity를 보지 않았음을 provenance로 확인할 수 있다.
 4. W&B에서 candidate lineage, component metric, 비용, latency, failure를 비교할 수 있다.
 5. Holdout 접근 전 development winner와 selection rule이 freeze되어 있다.
 6. 적어도 하나의 deliberate regression prompt가 objective와 failure analysis에서 악화로 탐지된다.
@@ -360,3 +365,90 @@ Fixture와 W&B payload는 exact allowlist schema를 사용한다. Unknown field,
 전에 거부한다. Candidate output directory는 매 iteration마다 새 경로여야
 하며 기존 경로 재사용은 evidence overwrite 없이 실패한다. 새로 예약한
 경로에서 run이 실패하면 partial local/W&B evidence를 제거한다.
+
+## 17. Codex auth inference adapter
+
+Claude auth 확인 전 첫 live smoke는 Codex CLI의 기존 ChatGPT 로그인을
+재사용한다. 이는 direct API key를 저장하지 않는 local-only adapter이며,
+Reviewer와 Judge를 서로 다른 ephemeral `codex exec` process로 실행한다.
+
+### Isolation contract
+
+| Role | 볼 수 있는 입력 | 볼 수 없는 입력 |
+| --- | --- | --- |
+| Reviewer | deterministic PDF-derived text, candidate prompt, review JSON schema | raw human review, human score arrays/means, Judge prompt/output |
+| Judge | deterministic PDF-derived text, generated review, human reference prose, frozen Judge prompt/schema | numeric human scores/means, candidate prompt |
+| Evaluator | generated review, Judge output, local human labels | model context에 새로운 입력을 주지 않음 |
+
+Runner가 먼저 `pdftotext -layout`으로 PDF text를 고정 추출하고 hash를 남긴다.
+각 Codex process에는 text를 prompt data block으로 직접 전달하며 shell, apps,
+subagents, hooks, memories, plugins, MCP, web search를 모두 비활성화한다. 또한
+`--ephemeral --sandbox read-only --ignore-user-config --ignore-rules`를 사용한다.
+PDF 안의 instruction은 untrusted data로 취급하고 external reviews 또는 score
+검색을 금지한다.
+
+### Current smoke sample
+
+- Human review JSON: `/Users/seongsubae/Downloads/5Q4hoiHhoU.json`
+- PDF: `/Users/seongsubae/Downloads/4986_UI2Code_N_UI_to_Code_Gene.pdf`
+- JSON SHA-256: `df3e0c6339445ae74b9d644249469600944d0677d0c036798eff58871c275644`
+- PDF SHA-256: `d780ec05de7b3ec3f30545fb39aded56e8dd13016bb9fe873dfd38dd7106928d`
+
+현재 JSON은 reviewer 한 명의 structured review다. Human target은 score field를
+길이 1 배열로 normalize한다. 이후 같은 forum의 reviewer가 여러 명이면 field별
+list에 append하고 arithmetic mean을 사용한다. Confidence는 local diagnostic으로만
+보존하고 composite에는 포함하지 않는다. Raw prose는 Reviewer 또는 W&B에
+전달하지 않으며, Judge에만 reference prose로 제공한다.
+
+### Reproducibility and observability
+
+각 run은 Reviewer/Judge model을 command line에서 명시하고 다음 provenance를
+local evidence와 W&B allowlist에 기록한다.
+
+- Codex CLI version과 auth mode (`chatgpt`만; token 자체는 기록 금지)
+- PDF, PDF-derived text, raw human-review JSON, prompt/schema/output SHA-256
+- Reviewer/Judge model name
+- pseudonymous paper/campaign/candidate ID
+- aggregate component metrics와 composite
+- full anonymized generated review와 Judge result
+
+Subscription-auth Codex는 API key를 관리하지 않는 장점이 있지만, direct API의
+고정 snapshot보다 backend 재현성이 약할 수 있다. 따라서 CLI/model/prompt/input
+hash를 모두 기록하고 model 또는 CLI가 바뀌면 별도 campaign configuration으로
+취급한다. 첫 smoke 후 exact model snapshot, rate/cost reporting, batch execution이
+필요해지면 direct API adapter와 같은 interface로 교체한다.
+
+현재 local `codex-cli 0.141.0`은 configured `gpt-5.6-sol` 요청을 server에서
+거절하므로 첫 smoke는 해당 CLI에서 동작을 확인한 `gpt-5.4`를 명시한다. CLI를
+업그레이드하거나 model을 바꾼 run은 같은 candidate의 재실행이 아니라 새로운
+campaign configuration으로 기록한다.
+
+- Codex authentication: <https://learn.chatgpt.com/docs/auth#openai-authentication>
+- Codex subagents: <https://learn.chatgpt.com/docs/agent-configuration/subagents>
+- Codex MCP server: <https://learn.chatgpt.com/docs/mcp-server>
+
+## 18. Two-iteration UI2CodeN smoke result
+
+Final campaign `review-prompt-two-iteration-003`은 현재 JSON/PDF pair로 두 개의
+versioned prompt를 순차 실행했다. JudgeQuality는 paper + generated review +
+human reference prose를 사용하는 reference-based metric이며 numeric human
+score는 Judge에서 제외했다.
+
+| Candidate | HumanAgreement | JudgeQuality | Composite | Decision |
+| --- | ---: | ---: | ---: | --- |
+| `baseline` | 0.93333 | 0.83333 | 0.88333 | baseline/keep |
+| `candidate-001` | 0.76000 | 0.83333 | 0.79667 | discard |
+
+`candidate-001`은 baseline보다 composite가 `-0.08667` 낮아 discard되었다.
+HumanAgreement는 soundness, presentation, significance, overall에서 gap이
+발생했고 JudgeQuality는 동일했다. 따라서 instruction을 길고 상세하게 만드는 것 자체가 개선을
+보장하지 않으며, parent보다 두 component를 함께 개선한 candidate만 keep한다.
+Composite가 높더라도 HumanAgreement/JudgeQuality가 0.02보다 악화되거나 어느
+human dimension agreement가 0.05보다 악화되면 regression gate로 discard한다.
+
+Local evidence:
+`.review-prompt-smoke/campaign-003/`. 각 candidate는 prompt,
+generated review, Judge result, metrics, reflection, provenance, append-only
+ledger, W&B offline run을 가진다. W&B scan에서 forum ID, paper title/method,
+author, raw-review field marker는 발견되지 않았다. 이 runtime directory는
+Git에 commit하지 않으며 online sync는 별도 승인 전까지 수행하지 않는다.

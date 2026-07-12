@@ -54,6 +54,21 @@ FIXTURE_FIELDS = frozenset(
     {"paper_id", "human_scores", "generated_review", "judge", "penalties"}
 )
 PAPER_ID_PATTERN = re.compile(r"^paper-[a-z0-9]+(?:-[a-z0-9]+)*$")
+HUMAN_REVIEW_FIELDS = frozenset(
+    {
+        "forum_id",
+        "summary",
+        "strengths_and_weaknesses",
+        "soundness",
+        "presentation",
+        "significance",
+        "originality",
+        "key_questions_for_authors",
+        "limitations",
+        "overall_recommendation",
+        "confidence",
+    }
+)
 
 
 def _finite_number(field: str, value: object) -> float:
@@ -169,6 +184,45 @@ def validate_smoke_fixture(value: object) -> Mapping[str, Any]:
         if not 0.0 <= penalty <= 1.0:
             raise ValueError(f"{field} penalty must be within 0..1")
     return fixture
+
+
+def validate_human_review_record(value: object) -> Mapping[str, Any]:
+    review = _mapping("human_review", value)
+    _exact_keys("human_review", review, HUMAN_REVIEW_FIELDS)
+    _nonempty_text("human_review.forum_id", review["forum_id"])
+    for field in (
+        "summary",
+        "strengths_and_weaknesses",
+        "key_questions_for_authors",
+        "limitations",
+    ):
+        _nonempty_text(f"human_review.{field}", review[field])
+    for dimension, (minimum, maximum) in REVIEW_SCORE_RANGES.items():
+        score = _finite_number(dimension, review[dimension])
+        if not minimum <= score <= maximum:
+            raise ValueError(f"{dimension} score must be within {minimum:g}..{maximum:g}")
+    return review
+
+
+def human_labels_from_reviews(
+    reviews: Sequence[Mapping[str, Any]],
+) -> dict[str, object]:
+    if not reviews:
+        raise ValueError("at least one human review is required")
+    validated = [validate_human_review_record(review) for review in reviews]
+    forum_ids = {str(review["forum_id"]).strip() for review in validated}
+    if len(forum_ids) != 1:
+        raise ValueError("all human reviews must have the same forum_id")
+    return {
+        "human_scores": {
+            dimension: [float(review[dimension]) for review in validated]
+            for dimension in SCORE_RANGES
+        },
+        "human_confidence": [
+            float(review["confidence"]) for review in validated
+        ],
+        "reviewer_count": len(validated),
+    }
 
 
 def human_targets(

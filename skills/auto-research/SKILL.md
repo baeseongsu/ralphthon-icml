@@ -72,7 +72,7 @@ Choose this mutually exclusive path only to review a **frozen Track 1 paper** an
 
 ## Review Prompt Optimization Smoke
 
-Use the credential-free smoke before connecting a live PDF or LLM API. It
+Use the credential-free smoke before connecting a live PDF or inference backend. It
 freezes the Reviewer/Judge API response boundary with the
 [smoke fixture](assets/review-optimization/smoke-fixture.json), hashes the
 [baseline prompt](assets/review-optimization/smoke-prompt.md), computes the
@@ -126,9 +126,46 @@ directory before writing evidence or creating a W&B run, and removes a newly
 reserved directory if the candidate fails before its ledger append completes.
 Use a new candidate ID and output directory for every iteration.
 
-This smoke consumes frozen response fixtures; it does not call a live LLM API.
-Choose and freeze the PDF ingestion method, API provider, Reviewer model, and
-Judge model before replacing that boundary.
+This smoke consumes frozen response fixtures; it does not call a live model.
+
+For an auth-based local smoke, use
+[`review_prompt_codex.py`](scripts/review_prompt_codex.py). It reuses the cached
+Codex ChatGPT login and makes two independent `codex exec` calls. The Reviewer
+receives deterministic text extracted from the PDF plus the versioned candidate
+prompt. The Judge receives that same extracted text, the generated review, and
+the frozen Judge rubric. Both calls disable shell, apps, subagents, hooks,
+memories, plugins, MCP, and web search; they are also ephemeral and read-only.
+The Reviewer sees neither the human review nor its scores. The Judge sees only
+the four reference prose fields; numeric human scores remain evaluator-only.
+
+Run the current two-candidate smoke with the local JSON/PDF pair:
+
+```bash
+uv run --with wandb python3 skills/auto-research/scripts/review_prompt_loop.py \
+  --paper-pdf /Users/seongsubae/Downloads/4986_UI2Code_N_UI_to_Code_Gene.pdf \
+  --human-review-json /Users/seongsubae/Downloads/5Q4hoiHhoU.json \
+  --candidate baseline=skills/auto-research/assets/review-optimization/smoke-prompt.md \
+  --candidate candidate-001=skills/auto-research/assets/review-optimization/smoke-prompt-v1.md \
+  --judge-prompt skills/auto-research/assets/review-optimization/judge-prompt.md \
+  --review-schema skills/auto-research/assets/review-optimization/generated-review.schema.json \
+  --judge-schema skills/auto-research/assets/review-optimization/judge.schema.json \
+  --output-root .review-prompt-smoke/ui2coden-two-iteration \
+  --campaign-id ui2coden-two-iteration-001 \
+  --reviewer-model gpt-5.4 \
+  --judge-model gpt-5.4 \
+  --wandb-mode offline \
+  --wandb-entity local-smoke \
+  --wandb-project review-prompt-smoke
+```
+
+The PDF and raw human-review JSON remain local and untracked. The evaluator
+extracts the six numeric fields, while the Judge receives only reference prose.
+W&B receives prompt/PDF/raw
+review hashes, explicit model
+names, Codex CLI version, aggregate objective metrics, the generated review, and
+the Judge result after identifier redaction; it excludes PDF/text, forum ID,
+raw reviews, and evaluator labels. A different model or auth backend is a new campaign
+configuration, not a silent rerun of the same candidate.
 
 ## Integrity Gate
 
