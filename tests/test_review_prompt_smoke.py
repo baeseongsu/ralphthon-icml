@@ -75,6 +75,48 @@ class ReviewPromptSmokeTest(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, serialized)
 
+    def test_human_targets_use_arithmetic_mean(self) -> None:
+        scoring = load_module(SCORING, "review_prompt_scoring")
+
+        result = scoring.human_targets(valid_human_scores())
+
+        self.assertEqual(result["soundness"], 3.0)
+        self.assertAlmostEqual(result["presentation"], 10 / 3)
+        self.assertEqual(result["overall_recommendation"], 4.0)
+
+    def test_out_of_range_human_score_is_rejected(self) -> None:
+        scoring = load_module(SCORING, "review_prompt_scoring")
+
+        with self.assertRaisesRegex(ValueError, "soundness"):
+            scoring.human_targets({**valid_human_scores(), "soundness": [0]})
+
+    def test_composite_uses_equal_human_and_judge_weights(self) -> None:
+        scoring = load_module(SCORING, "review_prompt_scoring")
+
+        result = scoring.score_candidate(
+            human_scores=valid_human_scores(),
+            predicted_scores={
+                "soundness": 3,
+                "presentation": 3,
+                "significance": 3,
+                "originality": 4,
+                "overall_recommendation": 4,
+            },
+            judge_scores={
+                dimension: 5 for dimension in scoring.JUDGE_DIMENSIONS
+            },
+            penalties={field: 0 for field in scoring.PENALTY_FIELDS},
+        )
+
+        self.assertAlmostEqual(result["judge_quality"], 1.0)
+        self.assertGreaterEqual(result["human_agreement"], 0.0)
+        self.assertLessEqual(result["human_agreement"], 1.0)
+        self.assertAlmostEqual(
+            result["composite"],
+            0.5 * result["human_agreement"]
+            + 0.5 * result["judge_quality"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
