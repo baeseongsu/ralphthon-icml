@@ -51,7 +51,7 @@ def panel_label(ax: mpl.axes.Axes, label: str, title: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("dataset", type=Path)
-    parser.add_argument("--output", type=Path, default=Path("figures/icml2026/distributions"))
+    parser.add_argument("--output", type=Path, default=Path("figure/icml2026/distributions"))
     args = parser.parse_args()
 
     ds = load_from_disk(str(args.dataset))

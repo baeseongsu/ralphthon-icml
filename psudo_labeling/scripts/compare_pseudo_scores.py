@@ -92,7 +92,7 @@ def main() -> None:
     parser.add_argument("dataset", type=Path)
     parser.add_argument("pseudo_labels", type=Path)
     parser.add_argument("--output", type=Path, default=Path("analysis/icml2026/pseudo_score_comparison"))
-    parser.add_argument("--figures", type=Path, default=Path("figures/icml2026/pseudo_score_comparison"))
+    parser.add_argument("--figures", type=Path, default=Path("figure/icml2026/pseudo_score_comparison"))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     args.figures.mkdir(parents=True, exist_ok=True)
