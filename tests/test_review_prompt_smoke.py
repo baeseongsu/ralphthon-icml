@@ -231,7 +231,7 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             fake_pdfinfo = root / "pdfinfo"
             write_fake_pdf_tool(
                 fake_pdfinfo,
-                "Title: Synthetic Paper\\nAuthor: Alice Example",
+                "Title: Synthetic Paper\nAuthor: Alice Example",
             )
             output = root / "run"
 
@@ -305,6 +305,46 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             self.assertTrue((output / "generated-review.json").is_file())
             self.assertTrue((output / "judge.json").is_file())
             self.assertTrue((output / "metrics.json").is_file())
+            self.assertTrue((output / "timing.json").is_file())
+            self.assertTrue((output / "attempts.json").is_file())
+            self.assertTrue((output / "publish-bundle.json").is_file())
+            timing = json.loads(
+                (output / "timing.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                set(timing),
+                {
+                    "extraction_seconds",
+                    "metadata_seconds",
+                    "auth_preflight_seconds",
+                    "reviewer_seconds",
+                    "judge_seconds",
+                    "scoring_seconds",
+                    "total_seconds",
+                },
+            )
+            self.assertTrue(all(value >= 0 for value in timing.values()))
+            self.assertGreaterEqual(
+                timing["total_seconds"] + 1e-9,
+                sum(
+                    timing[field]
+                    for field in timing
+                    if field != "total_seconds"
+                ),
+            )
+            attempts = json.loads(
+                (output / "attempts.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(attempts["reviewer"]["attempt_count"], 1)
+            self.assertEqual(attempts["judge"]["attempt_count"], 1)
+            publish_bundle = json.loads(
+                (output / "publish-bundle.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(publish_bundle["paper_id"].split("-")[0], "paper")
+            self.assertNotIn(
+                "RAW HUMAN REVIEW SENTINEL",
+                json.dumps(publish_bundle),
+            )
             provenance = json.loads(
                 (output / "provenance.json").read_text(encoding="utf-8")
             )

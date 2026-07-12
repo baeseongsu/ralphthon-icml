@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "skills" / "auto-research" / "scripts"
 SCORING = SCRIPTS / "review_prompt_scoring.py"
 DATASET = SCRIPTS / "review_prompt_dataset.py"
+CODEX_RUNNER = SCRIPTS / "review_prompt_codex.py"
 ASSETS = ROOT / "skills" / "auto-research" / "assets" / "review-optimization"
 REVIEW_SCHEMA = ASSETS / "generated-review.schema.json"
 JUDGE_SCHEMA = ASSETS / "judge.schema.json"
@@ -470,6 +471,120 @@ print("PDF-derived paper text " * 100)
             )
             self.assertEqual(sample["manifest_sha256"], second_sample["manifest_sha256"])
             self.assertTrue(dataset.verify_manifest_file(sample_path))
+
+
+class CodexEvidenceTest(unittest.TestCase):
+    def test_codex_retry_is_bounded_and_records_attempts(self) -> None:
+        runner = load_module(CODEX_RUNNER, "review_prompt_codex_retry_test")
+        calls = 0
+        ticks = iter([0.0, 2.0, 2.0, 5.0])
+
+        def invoke():
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                raise RuntimeError("rate limit 429; temporarily unavailable")
+            return {"value": "ok"}, {"input_tokens": 10}
+
+        output, usage, evidence = runner.run_codex_json_with_retry(
+            invoke=invoke,
+            validator=lambda value: value,
+            max_attempts=2,
+            clock=lambda: next(ticks),
+        )
+
+        self.assertEqual(output, {"value": "ok"})
+        self.assertEqual(usage, {"input_tokens": 10})
+        self.assertEqual(calls, 2)
+        self.assertEqual(evidence["attempt_count"], 2)
+        self.assertEqual(evidence["retry_count"], 1)
+        self.assertEqual(evidence["elapsed_seconds"], 5.0)
+        self.assertEqual(
+            [attempt["status"] for attempt in evidence["attempts"]],
+            ["failed", "succeeded"],
+        )
+
+    def test_codex_retry_exhaustion_preserves_failure_evidence(self) -> None:
+        runner = load_module(CODEX_RUNNER, "review_prompt_codex_exhaustion_test")
+        ticks = iter([0.0, 1.0, 1.0, 3.0])
+
+        with self.assertRaisesRegex(runner.CodexAttemptsExhausted, "2 attempts") as raised:
+            runner.run_codex_json_with_retry(
+                invoke=lambda: (_ for _ in ()).throw(
+                    ValueError("invalid Codex output JSON")
+                ),
+                validator=lambda value: value,
+                max_attempts=2,
+                clock=lambda: next(ticks),
+            )
+
+        self.assertEqual(raised.exception.evidence["attempt_count"], 2)
+        self.assertEqual(raised.exception.evidence["retry_count"], 1)
+        self.assertEqual(raised.exception.evidence["elapsed_seconds"], 3.0)
+
+    def test_codex_retry_stops_immediately_on_permanent_failure(self) -> None:
+        runner = load_module(CODEX_RUNNER, "review_prompt_codex_permanent_test")
+        calls = 0
+
+        def invoke():
+            nonlocal calls
+            calls += 1
+            raise RuntimeError("model requires newer version")
+
+        with self.assertRaisesRegex(
+            runner.CodexAttemptsExhausted,
+            "requires newer version",
+        ) as raised:
+            runner.run_codex_json_with_retry(
+                invoke=invoke,
+                validator=lambda value: value,
+                max_attempts=2,
+                clock=iter([0.0, 1.0]).__next__,
+            )
+
+        self.assertEqual(calls, 1)
+        self.assertEqual(raised.exception.evidence["attempt_count"], 1)
+        with self.assertRaisesRegex(ValueError, "1..2"):
+            runner.run_codex_json_with_retry(
+                invoke=invoke,
+                validator=lambda value: value,
+                max_attempts=3,
+            )
+
+    def test_publish_bundle_contains_only_pseudonymized_model_outputs(self) -> None:
+        runner = load_module(CODEX_RUNNER, "review_prompt_codex_bundle_test")
+        review = generated_review()
+        review["summary"] = "SecretMethod improves the target task."
+        judge = judge_result()
+        judge["rationale"] = (
+            "The proposed system uses iterative visual feedback to refine generated code."
+        )
+        reference = {
+            "summary": (
+                "The proposed system uses iterative visual feedback to refine generated code."
+            ),
+            "strengths_and_weaknesses": "Reference-only prose.",
+            "key_questions_for_authors": "Reference-only question.",
+            "limitations": "Reference-only limitation.",
+        }
+
+        bundle = runner.build_publish_bundle(
+            paper_id="paper-smoke-001",
+            generated_review=review,
+            judge=judge,
+            identifier_terms=["SecretMethod", "forum12345", "Alice Author"],
+            reference_review=reference,
+        )
+
+        self.assertEqual(
+            set(bundle),
+            {"schema_version", "paper_id", "generated_review", "judge"},
+        )
+        serialized = json.dumps(bundle, sort_keys=True)
+        self.assertNotIn("SecretMethod", serialized)
+        self.assertNotIn("forum12345", serialized)
+        self.assertNotIn("Reference-only", serialized)
+        self.assertIn("[REDACTED_REFERENCE_OVERLAP]", serialized)
 
 
 if __name__ == "__main__":

@@ -11,10 +11,12 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 from review_prompt_scoring import (
+    PAPER_ID_PATTERN,
     human_labels_from_reviews,
     score_candidate,
     validate_generated_review,
@@ -28,6 +30,14 @@ from review_prompt_smoke import (
     write_json,
 )
 from review_prompt_tracking import append_record, record_wandb_offline
+
+
+class CodexAttemptsExhausted(RuntimeError):
+    """Inference failure carrying bounded-attempt evidence for the batch runner."""
+
+    def __init__(self, message: str, evidence: Mapping[str, Any]) -> None:
+        super().__init__(message)
+        self.evidence = dict(evidence)
 
 
 def load_json_object(path: Path, label: str) -> dict[str, Any]:
@@ -180,6 +190,113 @@ def run_codex_json(
     return load_json_object(output, "Codex output"), parse_usage(completed.stdout)
 
 
+def _retry_failure_class(error: Exception) -> str | None:
+    if isinstance(error, subprocess.TimeoutExpired):
+        return "timeout"
+    if isinstance(error, (ValueError, json.JSONDecodeError)):
+        return "invalid_output"
+    if isinstance(error, RuntimeError):
+        message = str(error).lower()
+        if any(term in message for term in ("rate limit", "too many requests", "429")):
+            return "rate_limit"
+        if any(
+            term in message
+            for term in (
+                "timed out",
+                "timeout",
+                "temporarily unavailable",
+                "connection reset",
+                "connection refused",
+                "transport",
+                "service unavailable",
+                "internal server error",
+                "bad gateway",
+                "gateway timeout",
+            )
+        ):
+            return "transient_transport"
+    return None
+
+
+def run_codex_json_with_retry(
+    *,
+    invoke: Callable[
+        [], tuple[dict[str, Any], dict[str, int | float]]
+    ],
+    validator: Callable[[object], object],
+    max_attempts: int = 2,
+    clock: Callable[[], float] = time.perf_counter,
+) -> tuple[dict[str, Any], dict[str, int | float], dict[str, Any]]:
+    """Run one validated Codex call with at most two recorded attempts."""
+
+    if isinstance(max_attempts, bool) or not isinstance(max_attempts, int):
+        raise ValueError("max_attempts must be an integer within 1..2")
+    if not 1 <= max_attempts <= 2:
+        raise ValueError("max_attempts must be within 1..2")
+
+    attempts: list[dict[str, Any]] = []
+    elapsed_total = 0.0
+    for attempt_number in range(1, max_attempts + 1):
+        started = clock()
+        try:
+            output, usage = invoke()
+            validator(output)
+        except Exception as error:
+            elapsed = clock() - started
+            if elapsed < 0.0:
+                raise RuntimeError("monotonic clock moved backwards") from error
+            elapsed_total += elapsed
+            failure_class = _retry_failure_class(error)
+            attempts.append(
+                {
+                    "attempt": attempt_number,
+                    "status": "failed",
+                    "failure_class": failure_class or "permanent",
+                    "elapsed_seconds": elapsed,
+                    "error": str(error)[-1000:],
+                }
+            )
+            evidence = {
+                "attempt_count": len(attempts),
+                "retry_count": max(0, len(attempts) - 1),
+                "elapsed_seconds": elapsed_total,
+                "attempts": attempts,
+            }
+            if failure_class is None:
+                raise CodexAttemptsExhausted(
+                    f"Codex inference failed after {attempt_number} attempt(s): {error}",
+                    evidence,
+                ) from error
+            if attempt_number == max_attempts:
+                raise CodexAttemptsExhausted(
+                    f"Codex inference exhausted {max_attempts} attempts: {error}",
+                    evidence,
+                ) from error
+            continue
+
+        elapsed = clock() - started
+        if elapsed < 0.0:
+            raise RuntimeError("monotonic clock moved backwards")
+        elapsed_total += elapsed
+        attempts.append(
+            {
+                "attempt": attempt_number,
+                "status": "succeeded",
+                "failure_class": None,
+                "elapsed_seconds": elapsed,
+                "error": None,
+            }
+        )
+        return output, usage, {
+            "attempt_count": len(attempts),
+            "retry_count": max(0, len(attempts) - 1),
+            "elapsed_seconds": elapsed_total,
+            "attempts": attempts,
+        }
+
+    raise RuntimeError("unreachable retry state")
+
+
 def paper_block(paper_text: str) -> str:
     return (
         "<BEGIN_UNTRUSTED_PAPER_TEXT>\n" + paper_text
@@ -284,19 +401,59 @@ def sanitize_judge_for_wandb(
     return sanitized
 
 
+def build_publish_bundle(
+    *,
+    paper_id: str,
+    generated_review: Mapping[str, Any],
+    judge: Mapping[str, Any],
+    identifier_terms: Sequence[str],
+    reference_review: Mapping[str, str],
+) -> dict[str, Any]:
+    if PAPER_ID_PATTERN.fullmatch(paper_id) is None:
+        raise ValueError("paper_id must be a pseudonymous paper-* identifier")
+    validate_generated_review(generated_review)
+    validate_judge(judge)
+    sanitized_review = redact_value(generated_review, identifier_terms)
+    sanitized_judge = sanitize_judge_for_wandb(
+        judge,
+        identifier_terms,
+        reference_review,
+    )
+    validate_generated_review(sanitized_review)
+    validate_judge(sanitized_judge)
+    return {
+        "schema_version": "review-prompt-publish-v1",
+        "paper_id": paper_id,
+        "generated_review": sanitized_review,
+        "judge": sanitized_judge,
+    }
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
+    total_started = time.perf_counter()
     human_review = load_json_object(args.human_review_json, "human review")
     validate_human_review_record(human_review)
     labels = human_labels_from_reviews([human_review])
+
+    extraction_started = time.perf_counter()
     paper_text = extract_pdf_text(args.paper_pdf, args.pdftotext_bin)
+    extraction_seconds = time.perf_counter() - extraction_started
+
+    metadata_started = time.perf_counter()
     metadata = pdf_metadata(args.paper_pdf, args.pdfinfo_bin)
+    reference_review = reference_review_prose(human_review)
+    identifier_terms = redaction_terms(human_review, metadata)
+    metadata_seconds = time.perf_counter() - metadata_started
+
+    auth_started = time.perf_counter()
     cli_version, auth_mode = codex_preflight(args.codex_bin)
+    auth_preflight_seconds = time.perf_counter() - auth_started
     reviewer_prompt_text = args.reviewer_prompt.read_text(encoding="utf-8")
     judge_prompt_text = args.judge_prompt.read_text(encoding="utf-8")
     paper_id = "paper-" + hashlib.sha256(
         (str(human_review["forum_id"]) + sha256_file(args.paper_pdf)).encode("utf-8")
     ).hexdigest()[:16]
-    reference_review = reference_review_prose(human_review)
+    max_attempts = getattr(args, "max_attempts", 2)
 
     provenance: dict[str, Any] = {
         "auth_mode": auth_mode,
@@ -314,55 +471,103 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     with reserved_output_directory(args.output_dir):
-        with tempfile.TemporaryDirectory(prefix="review-prompt-reviewer-") as directory:
-            generated_review, reviewer_usage = run_codex_json(
-                codex_bin=args.codex_bin, model=args.reviewer_model,
-                prompt=reviewer_request(reviewer_prompt_text, paper_text),
-                schema=args.review_schema, workdir=Path(directory),
-                timeout_seconds=args.timeout_seconds,
+        def invoke_reviewer() -> tuple[dict[str, Any], dict[str, int | float]]:
+            with tempfile.TemporaryDirectory(
+                prefix="review-prompt-reviewer-"
+            ) as directory:
+                return run_codex_json(
+                    codex_bin=args.codex_bin,
+                    model=args.reviewer_model,
+                    prompt=reviewer_request(reviewer_prompt_text, paper_text),
+                    schema=args.review_schema,
+                    workdir=Path(directory),
+                    timeout_seconds=args.timeout_seconds,
+                )
+
+        generated_review, reviewer_usage, reviewer_attempts = (
+            run_codex_json_with_retry(
+                invoke=invoke_reviewer,
+                validator=validate_generated_review,
+                max_attempts=max_attempts,
             )
-        validate_generated_review(generated_review)
-        with tempfile.TemporaryDirectory(prefix="review-prompt-judge-") as directory:
-            judge, judge_usage = run_codex_json(
-                codex_bin=args.codex_bin, model=args.judge_model,
-                prompt=judge_request(
-                    judge_prompt_text, paper_text, generated_review, reference_review
-                ),
-                schema=args.judge_schema, workdir=Path(directory),
-                timeout_seconds=args.timeout_seconds,
-            )
-        validate_judge(judge)
+        )
+
+        def invoke_judge() -> tuple[dict[str, Any], dict[str, int | float]]:
+            with tempfile.TemporaryDirectory(
+                prefix="review-prompt-judge-"
+            ) as directory:
+                return run_codex_json(
+                    codex_bin=args.codex_bin,
+                    model=args.judge_model,
+                    prompt=judge_request(
+                        judge_prompt_text,
+                        paper_text,
+                        generated_review,
+                        reference_review,
+                    ),
+                    schema=args.judge_schema,
+                    workdir=Path(directory),
+                    timeout_seconds=args.timeout_seconds,
+                )
+
+        judge, judge_usage, judge_attempts = run_codex_json_with_retry(
+            invoke=invoke_judge,
+            validator=validate_judge,
+            max_attempts=max_attempts,
+        )
         provenance["generated_review_sha256"] = canonical_json_sha256(generated_review)
         provenance["judge_sha256"] = canonical_json_sha256(judge)
         provenance["reviewer_usage"] = reviewer_usage
         provenance["judge_usage"] = judge_usage
-        wandb_review: Any = None
-        wandb_judge: Any = None
-        if args.wandb_mode == "offline":
-            terms = redaction_terms(human_review, metadata)
-            wandb_review = redact_value(generated_review, terms)
-            wandb_judge = sanitize_judge_for_wandb(
-                judge, terms, reference_review
-            )
-            provenance["wandb_generated_review_sha256"] = canonical_json_sha256(
-                wandb_review
-            )
-            provenance["wandb_judge_sha256"] = canonical_json_sha256(wandb_judge)
+        publish_bundle = build_publish_bundle(
+            paper_id=paper_id,
+            generated_review=generated_review,
+            judge=judge,
+            identifier_terms=identifier_terms,
+            reference_review=reference_review,
+        )
+        wandb_review = publish_bundle["generated_review"]
+        wandb_judge = publish_bundle["judge"]
+        provenance["wandb_generated_review_sha256"] = canonical_json_sha256(
+            wandb_review
+        )
+        provenance["wandb_judge_sha256"] = canonical_json_sha256(wandb_judge)
+
+        scoring_started = time.perf_counter()
         metrics = score_candidate(
             human_scores=labels["human_scores"],
             predicted_scores=generated_review["scores"],
             judge_scores=judge["scores"], penalties={field: 0 for field in ("hallucination", "schema_failure", "missing_evidence", "api_failure")},
         )
+        scoring_seconds = time.perf_counter() - scoring_started
+        timing = {
+            "extraction_seconds": extraction_seconds,
+            "metadata_seconds": metadata_seconds,
+            "auth_preflight_seconds": auth_preflight_seconds,
+            "reviewer_seconds": reviewer_attempts["elapsed_seconds"],
+            "judge_seconds": judge_attempts["elapsed_seconds"],
+            "scoring_seconds": scoring_seconds,
+            "total_seconds": time.perf_counter() - total_started,
+        }
+        attempts = {
+            "max_attempts": max_attempts,
+            "reviewer": reviewer_attempts,
+            "judge": judge_attempts,
+        }
         write_json(args.output_dir / "generated-review.json", generated_review)
         write_json(args.output_dir / "judge.json", judge)
         write_json(args.output_dir / "metrics.json", metrics)
         write_json(args.output_dir / "provenance.json", provenance)
+        write_json(args.output_dir / "timing.json", timing)
+        write_json(args.output_dir / "attempts.json", attempts)
+        write_json(args.output_dir / "publish-bundle.json", publish_bundle)
         (args.output_dir / "reflection.md").write_text(
             render_reflection(args.candidate_id, metrics), encoding="utf-8"
         )
         record: dict[str, Any] = {
             "campaign_id": args.campaign_id, "candidate_id": args.candidate_id,
             "parent_candidate_id": args.parent_candidate_id, "paper_id": paper_id,
+            "timing": timing, "attempt_evidence": attempts,
             **provenance, **metrics,
         }
         if args.wandb_mode == "offline":
@@ -429,6 +634,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--pdftotext-bin", default="pdftotext")
     parser.add_argument("--pdfinfo-bin", default="pdfinfo")
     parser.add_argument("--timeout-seconds", type=int, default=1800)
+    parser.add_argument("--max-attempts", type=int, choices=(1, 2), default=2)
     parser.add_argument("--wandb-mode", choices=("disabled", "offline"), default="disabled")
     parser.add_argument("--wandb-entity", default="local-smoke")
     parser.add_argument("--wandb-project", default="review-prompt-smoke")
