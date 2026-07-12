@@ -70,6 +70,59 @@ Choose this mutually exclusive path only to review a **frozen Track 1 paper** an
 4. Trace review statements to the frozen artifact. Do not invent a missing run or demand Karpathy-specific metrics from unrelated research.
 5. Return both `review-agent.md` and the ICML-style review result with blockers. If evidence is insufficient, say so; do not silently switch paths.
 
+## Review Prompt Optimization Smoke
+
+Use the credential-free smoke before connecting a live PDF or LLM API. It
+freezes the Reviewer/Judge API response boundary with the
+[smoke fixture](assets/review-optimization/smoke-fixture.json), hashes the
+[baseline prompt](assets/review-optimization/smoke-prompt.md), computes the
+composite objective locally, appends one JSONL evidence record, and optionally
+creates one W&B offline run through
+[`review_prompt_smoke.py`](scripts/review_prompt_smoke.py).
+
+When multiple human reviewers scored the paper and there is no trusted
+pseudo-label, use the dimension-wise arithmetic mean as the representative
+target. Preserve per-reviewer score arrays locally for disagreement metrics.
+The smoke's `objective/composite` equally weights normalized human-score
+agreement and Judge review quality, then applies explicit penalties.
+
+Run without W&B first:
+
+```bash
+python3 skills/auto-research/scripts/review_prompt_smoke.py \
+  --fixture skills/auto-research/assets/review-optimization/smoke-fixture.json \
+  --prompt skills/auto-research/assets/review-optimization/smoke-prompt.md \
+  --output-dir .review-prompt-smoke/baseline-disabled \
+  --campaign-id smoke-001 \
+  --candidate-id baseline \
+  --wandb-mode disabled
+```
+
+Then validate exactly one W&B offline candidate run without syncing it:
+
+```bash
+uv run --with wandb python3 skills/auto-research/scripts/review_prompt_smoke.py \
+  --fixture skills/auto-research/assets/review-optimization/smoke-fixture.json \
+  --prompt skills/auto-research/assets/review-optimization/smoke-prompt.md \
+  --output-dir .review-prompt-smoke/baseline-wandb \
+  --campaign-id smoke-002 \
+  --candidate-id baseline \
+  --wandb-mode offline \
+  --wandb-entity local-smoke \
+  --wandb-project review-prompt-smoke
+```
+
+Each candidate is one W&B run with `job_type=review-prompt-candidate`. The
+`reviews/all` table contains the pseudonymous paper ID, complete anonymized
+generated review, and complete Judge result. Do not send PDF bytes, raw human
+review text, human score arrays, original paper/reviewer identifiers, secrets,
+or private data to W&B. W&B remains an observation layer: the same local
+selection result must be produced with `--wandb-mode disabled`.
+
+This smoke consumes frozen response fixtures; it does not call a live LLM API.
+Choose and freeze the PDF ingestion method, API provider, Reviewer model, and
+Judge model before replacing that boundary.
+
 ## Integrity Gate
 
 **Do not fabricate** results, citations, runs, reviewer evidence, or sponsor claims. Never backfill experiments to match prose. Label planned or expected results explicitly. If a run fails, report the failure and narrow the claim.

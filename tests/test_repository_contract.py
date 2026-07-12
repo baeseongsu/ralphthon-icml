@@ -243,6 +243,19 @@ class RepositoryContractTest(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, searchable)
 
+    def test_auto_research_documents_review_prompt_smoke(self) -> None:
+        skill = (ROOT / "skills" / "auto-research" / "SKILL.md").read_text()
+
+        for marker in (
+            "review_prompt_smoke.py",
+            "smoke-fixture.json",
+            "objective/composite",
+            "reviews/all",
+            "W&B offline",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, skill)
+
     def test_readme_documents_full_catalog_and_privacy_boundary(self) -> None:
         text = (ROOT / "README.md").read_text()
 
