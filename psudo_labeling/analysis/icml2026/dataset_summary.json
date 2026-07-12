@@ -1,0 +1,61 @@
+{
+  "dataset_path": "/home/hkh/github/ralphton/data/icml2026",
+  "papers": 6341,
+  "reviews": 24378,
+  "reviews_per_paper": {
+    "n": 6341,
+    "mean": 3.844504021447721,
+    "std": 0.40436907376189846,
+    "min": 2,
+    "q25": 4,
+    "median": 4,
+    "q75": 4,
+    "max": 6
+  },
+  "authors_per_paper": {
+    "n": 6341,
+    "mean": 5.694685380854755,
+    "std": 3.376550021382511,
+    "min": 1,
+    "q25": 3,
+    "median": 5,
+    "q75": 7,
+    "max": 59
+  },
+  "keywords_per_paper": {
+    "n": 6341,
+    "mean": 3.7702255164800507,
+    "std": 1.8452863719651114,
+    "min": 1,
+    "q25": 3,
+    "median": 4,
+    "q75": 5,
+    "max": 25
+  },
+  "abstract_words": {
+    "n": 6341,
+    "mean": 166.28591704778427,
+    "std": 29.57531324219898,
+    "min": 44,
+    "q25": 147,
+    "median": 166,
+    "q75": 185,
+    "max": 326
+  },
+  "review_text_words": {
+    "n": 24378,
+    "mean": 484.513495774879,
+    "std": 246.42132367957595,
+    "min": 16,
+    "q25": 319.0,
+    "median": 427.0,
+    "q75": 585.0,
+    "max": 3461
+  },
+  "unique_primary_areas": 84,
+  "unique_authors": 25065,
+  "decisions": {
+    "Accept (regular)": 5805,
+    "Accept (spotlight)": 536
+  }
+}
