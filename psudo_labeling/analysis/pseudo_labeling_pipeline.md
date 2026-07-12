@@ -3,73 +3,51 @@
 ```mermaid
 %%{init: {
   "theme": "base",
-  "flowchart": {"curve": "basis", "nodeSpacing": 30, "rankSpacing": 48},
+  "flowchart": {"curve": "basis", "nodeSpacing": 42, "rankSpacing": 60},
   "themeVariables": {
     "fontFamily": "Inter, Arial, sans-serif",
-    "fontSize": "15px",
+    "fontSize": "18px",
     "primaryTextColor": "#183B56",
-    "lineColor": "#6C8798"
+    "lineColor": "#668396"
   }
 }}%%
 flowchart TB
-    subgraph DATA["1 · Dataset preparation"]
-        direction TB
-        HF[("ICML 2026 dataset<br/><b>6,341 papers</b><br/>24,378 official reviews")]
-        SAMPLE["Stratified sampling<br/>primary area × review score"]
-        INPUT["Per-paper input JSON<br/>title · abstract · area<br/>3–4 initial reviews · meta-review"]
-        EXCLUDE["Excluded<br/>rebuttal · final justification"]
-        HF --> SAMPLE --> INPUT
-        EXCLUDE -. leakage control .-> INPUT
+    subgraph PREP["1 · Prepare review evidence"]
+        direction LR
+        DATA[("<b>ICML 2026 reviews</b><br/>6,341 papers")]
+        SAMPLE["<b>Stratified sample</b><br/>area × review score"]
+        INPUT["<b>Per-paper input</b><br/>abstract · initial reviews · meta-review<br/><i>no rebuttal or final justification</i>"]
+        DATA --> SAMPLE --> INPUT
     end
-    subgraph ORCH["2 · Parallel subagent orchestration"]
-        direction TB
-        QUEUE["Paper queue"]
-        WORKERS["10 parallel workflows<br/><b>one subagent per paper</b>"]
-        QUEUE --> WORKERS
+    subgraph DISTILL["2 · Distill with parallel subagents"]
+        direction LR
+        AGENT["<b>One subagent per paper</b><br/>parallel execution"]
+        WEIGHT["<b>Weight reviewer evidence</b><br/>high · medium · low"]
+        SYNTH["<b>Consolidate one review</b><br/>deduplicate critiques<br/>single-reviewer voice"]
+        SCORE["<b>Assign ICML scores</b><br/>within human [min, max]"]
+        AGENT --> WEIGHT --> SYNTH --> SCORE
     end
-    subgraph AGENT["3 · Evidence-aware review distillation"]
-        direction TB
-        READ["Parse initial reviews<br/>scores · strengths · weaknesses · questions"]
-        WEIGH["Assess reviewer evidence<br/><b>high · medium · low</b><br/>meta-review alignment · corroboration · specificity"]
-        SELECT["Select and deduplicate<br/>high-value review evidence"]
-        WRITE["Synthesize one coherent review<br/>single-reviewer voice · no process leakage"]
-        SCORE["Assign ICML scores<br/>within human reviewer [min, max]"]
-        VALIDATE{"Schema and rule<br/>validation"}
-        RETRY["Automatic retry"]
-        READ --> WEIGH --> SELECT
-        SELECT --> WRITE
-        SELECT --> SCORE
-        WRITE --> VALIDATE
-        SCORE --> VALIDATE
-        VALIDATE -- invalid --> RETRY --> READ
-    end
-    subgraph OUTPUT["4 · Structured outputs"]
-        direction TB
-        REVIEW[("Pseudo-review JSON<br/><b>10 ICML review fields</b><br/>text · scores · questions · limitations")]
-        META[("Label metadata JSON<br/>reviewer weights · score rationale")]
-        USE["Review-Agent<br/>training and evaluation"]
+    subgraph DELIVER["3 · Deliver structured labels"]
+        direction LR
+        REVIEW[("<b>Pseudo-review JSON</b><br/>10 ICML review fields")]
+        META[("<b>Audit metadata</b><br/>reviewer weights · rationale")]
+        USE["<b>Review Agent</b><br/>training and evaluation"]
         REVIEW --> USE
         META -. audit trail .-> USE
     end
-    INPUT --> QUEUE
-    WORKERS --> READ
-    VALIDATE -- valid --> REVIEW
-    VALIDATE -- valid --> META
-    classDef data fill:#EAF3F8,stroke:#4B89A6,stroke-width:1.5px,color:#183B56;
-    classDef process fill:#E9F1FB,stroke:#2878B5,stroke-width:1.5px,color:#183B56;
-    classDef decision fill:#FFF4DF,stroke:#E6863B,stroke-width:2px,color:#704214;
-    classDef output fill:#EDF6EC,stroke:#5B9A68,stroke-width:1.5px,color:#214C2B;
-    classDef warning fill:#FFF1EE,stroke:#D46A55,stroke-width:1.2px,color:#76382B;
-    class HF,SAMPLE,INPUT data;
-    class QUEUE,WORKERS,READ,WEIGH,SELECT,WRITE,SCORE,RETRY process;
-    class VALIDATE decision;
+    INPUT --> AGENT
+    SCORE --> REVIEW
+    SCORE --> META
+    classDef data fill:#EAF3F8,stroke:#3D86A6,stroke-width:2px,color:#183B56;
+    classDef process fill:#E9F1FB,stroke:#2878B5,stroke-width:2px,color:#183B56;
+    classDef output fill:#EDF6EC,stroke:#5B9A68,stroke-width:2px,color:#214C2B;
+    class DATA,SAMPLE,INPUT data;
+    class AGENT,WEIGHT,SYNTH,SCORE process;
     class REVIEW,META,USE output;
-    class EXCLUDE warning;
 ```
 
-**Suggested caption.** Pseudo-labeling subagent workflow. ICML 2026 papers are
-sampled by primary area and review score, then processed independently by
-parallel subagents. Each subagent assesses reviewer evidence, consolidates the
-most substantiated critiques into a single-reviewer narrative, and assigns
-scores under human-review range constraints. Schema validation produces a
-review-only artifact and a separate auditable metadata record.
+**Suggested caption.** Pseudo-labeling workflow. Stratified ICML review samples
+are processed by parallel per-paper subagents. Reviewer evidence is weighted and
+deduplicated before producing a single structured review whose scores are
+constrained by the human-review range. Review content and audit metadata are
+stored separately for downstream Review-Agent training and evaluation.
