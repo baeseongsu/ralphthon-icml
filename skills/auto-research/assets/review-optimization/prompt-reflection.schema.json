@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "hypothesis",
+    "memory_lessons_used",
+    "review_sections",
+    "change_summary",
+    "risk_checks"
+  ],
+  "properties": {
+    "hypothesis": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 1000
+    },
+    "memory_lessons_used": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {"type": "string", "minLength": 10, "maxLength": 1000}
+    },
+    "review_sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "strengths",
+        "weaknesses",
+        "questions",
+        "limitations",
+        "ethical_concerns",
+        "evidence_trace"
+      ],
+      "properties": {
+        "summary": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "strengths": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "weaknesses": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "questions": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "limitations": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "ethical_concerns": {"type": "string", "minLength": 160, "maxLength": 4000},
+        "evidence_trace": {"type": "string", "minLength": 160, "maxLength": 4000}
+      }
+    },
+    "change_summary": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {"type": "string", "minLength": 10, "maxLength": 1000}
+    },
+    "risk_checks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {"type": "string", "minLength": 10, "maxLength": 1000}
+    }
+  }
+}

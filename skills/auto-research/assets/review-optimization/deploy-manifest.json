@@ -1,0 +1,44 @@
+{
+  "schema_version": "review-prompt-deploy-v1",
+  "campaign_id": "n5-001",
+  "selection_scope": "fixed-development-n5-smoke",
+  "default": {
+    "candidate_id": "p2",
+    "status": "keep",
+    "prompt_path": "skills/auto-research/assets/review-optimization/smoke-prompt-calibration-v3.md",
+    "prompt_sha256": "sha256:3c25dd6f5759f02e1fcc316439ae66d3912c525237fcc9d24c2f9e89e95dd46f",
+    "output_schema_path": "skills/auto-research/assets/review-optimization/generated-review.schema.json",
+    "composite": 0.9465555555555556,
+    "reference_score_agreement": 0.9653333333333334,
+    "judge_review_quality": 0.9277777777777778
+  },
+  "experimental": [
+    {
+      "candidate_id": "p3",
+      "status": "discard",
+      "rejection_reason": "component_regression",
+      "prompt_path": "skills/auto-research/assets/review-optimization/smoke-prompt-reflection-v4.md",
+      "prompt_sha256": "sha256:daac4658bdc60cfcc5ec9387a32e89dce9a8d93c89d55213fe0b9c3631a10684",
+      "output_schema_path": "skills/auto-research/assets/review-optimization/generated-review.schema.json",
+      "composite": 0.9485555555555555,
+      "reference_score_agreement": 0.9359999999999999,
+      "judge_review_quality": 0.961111111111111
+    },
+    {
+      "candidate_id": "p4",
+      "status": "discard",
+      "rejection_reason": "no_composite_gain",
+      "prompt_path": "skills/auto-research/assets/review-optimization/smoke-prompt-reflection-v5.md",
+      "prompt_sha256": "sha256:61e6c8793b16f3fcd6b46503f2e90cf308b16031081579388d6fef7fa29d5903",
+      "output_schema_path": "skills/auto-research/assets/review-optimization/generated-review.schema.json",
+      "composite": 0.939111111111111,
+      "reference_score_agreement": 0.9226666666666666,
+      "judge_review_quality": 0.9555555555555555
+    }
+  ],
+  "reflection_prompt_path": "skills/auto-research/assets/review-optimization/prompt-reflection.md",
+  "reflection_schema_path": "skills/auto-research/assets/review-optimization/prompt-reflection.schema.json",
+  "judge_prompt_path": "skills/auto-research/assets/review-optimization/judge-prompt.md",
+  "judge_schema_path": "skills/auto-research/assets/review-optimization/judge.schema.json",
+  "warning": "The default was selected on a fixed N=5 development smoke only; P3 and P4 are reproducible experimental prompts, not deployment defaults."
+}

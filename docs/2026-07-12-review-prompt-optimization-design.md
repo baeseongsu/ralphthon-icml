@@ -211,13 +211,23 @@ prompts/icml-2026/
 1. Parent prompt version과 baseline metrics를 freeze한다.
 2. Error cluster 하나를 선택한다.
 3. 하나의 falsifiable hypothesis를 작성한다.
-4. 한 section 또는 한 공통 instruction만 변경한다.
-5. 동일한 development subset과 inference configuration으로 Reviewer LLM을 실행한다.
-6. HumanAgreement와 JudgeQuality를 계산한다.
-7. W&B candidate run에 aggregate metrics, per-section metrics, cost, latency, failure count를 기록한다.
-8. Parent 대비 개선, regression, 실패 사례를 self-reflection에 기록한다.
-9. `keep`, `discard`, `crash` 중 하나로 판정한다.
-10. Keep된 candidate만 다음 parent가 된다.
+4. 누적 `experience-memory.md`, current kept parent prompt, allowlisted aggregate
+   metrics를 별도 reflection prompt에 넣는다. PDF, per-paper label, reference
+   review prose, holdout은 reflection model에 전달하지 않는다.
+5. Reflection model은 `summary`, `strengths`, `weaknesses`, `questions`,
+   `limitations`, `ethical_concerns`, `evidence_trace`의 일곱 instruction을 모두
+   더 구체적인 claim-evidence-decision protocol로 다시 작성한다.
+6. Compiler는 parent의 `## Review sections`와 `## Score anchors` 사이만
+   교체하고 score calibration, output contract 등 나머지 parent prompt를
+   byte-for-byte 보존한다.
+7. 동일한 development subset과 inference configuration으로 Reviewer LLM을 실행한다.
+8. HumanAgreement와 JudgeQuality를 계산한다.
+9. W&B candidate run에 aggregate metrics, per-section metrics, predicted score
+   distributions, cost, latency, failure count를 기록한다.
+10. Parent 대비 개선, regression, 실패 사례를 self-reflection과 cumulative
+    experience memory에 기록한다.
+11. `keep`, `discard`, `crash` 중 하나로 판정한다.
+12. Keep된 candidate만 다음 parent가 된다.
 
 한 번의 우연한 개선을 방지하기 위해 최종 winner는 동일 configuration으로 confirmation run을 수행한다. Development winner를 고른 뒤 holdout은 한 번만 평가한다.
 
@@ -246,6 +256,11 @@ Reflection에는 아래 항목을 남긴다.
 - Judge와 human score가 불일치한 사례
 - Keep/discard 근거
 - 다음 iteration에서 검증할 하나의 가설
+
+이 reflection은 기록용 문서에서 끝나지 않는다. 다음 candidate를 만드는
+reflection prompt의 실제 input이며, 모델 output은 exact JSON schema로 검증한 뒤
+일곱 `Review sections` instruction으로 compile한다. Discard된 경험도 memory에는
+남지만 candidate prompt나 parent state를 직접 변경하지 않는다.
 
 Experiment ledger는 append-only로 유지한다. 과거 결과를 새 schema에 맞추기 위해 조용히 덮어쓰지 않는다.
 
