@@ -14,14 +14,24 @@
 \usepackage{mathtools}
 \usepackage{amsthm}
 \usepackage[capitalize,noabbrev]{cleveref}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  literate={—}{{--}}1
+}
 
-\icmltitlerunning{Building Reliable Review Agents from Multiple Human Reviews}
+\icmltitlerunning{Optimizing Evidence-Bound Review Agents with Consolidated Human Reviews}
 
 \begin{document}
 
 \twocolumn[
-  \icmltitle{Building Reliable Review Agents from\\
-    Multiple Human Peer Reviews}
+  \icmltitle{Optimizing Evidence-Bound Review Agents with\\
+    Consolidated Human Peer Reviews}
 
   \icmlsetsymbol{equal}{*}
   \begin{icmlauthorlist}
@@ -73,14 +83,7 @@ Research agents now automate literature exploration, hypothesis generation, expe
 
 \subsection{Source Records}
 
-We group public ICML 2026 OpenReview records by paper forum identifier. The accepted-paper collection contains 6,341 papers and 24,378 official reviews. We sample 600 papers (9.5\%) using largest-remainder allocation over primary areas and, within each area, quartiles of mean reviewer overall recommendation (seed 42). The sample covers 81 of 84 areas; its mean score is 4.144 versus 4.147 in the population, and its spotlight share is 7.7\% versus 8.5\%. We generated consolidated labels for 175 sampled papers (166 regular and 9 spotlight). \Cref{fig:pipeline} summarizes the workflow.
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.66\textwidth]{../psudo_labeling/figure/pipeline/pseudo_labeling_pipeline.png}
-  \caption{Pseudo-labeling workflow. A stratified ICML review sample is processed one paper at a time. Reviewer evidence is prioritized and deduplicated before producing a single structured review whose scores remain within the human-review range. Reviewer-priority metadata is retained for analysis only; the pseudo-review is the downstream supervision target.}
-  \label{fig:pipeline}
-\end{figure*}
+We group public ICML 2026 OpenReview records by paper forum identifier. The accepted-paper collection contains 6,341 papers and 24,378 official reviews. We sample 600 papers (9.5\%) using largest-remainder allocation over primary areas and, within each area, quartiles of mean reviewer overall recommendation (seed 42). The sample covers 81 of 84 areas; its mean score is 4.144 versus 4.147 in the population, and its spotlight share is 7.7\% versus 8.5\%. We generated consolidated labels for 175 sampled papers (166 regular and 9 spotlight).
 
 Our input construction excludes explicit rebuttal and post-rebuttal score-change fields. A meta-review may nevertheless refer to the rebuttal or decision, so we prohibit such references in the synthesized review. The review agent receives only the manuscript at inference time; human reviews, meta-reviews, rebuttals, and decisions are unavailable to it.
 
@@ -100,8 +103,15 @@ This constraint covers soundness, presentation, significance, originality, and o
 
 \section{Review Agent and Development Evaluation}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.90\textwidth]{../docs/figures/image.png}
+  \caption{End-to-end review-agent development workflow. A frozen pseudo-review benchmark supports manuscript-only Reviewer inference, reference-score and Judge evaluation, regression-gated prompt selection, experience-guided reflection, and deployment of the kept P2 prompt.}
+  \label{fig:system}
+\end{figure*}
+
 \paragraph{Manuscript-only reviewer.}
-The runner extracts text and metadata from a PDF, places the text in a delimited untrusted-data block, and invokes a no-tools reviewer through Codex authentication. Web search, external memory, and paper-embedded instructions are disabled. The selected P2 prompt asks GPT-5.4 to produce a descriptive summary, strengths, severity-ordered weaknesses, decision-relevant questions, limitations, ethical concerns, and an evidence trace. It also requires six ICML scores and paper-grounded rationales. A strict JSON schema and runtime validator reject unknown fields, missing prose, and out-of-range scores. During inference, the reviewer cannot access pseudo-label prose, reference scores, candidate identity, or Judge output.
+\Cref{fig:system} summarizes the implementation. The runner extracts text and metadata from a PDF, places the text in a delimited untrusted-data block, and invokes a no-tools reviewer through Codex authentication. Web search, external memory, and paper-embedded instructions are disabled. The selected P2 prompt asks GPT-5.4 to produce a descriptive summary, strengths, severity-ordered weaknesses, decision-relevant questions, limitations, ethical concerns, and an evidence trace. It also requires six ICML scores and paper-grounded rationales. A strict JSON schema and runtime validator reject unknown fields, missing prose, and out-of-range scores. During inference, the reviewer cannot access pseudo-label prose, reference scores, candidate identity, or Judge output.
 
 \paragraph{Optimization objective.}
 We optimize only the reviewer prompt on a frozen five-paper development sample. A separate GPT-5.4 Judge receives the manuscript, generated review, and reference pseudo-review prose, but not numeric reference scores or candidate identity. The local evaluator combines normalized agreement with consolidated pseudo-label scores ($A$), nine-dimension Judge quality ($J$), and penalties $P$ for hallucination, missing evidence, schema failure, and API failure:
@@ -131,7 +141,9 @@ We will next evaluate the frozen P2 prompt once on a larger sealed holdout, repo
 \onecolumn
 
 \section{Label-Construction Prompt}
-We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. Each input contains the paper title, abstract, primary area, initial reviews, rubric scores, and meta-review; explicit rebuttal and post-rebuttal \texttt{final\_justification} fields are excluded. The prompt first asks the model to classify source reviews as high, medium, or low priority using specificity, cross-review corroboration, and agreement with the meta-review. It then instructs the model to write one first-person ICML review, merge repeated observations and questions, exclude low-quality or unsupported criticisms, and avoid any mention of other reviewers, the meta-review, rebuttal, score changes, or the decision. The complete prompt used for label construction is included in the repository at \texttt{psudo\_labeling/docs/pseudo\_labeling\_prompt.md}.
+We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. The exact prompt supplied to each labeling agent is reproduced below; \texttt{\$\{id\}} is replaced with the paper forum identifier at runtime.
+
+\lstinputlisting[firstline=27,lastline=61]{../psudo_labeling/docs/pseudo_labeling_prompt.md}
 
 \section{Output Schema}
 The review output is stored separately from labeling metadata. Each record contains \texttt{forum\_id} plus ten review fields: \texttt{summary}, \texttt{strengths\_and\_weaknesses}, four quality scores, \texttt{key\_questions\_for\_authors}, \texttt{limitations}, \texttt{overall\_recommendation}, and \texttt{confidence}. The quality scores use the ICML 1--4 scale, overall recommendation uses 1--6, and confidence uses 1--5. A separate audit record stores \texttt{reviewer\_stances} and \texttt{score\_rationale}; these are not included in the review target.
@@ -139,7 +151,14 @@ The review output is stored separately from labeling metadata. Each record conta
 \section{Additional Data Statistics}
 The parent ICML 2026 accepted-paper collection contains 6,341 papers, 24,378 official reviews, and 84 primary areas. It comprises 5,805 regular accepts and 536 spotlight accepts. Papers have $3.84\pm0.40$ reviews on average (median 4), and an official review contains $484.51\pm246.42$ words on average. The stratified 600-paper sample covers 81 areas, has mean review score 4.144 (population: 4.147), and includes 46 spotlight papers. The current artifact contains 175 consolidated reviews and 163 separate audit records; the labeled subset consists of 166 regular and 9 spotlight papers. All six numerical fields are complete in the parent review collection. Because the source collection contains accepted papers only, these statistics do not represent the full ICML submission or rejection distribution.
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.96\textwidth]{../docs/figures/review-prompt-autoresearch-trajectory.png}
+  \caption{Prompt-optimization trajectory on the frozen five-paper development set. P2 is retained because it improves the composite objective and passes all component and dimension regression gates; P1, P3, and P4 are discarded.}
+  \label{fig:trajectory}
+\end{figure*}
+
 \section{Review-Agent Implementation}
-The deployment artifact freezes P2 at \texttt{skills/auto-research/assets/review-optimization/smoke-prompt-calibration-v3.md} and pairs it with \texttt{generated-review.schema.json}. Under \texttt{skills/auto-research/scripts/}, \texttt{review\_prompt\_codex.py} implements inference; adjacent \texttt{review\_prompt\_*} scripts implement dataset freezing, batching, scoring, reflection, selection, and privacy-aware tracking. The deployment manifest records prompt and schema hashes. P3 and P4 remain opt-in experimental prompts.
+The deployment artifact freezes P2 at \path{skills/auto-research/assets/review-optimization/smoke-prompt-calibration-v3.md} and pairs it with \path{generated-review.schema.json}. Under \path{skills/auto-research/scripts/}, \path{review_prompt_codex.py} implements inference; adjacent \path{review_prompt_*} scripts implement dataset freezing, batching, scoring, reflection, selection, and privacy-aware tracking. The deployment manifest records prompt and schema hashes. P3 and P4 remain opt-in experimental prompts.
 
 \end{document}
