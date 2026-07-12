@@ -1,0 +1,62 @@
+{
+ "forum_id": "lkGnJhXUNu",
+ "title": "Breaking Multi-Task Curse: Reward-Weighted Evolution for Black-Box Many-Task Optimization",
+ "abstract": "Evolutionary multi-tasking accelerates black-box optimization via knowledge transfer but falters in scenarios involving many low-similarity tasks. We identify this scalability barrier as the *Multi-Task Curse*, driven by evaluation budget dispersion and negative transfer. To overcome this, we propose MES-RET (*M*any-task *E*volution *S*trategy with *R*eward-weighted *E*valuation and *T*ransfer), which combats budget dispersion via a reward-weighted evaluation scheme that guarantees superior expected improvement, while simultaneously mitigating negative transfer through a robust reward-weighted aggregation of mean and covariance statistics, ensuring a safe fallback to independent evolution. Furthermore, to handle neural dimensional mismatches in many-task policy search, we introduce a semantic parameter alignment strategy that bridges heterogeneous state-action spaces. Extensive experiments on synthetic benchmarks, real-world engineering problems, and reinforcement learning tasks demonstrate that MES-RET consistently outperforms state-of-the-art methods, notably enabling skill transfer across morphologically distinct policies.",
+ "primary_area": "optimization->zeroorder_and_blackbox_optimization",
+ "decision": "Accept (regular)",
+ "decision_comment": "A technically strong paper with consensus among the reviewers.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_FpL8",
+   "summary": "The paper introduces MES-RET, an evolutionary multi-tasking algorithm designed for many-task optimization problems. It dynamically allocates evaluation budgets and transfers mean and covariance statistics based on task-specific reward signals. It also presents a semantic policy parameter alignment strategy to enable knowledge transfer across reinforcement learning policies with differing state-action dimensionalities.",
+   "strengths_and_weaknesses": "Strengths\n1.\tThe weak guidance injection mechanism offers a theoretically grounded safeguard against negative transfer by discarding maladaptive external solutions through rank-based truncation.\n2.\tThe empirical evaluation is broad, spanning 87 synthetic benchmarks, 42 real-world constrained engineering tasks, and 18 Gymnasium environments, demonstrating robust performance across diverse domains.\n3.\tThe covariance and mean aggregation mechanism provides a computationally lightweight approach to cross-task knowledge transfer without requiring explicit feature mapping or secondary learning loops.\n\nWeaknesses\n1.\tThe core allocation and aggregation mechanisms offer incremental heuristic adjustments. Is the Semantic Policy Parameter Alignment genuinely novel, or is it merely a standard shared-backbone architecture for Multi-Layer Perceptrons? This partitioning relies on fixed hidden dimensions, which limits its applicability to heterogeneous neural networks.\n2.\tThe concept of a Multi-Task Curse lacks rigorous mathematical formulation. Does it offer any new theoretical depth, or does it simply repackage the well-documented challenges of negative transfer and resource dilution?\n3.\tProposition 3.1 relies on the unverified assumption that the heuristic reward positively correlates with true expected improvement. Why should historical progress serve as a reliable empirical proxy? Theoretical guarantee for future improvement in deceptive or non-convex landscapes is needed for this formulation.\n4.\tProposition 3.3 states that truncation selection discards inferior external solutions. However, does generating and evaluating these maladaptive candidates not still consume the limited computational budget? The analysis ignores soft negative transfer, where mediocre transferred solutions survive truncation and pull the search into suboptimal basins.\n5.\tThe experimental setup compares evolutionary methods using 16-neuron hidden layers against gradient-based baselines using 64-neuron architectures. Is it fair to cap the gradient methods at 10 million steps merely to match the wall-clock runtime of parallelized evolutionary strategies? This structural bias penalizes sample efficiency and invalidates the comparative claims.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please refer to the Weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_jwef",
+   "summary": "This paper addresses the \"Multi-Task Curse\" in Evolutionary Multi-Tasking (EMT), a problem characterized by evaluation budget dispersion and negative transfer. To address these issues, the authors propose MES-RET.  This framework introduces an adaptive budget allocation strategy based on a reward-weighted evaluation mechanism and employs a reward-weighted transfer mechanism with weak guidance injection to enhance knowledge transfer.",
+   "strengths_and_weaknesses": "**Strengths** \n\n- *Effective Knowledge Transfer*: \nThe proposed Mean & Covariance aggregation method offers a simple yet highly efficient approach to knowledge transfer.\n\n- *Strong Empirical Performance*: \nThe method demonstrates excellent performance, consistently outperforming both single-task and many-task Evolution Strategies (ES) baselines. Furthermore, it achieves results comparable to gradient-based RL algorithms like PPO on reinforcement learning benchmarks.\n\n&nbsp;\n\n**Weaknesses** \n\n- *Lack of Theoretical Guarantee for the Reward Design*: \nProposition 3.1 successfully establishes that a reward-weighted strategy is superior to a uniform baseline. However, the paper lacks a theoretical guarantee or proof demonstrating that the specifically proposed reward design actually satisfies the required condition outlined in Equation 3..\n\n- *Simplistic Mitigation for Negative Transfer*: \nWhile the paper heavily emphasizes the severity of negative transfer, the proposed solution, weak guidance injection, feels somewhat too simplistic to fully address the stated magnitude of the problem.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Can you provide a theoretical justification or stronger empirical evidence demonstrating that the proposed reward design reliably satisfies the condition in Equation 3?\n\n2. Regarding Figure 7, the initial starting states for sep-MES-RET and w/o-RT appear to be different. Is this a fair visual comparison? For a more rigorous assessment, shouldn't both models begin from the exact same initial state?\n\n3. Could you provide an additional ablation study that isolates the effect of the Weak Guidance Injection? Seeing the performance drop when only this specific component is removed would help clarify its true impact on the system.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_T2zD",
+   "summary": "This paper studies the multi-task curse in black-box many-task optimization, where jointly optimizing a large number of tasks can lead to worse performance than solving them independently due to evaluation budget dispersion and negative knowledge transfer. To address this issue, the authors propose MES-RET (Many-task Evolution Strategy with Reward-weighted Evaluation and Transfer). The method introduces to dynamically allocate evaluation budgets across tasks and weights cross-task knowledge transfer. Experiments on benchmark many-task optimization problems demonstrate that the proposed method mitigates the degradation observed in existing multi-task evolutionary algorithms and achieves improved performance.",
+   "strengths_and_weaknesses": "S1. The paper provides a clear diagnosis of why many-task optimization methods degrade as the number of tasks increases, highlighting evaluation budget dispersion and negative transfer.\n\nS2. Reward-weighted evaluation and transfer provide an intuitive mechanism for prioritizing promising tasks and filtering harmful information sharing.\n\nW1. The paper is sometimes difficult to follow due to limited background explanations and unclear presentation of some components. For example, several notations appear before being formally defined (e.g., the symbol $\\lambda$ in line 180). In addition, some sub-algorithms used in the method, such as the CMA-based evolution procedure, are introduced with minimal explanation. Since these components are essential to understanding the proposed method, the paper would benefit from more detailed descriptions or background introductions.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Q1. In the chosen experiments, how much multi-task curse do they have? Is there any way to show the negative transfer? I am asking because researchers show gradient cosine similarity in multi-objective optimization experiments where gradient conflict is a source of negative transfer. However, in black-box optimization, there is no information about gradients. But if showing some negative transfer in other methods, while showing less negative transfer in this method, may help.\n\nNote: This paper's scope is a bit beyond my background. I would modestly read other reviewers' comments and change my opinion accordingly.",
+   "limitations": "Please refer to the weaknesses and questions.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_Bgwp",
+   "summary": "This paper introduces a black-box optimization framework named MES-RET to solve the \"multitasking curse\" problem in evolutionary multitasking processing. This method dynamically allocates computing resources through a reward-weighted evaluation mechanism, giving priority to tasks with higher convergence or exploration potential, thereby significantly improving the solution efficiency. To prevent negative transfer between unrelated tasks, researchers have designed a robust knowledge transfer mechanism that uses global statistics to provide weak guidance and ensures that it can automatically revert to an independent evolutionary state when the effect is poor. In addition, to address the challenge of dimension mismatch in reinforcement learning, this paper proposes a semantic policy parameter alignment strategy, achieving skill sharing across heterogeneous tasks. A large number of experiments have proved that this method is superior to the existing single-task and multi-task baseline algorithms in fields such as synthetic functions, engineering design, and complex robot control.",
+   "strengths_and_weaknesses": "**Strengths**\n1) Clearly identify and define the two major causes of the \"multitasking curse\" : evaluation budget dispersion and negative transfer.\n\n2) The paper not only presents the algorithm but also provides theoretical proof.\n\n3) The proposed reward weighted evaluation and reward weighted transfer mechanisms can dynamically adjust resources and aggregate cross-task knowledge. Meanwhile, this algorithm maintains the same asymptotic time complexity as the standard CMA-ES and has extremely low computational overhead.\n\n**Weaknesses**\n1) The semantic policy alignment policy currently relies on a fixed size of hidden layers, which limits its direct application between tasks with completely different neural network architectures, such as different numbers of layers or different types.\n\n2) The sample efficiency of the ES strategy is low.\n\n3) Currently, the alignment is mainly focused on MLP structures. More complex structures (such as CNN or Transformer) are not discussed in depth in this paper.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1) In the semantic policy parameter alignment mechanism, if the hidden layer dimensions between tasks are completely different or there are non-fully connected layers (such as convolutional layers), how can this framework be effectively extended?\n\n2) When the number of tasks expands from dozens to hundreds or even thousands, will categorical sampling in reward-weighted evaluation fail due to extremely diluted probabilities?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

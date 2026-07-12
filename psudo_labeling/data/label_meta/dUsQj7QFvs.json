@@ -1,0 +1,26 @@
+{
+  "forum_id": "dUsQj7QFvs",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_XdSP",
+      "weight": "high",
+      "reason": "Specific and well-substantiated. Two of its concerns are picked up directly by the meta-review: the sliding-window hazard-rate estimation risking transient dips under non-stationarity, and the validity of the linear timing model at long context (quadratic attention). Accurate summary, confidence 4, and its scores match the ensemble."
+    },
+    {
+      "reviewer": "Reviewer_A6CD",
+      "weight": "high",
+      "reason": "Its written content is the leading concern in the meta-review: no formal TTFT/TPOT tradeoff, the 'competitive latency' claim not tied to a target, and results confined to a heavy-traffic high-concurrency regime with no SLO evaluation. Content is adopted, so weighted high; however its soundness/presentation scores of 2 and confidence of 2 are outliers not supported by the meta-review's explicit 'scope, not correctness' framing, so those scores are discounted."
+    },
+    {
+      "reviewer": "Reviewer_4uHm",
+      "weight": "high",
+      "reason": "Raises the comparison to prefill-decode disaggregation and multi-GPU behavior, both explicitly echoed by the meta-review, plus substantive questions on real-world CFR/IFR validity and hazard-rate estimation sensitivity (the latter corroborating XdSP). Its originality score of 2 is a mild outlier against the other three."
+    },
+    {
+      "reviewer": "Reviewer_GmVf",
+      "weight": "high",
+      "reason": "Accurate summary and its main weakness (THETA is not always faster, especially on bandwidth-constrained GPUs or long context) maps directly onto the meta-review's concluding caveat that benefits are regime-dependent; the when-to-use-THETA question is on-target. Somewhat briefer and lighter in detail than the other reviews, but well-aligned and confidence 4."
+    }
+  ],
+  "score_rationale": "All four reviewers converged on weak accept (4) and the meta-review confirms Weak Accept, so overall recommendation is 4. Soundness is set to 3 rather than 2 because the meta-review explicitly frames the open issues as scope, not correctness, making A6CD's soundness/presentation 2 an outlier against the other three reviewers' 3s. Significance is held at 3 (not GmVf's 4) because the meta-review stresses that impact is limited by regime-dependent benefits, and originality stays at the majority 3 (despite 4uHm's 2), reflecting a novel hardware-aware reframing built on known scheduling primitives. Confidence is 4 because the substantive concerns (latency/SLO tradeoffs, non-stationarity, long-context linear-model validity, disaggregation/multi-GPU) are specific and mutually corroborating and each is adopted by the meta-review."
+}

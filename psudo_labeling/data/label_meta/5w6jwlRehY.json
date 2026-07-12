@@ -1,0 +1,21 @@
+{
+  "forum_id": "5w6jwlRehY",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_3fhq",
+      "weight": "high",
+      "reason": "The most detailed and specific review. Its central concerns—the missing feasibility condition in Theorem 3.1 (which the authors subsequently revised the theorem to include), the overstated empirical support (toy 2D, single-sample, single linear network, no nonlinear validation), and the lack of evaluation on established larger-scale/LLM models—are directly adopted by the meta-review, which names this reviewer and frames experimental sufficiency as the main remaining concern. Substantiated and corroborated."
+    },
+    {
+      "reviewer": "Reviewer_aW9B",
+      "weight": "high",
+      "reason": "Balanced, specific, and well-substantiated. Its key points—the single/final-layer and full-network scope limitation and the gap between the derived formula and the trained Section 7 attack—are echoed by the meta-review's concern about single-layer scope, and it also articulates the positive case (novel low-rank perspective, practical compression-safety relevance) that the meta-review adopts as grounds for acceptance."
+    },
+    {
+      "reviewer": "Reviewer_XW9W",
+      "weight": "medium",
+      "reason": "Two substantive criticisms—the absence of any related-work comparison and the strong local-invertibility assumption—are the meta-review's top two concerns and are incorporated into my prose and questions. However, the review is comparatively thin, its self-reported confidence is low (2), and its presentation score of 1 is an unjustified outlier contradicted by the two other reviewers' explicit praise of clarity, so I adopted its content but discounted its numeric scores (presentation, significance, originality)."
+    }
+  ],
+  "score_rationale": "I weighted Reviewer_aW9B and Reviewer_3fhq most heavily: their concerns—single-layer/single-sample scope, the missing feasibility condition in Theorem 3.1, the theory-experiment gap, and limited experimental validation—are specific, mutually corroborating, and adopted by the meta-review, which treats experimental sufficiency (especially for large-scale models) as the main remaining concern while endorsing the novelty and significance of the theory as grounds for acceptance. Reviewer_XW9W's substantive points (absent related-work comparison and the local-invertibility assumption) are the meta-review's top two concerns and are reflected in my prose, but I discounted their presentation score of 1 as an unjustified outlier given the other reviewers' explicit praise of clarity and their low self-reported confidence. Scores therefore sit at 3/3/3/3 with a weak-accept (4) overall: good across dimensions, moderated by genuine soundness caveats and scope-limited practical significance, consistent with the two weak-accept recommendations and the meta-review's accept direction. Confidence is 3, reflecting strong corroboration on the substantive weaknesses alongside scoring splits on soundness, significance, and the overall recommendation."
+}

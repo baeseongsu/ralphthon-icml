@@ -1,0 +1,26 @@
+{
+  "forum_id": "GxSB5ZYfM4",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_9Vdp",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review. Its central concerns are corroborated by the meta-review: the entropy-probing idea is credited as genuinely novel, and the metric/validation inconsistency in the probing evaluation is explicitly referenced. Its SFT confound, backbone confound, entropy-validation gap, and overstated framing arguments are specific and echoed by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_pMe3",
+      "weight": "high",
+      "reason": "Specific and substantiated. The meta-review notes this reviewer found the method novel and the experimental design well-crafted, and adopts two of its key points directly: the need for backbone-matched baselines and the small marginal value of the proactive probing stage relative to reactive correction."
+    },
+    {
+      "reviewer": "Reviewer_XKHc",
+      "weight": "high",
+      "reason": "Specific and on-target. The meta-review adopts its framing that the contribution is specialized to solver-in-the-loop systems, and its points on entropy-trigger reliability and disentangling SFT/fine-tuning from inference-time gains align with the other high-weight reviews and the AC's assessment; it cites concrete prior work on the repair-loop pattern."
+    },
+    {
+      "reviewer": "Reviewer_2StX",
+      "weight": "medium",
+      "reason": "Partly on-target. Substantive points (missing baselines such as Logic-LM++, single-backbone generalization, fusion-branch statistics, cost analysis) overlap with the high-weight reviews and the meta-review notes its concern about missing key experiments. Weakened by several more generic or nitpicky points (terminology definitions, wording of overstatements) and the lowest overall score, which the meta-review's accept direction down-weights."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (9Vdp, pMe3, XKHc) converge on the two points the meta-review adopts, the backbone/SFT confound that prevents cleanly attributing gains to the architecture and the small empirical contribution of the paper's most novel component (entropy probing, +2.8 vs +18.3 for reactive repair), so soundness (3) and significance (2) are pulled toward the lower end of their ranges while staying within an accept band. Originality is set to 2 because the two most substantiated novelty critiques (the strawman Generate-and-Hope framing and prior generate-verify-repair loops in LLM-ARC and others) outweigh the positive impressions, though the genuinely novel entropy kernel is credited in prose. Overall recommendation of 4 matches the meta-review's weak-accept and the high-weight cluster (4, 4, 5), with the medium-weight dissent (3) noted but down-weighted; presentation (3) balances praise for the figures and appendix against the framing overstatements and dense Figure 2. Confidence is 4 given how strongly the reviews corroborate one another."
+}

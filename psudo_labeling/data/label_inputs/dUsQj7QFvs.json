@@ -1,0 +1,62 @@
+{
+ "forum_id": "dUsQj7QFvs",
+ "title": "Threshold-Based Exclusive Batching for LLM Inference",
+ "abstract": "Mixed batching (MB)—interleaving prefill and decode in a single batch—has become the standard scheduling strategy for large language model (LLM) inference due to its efficiency in maximizing compute and memory utilization. However, through controlled experiments, we find that prefill–decode interference inflates MB's per-step marginal cost above that of pure decode. On the high-bandwidth H200 (4.8 TB/s), this occurs only when decode tokens exceed 80% of the batch; however, on the bandwidth-constrained RTX PRO 6000 (1.792 TB/s), this threshold plummets to just 20%. Consequently, the optimal choice between MB and exclusive batching (EB) fundamentally depends on GPU memory bandwidth, model size, and workload composition. We derive a closed-form condition for this EB–MB performance crossover, along with asymptotically optimal phase-switching thresholds and memory-safe batch sizing for EB. Optimized EB achieves up to 41.9% higher throughput on bandwidth-constrained GPUs, while MB retains its advantage on high-bandwidth hardware with larger models. Our hybrid scheduler EB+ applies this condition online to dynamically switch between EB and MB without manual intervention. Under non-stationary traffic with distribution or concurrency shifts, EB+ attains the highest or near-highest throughput in every setting, outperforming MB by up to 36.4%.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "The reviewers agree that this is a technically solid and practically relevant systems paper. The authors strive to analyze a central area in LLM serving: when chunked prefill ceases to be the right default under memory-bandwidth constraints. An important area presented by this article is the hardware-aware scheduling tradeoff between chunked prefill and exclusive batching. Reviewers found the main contribution meaningful: the paper identifies a clear bandwidth-constrained regime where exclusive batching can outperform chunked prefill, and supports this with both analysis and broad experiments.\n\nThe main concerns were about scope rather than correctness: limited treatment of TTFT/TPOT tradeoffs and SLOs, behavior under non-stationary workloads, long-context validity of the linear timing model, and comparison to disaggregation / multi-GPU settings. In the rebuttal, the authors provided additional analyses and experiments addressing these points, including THETA+, SLO-style evaluation, non-stationary settings, long-context evidence, and multi-GPU/disaggregation comparisons. Most reviewers explicitly said their concerns were fully or largely resolved.\n\nOverall, my recommendation is Weak Accept: the paper makes a useful, well-supported contribution, especially for bandwidth-constrained inference, though its impact is somewhat limited by the fact that benefits are regime-dependent and some latency tradeoffs remain workload-sensitive.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_GmVf",
+   "summary": "This paper studies LLM inference scheduling on GPUs with limited memory bandwidth. It argues that the commonly-used chunked prefill strategy is not always the best choice because mixing prefill and decode can increase memory-bandwidth contention and hurt decode efficiency on memory-bandwidth-constrained hardware. To address this, the paper proposes THETA, a threshold-based exclusive batching framework that derives analytical phase-switching thresholds and memory-safe batch sizes, and adapts them online based on workload statistics. Experiments on several GPUs and workloads show that THETA can outperform chunked prefill, especially on bandwidth-constrained GPUs, by to 1.15x higher throughput while not significantly affect latency.",
+   "strengths_and_weaknesses": "Strengths:\n\n* The paper challenges the common-sense of using chunked prefill is always better and propose adaptive chunked prefill with decoding.\n* The proposed approaches have been validated through extensive experiments on multiple GPUs.\n\nWeaknesses:\n\n* The proposed approach, on some cases, is still slower than its chunked-prefill baseline, especially on bandwidth-constrained GPUs or on benchmarks with long context.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "* Since THETA does not always outperform its baseline, can you provide a more clear guideline on when to use THETA?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_A6CD",
+   "summary": "This paper studies when chunked prefill underperforms exclusive batching for LLM inference and attributes the crossover primarily to memory-bandwidth constraints. It introduces THETA, an exclusive-batching scheduler with closed-form, asymptotically optimal phase-switching thresholds derived under stochastic output-length models and a probabilistic memory-safe batch-sizing rule; an online controller estimates hazard-rate parameters and adapts the threshold and batch size at runtime.",
+   "strengths_and_weaknesses": "Strengths\n1. The paper identifies a clear and practically important regime (bandwidth-constrained GPUs) where chunked prefill can be suboptimal and provides a principled alternative tailored to that regime.\n\nWeaknesses\n1. The paper states that chunked prefill favors TTFT and exclusive batching favors TPOT. When THETA wins on throughput but loses on TTFT, there is no formal treatment of how to balance TTFT vs. TPOT; the “competitive latency” claim is not tied to a specific latency target.\n2. Most results are reported in a heavy-traffic, high-concurrency setting (2048). Extremely large TTFT numbers raise questions about the relevance for interactive workloads; evaluation under moderate loads or with SLO constraints would provide a fuller picture.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to Weaknesses.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_XdSP",
+   "summary": "This paper challenges the universal superiority of chunked prefill by demonstrating that on memory-bandwidth-constrained GPUs (e.g., RTX PRO 6000), interleaving prefill and decode phases causes resource contention that degrades throughput. The authors propose THETA, a scheduling framework for exclusive batching that utilizes a theoretical model to derive closed-form, asymptotically optimal phase-switching thresholds ($\\theta^*$) under stochastic output-length distributions. By combining these thresholds with a probabilistic memory-safe batch sizing strategy and an online adaptive controller, THETA achieves up to 15.3% higher throughput than chunked prefill on bandwidth-limited hardware while maintaining competitive latency and memory safety.",
+   "strengths_and_weaknesses": "**Strengths**\n\n* The paper provides a rigorous hardware-aware critique of chunked prefill, specifically quantifying the \"crossover point\" (80% decode ratio on H200 vs. 20% on RTX 6000) where mixed batches begin to underperform pure decode batches. This offers a necessary theoretical foundation for choosing scheduling strategies based on absolute memory bandwidth rather than just software-level heuristics.\n\n* Instead of relying on empirical heuristics, the framework utilizes stochastic optimization to determine switching timings. It specifically accounts for real-world \"Increasing Failure Rate\" behavior, providing a formal mathematical justification for scheduling decisions.\n\n* The evaluation demonstrates specific, substantial improvements on bandwidth-constrained GPUs, such as a 15.3% throughput increase on ShareGPT and 11.6% on WildChat.\n\n**Weaknesses**\n\n* The online adaptive algorithm relies on sliding windows to estimate hazard rates. In scenarios with \"bursty\" traffic or rapid distribution shifts (non-stationarity), the delay in parameter fitting could lead to transient throughput dips or, more critically, inaccurate memory-safe batch sizing.\n\n* [Minor] The diagrams in Figure 2 are not very easy to read due to the color setting. The presentation could be improved.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "* The timing model in Section 3.1 adopts a linear iteration time formula for the prefill phase. Since attention complexity is theoretically quadratic ($O(L^2)$), what is the impact of neglecting the quadratic term on the framework's performance? Is there specific evidence or profiling data to verify that this assumption holds for the context lengths tested?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_4uHm",
+   "summary": "This paper focuses on the case of interleaving prefills and decodes, and develops a scheduling algorithm that decide when to run prefill or decode batches on various hardware configurations.",
+   "strengths_and_weaknesses": "Strength: \n- Demonstrated the case where scheduling on exclusive batching is useful \n- Thorough evaluation on a variety of hardware settings\n\nWeakness: \n- Need to compare with other design choices such as prefill-decode disaggregation. PD disaggregation has been viewed as an alternative to chunked prefill to avoid the contention between prefill and decode stages. I would like to see a discussion in the paper on comparison with PD disaggregation.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "The paper analyzes CFR and IFR cases, can you show real-world evidences on if real-world data follows CFR and IFR. \n\nI'd also like to understand how the performance of the online adaptive algorithm is sensitive to the online estimation of the hazard rates. (what's the estimation accuracy in your experiments? if the estimation goes wrong, how does it affects your algorithm efficiency?)\n\nI wonder how the proposed solution behave on multiple-GPU platforms.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

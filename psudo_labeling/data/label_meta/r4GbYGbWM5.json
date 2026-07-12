@@ -1,0 +1,26 @@
+{
+  "forum_id": "r4GbYGbWM5",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_pDvE",
+      "weight": "high",
+      "reason": "The most technically careful and substantive review. It correctly characterizes the method as a conditional latent-variable generator, and its 'elegant synthesis rather than a fundamentally new paradigm' framing is explicitly adopted by the meta-review and echoed by other reviewers. Its concrete asks -- missing classical/parametric baselines and OOD behavior of the conditioning variable -- are specific and corroborated."
+    },
+    {
+      "reviewer": "Reviewer_s4HN",
+      "weight": "high",
+      "reason": "The most detailed and technically grounded critique. Its central concern -- that the KDE-NLL objective and the CRPS/QICE metrics are marginal-only, so the joint predictive distribution is neither modeled nor evaluated -- is singled out by the meta-review as the main remaining point. Its further concerns (uncertainty collapse, fixed bandwidth, missing parametric/flow-matching baselines, single-horizon evaluation, evaluation protocol) are specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_PZr9",
+      "weight": "medium",
+      "reason": "On-target but comparatively brief. Its points on limited originality (resemblance to standard encoder-decoder latent-variable models) and the practical relevance of the theorems corroborate the synthesis theme, and the meta-review jointly attributes the marginal KDE-NLL limitation to this reviewer. However, the initial review lists only two weaknesses and gives the lone (weak) reject, so it is weighted below the two most substantiated reviews."
+    },
+    {
+      "reviewer": "Reviewer_D77y",
+      "weight": "medium",
+      "reason": "Moderate-effort review that is partly on-target. The request to distinguish PPM from diffusion/flow-matching learning aligns with the originality/synthesis theme and s4HN's missing-flow-matching point, and the finite-sample KDE concern connects to the bias-variance tradeoff. However, the curse-of-dimensionality framing is less apt given the 1D-marginal KDE, and the granular lemma-reference remarks carry little evaluative weight."
+    }
+  ],
+  "score_rationale": "pDvE and s4HN were weighted highest: pDvE for its careful, substantive assessment whose 'elegant synthesis' framing the meta-review directly adopts, and s4HN for the most detailed critique, whose marginal-only KDE-NLL and evaluation concern the meta-review singles out as the main remaining point. Presentation (3) and overall recommendation (4) follow the strong, corroborated positive consensus and the accept decision, staying within the reviewers' ranges. Originality was set to 2 because three of four reviewers and the meta-review frame the work as a synthesis rather than a new paradigm; soundness (3) reflects the majority of high-weight opinion and the meta-review's positive framing of the KDE-NLL issue as an acknowledged proxy limitation rather than a flaw, while significance (3) follows both high-weight reviewers. Confidence (4) reflects the strong mutual corroboration across reviews on the core assessment."
+}

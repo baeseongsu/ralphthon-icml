@@ -1,0 +1,66 @@
+{
+ "forum_id": "T1uBDl1WPR",
+ "title": "Mechanistic Anomaly Detection via Functional Attribution",
+ "abstract": "We can often verify the correctness of neural network outputs using ground truth labels, but we cannot reliably determine whether the output was produced by normal or anomalous internal mechanisms. Mechanistic anomaly detection (MAD) aims to flag these cases, but existing methods either depend on latent space analysis, which is vulnerable to obfuscation, or are specific to particular architectures and modalities. We reframe MAD as a functional attribution problem: asking to what extent samples from a trusted set can explain the model's output, where attribution failure signals anomalous behavior. We operationalize this using influence functions, measuring functional coupling between test samples and a small reference set via parameter-space sampling. We evaluate across multiple anomaly types and modalities. For backdoors in vision models, our method achieves state-of-the-art detection on BackdoorBench, with an average Defense Effectiveness Rating (DER) of 0.93 across seven attacks and four datasets (next best 0.83). For LLMs, we similarly achieve a significant improvement over baselines for several backdoor types, including on explicitly obfuscated models. Beyond backdoors, preliminary evidence shows our method can detect adversarial and out-of-distribution samples, and distinguishes multiple anomalous mechanisms within a single model. Our results establish functional attribution as an effective, modality-agnostic tool for detecting anomalous behavior in deployed models.",
+ "primary_area": "social_aspects->accountability_transparency_and_interpretability",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper introduces a new mechanistic anomaly detection framework by reframing the task as functional attribution via influence functions. Reviewers praised the method's originality and state-of-the-art performance in backdoor detection across diverse modalities and architectures. While initial concerns focused on computational complexity and reference set robustness, the authors successfully addressed these during the discussion phase with new efficiency analyses, pseudocode, and contamination experiments. Despite higher costs than latent-space baselines, the framework's unique robustness to obfuscation and its modality-agnostic nature represent a significant contribution to AI safety. Given the consensus and the successful resolution of all major reviewer concerns, I recommend acceptance for this submission.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Nubc",
+   "summary": "The paper presents MAD, a framework viewing anomaly detection as a functional attribution issue. It examines whether a model's internal mechanisms behave abnormally under different inputs, using influence functions to relate test samples to a trusted reference to spot unusual patterns. Tested on different anomalies, especially backdoor detection, it outperforms previous methods.",
+   "strengths_and_weaknesses": "Strengths\n- The problem studied is emerging, given the rise of foundation models and safety concerns.\n- The paper introduces a mechanistic perspective for anomaly detection, shifting focus from output correctness and latent-space anomalies to internal functional mechanisms.\n- This perspective is well motivated, especially in the context of backdoor attacks and mechanistic interpretability.\n\nWeaknesses\n- The exact operational pipeline of MAD is unclear to me. How exactly is functional coupling computed? What specific attribution signals are used? How is the reference set constructed?\n- The proposed MAD depends on a trusted set of reference samples to estimate functional attribution signals. However, in many real-world situations, especially adversarial ones, obtaining a clean and reliable reference dataset can be challenging. I believe detection performance could degrade when the trusted set is imperfect or contaminated.\n- Comparison with recent defenses is limited. A stronger baseline comparison would strengthen claims of SOTA performance.\n- Although the paper claims general anomaly detection, experiments appear heavily focused on backdoor attacks. Comparison with recent defenses is also limited.\n- There are no ablation studies on how the choice of the attribution method and approximation accuracy affect the experimental results.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Can the authors provide pseudocode for the MAD pipeline?\n2. Have you assessed the detection performance across different noise or poisoning levels in the trusted set?\n3. Could you provide runtime or complexity analysis for larger models or datasets?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The newly added pseudocode and additional experimental results strengthen the paper and make the proposed method more robust and well justified."
+  },
+  {
+   "reviewer": "Reviewer_PRmF",
+   "summary": "This paper proposes a detection-based mechanism to protect machine learning models from malicious or abnormal inputs by analyzing statistical relationships between incoming inputs and a trusted dataset. The key idea is to characterize normal data behavior using covariance statistics computed over a trusted reference dataset and then detect anomalous inputs that significantly deviate from this distribution. The method provides a mechanistic perspective for anomaly detection and aims to serve as a lightweight defense mechanism that can be applied without modifying the underlying model.\n\nExperiments demonstrate the effectiveness of the proposed detection approach on several datasets and attack scenarios, suggesting that statistical consistency with trusted data can serve as a useful signal for identifying malicious inputs.",
+   "strengths_and_weaknesses": "Strengthens:\n\n1. Interesting perspective on model protection. The paper provides a novel viewpoint by framing anomaly detection through covariance relationships with a trusted dataset, which offers a mechanistic interpretation of abnormal inputs.\n\n2. Model-agnostic defense mechanism. The proposed detection approach does not require modifying or retraining the target model, making it potentially attractive for practical deployment.\n\n3. Promising empirical results. Experimental results show that the method can effectively detect abnormal inputs under several attack scenarios.\n\n4. Clear methodology. The detection pipeline and statistical formulation are clearly described, making the method relatively easy to understand and reproduce.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Limited discussion on the trusted dataset. The effectiveness of the proposed method strongly depends on the size and composition of the trusted dataset, but the paper provides limited discussion on how this dataset should be constructed, selected, or scaled in practice.\n\n2. Limited scenarios and dataset diversity. The experiments are conducted on relatively small datasets and limited scenarios. An important question is whether the method remains effective when applied to MLLM systems that accept inputs from diverse domains. In such cases, inputs may come from heterogeneous distributions, which raises questions about whether a single trusted dataset would still be sufficient.\n\n3. Efficiency considerations. The detection mechanism relies on computing covariance relationships between the input and the trusted dataset. When the trusted dataset grows large, the computational overhead may become significant. The paper would benefit from a more detailed efficiency analysis and scalability discussion.",
+   "limitations": "Please see the questions.\n\nOverall, this paper presents an interesting and potentially useful perspective on model protection through statistical consistency with trusted data. While the empirical results are promising, several practical aspects are important considerations that are currently not sufficiently discussed.\n\nDespite these limitations, the proposed idea is conceptually interesting and could stimulate further research on statistical mechanisms for protecting machine learning models.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_gNH9",
+   "summary": "The paper proposes to anomalous behaviors of inference of neural networks. The idea is to measure covariance of loss functions of sample in question and reference samples. If the correlation is high, than the NN behaves nominally, if low otherwise.",
+   "strengths_and_weaknesses": "I like the paper.\n* The mathematical part of the paper is solid and passes an eye test. That means I have not rederived the math, but to my naked eye it looks correct.\n* The idea behind the paper is also rational. I made my mental model of the method and I like it.\n* The experimental evaluation is nice.\n* The weakness of the method is computational complexity, which I think is massive. Langevin dynamics is no small feat, since it requires computing the gradient. With this respect, the method cannot be deployed in large scale on big models.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "I do not have questions.",
+   "limitations": "I do not think the method can have negative impact on society.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_4vXL",
+   "summary": "In the paper, the authors propose to apply influence functions (IFs) to network anomaly detection. In contrast to previous attempts that regard influence functions as input-behavior correlation indicators, the proposed method builds a mathematical relationship between network behavior on trusted inputs and the tested, potential anomalous input. The method modifies the Bayesian IF to concentrate on the low-loss local minimum, and aggregates the IF values from all trusted inputs to determine a comprehensive anomaly detection score for the tested input. Experiments on backdoor samples validate that the proposed method outperforms existing baselines in most scenarios.",
+   "strengths_and_weaknesses": "Strengths:\n- Interesting and novel viewpoint. The transfer of influence functions to anomaly detection as functional attributions is novel and effective.\n- Strong theoretical proof. Section 4.2 in the paper theoretically proves (though under assumptions) the effectiveness of the method.\n- High empirical performance. Extensive experiments on backdoor samples demonstrate the performance of the method.\n- Clear paper structure and writing.\n\nMajor Weaknesses:\n- Limited novelty in method design. The method is based on previous works on influence functions with incremental modifications. The core novelty of the method is the shift from \"training data attribution\" to \"anomaly detection\", which is not sufficient enough.\n- Lack of coverage on multiple types of anomalies. The theoretical proof of the method relies on assumptions that specific anomalies may not support. The paper only presents detection results on backdoor tasks and a few OOD tasks. In-depth analyses on other types of anomalies (including OOD), such as adversarial examples, noises, and natural failure cases are missing. In addition, from Table 5, the method is relatively weak in near-OOD detection. Analyses under different difficulties of anomalies (besides backdoor) are missing.\n\nMinor Weaknesses:\n- High computational complexity of the method. This is also stated in \"limitations\" in the paper. However, Appendix D.4 does not present time comparisons between the method and the baselines, or more detailed results under different hyper-parameter settings.\n- Lack of details on detection score threshold. It is unclear how to choose a detection score threshold in practice with new tasks and no further information. This may limit the performance of the method in deployment.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "None",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The additional experimental results and analyses further validate and strengthen the paper's claim."
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "forum_id": "uZ8JZ1Lw9a",
+ "title": "Chain-of-Thought Gradient Descent",
+ "abstract": "We show that Chain-of-Thought (CoT) expands the expressiveness of Transformer in-context learning (ICL).\nSpecifically, we show CoT enable efficient simulation of In-Context Gradient Descent (ICGD) for $N$-layer neural network. \nDifferent from CoT, a Transformer with fixed depth and hidden dimension has fixed ICL capacity in one forward pass. \nSimulating larger models or more optimization steps in-context requires deeper or wider Transformers.\nCoT removes this limitation by providing an expandable workspace via the sequence trajectory.\nThis enables arbitrary-step and arbitrary-capacity ICGD within a constant-depth Transformer.\nSecond, we provide a provable efficient guarantee unique to CoT through dynamical masking.\nThe attention mechanism only process the relevant tokens for the current update step.\nThis eliminates the redundant ``process everything'' cost of single-pass deep models.\nSpecifically, we prove this CoT mechanism improves the computational cost of the prior best in-context result [Wu et al., ICML 2025] by $O(N)$. \nNumerical validations support our theory.",
+ "primary_area": "deep_learning->attention_mechanisms",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper makes a solid theoretical contribution to understanding CoT by showing how a single-layer transformer can simulate multi-step in-context gradient descent with improved efficiency via dynamic masking. Reviewers found the core ideas interesting and technically sound, and the rebuttal successfully addressed concerns about significance, architectural specification, masking assumptions, and empirical scope; all active reviewers raised or maintained accept-level scores. While the practical realism of some assumptions and the presentation of Section 3 can still be improved, I believe the theoretical novelty, clear analysis, and strong rebuttal justify acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_ivTB",
+   "summary": "The paper improves previous constuction show that Chain-of-Thought can let a single-layer transformer simulate multi-step in-context gradient descent and backpropagation for an N-layer feed-forward network. They do this in a a way that reduces compute by O(N). They also extends the analysis to GLM, ridge regression, and lasso.",
+   "strengths_and_weaknesses": "- The paper is well written, tackles an interesting problem, and I enjoyed reading it.\n\n- My main reservation is that the paper improves the efficiency of a construction in a setting where, to me, the more interesting question is whether this phenomenon is reasonably possible at all, rather than how to obtain the most efficient construction once it is already known to be possible. The main gain appears to be an \\(O(N)\\) improvement, and while the masking-based implementation is nice, I find this contribution somewhat incremental. Relatedly, it does not feel like the previous results were so prohibitively large or inefficient that this improvement substantially changes the overall picture, so I am unsure whether the contribution is sufficient.\n\n- That said, despite the above concerns, I do think this work has a place in the ML community and could clear the bar in some settings. I am just unsure whether it clearly meets the NeurIPS bar, so I would leave that final judgment to the AC.\n\n- I find the neural network part of the paper substantially more interesting than the linear-model, ridge-regression, and lasso-regression parts, and therefore my review is based mostly on the NN analysis.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "I realize this is partly a matter of personal taste, but could you explain why, in your view, finding a more efficient construction is important in this setting? Relatedly, could you also try to convince me that the constructions for linear models, ridge regression, and lasso regression are important for reasons beyond providing intuition for the neural-network part?\n\nI know this is ultimately a matter of taste, and so it is unlikely that I will fully change my mind. That said, if I were convinced that either of these two aspects is sufficiently important, I would be willing to raise my score.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "As noted in my rebuttal acknowledgment, the authors’ response convinced me that the paper’s efficiency claims are meaningful and address one of my main concerns about the contribution. As a result, my evaluation became more positive. Overall, I believe this paper makes a valuable contribution and would be a good addition to the ICML program."
+  },
+  {
+   "reviewer": "Reviewer_JpXP",
+   "summary": "The paper shows that Chain-of-Thought (CoT) enables a single-layer transformer to approximate the training process of a multi-layer feed-forward network in-context, demonstrating the expressive power of CoT. In addition, it proposes an approach named dynamic masking to reduce the total computation compared with prior works.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper applies CoT and dynamic masking to the transformer model to simulate gradient descent for FFN. It provides a solid theoretical foundation for how transformers can simulate complex optimization algorithms.\n2. By introducing a novel dynamic masking mechanism, the model only needs to focus on the current step, which reduces the computation.\n\nWeaknesses: \n1. In definition 4.3, the bottom rows of $X_l$ and $Y_l$ are $2_{1\\times d}$, which seems unusual. The authors could discuss the motivation for this design and show the necessity of this part.\n2. The paper proposes dynamic masking to focus on two current tokens within each update. However, computing the mask itself requires pre-knowledge or additional training. In more complex settings, it remains unclear how the model can determine which blocks to attend to.\n3. The theoretical proofs are mainly for the ReLU activation function, while in practice, other activations like GeLU and SwiGLU are also widely used. It's better to discuss more complex functions.\n4. The experimental results are limited to a relatively small-scale setting, and the forward and backward operators are trained separately, which differs from the end-to-end learning of standard transformers. In addition, the experiments corresponding to statistical models in Section 3 would help strengthen the empirical evidence.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See Weaknesses.",
+   "limitations": "The authors haven't discussed the limitations.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "The rebuttal has addressed my concerns. I will raise my score to 4."
+  },
+  {
+   "reviewer": "Reviewer_E4ra",
+   "summary": "This paper studies how transformers with Chain-of-Thought (CoT) prompting can simulate multi-step optimization procedures in context. The authors propose a theoretical framework where a single-layer transformer recursively generates a CoT trajectory that mimics the forward and backward passes of gradient descent. A key idea is dynamic masking, which restricts attention to only the tokens relevant for the current computation step, enabling reuse of the same transformer block while avoiding redundant processing. Using this mechanism, the authors construct transformers that approximate in-context gradient descent for several statistical models and show how to simulate gradient descent for deep neural networks with improved computational efficiency.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n* The paper is generally well written, and the main ideas are presented in a clear and easy-to-follow manner.\n* The attempt to connect chain-of-thought with ICGD is interesting and potentially valuable.\n\n**Weaknesses:**\n\n**Major:**\n\n* The paper does not provide a clear definition or specification of the Transformer architecture used in the analysis.\n* In the theoretical results, the authors do not specify how large the Transformer model needs to be in terms of the number of heads, head dimension, embedding dimension, or overall number of parameters. This makes it difficult to understand the exact regime in which the theorems apply.\n* The results in Section 3 appear somewhat incremental, as they are largely built upon prior work by Bai et al. (2023) and Hu et al. (2025).\n* Several simplifying techniques are introduced to facilitate the theoretical analysis, such as dynamic masking and a hand-crafted context window that forces the model to focus only on the last $n$ tokens. However, these assumptions are not realistic in practical Transformer implementations. Due to the nature of the Softmax attention mechanism, tokens typically attend to all other tokens. The use of dynamic masking appears more like a workaround to avoid the difficulty of dealing with the Softmax attention mechanism. While causal masking is widely used and has a clear functional role, the practical motivation or meaning of dynamic masking is not convicing. Relying on such artificial mechanisms may weaken the contribution and potentially oversimplify the problem.\n\n**Minor:**\n\n* Typo: In Section 3, “lass” should be “lasso.”",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "During the rebuttal, the authors clarified the motivation behind the results in Section 3 and provided details on the size of the Transformer models in terms of parameter count. They also discussed the rationale for dynamic masking and context windows. Based on these clarifications, I will raise my score."
+  }
+ ]
+}

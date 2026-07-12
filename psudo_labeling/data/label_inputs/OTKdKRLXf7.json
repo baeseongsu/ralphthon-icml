@@ -1,0 +1,62 @@
+{
+ "forum_id": "OTKdKRLXf7",
+ "title": "Asymmetric Multi-View Clustering with Hyperbolic Uncertainty Modeling",
+ "abstract": "Deep Multi-View Clustering (MVC) aims to learn a unified semantic representation from diverse data sources without supervision. However, current approaches relying on flat Euclidean embeddings often fail to model data uncertainty, resulting in rigid alignment where high-quality views are forced to drift toward corrupted ones. To address these challenges, we propose the Hyperbolic Asymmetric Multi-view Clustering (HAMC) framework. HAMC maps view-specific features into the Poincaré ball and uses radial geometry as a confidence proxy, encouraging confident representations to occupy larger radial distances while allowing ambiguous or noisy samples to remain closer to the origin. To mitigate noise, we introduce an asymmetric view alignment mechanism, enabling reliable views to unidirectionally guide unreliable ones. Furthermore, a consensus-aware cluster learning strategy is designed to construct robust global pseudo-labels via a confidence-based screening scheme, refining the cluster structure. Extensive experiments against 13 baselines demonstrate that HAMC achieves state-of-the-art performance.",
+ "primary_area": "general_machine_learning->clustering",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "This paper proposes a multi-view clustering method with hyperbolic uncertainty modeling. The idea of using hyperbolic uncertainty modeling is novel and clever, which can effectively address the geometric mismatch. All reviewers agree on the novelty and technical contributions of this paper.  The experiments are sufficient and convincing. The authors successfully addressed all concerns raised by reviewers. Hence, I recommend accepting this paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_B4Uh",
+   "summary": "The paper proposes the HAMC framework to address the geometric mismatch problem in Euclidean-based Deep MVC methods. By embedding multi-view features into the Poincaré ball, the framework effectively models data uncertainty and maximizes cluster separability. Additionally, it introduces an asymmetric alignment mechanism that prevents corrupted views from degrading high-quality representations. Extensive experiments demonstrate that HAMC achieves state-of-the-art clustering performance across six benchmark datasets.",
+   "strengths_and_weaknesses": "# Strengths:\n* The paper effectively addresses the geometric mismatch in multi-view clustering by embedding features into the Poincaré ball model.\n* The method is extensively evaluated against 13 baselines on six datasets.\n\n# Weaknesses:\n* Stage 1 uses Euclidean K-Means on tangent features for warm-up. This Euclidean initialization might severely bias the initial distribution in the hyperbolic space, potentially trapping the model in local optima.\n* Although the method proves effective across various datasets, the paper lacks a detailed theoretical or empirical analysis of the computational and memory complexities introduced by the hyperbolic distance calculations and exponential mappings.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "* This approach employs Euclidean K-Means for the initialization of hyperbolic clustering. Is this Euclidean prior likely to corrupt the structure acquired during the warm-up phase?\n* The paper defines the asymmetric alignment weight as $w_{i}^{u\\rightarrow v} = \\max(0, H_{i}^{(v)} - H_{i}^{(u)})$. If all views for a specific sample exhibit high entropy, view $u$ will still guide view $v$ due to the minor relative difference. When no reliable \"teacher\" view exists for a given sample, how does the model prevent the mutual degradation of representations?\n* The authors claim that the proposed method is robust to missing data. However, the experimental validation was only conducted at a 50% missing rate. Could the authors provide clustering results for data with even higher missing rates to further demonstrate this robustness?",
+   "limitations": "The potential application scenario should be further discussed.",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_5AXp",
+   "summary": "This paper presents HAMC, a deep multi-view clustering framework based on hyperbolic representation learning. Instead of using standard Euclidean embeddings, the method places view-specific features in the Poincaré ball and uses the embedding norm as a signal related to uncertainty. Based on this design, the paper proposes asymmetric alignment between views, where more reliable views guide less reliable ones, and a consensus-aware clustering scheme for multi-view fusion and prototype learning. Experiments on six datasets, including both complete-view and missing-view settings, show improvements over a fairly large set of baselines, and the paper also provides ablation studies on the main design choices.",
+   "strengths_and_weaknesses": "**[Strength]**\n\n1. I think using hyperbolic representations for multi-view clustering is a nice idea, since most prior methods are still based on Euclidean space.\n2. The asymmetric alignment also makes sense to me, especially when some views are noisy or clearly less trustworthy.\n3.  The experiments are quite broad and include both complete and missing-view cases, so the paper gives a reasonably convincing empirical validation.\n\n\n\n**[Weakness]**\n\n1. The method pushes high-confidence representations toward the boundary to improve separability, which is interesting. But then it seems possible that noisy or ambiguous samples are left closer to the cluster center. If so, the prototype may become less clean and the cluster semantics may get blurred.\n2. The overall framework is quite complicated. Although HAMC is presented with three main modules, each module also contains several nontrivial design choices. Because of that, it is hard to tell which parts are really necessary. Right now the method looks somewhat like a combination of several heuristics, so more detailed ablation is needed.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The authors argue that sending high-confidence representations toward the boundary improves cluster separability. But even if ambiguous or less-informative samples stay near the origin, is it possible that they still influence prototype estimation and hurt the final cluster quality? I am not fully convinced that confidence screening and the reliability-weighted prototype update are enough to solve this issue.\n2. I understand the intuition of reconstructing in the tangent space, but it would be better to show empirical evidence that this is actually a more suitable space for reconstruction in this task.\n3. The method uses prediction entropy as a signal of view reliability, but is there enough empirical evidence that it really reflects a reliable view? If the model is overconfident on wrong pseudo-labels, the asymmetric guidance may instead propagate errors.",
+   "limitations": "The paper does not adequately discuss limitations or potential negative societal impact.\nA more explicit discussion of the method’s assumptions, possible failure modes, and risks in sensitive application settings would improve the paper.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_xrix",
+   "summary": "In this paper, the authors propose the Hyperbolic Asymmetric Multi-view Clustering (HAMC) framework to extract a unified semantic consensus from diverse multi-view information. The framework embeds multi-view features into the Poincaré ball model to leverage its exponential volume growth to handle data uncertainty. The experiment results show that the proposed method achieves good performances.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper is logically organized and very easy to read.\n2. This method tackles the geometric mismatch in standard Euclidean space by applying hyperbolic geometry to deep multi-view clustering.\n3. The experiments are thorough, including ample comparisons, visual results, and ablation studies.\n\nWeaknesses:\n1. Although incomplete view scenarios are tested, the method section completely leaves out the mathematical treatment of missing views for entropy computation and asymmetric alignment.\n2. There is no formal mathematical proof that the alternating optimization of network parameters and cluster prototypes converges on the non-Euclidean manifold.\n3. The dependence on the $\\mathcal{L}_{warmup}$ phase could become a bottleneck. Subpar initial optimization may trap momentum-based prototype updates in poor tangent spaces.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. The paper states that hyperbolic geometry captures varying uncertainty, yet this is shown only through entropy visualizations. Could the authors supply direct statistical metrics to experimentally confirm the decoupling of uncertainty?\n2. During the warm-up stage, an InfoNCE loss is used. How are the positive and negative pairs specifically defined across the different views?\n3. The experiments are conducted only on datasets with two views. Could the authors explain if and how the proposed model can be applied to datasets that have more than two views?\n4. How does the model handle cases where all views are heavily corrupted?",
+   "limitations": "The authors only discuss future work and do not analyze the limitations. The authors should discuss the limitations of the multi-stage training approach.",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_mtBu",
+   "summary": "This paper proposes the Hyperbolic Asymmetric Multi-view Clustering (HAMC) framework. By embedding features into the Poincaré ball model, HAMC pushes high-confidence representations toward the boundary and retains noisy ones near the origin.  It introduces an asymmetric alignment mechanism allowing reliable views to unidirectionally guide unreliable ones. Additionally, a consensus-aware learning strategy constructs global pseudo-labels via a confidence-based screening scheme. Experiments are conducted against 13 baselines on six benchmark datasets under both complete and incomplete settings.",
+   "strengths_and_weaknesses": "Strengths：\n1. The introduction of hyperbolic geometry to address the geometric mismatch in multi-view clustering is innovative.\n2. The experimental section is exhaustive, comparing against 13 recent baselines across both complete and incomplete scenarios.\n3. The paper presents the algorithm block and provides an anonymous code repository, which enhances the reproducibility of the proposed method.\nWeaknesses：\n1. The paper lacks a computational complexity analysis.\n2. The framework relies on a heavy hyperparameter tuning burden ($\\lambda_1, \\lambda_2, \\tau, \\tau_c, m, p$).\n3. The scale of the datasets used for evaluation is relatively small, with the largest dataset containing only 30,000 samples.\n4. The parameter sensitivity analysis lacks an evaluation of the momentum coefficient $m$.\n5. The current evaluation only provides entropy and t-SNE visualizations. It lacks a visual verification of how the model maps high-confidence samples toward the boundary of the hyperbolic space.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to the strengths and weaknesses.",
+   "limitations": "In the conclusion, the authors discuss future work but fail to explicitly address the limitations of the proposed method. The authors are encouraged to clarify the model's bottlenecks, particularly concerning computational overhead and the scope of practical applicability.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

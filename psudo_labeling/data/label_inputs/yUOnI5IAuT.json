@@ -1,0 +1,62 @@
+{
+ "forum_id": "yUOnI5IAuT",
+ "title": "Visual Para-Thinker: Divide-and-Conquer Reasoning for Visual Comprehension",
+ "abstract": "Existing LLM test-time scaling laws emphasize the emergence of self-reflective behaviors through extended reasoning length. Nevertheless, this vertical scaling strategy often encounters plateaus in exploration as the model becomes locked into specific thinking pattern. By shifting from depth to parallelism, parallel thinking mitigates the narrowing of exploration. However, the extension of this paradigm to visual domain remains an open research question. In this paper, we first examine the role of visual partitioning in parallelized reasoning and subsequently propose two distinct strategies. Based on the above, we introduce Visual Para-Thinker, representing the inaugural parallel reasoning framework for MLLMs. To maintain path independence and promote diversity in reasoning, our approach integrates Pa-Attention alongside LPRoPE. Leveraging the vLLM framework, we have developed a native multimodal implementation that facilitates high-efficiency parallel processing. Empirical results on benchmark datasets such as V*, CountBench, RefCOCO, and HallusionBench confirm that Visual Para-Thinker successfully extends the benefits of parallel reasoning to the visual domain.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a parallel reasoning framework for multimodal LLMs. The core idea is pretty intuitive. Instead of going deeper with sequential chain-of-thought, you go wider by running multiple reasoning paths in parallel, each attending to different partitions of the image. The two key components are Pa-Attention for keeping paths isolated from each other, and LPRoPE for making sure paths are positionally unbiased and discriminable. The whole thing is implemented efficiently on top of vLLM with KV cache reuse, and results on counting, grounding, and hallucination benchmarks show consistent improvements. The rebuttal was pretty thorough. The authors added comparisons with new baselines, consistently outperforms all of them. This is the most important result. It directly addresses whether the gains come from the parallel architecture or just from the distilled data, and the answer is clearly the former.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_zDkc",
+   "summary": "This paper introduces Visual Para-Thinker, a parallel reasoning framework for MLLMs that employs visual partitioning strategies to generate diverse reasoning paths. By integrating Pa-Attention and LPRoPE for path isolation, the model demonstrates significant performance gains across counting, grounding, and hallucination benchmarks. The efficient vLLM-based implementation achieves these improvements with minimal inference overhead.",
+   "strengths_and_weaknesses": "Strengths\n\n· Presents a novel and intuitive approach to applying parallel thinking in the vision-language domain.\n\n· Technical contributions (Pa-Attention and LPRoPE) are well-motivated and effectively address path interference.\n· Extensive experiments show consistent and substantial improvements over strong baselines.\n\nWeaknesses\n\n· Lacks detailed ablation comparing the individual contributions of the two partitioning strategies.\n\n· Does not fully explore how inference time and memory scale with an increasing number of reasoning paths.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weakness",
+   "limitations": "ye s",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_YoSR",
+   "summary": "The paper considers the context of TTS limitations in sequential reasoning and proposes Visual Para-Thinker, which is a parallel thinking framework for VLM. The work presents the concept of visual partitioning. It has two main methods: Block-based and Scan-order. It aims to generate diverse, isolated reasoning paths. To achieve it, the paper implements Pa-Attention for path isolation and LPRoPE for path discriminability. Experiments on counting, grounding, perception, and hallucination benchmarks show consistent gains over baselines.",
+   "strengths_and_weaknesses": "The technical components (Pa-Attention, LPRoPE) are sound with experiments on training the 3b and 8b models, and some of the design is intuitively reasonable. The ablation study isolates the contribution of each component. \n\nBut the motivation and proof seem to be very unclear. For example, most of the theorems in the paper are not solid proof. A lot of them are just intuition but are not validated with mathematical proof. A lot of claims in the paper have no evidence and clear experiments or citation to support them. \n\nAlso, the paper lacks comparison against other TTS baselines, and the gains seem to be relatively small with the trade-off of the extra complexity and compute.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "* For theorems, please provide more solid proof.\n* The improvement seems to decrease with larger models. With even larger models >100B, would the improvement become negligible, as the base model is already good enough?",
+   "limitations": "The paper includes an \"Impact Statement\" but does not adequately discuss limitations. It doesn't seem to analyze training complexity and extra cost in a explicit way.",
+   "overall_recommendation": 3,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_7adr",
+   "summary": "This paper introduces Visual Para-Thinker, the parallel reasoning framework for multimodal large language models that extends the benefits of parallel thinking from the text to the visual domain. By shifting from vertical scaling (increasing reasoning depth) to horizontal scaling (parallel reasoning paths), the framework claims mitigating the problem of exploration narrowing through two key innovations: Pa-Attention and LPRoPE, which maintain path independence and reasoning diversity. The approach, implemented through the vLLM framework with native multimodal support, demonstrates empirical success across multiple vision-language benchmarks including V*, CountBench, RefCOCO, and HallusionBench.",
+   "strengths_and_weaknesses": "## Strength\n\n- By shifting test-time scaling from sequential depth to parallel width via visual partitioning, the authors provide a compelling and novel solution to the exploration plateaus often seen in standard visual Chain-of-Thought approaches.\n\n- The proposed structural modifications, specifically Pa-Attention and LPROPE, represent a technically sound and elegant approach to multi-path generation. These mechanisms effectively guarantee reasoning path isolation without information leakage, while cleverly resolving positional ID collisions during the final aggregation phase.\n\n- The framework's native implementation on vLLM with KV-cache reuse demonstrates significant real-world significance. By eliminating re-prefilling overhead, the method achieves a 2.5x throughput increase and a 15% reduction in total inference time compared to naive majority voting, making test-time scaling highly practical for deployment.\n\n## Weakness\n\n- The training data construction heavily relies on distillation from a massive teacher model (Qwen3-VL-235B) using a \"Teacher-Forcing\" style approach. The lack of an ablation study on the data generation process makes it difficult to ascertain how much of the performance gain stems strictly from the proposed architectural framework versus the injection of high-quality distilled reasoning paths.\n\n- The paper introduces a \"hybrid training paradigm\" combining Block-based and Scan-order partitioning, but the exact execution mechanism during inference remains under-explained. It is unclear whether the model dynamically routes to a specific partitioning strategy based on the query type or if it forcibly executes both across all tasks, which could lead to redundant computation on simpler queries.\n\n- While the empirical results show solid improvements over the base model, sequential CoT, and majority voting, the evaluation lacks comparisons with other advanced inference-time scaling techniques. Including baselines like Best-of-N sampling, Tree of Thoughts, or other approaches would significantly strengthen the claims of the parallel paradigm's superiority.\n\n- The evaluation focuses heavily on dense visual perception tasks, such as counting (Pixmo), grounding (RefCOCO), and hallucination ( HallusionBench). The paper lacks comprehensive evaluation on standard, broad-domain multimodal reasoning benchmarks (e.g., MMMU or V*), leaving the generalizability of this parallel reasoning paradigm across more diverse cognitive tasks in question.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "see weakness",
+   "limitations": "see weakness",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_LQGf",
+   "summary": "This paper proposes Visual Para-Thinker, the first framework for parallel divide-and-conquer reasoning in visual comprehension tasks. \nThe authors detail two main strategies for visual partitioning (Block-based and Scan-order) and develop corresponding architectural innovations: Pa-Attention to ensure path isolation and LPRoPE to support unbiased, discriminable path representations. \nThe method is implemented natively on top of vLLM to enable efficient parallel inference, with extensive experiments across counting, grounding, fine-grained perception, and hallucination benchmarks. \nQuantitative and qualitative results demonstrate consistent improvements over sequential and majority-voting baselines as well as strong efficiency gains.",
+   "strengths_and_weaknesses": "strengths:\n\n- The paper addresses an underexplored, but emerging, topic—parallel reasoning—for visual multimodal LLMs, with a clear and compelling motivation rooted in overcoming exploration bottlenecks seen with deep, sequential CoT-style approaches.\n- Substantive architectural contributions (Pa-Attention and LPRoPE) are presented, each with theoretical formulations and clear roles in enforcing path isolation, unbiasedness, and discriminability.\n- Comprehensive, multi-aspect experiments substantiate improvements in accuracy and inference speed over strong baselines (Qwen variants, Sequential, Majority Voting), and over some frontier models on challenging multimodal benchmarks.\n\nweakness:\n\nSee the questions.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Does the sft dataset may overlap the evaluation benchmarks? Is the training dataset clean enough? If not, how does this model perform on the out-of-distribution dataset?\n\n2. Are the compared baselines all zero-shot, without considering the sft or rl baselines? How does the rl method, such as the group-based rl models, perform on the provided benchmarks? How does your method compare to them?\n\n3. The data you provided is from the big model, Qwen3-VL-235B-A22B-Instruct series. Is your method effective because of your Para-Thinker mode, or just due to distillation from the big model? I mean, if you do not use Para-Thinker, only sft from the Qwen3-VL-235B-A22B-Instruct in the common VQA setting, will it perform better or worse than your Para-Thinker?",
+   "limitations": "see the questions.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

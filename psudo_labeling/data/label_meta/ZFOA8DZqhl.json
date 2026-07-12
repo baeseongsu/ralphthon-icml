@@ -1,0 +1,26 @@
+{
+  "forum_id": "ZFOA8DZqhl",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_FCrR",
+      "weight": "high",
+      "reason": "The most detailed and specific review, covering all four dimensions with substantiated observations. Its central weakness - limited conceptual novelty relative to deformable convolution/attention, framed as an architectural refinement rather than a new paradigm - is adopted almost verbatim as the meta-review's foremost concern, and its efficiency and stronger-baseline/capacity-fairness points are echoed as well. Self-rated confidence 4."
+    },
+    {
+      "reviewer": "Reviewer_z5BV",
+      "weight": "high",
+      "reason": "Specific and substantiated points: the undefined seam loss (reproducibility), incomplete efficiency analysis (params/FLOPs/latency/memory), and the key ambiguity of whether gains stem from modeling degradation structure versus general image detail, motivating mixed-degradation experiments. All are echoed by the meta-review, and the reviewer reports the highest confidence (5)."
+    },
+    {
+      "reviewer": "Reviewer_isRs",
+      "weight": "high",
+      "reason": "On-target, substantiated concerns about the unclear definition/normalization of degradation type and intensity across heterogeneous tasks and about ablations being confined largely to denoising; both are adopted by the meta-review (clarity/formulation and broader-ablation concerns). Also contributes a concrete observation on the limited task-token-dropout gain in the soft-tag setting. Gave the lone significance score of 2."
+    },
+    {
+      "reviewer": "Reviewer_ZCcg",
+      "weight": "medium",
+      "reason": "Points on the missing visualization of grid-artifact reduction, the unreviewed deformable-operation literature, and the unreported computation overhead are valid and corroborated by the other reviewers and the meta-review, but the review is brief and relatively low-effort, and its self-rated confidence is the lowest (2)."
+    }
+  ],
+  "score_rationale": "Soundness and presentation are fixed at 3, the unanimous reviewer value, and overall recommendation is 4, the unanimous reviewer value that is consistent with the accept decision. Originality is set to 2 rather than 3 because the meta-review's primary concern is limited conceptual novelty, adopting almost verbatim the framing of high-weight Reviewer_FCrR (who scored originality 2) that the work is an architectural refinement rather than a new paradigm. Significance is 3, following the two high-weight reviewers and the medium-weight reviewer and the meta-review's view that the problem is important and the improvement meaningful, over the single significance-2 from Reviewer_isRs. Confidence is 4 given the strong mutual corroboration across reviewers on the novelty, efficiency, clarity/formulation, and mixed-degradation concerns."
+}

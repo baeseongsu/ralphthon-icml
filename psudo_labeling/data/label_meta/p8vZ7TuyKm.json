@@ -1,0 +1,21 @@
+{
+  "forum_id": "p8vZ7TuyKm",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_aWMz",
+      "weight": "high",
+      "reason": "The meta-review adopts this reviewer's framing and summary almost verbatim (first framework to use uncertainty signals for adaptive reasoning, UAR Block, Heuristic-to-RL), and its praised strengths (well-motivated, thorough ablations, data efficiency, efficiency-performance balance) are echoed directly. Its question on whether the three modes matter versus simply pausing to generate text maps onto the meta-review's 'minimal yet sufficient weakly supported' concern. Highest confidence (4) and specific, substantiated points."
+    },
+    {
+      "reviewer": "Reviewer_QMeZ",
+      "weight": "high",
+      "reason": "Both of its core weaknesses are directly reflected in the meta-review: the lack of justification for the reasoning modes (compare to other strategies) and the request for concrete analysis of action-entropy/observation complementarity (Table 8). Points are specific and substantiated, including concrete presentation and readability issues, and align with the two remaining concerns the meta-review highlights."
+    },
+    {
+      "reviewer": "Reviewer_Ws95",
+      "weight": "high",
+      "reason": "Provides the most substantive, specific soundness analysis: the action-entropy trigger is only shown to correlate with failure at the trajectory level, is not validated as predicting when reasoning helps, and is not compared against alternative trigger signals, which aligns with the meta-review's call to compare against other reasoning strategies. Also flags concrete reproducibility gaps (Eq. 6, RL procedure, undefined 'group') and the missing latency/token/cost analysis. Critical prose despite high numeric scores, but the content corroborates the other reviewers and the meta-review."
+    }
+  ],
+  "score_rationale": "All three reviewers are high-weight: the meta-review anchors on aWMz's framing and strengths, and QMeZ and Ws95 supply the two substantiated concerns (weak justification/necessity of the reasoning modes and under-validated trigger signal / complementarity) that the meta-review foregrounds, so the dimension scores sit at the corroborated center of the reviewer ranges (soundness/significance/originality 3 within [3,4]; presentation 3 within [2,4], balancing genuine reproducibility and polish issues against two 3+ ratings). Overall recommendation is set to 4, at the lower end of the [4,5] range: two reviewers gave 5 and the meta-review recommends acceptance, but a single careful voice incorporating the genuine, unresolved concerns about mode necessity, trigger validation, and missing cost/sensitivity analysis lands most honestly at weak accept while remaining clearly above the bar. Confidence is 4 because the strengths and the key weaknesses are coherent and mutually reinforcing across reviewers and the meta-review."
+}

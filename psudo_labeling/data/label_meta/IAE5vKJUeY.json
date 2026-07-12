@@ -1,0 +1,21 @@
+{
+  "forum_id": "IAE5vKJUeY",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_9hka",
+      "weight": "high",
+      "reason": "Most closely corroborated by the meta-review: the explicitly named concern about missing smaller benchmarks (CIFAR-10/100, Tiny-ImageNet), the incremental-novelty point, and the request to clarify the DP-vs-DD evaluation protocol all appear in the decision. Specific, substantiated, and highest confidence (4); also flags the Combine step's dependence on high-resolution data."
+    },
+    {
+      "reviewer": "Reviewer_jfCU",
+      "weight": "high",
+      "reason": "Provides the sharpest, most specific novelty critique (PCA reduces to pruning over ~4x downsampled images; RDED-style combination), which the meta-review adopts as the main concern. Accurate summary and a concrete, well-grounded presentation critique (table clutter on pages 7-8). Scores (originality 2, presentation 2) align with the paper's incremental character."
+    },
+    {
+      "reviewer": "Reviewer_eDsu",
+      "weight": "high",
+      "reason": "Thorough and on-target qualitative review; the under-specified Combine step and the single-dataset / single-architecture concerns are corroborated by other reviewers and echoed in the meta-review. However, its originality (4) and overall (5) scores run above the meta-review's explicit judgment that novelty is incremental, so those specific numeric scores were down-weighted while the substantive points were adopted."
+    }
+  ],
+  "score_rationale": "All three reviews are specific and mutually corroborating, and the meta-review confirms their shared reading: a well-motivated, empirically valuable paper whose main weakness is incremental technical novelty. Soundness is unanimous at 3. Presentation (3) and significance (3) follow the majority and the meta-review's positive framing of the benchmark and soft-label findings, while still registering the clutter concern. Originality is set to 2, positioned toward the low end of the [2,4] range per the meta-review's explicit statement that novelty is the main concern and the components are standard, discounting the outlier 4. Overall is 4 (weak accept), matching the two high-weight reviewers and consistent with the accept decision; confidence is 4 given the strong agreement across reviews and the meta-review."
+}

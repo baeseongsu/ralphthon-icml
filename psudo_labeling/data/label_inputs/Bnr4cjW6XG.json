@@ -1,0 +1,66 @@
+{
+ "forum_id": "Bnr4cjW6XG",
+ "title": "Universal Multiclass Transductive Online Learning",
+ "abstract": "We consider the problem of universal transductive online classification with a possibly unbounded label space. This setting considers online learning, with the sequence of instances (without labels) known to the learner in advance. We say a concept class $\\mathcal{H}$ is learnable if there is a learning algorithm $\\mathcal{A}$, such that for every realizable sequence, the number of mistakes made by $\\mathcal{A}$ grows at most sublinearly with the number of predictions. We characterize the learnability of this setting and show that there are only two possible optimal rates for the learnable classes: either bounded or increasing logarithmically. We introduce a new combinatorial structure, called \"Level-Constrained-Littlestone-Littlestone (LCLL) tree\", which, along with the indifference property, characterizes the learnability. We also extend the learnability result to the agnostic case and the case where only the stochastic process that generates the instance sequence is known.",
+ "primary_area": "theory->learning_theory",
+ "decision": "Accept (regular)",
+ "decision_comment": "Recent works have established rates of multiclass transductive online learning. This submission studies the problem under the universal PAC framework and provides a few new techniques to establish new rates. Reviewers agree that the contribution is fundamental to learning theory.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_S6cf",
+   "summary": "The paper studies universal transductive online learning for multiclass classification with countably infinite labels. It introduces the indifferent Littlestone tree and a new Level-Constrained-Littlestone-Littlestone (LCLL) tree notion, proves a realizable trichotomy separating constant, logarithmic, and impossible-sublinear regimes, gives an agnostic characterization via the absence of an infinite indifferent LCLL tree, and extends the discussion to the setting where only the instance-generating stochastic process is known. It also provides counterexamples showing that several nearby tree notions do not suffice for characterization.\n\nNote from reviewer: I'm not the best person to review this paper, I have general knowledge about studied concepts, I personally never worked on them and I don't know many of cited works.",
+   "strengths_and_weaknesses": "**Strengths**\n- Sharp structural characterization of the realizable problem and the constant / logarithmic / impossible-sublinear split is clean and informative.\n- I really like Section 3 with negative examples that rule out plausible but wrong alternatives.\n- The proof techniques in this paper seem to be novel.\n- The paper is well presented...\n\n**Weaknesses**\n- ... however, proof explanations in the main papers sometimes feel too compressed.\n- It seems that the presented algorithms are not well defined, as they don't specify uniqueness or tie-breaking for argmax/argmin, etc.\n$h(X_t)=y$,",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses section.",
+   "limitations": "Not directly, but theory seems discussed honestly and I don't see negative social impact of this work so lack of discussion is fine in this case.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_GxWR",
+   "summary": "The paper studies a variant of online learning where the learner knows in advance the sequence of instances that the adversary is going to present (transductive setting). Moreover, the regret/mistake bounds depend on any fixed input sequence rather than uniformly over all input sequences (universal setting). The paper extends prior results that characterized binary setting to the multiclass setting with potentially infinite label space. The authors show that for realizable sequences of length $T$ the optimal mistake bound is either constant, $\\log(T)$, or more than any sublinear function of $T$. The main contribution of the paper is deriving the logarithmic upper bound that is achieved by defining a Gale-Stewart game where the adversary proposes a sequence and a level constrained Littlestone tree and the learner must remove a branch of this tree. The learner wins at round $t$ if the proposed branch is not realizable by any hypothesis in the version space.",
+   "strengths_and_weaknesses": "Strengths:\n\nThe paper is theoretically solid. It proves a complete characterization of the bounds in the multiclass setting.\nThe presentation is generally good and the proof sketches in the main text convey the general ideas of the proofs.\n\nWeakness:\n\nThe problem, in my opinion, is not well motivated and is interesting mostly from a theoretical view.\n\nThe proofs seem to generally follow the same prototype of prior work and the technical contributions are limited to the $\\log T$ upper bound. Maybe the authors could expand more on this.\n\nSuggestions:\nI would add subsections to Section 4 to make it easier to find the results corresponding to each rate.\n\nI think Figure 2 doesn’t fully show how your dimension is different from VCL/DSL. Maybe you could make it more clear by using specific labels.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "It was not clear to me whether the agnostic rate is a dichotomy between $\\sqrt{T}$ (up to logarithmic factors) and linear regret or there are other possibilities.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "This is a solid theoretical paper with technical novelty."
+  },
+  {
+   "reviewer": "Reviewer_mEZH",
+   "summary": "This paper investigates the universal learning rates of transductive online multiclass learning with a countably infinite label space. The authors characterize the learnability in this setting by establishing a trichotomy of learning rates. To achieve this, they introduce a novel combinatorial structure known as the indifferent Level-Constrained-Littlestone-Littlestone (LCLL) tree. A major conceptual contribution of the work is the design of a new Gale-Stewart game that correctly captures the indifferent property of these trees",
+   "strengths_and_weaknesses": "Strengths: \n1. The authors derive a result that is fundamental to the learning theory community. Establishing the trichotomy of optimal rates—specifically $O(1)$, $\\Theta(\\log T)$, and $\\Omega(T)$—for multiclass transductive online learning. This maps out the landscape of this problem beautifully.\n2. Novel Combinatorial Structures: The introduction of the indifferent LCLL tree is a significant theoretical step forward for dealing with unbounded label spaces. \n3. Innovative Proof Techniques: The authors note that the standard structure of the Gale-Stewart game naturally leads to an infinite Littlestone-type tree, which causes a mismatch with indifferent trees. To resolve this, they designed a game where the adversary provides all possible label sequences for an interval of instances. This conceptual contribution is a useful tool that might be used for other multiclass learning problems",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": ".",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_rKTT",
+   "summary": "Transductive online learning is a problem in which a learner has access to a full (possibly infinite) sequence of instances in advance, and then aims to learn a mapping into (potentially infinitely many) classes. This setting differs from classical online learning in that the whole sequence (without labels) is already known at the start. \n\nFor binary classification, Hanneke et al. 2023 showed that there are three possible optimal regimes for sequence length T: O(1), O(\\log T) and \\Omega(T) mistakes. In this article, the authors extend this to the more general setting where the number of classes may be infinite. They show that there are the same three regimes. To do so, they use natural trees to classify",
+   "strengths_and_weaknesses": "Soundness: Although I did not verify the mathematical claims in detail, they appear to be sound. \nThe definitions of the different trees are slightly confusing, but the authors provide figures to further clarify them.\n\nPresentation: While the presentation is not \nFurther Comments/Nit:\n\"has an infinite Littlestone (LCLL) tree but has no infinite indifferent Littlestone (LCLL) tree\" --> same shorthand? There is a difference between LCLL trees and Littlestone trees. Be consistent with using the names. \nFigure 1 & 2 are not tidy. Things are overlapping, the subscripts are formatted inconsistently. \nSection 5 is not useful in the current state. Consider expanding it a little, and sharpen up the phrasing a bit. \n\nSignificance: The authors study a novel variant of online learning. The analysis strategy seems relatively boilerplate, but requires technical care. I don't think  \n\nOriginality: The question is natural but not very original. I am not familiar enough with the literature to adequately assess if there are original parts in the analysis.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "What is the surprising part about this result? That there is no area between constant or logarithmic? Did you expect a different outcome when you started studying this question? \n\nWhat is the conceptual contribution over the binary case? \n\nCould you elaborate on the examples you provide? Why are these natural choices, and how do they help the reader understand the article?\n\nWhy is an LCLL tree natural? How does it differ from the other options?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "I believe that the authors obtained a result that is an interesting extension of a line of prior work. They adequately answered my questions, and I see the result as slightly more surprising now than I originally did. I still believe that the question is a bit contrived, but all in all I think this result is slightly above the bar."
+  }
+ ]
+}

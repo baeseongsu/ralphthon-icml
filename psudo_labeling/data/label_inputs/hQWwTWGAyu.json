@@ -1,0 +1,62 @@
+{
+ "forum_id": "hQWwTWGAyu",
+ "title": "PointDiT: Pixel-Space Diffusion for Monocular Geometry Estimation",
+ "abstract": "State-of-the-art single-image 3D reconstruction methods often rely on complex hybrid architectures and loss functions (e.g., MoGe), or necessitate compressing geometry into latent spaces (e.g., GeometryCrafter) to leverage pre-trained latent diffusion models. In this work, we demonstrate that such architectural overhead and intricate loss formulations are unnecessary. We introduce a minimalist pixel-space Diffusion Transformer built on a plain ViT, which operates directly on raw 3D point map patches and is conditioned on image tokens from a pre-trained DINOv3. Unlike existing latent diffusion-based approaches, we train our diffusion backbone entirely from scratch, eliminating the need for point map tokenizers. We show that this streamlined approach yields results superior to complex latent-based diffusion models while remaining significantly simpler than hybrid alternatives. Notably, our model produces sharper geometric structures and achieves significantly better results on highly ambiguous regions, such as transparent objects.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "All reviewers recommend the weak accept in the first round review. All reviewers recognized the technical contributions of the paper. Reveiwers' concerns are well addressed in the rebuttal phase. Based on the comments of the paper, this paper is ready for ICML.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_9dSW",
+   "summary": "The authors proposed a minimalist pixel-space Diffusion Transformer for monocular geometry estimation. By involving DINOv3 as a pre-trained tokenizer, the lightweight model can be trained from scratch in pixel space. The newly designed architecture achieves comparable results to those of complex latent-based diffusion models.",
+   "strengths_and_weaknesses": "Strength:\n1. The authors utilize the pre-trained DINOv3 as the tokenizer, eliminating the need for point map tokenizers.\n2. The newly designed lightweight architecture still achieves comparable results with complex latent-based diffusion models, which is a simple yet effective design.\n3. The experiments are conducted adequately to prove the effectiveness of the novel design, including prediction target, different image embeddings, noise schedule, and patch size.\n\nWeakness:\n1. From Table 1, although the PointDiT-H achieves great performance, the number of parameters is much more than models like Depth-Pro and MoGe-2.\n2. The compared baselines include MoGe and DepthPro, but neglect other SOTA methods, like UnidepthV2. The visual comparisons are also limited to four images.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. In Table 1, how will it be when performing more steps for PointDiT-B/PointDiT-L? Will PointDiT-B or PointDiT-L still be comparable with MoGe with similar parameters?\n2. How is the result of UniDepthV2 on the same evaluation datasets in Table 1?",
+   "limitations": "yes.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_3ESy",
+   "summary": "This paper presents PointDiT, which is a pixel-space diffusion model that predicts dense point maps conditioned on image tokens from DINOv3. The authors showed that directly estimating the point map by x-prediction objective is effective for geometric data and eliminates the need for compressing point maps into a latent space. Experimental results show the robustness of the model on real-world datasets in various environments.",
+   "strengths_and_weaknesses": "Strengths\n1) The paper demonstrates an important shift towards 3D and 4D generation by proving the effectiveness of pixel-space diffusion for 3D tasks. The flexible inference on different steps also adds practical value.\n2) The paper is structured and easy to follow, presenting the limitations of current works and motivations for the proposed work. The experimental results are clearly presented.\n\nWeaknesses\n1) Although the paper introduces task-specific techniques like point map normalization and relative point loss, the overall contribution shares significant overlap with JiT. The architectural design remains largely the same except for the addition of DINOv3 conditioning.\n2) The ablation study for the training loss (Table 6) shows only marginal improvements across all metrics. It is unclear whether the additional relative loss provides meaningful impact on the model’s geometric reasoning.\n3) The paper lacks sufficient explanation regarding the layer selection of the DINOv3 encoder.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 2,
+   "key_questions_for_authors": "- Since the model outputs affine-invariant point maps, how does the alignment procedure affect evaluation fairness?\n- The denoising loss is computed in the velocity space while the relative point loss is applied directly to the predicted clean map. Is any training instability caused by these losses?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_fuH8",
+   "summary": "The authors presents PointDiT, a monocular image to depth map framework that utilizes DINO priors to do pixel-level depth estimation. The method is more streamlined compared to previous methods by removing the use of a VAE. The paper claims to achieve higher fidelity and accuracy in its empirical results, especially in traditionally more challenging regions.",
+   "strengths_and_weaknesses": "### Strengths\n\n- As the author stated, the method proposed is more streamlined compared to previous methods, which is a plus for reimplementation and reproduction of results.\n- The preference on pretrained DINO priors over pretrained VAE appears to produce better results in reconstruction.\n- Good results on inference even with one-step generation vs multi-step generation.\n\n### Weaknesses\n\n- The paper claims that their method is parameter-free that “immediately reconstructs 3D”, however, the model is trained on normalized data to satisfy the need of flow matching. As a result, inference will produce normalized data as well. In practice, this will need alignment from normalization parameters to end up with usable result.\n- The proposed method is trained and fine-tuned on synthetic data, this might play a down factor in the presentation of this method as a well-generalized approach towards mono to 3D lifting. Many in the wild scenarios might see the results degrade under domain gaps for the current form of the paper’s models.\n- The approach depends on a frozen DINOv3 backbone for conditioning. The paper does not clearly quantify the end-to-end compute/memory overhead versus latent-diffusion baselines, so the scalability/efficiency part of their narrative is incomplete. They mentioned in the experiment set up section that their “high-performance hardware configuration keeps fine-tuning times remarkably efficient”: this is not a positive talking point as they used 128 H100.\n- The authors used a practical patch of randomly setting time step to 0 during training. This is somewhat of a volatile and heuristic approach and I’d like to see a proof of its effects.\n- Fixed generation resolution might see this method less practical for real-world use cases, since the authors mentioned this in their discussion, this is less of a problem from my point of view. Overall, the method gives me a “replace previous pipeline with DINO” vibe, which is less impressive conceptually considering [1] already exists. If the authors can prove its practical values then this might enhance their narrative.\n\n[1] Zheng, B., Ma, N., Tong, S., and Xie, S. Diffusion transformers with representation autoencoders. arXiv preprint arXiv:2510.11690, 2025.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. See Weakness #2\n2. See Weakness #3\n3. See Weakness #4",
+   "limitations": "The authors mentioned briefly about fixing their generation dimension to 256x256, but without saying explicitly why this limitation exist. With the context of the paper, I assume this is a fundamental architectural limitation of replacing a latent VAE (which scales well) with a pixel-level generation paradigm (which is computationally heavy).",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_ANUc",
+   "summary": "This paper tends to transfer the success of JiT in image generation to the monocular geometry estimation task. Technically, a pixel-space diffusion model is constructed based on the plain ViT architecture, with RGB image tokens extracted from frozen DINOv3 as conditions. The target output is the form of point map encoding spatial coordinates. Experiments demonstrate the effectiveness of the proposed framework.",
+   "strengths_and_weaknesses": "### Strengths\n\nThis paper verifies the effective design choices proposed in JiT in the monocular geometry estimation task. It is valuable to demonstrate that pixel-space diffusion without complicated design also works well.\n\n### Weaknesses\n\n1. For image conditioning, the authors mention that while the input RGB image could be processed via standard learnable patch embeddings, they instead leverage powerful pre-trained representations from DINOv3. However, the corresponding quantitative verifications are missing.\n2. It is claimed that using more inference steps could largely improve local structures. It is necessay to provide some visual comparisons.\n3. Table 7 is unclear. Please add more necessary explanations to its settings.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "NA",
+   "limitations": "The proposed method itself shows relatively limited technical novelty. Basically, this paper only transfers the success of JiT to the different task of monocular geometry estimation. (Yet, it does not mean this work is not valuable.)",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "forum_id": "63o9EmYHXt",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_XeHW",
+      "weight": "high",
+      "reason": "Most detailed and substantiated review; engages with the theorems directly and raises specific, well-founded concerns about the practical reach of the equi-semiconvexity assumption, the lack of guidance on the anchor-set size, and the fact that experiments do not directly validate the approximation results. These map closely onto the meta-review's clarity/scope framing, and its per-dimension scoring (soundness 3) tracks the meta-review's position that correctness is not in question."
+    },
+    {
+      "reviewer": "Reviewer_Gq1V",
+      "weight": "high",
+      "reason": "Concise but almost entirely on-target: its central point that the paper does not specify how the parameterization is concretely implemented in the experiments, together with the disconnected neural-network comparison and the equi-semiconvexity caveat, is essentially what the meta-review adopts as points (i), (ii), and (iii). Specific and corroborated by the other reviews despite a low self-reported confidence."
+    },
+    {
+      "reviewer": "Reviewer_5sfL",
+      "weight": "medium",
+      "reason": "Its core concerns (unclear algorithm/pseudocode, murky neural-network connection, small experimental scale) are corroborated by the meta-review and the other reviewers, but a meaningful share of its critique (missing finite-time convergence guarantees, robustness to a(y) estimation error, large-scale neural-network training comparisons) targets guarantees the paper never claims and is not reflected in the meta-review, making it only partly on-target."
+    }
+  ],
+  "score_rationale": "All three reviewers converge on the same picture, correct and well-scoped approximation theory (unanimous significance/originality of 3 and overall of 4) undercut by a loose theory-to-experiment connection and narrow experiments, and the meta-review confirms these as clarity/scope rather than correctness concerns. Soundness is set at 3, the top of the reviewers' [2,3] range, because the meta-review explicitly frames correctness as not in question and the highest-weight, most proof-engaged reviewer scored it 3, whereas presentation is held at 2 to reflect the strongly and repeatedly flagged gaps in the implementation pipeline and neural-network discussion. Reviewer_XeHW and Reviewer_Gq1V are weighted high for specificity and direct alignment with the meta-review, while Reviewer_5sfL is medium because several of its asks fall outside the paper's stated scope. Confidence is 4 given how tightly the reviews corroborate one another and the meta-review."
+}

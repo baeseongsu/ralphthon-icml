@@ -1,0 +1,26 @@
+{
+  "forum_id": "5Zp3m9Uetz",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Uopp",
+      "weight": "high",
+      "reason": "Directly anticipates the meta-review's central concern that the 'intrinsic label-noise robustness' claim may be a consequence of configuration choices (local epochs, sampling ratio, aggregation, optimization budget) rather than an intrinsic property, and raises the server-side GMM/computation cost question. Specific, well-substantiated, and echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_cQRr",
+      "weight": "high",
+      "reason": "Provides the sharpest articulation of the core weakness—that Figure 1 may only show delayed/underfit learning rather than genuine noise resistance and could collapse under different configurations—which maps onto the gradient-alignment explanation the meta-review credits. Also raises communication-overhead quantification and poisoning/EMA isolation. Confident and specific; low dimension scores reflect severity of concerns later resolved."
+    },
+    {
+      "reviewer": "Reviewer_skjM",
+      "weight": "high",
+      "reason": "Aligns with all three primary concerns the meta-review says were resolved: the unexplained mechanism of FL robustness, the unreported communication cost, and the unvalidated convergence analysis. Also flags the loose phenomenon-method connection and incomplete parameter analysis. Detailed and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_mycA",
+      "weight": "medium",
+      "reason": "Substantive review whose strengths match the meta-review (reusable observation, coherent method, strong experiments), and whose client-side computational-overhead limitation is on target. However, several of its specific weaknesses (membership-inference privacy, missing FedClean citation, GMM error propagation) sit off the central axis the meta-review flagged, and its overall score (5) is the outlier above the high-weight consensus."
+    }
+  ],
+  "score_rationale": "Weights were anchored to the meta-review, which credits resolution of three concerns—the mechanism behind FL's noise robustness, communication overhead, and the convergence analysis—raised most sharply by Uopp, cQRr, and skjM (high weight); mycA (medium) contributed on-target strengths but more tangential weaknesses and an outlier overall score. Dimension scores sit at the mode of the reviewers (soundness, presentation, and originality at 3), with significance placed at 3 rather than 2 to reflect the meta-review's clear emphasis on practical importance and empirical strength. Overall recommendation is set to 4, matching the unanimous weak-accept of the three high-weight reviewers and the accept decision rather than mycA's 5. Confidence is 4 because the reviews strongly corroborate one another on the same core issues (phenomenon-method link, cost, and convergence)."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "CPN5KsCpiE",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_WkCD",
+      "weight": "high",
+      "reason": "The most specific and substantiated review. Its central concerns -- missing reward-based / in-context RL baselines and whether gains survive a weaker judge (distillation vs. rubric structure) -- are exactly the themes foregrounded by the meta-review (new baselines, new judge models), and its observations (the impactful credit-assignment ablation, absence of code and standard deviations, masking/loss-on-source questions) are concrete and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_EY2q",
+      "weight": "high",
+      "reason": "Detailed and specific, with a well-articulated set of missing controls (SFT on revisions, RLVR OOD in Table 2, a fairer Figure 4 comparison, ablating the bonus reward alone) and a concrete presentation fix (Section 2.2). Its lack-of-experiments concern is the core issue adopted by the meta-review, and it is the reviewer whose conditional weak-lean was explicitly contingent on adding those experiments -- consistent with the meta-review's note that a reviewer raised the score."
+    },
+    {
+      "reviewer": "Reviewer_tvKt",
+      "weight": "medium",
+      "reason": "Concise and on-target: the missing-baseline concern (structured exploration, intrinsic rewards) is echoed by the meta-review and corroborated by EY2q and WkCD, and the hindsight-vs-rollouts and computational-cost questions overlap with WkCD/tvKt. However, the review is brief and lightly substantiated relative to the two high-weight reviews."
+    },
+    {
+      "reviewer": "Reviewer_3LSZ",
+      "weight": "medium",
+      "reason": "Partly on-target. Its presentation concern (experimental section hard to follow) is corroborated by EY2q, its scope/significance point (applicability limited to settings with rubrics and rubric evaluation) is acknowledged by the authors, and its robustness/mis-specification and rubric-coverage questions align with the judge-model concern raised by WkCD. But the review is comparatively vague and less substantiated, and its lower presentation/significance/originality scores are only partially shared."
+    }
+  ],
+  "score_rationale": "Scores are anchored to the two high-weight reviews (WkCD, EY2q), whose most-substantiated concern -- missing baselines and ablations, plus dependence on a single strong judge -- is precisely what the meta-review foregrounds, with tvKt and 3LSZ corroborating the baseline and presentation concerns at medium weight. Soundness is unanimous at 3 and overall recommendation unanimous at 4 among the initial reviews, so both are fixed within their ranges. Presentation is set at 3 because both high-weight reviewers scored 3 despite noting localized clarity issues (Section 2.2, the experimental section); for the genuinely split dimensions of significance (2-3) and originality (2-3) I positioned at 3, breaking the 2-2 tie via the meta-review's clearly positive direction, its emphasis on the problem's importance and the value of the rubric-plus-feedback technique, and the reviewers who scored 3 or wrote positive prose. Confidence is 4 given strong mutual corroboration of the core narrative (important problem, simple method, strong results, needs more baselines) despite variation in review depth."
+}

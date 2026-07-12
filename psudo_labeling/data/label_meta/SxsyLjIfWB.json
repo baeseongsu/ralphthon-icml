@@ -1,0 +1,26 @@
+{
+  "forum_id": "SxsyLjIfWB",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_RRau",
+      "weight": "high",
+      "reason": "Specific and substantiated: praises the extensive evaluation, comprehensive ablations, and open-sourcing, and raises a concrete, valid weakness (the non-apples-to-apples runtime comparison across hardware) plus a reproducibility caveat that the meta-review explicitly acknowledges. Aligns with the accept direction."
+    },
+    {
+      "reviewer": "Reviewer_GshV",
+      "weight": "high",
+      "reason": "The most detailed and technically accurate review. Its substantive concerns (several design choices justified only through ablation, and gains over TabPFN-2.5/RealTabPFN not statistically distinguishable in the critical difference plots) are specific and corroborated by other reviewers, and its positive overall stance matches the meta-review's accept direction."
+    },
+    {
+      "reviewer": "Reviewer_uQVH",
+      "weight": "high",
+      "reason": "Positive, specific review with a concrete weakness (Muon optimizer justification) that is independently corroborated by GshV. Confidence 4 and an accept recommendation consistent with the meta-review's emphasis on well-supported claims."
+    },
+    {
+      "reviewer": "Reviewer_R6UP",
+      "weight": "medium",
+      "reason": "Partly on-target: the reproducibility concern (prior/synthetic-data code not released) is the point the meta-review specifically singles out as valid and is echoed by RRau, and the review is specific about the components. However, the originality=1 score and the overall reject (2) are outliers that are harsher than the consensus and contradicted by the meta-review's positive, accept direction."
+    }
+  ],
+  "score_rationale": "The meta-review's clear accept direction and its emphasis on significant, well-supported contributions, combined with all three high-weight reviewers converging on overall=5, set the recommendation at 5 and held soundness, significance, and presentation at the good-to-excellent level (3/3/4) despite corroborated caveats about ablation-only justifications, non-apples-to-apples runtime, and limited statistical separation from the closest baselines. Originality was placed at 2 because the incremental combination-of-known-techniques characterization is the single most broadly corroborated concern (raised by all four reviewers, scored 2 by the most detailed high-weight reviewer), and the meta-review does not specifically defend originality; R6UP's originality=1 and reject recommendation were treated as outliers contradicted by the meta-review and excluded from the low end. Confidence 4 reflects strong mutual corroboration on both the strengths and the originality weakness, with the main divergence being R6UP's harsher overall stance."
+}

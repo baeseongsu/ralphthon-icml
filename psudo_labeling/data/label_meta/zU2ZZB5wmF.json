@@ -1,0 +1,26 @@
+{
+  "forum_id": "zU2ZZB5wmF",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_738Q",
+      "weight": "high",
+      "reason": "Specific and substantiated critique. The concern about missing OR/classical baselines for very-large-scale SCP (e.g., scalable greedy) maps directly onto the meta-review's key reservation about better OR baselines, and the observations that generalization-failure claims are overstated relative to the literature and that ablations should be surfaced in the main text are corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_qKSY",
+      "weight": "high",
+      "reason": "Balanced and well aligned with the meta-review. The point that the paper overstates superiority over the strongest baselines, the request for recent generative CO comparisons (T2T/Fast-T2T), and the call for sharper empirical isolation of the trajectory mechanism are echoed by the meta-review and by Reviewer_WRvs; the complexity/reproducibility concern is concrete."
+    },
+    {
+      "reviewer": "Reviewer_WRvs",
+      "weight": "high",
+      "reason": "Substantive, corroborated points on missing diffusion/OR baselines (T2T/Fast-T2T), exact-solver-label reproducibility, and isolating the trajectory contribution align with the meta-review's baseline reservation and with Reviewer_qKSY. Some lower-value asks (figure aesthetics, a long citation list) temper this but do not undercut the core corroborated concerns."
+    },
+    {
+      "reviewer": "Reviewer_5Cnp",
+      "weight": "medium",
+      "reason": "On target about the paper's genuine strengths (writing clarity, validity of the decomposition, strong empirical support), which are independently corroborated, but the uniformly top scores and minimal critical engagement are out of step with the meta-review's measured weak-accept and with the substantive baseline/generality reservations raised elsewhere; the questions are relevant but comparatively minor."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers converge on soundness, presentation, and originality of 3 and an overall weak-accept (4), while the fourth reviewer's uniformly top scores were discounted as overly generous relative to the meta-review's measured tone. The meta-review anchors the principal reservation on missing/stronger OR and generative-CO baselines while explicitly affirming that SCP's importance via column generation makes the application and significance sufficient, which lifts significance to 3 despite two reviewers scoring it 2; originality is set to 3 following the meta-review's explicit endorsement of the generative-LNS synthesis as novel and interesting. The overall recommendation of 4 matches the meta-review's weak-accept, and confidence is 4 given the strong mutual corroboration among the substantive strengths (trajectory-guided generation, halo decomposition, strong short-budget results) and weaknesses (baselines, generality, complexity/reproducibility, trajectory isolation)."
+}

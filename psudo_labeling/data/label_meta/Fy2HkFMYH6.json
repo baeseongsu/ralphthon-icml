@@ -1,0 +1,21 @@
+{
+  "forum_id": "Fy2HkFMYH6",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Gtkq",
+      "weight": "high",
+      "reason": "Most comprehensive and specific review. It articulates concrete technical novelty (the Tweedie-based bridge between remixing and flow matching, the PIT-to-flow-matching adaptation), highlights the population analysis and Wake-Sleep framing, and raises well-targeted, corroborated weaknesses (teacher dependence, missing ablations, computational cost, source-count scalability, and missing prior-based baselines). Highest confidence (4) and consistent with the accept decision."
+    },
+    {
+      "reviewer": "Reviewer_3AeJ",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its method and ablation concerns (underspecified teacher initialization, the beta hybrid-teacher parameter, the remixing batch size, and missing training-time analysis) and the missing-reference/positioning point are corroborated by the other reviewers. The presentation score of 1 is an outlier relative to the other two reviewers (both 3), so its severity was discounted, but the underlying notation/clarity critique is real and contributed to the mixed initial reception noted by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_veC9",
+      "weight": "medium",
+      "reason": "Accurate but less deep, with low self-reported confidence (2); the stated strengths are somewhat generic. Its computational-cost concerns (inference ODE steps, teacher regression-to-flow transition cost) and the useful clarification about whether the teacher or student is used at evaluation overlap with and reinforce the higher-weight reviewers, so the review is partly on-target."
+    }
+  ],
+  "score_rationale": "Soundness is unanimous at 3 and adopted directly. Presentation ranges 1-3; I positioned it at 2 because all three reviewers flagged notation, clarity, or missing-detail issues even though two scored it 3 -- the aggregate concern, and its role in the 'mixed' initial reception noted in the meta-review, justify a below-good rating without adopting the outlier 1. Significance (3) and originality (3) synthesize the two high-weight reviewers' disagreement, landing between the 'incremental extension of prior FM separation' view (2) and the strongly-novel view (4) for what is a novel combination of existing frameworks with genuine theoretical contributions. Overall recommendation is 5 (accept), matching the two 5-rating reviewers and the meta-review's explicit accept consensus, with the lone 4 reflecting fixable presentation/ablation concerns; confidence is 4 because the reviewers' core assessments are highly consistent and mutually corroborating despite the presentation/originality score spread."
+}

@@ -1,0 +1,21 @@
+{
+  "forum_id": "aOL0RPDfTQ",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_ChCL",
+      "weight": "high",
+      "reason": "Detailed, specific, and substantiated. Its central claim, that inverting the paradigm to audit judges on university-level proofs is novel and timely, is directly echoed by the meta-review. Praise for the 7x5 matrix, domain-matched expert annotation, and contamination controls is concrete, though the review is light on critical depth (no questions, all 3s)."
+    },
+    {
+      "reviewer": "Reviewer_g835",
+      "weight": "high",
+      "reason": "Balanced and specific: identifies concrete strengths (matrix design, >1k-hour annotation, realistic difficulty) and concrete weaknesses (limited methodological novelty, single-ground-truth assumption, modest 275-problem dataset). The novelty concern is independently corroborated by zNXQ, and the calibration question is actionable."
+    },
+    {
+      "reviewer": "Reviewer_zNXQ",
+      "weight": "high",
+      "reason": "The most careful review with the highest self-reported confidence (4). Surfaces the deepest critiques: analysis is observational rather than explanatory, and results may be confounded by rubric granularity, score discretization, and same-family solver/judge self-preference. Its limited-novelty point corroborates g835."
+    }
+  ],
+  "score_rationale": "All three reviews are specific, mutually corroborating, and consistent with the meta-review, so each was weighted high; they converge on an overall recommendation of 4 (weak accept), fixing that score. Soundness and presentation were unanimous at 3. For significance and originality I stayed within the [2,3] range: significance is set to 3 because two reviewers plus the meta-review's 'timely' framing outweigh the lone 2, and originality is set to 3 because the meta-review anchors on the novel inversion of auditing judges (echoed by ChCL) while the score still reflects the corroborated observation that methodological novelty is limited. Confidence is 4 given the strong coherence across the reviews."
+}

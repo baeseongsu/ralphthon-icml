@@ -1,0 +1,26 @@
+{
+  "forum_id": "8As2E4z9qt",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_h1mT",
+      "weight": "high",
+      "reason": "Directly echoed by the meta-review on the breadth-versus-depth trade-off, integration-over-novelty, robustness to weak pairing, and data-split/leakage concerns. Points are specific and substantiated (e.g., modest receptor-status gains over UNI, synthetic-corruption proxy being partial), and corroborated by other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_xxop",
+      "weight": "high",
+      "reason": "Most detailed and constructive on the generative-evaluation gaps (missing baseline/implementation details, no biological-plausibility evidence, weak Figure 4), on under-specified pretraining/velocity-field design, and on presentation clarity of the SSL objective — all foregrounded by the meta-review. Most critical overall score, well argued."
+    },
+    {
+      "reviewer": "Reviewer_kxXZ",
+      "weight": "high",
+      "reason": "Specific first-hand technical review with an insightful point that the perturbation embedding requires measured deltas and thus restricts to observed perturbations, sitting awkwardly with the distributional metrics used. Well-substantiated on architecture and losses; its generative-evaluation concern is echoed by the meta-review, though its presentation score (4) is more positive than the consensus."
+    },
+    {
+      "reviewer": "Reviewer_8gZn",
+      "weight": "medium",
+      "reason": "On-target and corroborates the generative-evaluation, data-split, confidence-interval, and pretrained-encoder concerns raised by others, but the review is shorter and less developed, adding fewer unique or deeply substantiated observations."
+    }
+  ],
+  "score_rationale": "Soundness is unanimous at 3 across all reviewers and is held there. Presentation is set to 2 because the two most presentation-focused high-weight reviewers (xxop, h1mT) both gave 2 and identified concrete underdeveloped sections, and the meta-review foregrounds clarity of objectives and pretraining as a main concern requiring revision, which outweighs kxXZ's more positive read (4). Significance (3) and originality (3) follow the majority of reviewers, but the prose reflects the meta-review's 'integration over a single novel component' framing that h1mT captured with originality 2. Overall recommendation is 4 (weak accept): the high-weight reviewers spanned 3-5 and averaged 4, and an initial pre-rebuttal assessment that takes the substantive generative-evaluation, presentation, and protocol concerns seriously lands at a qualified accept, consistent with the meta-review's ultimately positive but caveated stance. Confidence is 4 because the substantive concerns are highly coherent and mutually corroborating across reviewers despite spread in the headline scores."
+}

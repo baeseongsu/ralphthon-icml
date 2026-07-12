@@ -1,0 +1,62 @@
+{
+ "forum_id": "nn5hJFwMPu",
+ "title": "Discriminative Attribute Graph Clustering Through Topology-Guided Contrastive Learning",
+ "abstract": "Deep attribute graph clustering aims to learn discriminative node representations by leveraging both node attributes and graph topology to partition nodes into distinct clusters. Although substantial progress has been made in attribute-graph clustering in recent years, two key challenges remain: noisy edges in the original adjacency matrix degrade the quality of information propagation, and redundant feature information across different feature views hampers the learning of discriminative representations. To address these issues, we propose a self-supervised attribute graph clustering method based on topological reconstruction and correlation decorrelation. First, we reconstruct the graph topology by computing intersections between k-nearest neighbors and the original adjacency relationships, while simultaneously leveraging global semantic information from K-means clustering to filter out noisy nodes. This reconstructed topology effectively mitigates information redundancy during feature aggregation in Graph Neural Networks. Second, unlike existing augmentation-based contrastive methods, we treat the feature representations from an auto-encoder (AE) and a graph auto-encoder (GAE) as two complementary natural views. We then apply mutual information minimization and a decorrelation constraint to suppress redundant information between views, yielding more discriminative node representations. Extensive experiments on four widely-used graph datasets—ACM, DBLP, CITE, and AMAP—demonstrate that our method consistently outperforms six state-of-the-art baselines.",
+ "primary_area": "deep_learning->graph_neural_networks",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper presents a self-supervised attribute graph clustering method based on topological reconstruction and correlation decorrelation. It possesses the property of mitigating information redundancy with the proposed two components. Experimental evaluations verify the statements and the superiority. All four reviewers provide positive feedback by recognizing clear motivations, novel methodology, and sufficient evaluations. After the rebuttal, reviewers’ concerns are fully resolved.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_wHB5",
+   "summary": "This paper addresses attributed graph clustering and proposes a self-supervised framework that refines graph topology by integrating feature-space KNN with local adjacency overlap and global K-means semantics. It then learns node embeddings through a two-view AE/GAE architecture, optimized with mutual-information minimization, decorrelation, and a DEC-style clustering objective.",
+   "strengths_and_weaknesses": "Strengths:\n(1)The motivation of reducing redundant or noisy neighbor aggregation in GNN-based clustering is well aligned with known issues in attributed graph clustering.\n(2)Using AE and GAE embeddings as two views avoids explicit graph augmentations while still enabling self-supervised regularization.\n(3)Experimental results on multiple datasets demonstrate the effectiveness of the proposed method.\n(4)The selected topic is meaningful and worthy of research and the paper is well written and motivated.\n\nWeaknesses：\n(1) Several key components are established building blocks and the novelty mostly comes from their particular combination and the topology reconstruction heuristic.\n(2) Sensitivity to k, K, and the number of negative samples is not systematically explored beyond listing the final settings.\n(3) The paper claims that “redundant feature information across different feature views hampers discriminative representation learning”, but does not clearly define “redundant features” or explain why they harm discriminability.\n(4) Formulas should not appear in the Related Work section. If necessary, they should be moved to the Preliminaries or Methodology section.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "（1）How should readers interpret mutual information minimization between AE and GAE views relative to typical MI maximization, and what failure cases does minimization avoid here.\n（2）Same as w2 above, how sensitive are the results to k, K, and the number of negative samples, and does the method degrade gracefully under reasonable perturbations of these values.\n（3）The model itself is very interesting, but the results, as you just said, there is \"no significant difference compared to the baseline method DFCN\". Can you provide more insights on how this is happening (whether or not you regard it as reasonable), and what you believe could be done to further improve your model so that you can beat it?\n（4）The paper refers to the graph structure optimization process as graph reconstruction. However, the proposed process appears to refine or adjust the original graph rather than reconstruct it from representations. Could the authors clarify the reason for using the term “graph reconstruction”?",
+   "limitations": "The paper notes that MI minimization may remove useful information, and it would be helpful to add a short discussion on when topology reconstruction might harm performance on graphs with strong heterophily or noisy features.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_gntJ",
+   "summary": "This work presents a reconstruction-based graph clustering framework at the node level, in which self-supervision is achieved via contrastive learning. The designs include mutual information minimization and decorrelation operations as incorporated constraints with different views generated by autoencoders.",
+   "strengths_and_weaknesses": "The problem proposed in the paper is interesting. The strengths are: 1) The paper is well-written, with clear quality and convincing novelty. It will be of great interest to experts in the field. 2) The author's proposed framework provides a clear end-to-end objective that connects representation learning and clustering. 2) The decorrelation loss is a reasonable mechanism to reduce redundancy between the two views without relying on hand-designed augmentations. 3) Empirical results show consistent improvements over several classic baselines and competitive methods across ACC, NMI, ARI, and macro-F1.\n\nHowever, I think this paper still needs to be improved. 1) The use of K-means on raw features X as a source of “global semantics” may be brittle when features are high-dimensional or poorly scaled. 2) The AE is described as a deep CNN auto-encoder, but the design choices for non-image node attributes are not fully motivated. 3) The negative sampling procedure for $Z^ae$ is only briefly described and could affect optimization stability and the MI estimate.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Why is K-means applied on $X$ rather than on a learned representation, and what happens if clustering is performed on an AE-pretrained embedding for defining $G_i$? And could you provide a small analysis showing how many edges change in $A^g$ compared to A and whether improvements correlate with this change?",
+   "limitations": "The paper would be better with a discussion of when KNN-based topology reconstruction may introduce bias on graphs with weak attribute homophily and with more explicit reporting of computational overhead.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_Uh25",
+   "summary": "This submission introduces an attributed graph clustering framework that refines the input topology via a union of KNN intersections with observed neighbors and K-means semantic groups, and then uses AE and GAE embeddings as two self-supervised views with mutual-information minimization and decorrelation regularization before applying a DEC-like clustering loss.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The paper organizational structure is clear and easy to understand.\n\n2. The topology reconstruction rule is transparent and easy to reproduce given X and A.\n\n3. The method is motivated by a concrete failure mode in GNN-based clustering where aggregating neighbors across classes can inject redundant signals.\n\n**Weaknesses:**\n\n1. Evaluation relies on reported baseline numbers from other papers, which reduces experimental control over preprocessing and tuning.\n\n2. The method adds several hyperparameters and modules but provides limited guidance on default choices beyond Table 3.\n\n3. Contribution is primarily empirical and algorithmic and does not include a deeper theoretical explanation for why MI minimization is the right inductive bias.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "If space permits, can we expect to see more discussion on the abnormal NMI field in Table 3 (instead of just a sentence)?",
+   "limitations": "The paper briefly mentions the risk of removing useful information via MI minimization, and it would help to add concrete failure modes and recommended diagnostics for practitioners.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_PhYD",
+   "summary": "This paper proposes a self-supervised attribute graph clustering method that (1) reconstructs topology by intersecting KNN neighbours with adjacency and k-means cluster, and (2) treats AE and GAE embeddings as two views for contrast with MI minimization plus a decorrelation loss.  Extensive experiments on ACM, DBLP, CITE, and AMAP show that it outperforms state-of-the-art methods.",
+   "strengths_and_weaknesses": "Strengths：\nAiming at the two challenges of noisy and augmentation dependency, this paper propose a topology reconstruction mechanism that integrate local-global information with an augmentation-free contrastive framework. The topological reconstruction mechanism is straightforward and targets noisy neighbour fusion in GNN encoders. AE/ GAE contrast and topology reconstruction is interesting. \n\nWeaknesses:\n(1) The self-supervised clustering section introduces Q' (based on the Student's t-distribution), but later refers Q'' without clear definitions. Please keep symbols consistent across text and figures. (2) More details are needed: including neighbour selection criteria, hyperparameter sensitivity experiments and time/space complexity analysis of the reconstruction process. (3) Notations need clear definitions, and maybe a notation table are needed to avoid ambiguity.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to Weakness and Limitation Sections.",
+   "limitations": "The paper would benefit from more discussions:\n(1) the scalability of the similarity computation (e.g., time/memory complexity of constructing the KNN-based reconstructed graph, especially on large-scale datasets);\n(2) the potential mismatch between K-means-induced semantics and the true underlying cluster structure, particularly when node attributes are noisy, sparse, or weaky correlated with graph topology.",
+   "overall_recommendation": 5,
+   "confidence": 5
+  }
+ ]
+}

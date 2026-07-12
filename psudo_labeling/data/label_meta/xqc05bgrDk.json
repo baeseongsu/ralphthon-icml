@@ -1,0 +1,26 @@
+{
+  "forum_id": "xqc05bgrDk",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_z6UD",
+      "weight": "high",
+      "reason": "The most detailed and highest-confidence review (confidence 4). Its points on sentinel constructibility, the possibility of noisy human correction, worker reliability, and rational annotators strategically detecting sentinels are directly reflected in the meta-review and anchor the assessment; its praise of the rigorous impossibility/sentinel results and the original joint-optimization framework is well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_K8Aw",
+      "weight": "high",
+      "reason": "Concise but on-target. The concerns about annotators reverse-engineering sentinel questions and the difficulty of constructing sentinels for hard-to-verify tasks are corroborated by the other careful reviewers and explicitly echoed in the meta-review's note on annotators detecting sentinel tasks and on strong assumptions."
+    },
+    {
+      "reviewer": "Reviewer_sxaj",
+      "weight": "high",
+      "reason": "Specific and substantiated across all dimensions. The concerns about whether sentinel tasks can be constructed, the indistinguishability assumption, the strong assumption that the annotator's cost/utility (best response) is known, and the mismatch between the continuous-Y theory and the binary-label experiments are corroborated by other reviewers and aligned with the meta-review, despite its lower overall recommendation."
+    },
+    {
+      "reviewer": "Reviewer_5gNq",
+      "weight": "medium",
+      "reason": "Its summary is copy-pasted from an unrelated paper (about an 'Awakening Crowd of Experts' regret problem), a clear carelessness signal that lowers trust. However, the substantive weaknesses it raises, namely the idealization that the AI always fails on sentinels (the AI may sometimes answer them correctly) and the case for adaptive rather than fixed auditing, are relevant and partially corroborated by the meta-review's mention of noisy correction."
+    }
+  ],
+  "score_rationale": "I anchored on the two most thorough, mutually corroborating reviews (z6UD and K8Aw, both high weight) together with the specific, substantiated critique from sxaj; all three converge with the meta-review on the same core concerns (sentinel constructibility, indistinguishability and strategic detection, and strong modeling assumptions), while agreeing on the paper's rigorous theory, timely problem, and original joint-optimization framework. Presentation is unanimous at 3; soundness sits at 3 because the meta-review characterizes the core solution as rigorous and the paper is accepted, even though two high-weight reviewers gave 2 over strong assumptions, and significance and originality are held at 3 to reflect the majority position rather than z6UD's more enthusiastic 4s. Overall recommendation of 4 reflects the accept decision and the center of the high-weight reviewers' 3-5 spread, and confidence of 4 reflects the strong cross-review agreement on the substantive issues despite 5gNq's mismatched summary."
+}

@@ -1,0 +1,62 @@
+{
+ "forum_id": "EKmiOtjZjI",
+ "title": "Online Conformal Prediction via Universal Portfolio Algorithms",
+ "abstract": "Online conformal prediction (OCP) seeks prediction intervals that achieve long-run $1-\\alpha$ coverage for arbitrary (possibly adversarial) data streams, while remaining as informative as possible. Existing OCP methods often require manual learning-rate tuning to work well, and may also require algorithm-specific analyses. Here, we develop a general regret-to-coverage theory for interval-valued OCP based on the $(1-\\alpha)$-pinball loss. Our first contribution is to identify *linearized regret* as a key notion, showing that controlling it implies coverage bounds for any online algorithm. This relies on a black-box reduction that depends only on the Fenchel conjugate of an upper bound on the linearized regret. Building on this theory, we propose UP-OCP, a parameter-free method for OCP, via a reduction to a two-asset portfolio selection problem, leveraging universal portfolio algorithms. We show strong finite-time bounds on the miscoverage of UP-OCP, even for polynomially growing predictions. Extensive experiments support that UP-OCP delivers consistently better size/coverage trade-offs than prior online conformal baselines.",
+ "primary_area": "theory->online_learning_and_bandits",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "This paper introduces UP-OCP, a parameter-free algorithm for online conformal prediction, built on a novel connection to portfolio optimisation. Reviewers were broadly positive, praising the theoretical novelty, the parameter-free design, and the empirical evaluation.\n\nMinor concerns were raised by reviewers: the algorithm slightly undershoots the target coverage in finite samples; the optimality claims are imprecise; proof sketches are missing; and prior work comparison is limited. All four reviewers confirmed their concerns were resolved.\nThe revision should incorporate the promised comparison table, proof sketches, and discussion of limitations and extensions.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_iEFj",
+   "summary": "This paper studies online conformal prediction (OCP). First, the authors show that the general notion of linearized regret directly implies coverage. Built on that, they propose UP-OCP, a new parameter-free method for OCP, and derives finite-time miscoverage bounds. Experiments show that UP-OCP delivers consistently better size/coverage trade-offs than prior baselines.",
+   "strengths_and_weaknesses": "Strengths\n1. The linearized regret perspective is conceptually clean and potentially broadly useful. Theorem 3.1 gives a fairly general black-box route from online-learning guarantees to OCP coverage, rather than relying on algorithm-specific analyses.\n2. The reduction to an asymmetric two-asset conformal market is interesting, and the resulting UP-OCP update is parameter-free and simple.\n3. This paper presents extensive experiments on both synthetic data and real-world time series.\n\nWeaknesses\n1. Claims such as “optimal” and “best known finite-time coverage guarantee” need more clarification, since the paper mainly presents upper bounds.\n2. The paper does not include proof sketches, which makes the theoretical results harder to understand.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The empirical results show that UP-OCP achieves coverage slightly below the target level, at around 93%. What explains this gap, and is there a way to fix it?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_PTj8",
+   "summary": "In this paper, authors showed that online coverage in conformal prediction can be achieved by any online algorithm with small linearized regret. Then authors proposed a new algorithm that minimizes the linearized regret after reducing the problem to a portfolio selection problem. This algorithm particularly handled the asymmetry inherent in this problem. Lastly authors empirically verified that their algorithm is better at balancing coverage and size of the prediction set than other baselines.",
+   "strengths_and_weaknesses": "**Strengths:**\n1. Given prior results that no-regret alone doesn't imply online coverage, the observation that no-linearized-regret does imply online coverage is novel and insightful.\n2. The reduction from linearized regret minimization to portfolio selection is novel and the observation that the problem is asymmetric is crucial for designing the right algorithm.\n3. There is both theoretical and empirical evidence that the proposed algorithm dominates other baseline algorithms like OGD.\n\n**Weaknesses:**\n1. Minor issues: Does $\\mu(\\lambda)$ in equation (10) and later stand for the density of $d\\mu$ wrt the Lebesgue measure?\n2. From equation (5) it's clear that the mis-coverage rate is small if the sum of sub-gradients has small absolute value. It would be better if authors can explain how Theorem 3.1 implies that \"small linearized regret implies small sum of sub-gradients\".",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "How much would the current analysis framework change if the prediction sets are no longer symmetric intervals? Is it possible that some general notion of linearized regret could be relevant?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_U4YL",
+   "summary": "This paper studies the problem of online conformal prediction (OCP), especially its relationship with other problems. The paper first shows the relation between miscoverage and linearized regret, showing that any online algorithm with guarantee of linearized regret could be applied to solve OCP problem. The paper further pushes this forward and shows that linearized regret minimization with pinball loss could be reduced to portfolio selection problem, which enjoys a benefit when $\\alpha$ is close to 0 or 1. Experiments show that the proposed portfolio-algorithm-based OCP outperforms considered baselines.",
+   "strengths_and_weaknesses": "The strengths and weaknesses of this paper is summarized as follows\n\nStrengths:\n\n1. The paper makes several interesting reduction, revealing the relationship between OCP, linearized regret minimization and wealth maximization in conformal market. \n\n2. The reduction introduces new algorithms to OCP, which is superior in the scenarion of $\\alpha$ close to 0 or 1.\n\nWeaknesses:\n\n1. While the paper introduces two reductions, it is not discussed whether such reduction is sharp. For example, as remarked in the paper, Lemma A.1 is loose when applying OSD to OCP. It is unknown whether other reduction (e.g., Theorem 4.3) incoporates such looseness\n\n2. The reduction-incurred bound heavily depends on Frechel Duality, for example in Theorem 3.1 and Theorem 4.3, therefore it is not straightforward to see how dependencies on problem parameters (e.g., T, $\\alpha$) translates. The paper could provide some more examples to demonstrate these scalings (e.g, for Theorem 3.1, provide some algorithms with their rate of regret and show how the regret translates to miscoverage).\n\n3. The comparison to previous results are not clear enough. A better way might be summarizing the miscoverage rate (and other notable features) of OSD, KT and other relevant results in a table. Currently, the relevant rate is scattered over the paper and not convenient for comparison.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "My questions are listed below\n\n1. How is the linearized regret differs from standard regret in terms of algorithmic results in literature? Can algorithm that minimizes standard regret automatically minimize linearized regret, or does this holds vise versa? If neither induces the other, what are the sota algorithm for both setting?\n\n2. Can the results (derived from portfolio selection) in this paper induces better linearized regret in online learning where the loss function are not necessarily symmetry?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_UHNT",
+   "summary": "The paper provides a new fundamental result on the connection between gradient equilibrium (online conformal prediction) and linear regret through the Fenchel conjugate of a bound on the linear regret.  This motivates the study of universal portfolio schemes for nline conformal prediction, yielding parameter-free protocols with improved theoretical guarantees on convergence as compared to the state of the art.",
+   "strengths_and_weaknesses": "Strengths\n\nThe paper is technically sound, and provides an important reference in the line of work on online conformal prediction.\n\nWeaknesses\n\nPlease describe the relationship between the upper bound on the regret, the Fenchel dual and gradient in (7) via a figure. This is briefly discussed in words in the first paragaph of Section 4). \n\nThe experimental results are rather limited, and may not provide a full understanding of the limitations of the scheme.\n\nComment on possible extensions towards strongly adaptive regret following Bhatnagar et al 2023.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "What are the practical limitations of the approach?\n\nIn what directions can the main result on the linear regret be extended to other notions of regret, such as the strongly adaptive regret?",
+   "limitations": "Yes.",
+   "overall_recommendation": 6,
+   "confidence": 4
+  }
+ ]
+}

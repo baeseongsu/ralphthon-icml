@@ -1,0 +1,62 @@
+{
+ "forum_id": "FfrpNZofIk",
+ "title": "Forget-It-All: Multi-Concept Machine Unlearning via Concept-Aware Neuron Masking",
+ "abstract": "The widespread adoption of text-to-image (T2I) diffusion models has raised concerns about their potential to generate copyrighted, inappropriate, or sensitive imagery. As a practical solution, *machine unlearning* aims to erase unwanted concepts without retraining from scratch. While most existing methods are effective for single-concept unlearning, they often struggle when removing multiple concepts, causing significant challenges in unlearning effectiveness, generation quality, and sensitivity to hyperparameters and datasets. We take a unique perspective on multi-concept unlearning by leveraging model sparsity and propose the **F**orget **I**t **A**ll (FIA) framework. FIA first introduces *Contrastive Concept Saliency* to quantify each weight connection's contribution to a target concept. It then identifies *Concept Sensitive Neurons* by combining temporal and spatial information, ensuring that only neurons consistently responsive to the target concept are selected. Finally, FIA constructs masks from the identified neurons and fuses them into a unified multi-concept mask, where *Concept Agnostic Neurons* that broadly support general content generation are preserved while concept-specific neurons are pruned to remove the targets. FIA is training-free and requires minimal hyperparameter tuning for new tasks, enabling plug-and-play use. Extensive experiments across three distinct unlearning tasks demonstrate that FIA achieves more reliable multi-concept unlearning, improving forgetting effectiveness while maintaining generation fidelity and quality. Code is available at [https://github.com/kaiyuan02415/Forget-It-All](https://github.com/kaiyuan02415/Forget-It-All)",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a method for multi-concept unlearning in text-to-image diffusion models. The method uses a training-free pruning approach where neuron masks are made per-concept (with stability throughout diffusion timesteps) and then fused into a multi-concept mask in a way that preserves the generative ability of concept-agnostic neurons.\n\nThe proposed method, which includes a novel approach to multi-concept unlearning, is demonstrated as practically useful for copyright preservation (unlearning of multiple objects or multiple artistic styles) and for generative safety (explicit content unlearning).\n\nBased on the set of reviews, the authors’ successful rebuttal and following discussions, I consider this paper as a solid contribution to the timely problem of multi-concept unlearning. Hence, my recommendation is to accept this paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_riQw",
+   "summary": "This paper proposed the unlearning method for diffusion based text-to-image models by integrating the concept analysis over time, channel, spatial locations to unlearn multiple concepts at the same time. The proposed method is highly related to pruning method by masking out sensitive neurons associated to-be-unlearnt concepts. Moreover, the proposed method does not involve the fine-tuning, as it simply masked out the neuron activation as knowledge suppression. The experimental results are comprehensive across datasets and models, and supress many baselines.",
+   "strengths_and_weaknesses": "Strengths:\n\n1. Multi-concept unlearning is an important topic in the machine unlearning as it increases the complexity as compared to single concept unlearning significantly. \n\n2. The proposed Contrastive Concept Saliency quantify the weight importance for each concept, connecting with the model pruning. Furthermore, built on top of diffusion model, the authors further integrated time, channel and spatial information to precisely quantify the quantity. \n\nWeaknesses: \n\n\n1. Lacks of key ablation study on the design of eq 3, how important of each factor when determine a neuron is sensitive to a concept? could one of factors dominate the determination? And for eq 6, it will be interesting to learn more the disagreement between global vs channel. Along with that the sensitivity analysis over hyper-parameters $r_1$ and $r_2$ are not clear.\n\n2. Limited robustness analysis given that there are many forms in text to describe the same thing, it will be interesting to see more how the robustness can be evaluated in this line of works.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "See Weaknesses:\n\n1. The sensitivity is computed based on a pre-defined denoise steps, how robust it is if using more or fewer denoise step during the inference?\n\n2. I am wondering the robustness of such unlearning to the paraphrase attack, as the prompt template in the experiment is simple, what if the text prompt become more complicated without directly referring to the concept itself, will the unlearning still work? \n\nOther comments: \n1. Eq 2 could be confused in the first place as the index are reduced",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_CJCc",
+   "summary": "This paper propose a Forget It All (FIA) framework to erase unwanted concepts from a pretrained model without retraining from scratch. Firstly, the FIA introduces Contrastive Concept Saliency to quantify each weight connection’s contribution to a target concept. Then, Concept Sensitive Neurons are identified by combining temporal and spatial information. Finally, FIA constructs masks from the identiffed neurons and fuses them into a uniffed multi concept mask to remove the targets. The experimental results demonstrate the effectiveness of the proposed method.",
+   "strengths_and_weaknesses": "Strength:\n1. The topic of this paper is highly interesting and worthy of research.\n2. The design of pruning neurons associated with unwanted concepts is a sound approach for removing target concepts.\n3. This paper is well-structured, which facilitates easy understanding.\n\nWeakness:\n1. The feature visualization is not provided to support the discussion.\n2. The motivation of model design should be discussed more in details.\n3. Consistent font size across all tables is recommended to maintain a professional appearance.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. Could the authors provide feature visualizations to empirically support the key points in the discussion?\n2. Could the authors elaborate in more detail on the motivation behind the proposed model design?\n3. Could the authors ensure consistent font sizing across all tables to maintain a professional and readable presentation?",
+   "limitations": "Failure cases should be displayed and discussed.",
+   "overall_recommendation": 6,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_GYvv",
+   "summary": "The paper proposes neuron masking as a means for erasing undesired concepts for text-to-image generation diffusion models. They aggregate spatial and temporal information to design a search criterion for recognizing weights that are responsible for generating target concepts and achieve concept erasure by masking them.",
+   "strengths_and_weaknesses": "**Strengths:**\n1. One of the strengths of this paper is that the proposed method is training-free, which implies that it can be added on top of existing models easily, and target concepts can be erased on-the-fly.\n2. The paper is well written.\n3. The paper demonstrates strong results.\n\n\n**Weaknesses: **\n1. Limited experiments - I think the paper lacks an evaluation of the proposed method for recent image generation models like SDv3.5 and FLUX. These results would show the generalizability of the proposed method.\n\n2. Limited novelty - The proposed method seems to be an incremental improvement step over current neuron-masking-based concept erasure methods like ConceptPrune. For example, Equation 1 describes a small incremental step over the WANDA score used in ConceptPrune, where the authors add a cosine similarity term. Equations 4,5,6 are very similar to the method in ConceptPrune, which filter out target weight neurons using the search criteria. According to me, the novelties of this paper lie in Equations 2, 3, and 8; thereafter, combining all the steps in the method, the novelty is quite limited.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Multi-concept unlearning - Instead of artist styles, can you erase multiple objects from the model simultaneously? Also, can you erase an artist style and an object, for example, 'a cat in the style of Van Gogh'? Will your method be successful in erasing both 'cat' and 'Van Gogh'? \n\n2. Can you please move Section C - ROBUSTNESS of FIA to the main paper? This section is not referred to anywhere in the main manuscript and is a very important part of concept erasure works.\n\n3. Can you please compare the advantage of using the extra cosine similarity term in Equation 1? This saliency score seems to very similar to the WANDA score [1] (which is also not cited in the paper). Can you compare your proposed score with theirs?\n\n[1]A Simple and Effective Pruning Approach for Large Language Models, Sun et al",
+   "limitations": "See Weaknesses",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_89VM",
+   "summary": "This paper proposes FIA, a training-free, plug-and-play framework for multi-concept unlearning in text-to-image diffusion models. Addressing the limitations of existing methods that struggle with single-concept constraints or performance degradation. The paper is well written and well organized. However, one of my concerns is that the most recent work included in the experiments is from 2024, and the related work from 2025 has not been fully explored. In addition, I feel that the theoretical foundation of the proposed framework is somewhat limited.",
+   "strengths_and_weaknesses": "1.The paper proposes a training-free, plug-and-play framework for multi-concept unlearning in T2I diffusion models, addressing the limitation of single-concept focus in existing methods. It introduces Contrastive Concept Saliency and preserves concept-agnostic neurons, balancing unlearning efficacy and generation quality.\n2.The work shows strong performance across multi-object, explicit content, and artistic style unlearning tasks.\n3. It demonstrates high computational efficiency and robustness against adversarial attacks, with generalizability to SDXL.\n\n\nWeaknesses\n\n1.In experiments, it lacks t he comparison with the SOTA methods 2025 or later, also the related works lacks SOTA ones.\n2.Although there are not many hyperparameters, they still need to be adjusted according to the task.\n3.The paper, as I see, provides insufficient analysis of semantically similar or interfering concepts, which may affect unlearning completeness.\n4.The generation quality degrades when unlearning hundreds of concepts, with no clear mitigation strategies.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weakness.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  }
+ ]
+}

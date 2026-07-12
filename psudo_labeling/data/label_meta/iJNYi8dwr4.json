@@ -1,0 +1,26 @@
+{
+  "forum_id": "iJNYi8dwr4",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_N6My",
+      "weight": "high",
+      "reason": "Detailed, specific, high-confidence review whose central points are substantive and partly corroborated: the robot-state-only world model's limited scope (cannot capture obstacle/environment dynamics), the puzzling success-rate gains needing confidence intervals, the limited task randomization in Libero/Bigym, and the missing limitations discussion (per-task data, ~50-100 demos, not truly zero-shot)."
+    },
+    {
+      "reviewer": "Reviewer_s5H4",
+      "weight": "high",
+      "reason": "Specific and well-referenced; its main concern (reliability of the offline-trained world model that underlies the whole framework, and its simple multi-step MSE training) is the dominant cross-corroborated theme, and its points on the narrow baseline set and the epsilon sensitivity in Section 5.4 are concrete and actionable."
+    },
+    {
+      "reviewer": "Reviewer_2U3p",
+      "weight": "high",
+      "reason": "Technically precise; the world-model attribution concern (EEF-only deviation vs. scene/object dynamics) and the CMDP-vs-soft-RL ambiguity (Prop. 4.1's large penalty vs. small reported penalties and varying discount factors) are specific and evaluation-relevant, and align with the shared world-model reliability theme; also flags the page-limit/running-title formatting issues."
+    },
+    {
+      "reviewer": "Reviewer_A78A",
+      "weight": "medium",
+      "reason": "The world-model reliability and formatting concerns are corroborated by others and consistent with the meta-review direction, but the review is brief with low self-reported confidence, and its claim that the method is 'only evaluated on simulation' is factually off-base since the paper includes real-world experiments (noted in the abstract and by the other reviewers)."
+    }
+  ],
+  "score_rationale": "The three high-weight, high-confidence reviewers (N6My, s5H4, 2U3p) converge on the world model's reliability and scope as the central soundness concern, holding soundness at 3, while presentation stays at 4 given their agreement and the meta-review's emphasis on clear presentation (minor formatting issues aside). Significance (3) and originality (3) reflect a practical, well-executed but combinatorial/incremental contribution, with only one reviewer rating significance higher. The overall recommendation of 5 follows the two high-weight accepts (5) and the clearly positive Accept meta-review, tempered from the top of the range by the shared reliability concerns; A78A was down-weighted to medium because its 'simulation-only' criticism is contradicted by the paper's real-world experiments. Confidence is 4 given the strong, mutually corroborating agreement across reviewers on both strengths and the world-model weakness."
+}

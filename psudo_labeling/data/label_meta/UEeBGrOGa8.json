@@ -1,0 +1,26 @@
+{
+  "forum_id": "UEeBGrOGa8",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_LfFw",
+      "weight": "high",
+      "reason": "Substantive and specific; the meta-review adopts this reviewer's exact strength language (\"technically coherent and empirically well supported\"), and the presentation critique (long abstract, blurred Sections 3.1-3.2, underspecified Section 3.3, unhighlighted Eqns 12-14, unproven global-receptive-field claim) is concrete and actionable, despite low self-confidence and being outside the reviewer's main area."
+    },
+    {
+      "reviewer": "Reviewer_TVDt",
+      "weight": "high",
+      "reason": "Highest self-confidence and most specific review; multiple points are echoed verbatim by the meta-review (\"excellent appendices,\" \"sensible experiments,\" experiments' range and complexity not the strongest part). Identifies the key missing comparison to FNO/spectral NPs and to sub-quadratic attention variants."
+    },
+    {
+      "reviewer": "Reviewer_ojnn",
+      "weight": "medium",
+      "reason": "Largely checkbox (\"Yes, as far as I can assess\"), self-declared outside core expertise with low confidence, but contributes a few constructive and corroborating points (add coverage/CRPS metrics and a GP baseline, weaknesses not discussed) that align with the broader 'broaden the evaluation' theme."
+    },
+    {
+      "reviewer": "Reviewer_iyk8",
+      "weight": "high",
+      "reason": "Specific and high-confidence; its framing of the two motivating limitations (interpretability, scalability) matches the meta-review's \"well motivated and technically developed,\" and it raises concrete, evaluation-relevant weaknesses (linear-attention baselines, missing qualitative figures) and good clarifying questions (|Ξ| capacity scaling, length-scale sensitivity, first-order Volterra correspondence)."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (LfFw, TVDt, iyk8) converge on a well-motivated, technically sound paper whose experiments are the weakest aspect, and the meta-review adopts their language almost verbatim (\"technically coherent,\" \"empirically well supported,\" \"excellent appendices,\" \"sensible experiments,\" experiments' range not the strongest part); soundness and significance are therefore set at the shared 3, and overall recommendation at the unanimous 5 that matches the accept decision. Presentation is placed at 3 as a weighted middle between LfFw's specific main-text critique (2) and the praise of TVDt/ojnn (4) and iyk8 (3), since the paper is generally clear but under-organizes its main-text contributions. Originality is set to 3, balancing LfFw's \"novelty is in the combination\" (2) against iyk8/ojnn (4), reflecting a meaningful synthesis rather than an entirely new primitive. Confidence is 4 because the evidence is highly coherent and mutually corroborating, anchored by the two high-confidence reviewers; ojnn is down-weighted to medium for being largely checkbox and outside its expertise."
+}

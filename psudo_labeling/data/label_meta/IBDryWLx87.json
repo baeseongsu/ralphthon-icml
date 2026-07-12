@@ -1,0 +1,26 @@
+{
+  "forum_id": "IBDryWLx87",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_N64c",
+      "weight": "high",
+      "reason": "The most detailed and specific review, substantiated with concrete numbers. It directly anchors the meta-review's 'not fully supported claims' (missing significance tests, gains within one standard deviation, the five-system ternary-blend result), the theoretical looseness in the rotation-invariance discussion (Haar-sampling proof vs. fixed canonical views, uncomputed Wasserstein bound), the missing ImageNet-pretrained ViT counterfactual, and the VideoMol related-work/novelty gap."
+    },
+    {
+      "reviewer": "Reviewer_hcXc",
+      "weight": "high",
+      "reason": "Specific, physically grounded critique that is corroborated by the meta-review and by other reviewers: the end-to-end DFT cost of generating ED inputs versus only modest gains over cheaper non-ED baselines (e.g., EquiformerV2), information loss from projecting the 3D ED field onto finite 2D views, and the questionable coupling between ground-state-DFT ED and excited-state-dependent photovoltaic targets. Also correctly reframes the weak 'data scarcity' motivation."
+    },
+    {
+      "reviewer": "Reviewer_fxL8",
+      "weight": "medium",
+      "reason": "Thoughtful and specific in places - the ED-geometry-vs-ESP-coloring disentanglement, the pretraining/downstream leakage check, and the precise novelty framing all echo the meta-review's novelty concern and add value - but the overall stance is notably positive and some points (the self-supervised terminology quibble) are minor, so it is partly on-target rather than an anchor."
+    },
+    {
+      "reviewer": "Reviewer_H9Uq",
+      "weight": "medium",
+      "reason": "Raises the DFT-cost concern echoed by the meta-review and a legitimate baseline-fairness point (baselines not pretrained on the same corpus), which corroborates the counterfactual issue N64c details. However, the review is brief and one of its main issues is a data-description ambiguity rather than a substantive methodological flaw."
+    }
+  ],
+  "score_rationale": "Scoring is anchored on the two most substantiated reviews (N64c and hcXc), whose concerns - overstated/unsupported claims, a missing ImageNet-ViT control, loose rotation-invariance theory, and only modest gains relative to the DFT cost - are exactly the issues echoed in the meta-review. Soundness (3) and significance (3) sit above the two lowest human scores because the meta-review affirms the problem's importance and practical relevance and states that most concerns were ultimately addressable, while presentation (2) reflects the recurring overclaiming and the related-work gap that the most careful review detailed. Originality is fixed at 3 (unanimous across reviewers), and the overall recommendation (4, weak accept) follows the two high-weight reviewers and the qualified-accept direction of the meta-review, staying within the reviewers' [4,5] band. Confidence (4) reflects the strong mutual corroboration among the reviews and with the meta-review."
+}

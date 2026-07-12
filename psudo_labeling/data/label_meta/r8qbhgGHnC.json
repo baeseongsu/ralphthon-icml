@@ -1,0 +1,26 @@
+{
+  "forum_id": "r8qbhgGHnC",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_MWhv",
+      "weight": "high",
+      "reason": "The most detailed and substantiated review. Both of its central concerns - concrete math/rigor errors in the formulation and the question of whether empowerment is a standalone versus complementary metric - are explicitly adopted by the meta-review, and its points on aggregate-only analysis, WebArena reliability, the Qwen gaming failure mode, and trajectory-count sensitivity are specific and well argued."
+    },
+    {
+      "reviewer": "Reviewer_e2DV",
+      "weight": "high",
+      "reason": "The per-environment training/deployment cost concern is adopted by the meta-review and corroborated by 67LU. The review is concrete and verifiable, documenting code-versus-paper discrepancies with specific file and line references, plus substantive points on data-collector bias and state/action coverage."
+    },
+    {
+      "reviewer": "Reviewer_67LU",
+      "weight": "high",
+      "reason": "The evaluation-cost/overhead concern is adopted by the meta-review and corroborated by e2DV, and the cross-task generalization concern (are empowerment values or model rankings preserved across tasks) is substantive and specific. Careful, well-supported review."
+    },
+    {
+      "reviewer": "Reviewer_zCxg",
+      "weight": "medium",
+      "reason": "The limited-originality concern (method combines established tools; empowerment-performance correlation and Gridworld/ToH have precedent) is explicitly echoed by the meta-review as a factor keeping the score borderline. However, the overall stance (weak reject) is more negative than the meta-review's weak-accept landing, and the dismissal of the realistic-environment contribution is partly at odds with the meta-review's positive read of the WebArena tracking; some points are somewhat generic."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on MWhv (math errors, standalone-versus-complementary metric), e2DV and 67LU (per-environment training/evaluation cost), and zCxg (limited originality), so these points drive the review. Soundness (3) reflects the corroborated equation/rigor issues flagged by a high-weight reviewer and echoed by the meta-review, sitting below 67LU's 4; presentation (3) balances the generally clear writing (67LU/zCxg at 4) against the under-specified method and Figure 2 (MWhv at 2). Significance (3) and originality (3) sit at the upper end of the reviewers' range because the three high-weight reviewers rated originality 3 and the meta-review credits genuine usefulness ('a useful tool'), while still registering the adopted limited-novelty and standalone-metric concerns. Overall recommendation (4) matches the meta-review's weak-accept landing and the modal reviewer score, and confidence (4) reflects strong mutual corroboration across reviewers on the interesting-problem, limited-novelty, and deployment-cost axes."
+}

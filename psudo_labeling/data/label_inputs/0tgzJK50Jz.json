@@ -1,0 +1,62 @@
+{
+ "forum_id": "0tgzJK50Jz",
+ "title": "TriAttention: Efficient Long Reasoning with Trigonometric KV Compression",
+ "abstract": "Extended reasoning in large language models (LLMs) requires long and accurate decoding and creates severe KV cache memory bottlenecks. Leading KV cache compression methods estimate KV importance using attention scores from recent post-RoPE queries. However, queries rotate with position during RoPE, making representative queries very few, leading to poor top-key selection and unstable reasoning. To avoid this issue, we turn to the pre-RoPE space, where we observe that Q and K vectors are highly concentrated around fixed non-zero centers and remain stable across positions—*Q/K concentration*. We show that this concentration causes queries to preferentially attend to keys at specific distances (e.g., nearest keys), with the centers determining which distances are preferred via a trigonometric series. Based on this, we propose TriAttention to estimate key importance by leveraging these centers. Via the trigonometric series, we use the distance preference characterized by these centers to score keys according to their positions, and also leverage Q/K norms as an additional signal for importance estimation. On AIME25 with 32K-token generation, TriAttention matches Full Attention reasoning accuracy while achieving 2.5× higher throughput or 10.7× KV memory reduction, whereas leading baselines achieve only about half the accuracy at the same efficiency.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper studies KV-cache compression for long-output reasoning workloads. The authors propose TriAttention, a method that estimates key importance using a triangular-series-based distance prior together with Q/K norm signals, whose performance advantages over several existing baselines have been verified by empirical studies. There have been abundant discussions during the rebuttal, and the authors' responses have addressed all the major concerns, especially those new experimental results. The paper received consistently positive evaluations from 4 reviewers after the rebuttal. I would recommend an accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_7qmr",
+   "summary": "Authors observed that the queries and keys form clusters in pre-ROPE space that stay consistent as new queries and keys are observed. Based on this observation, authors suggested a trigonometric series scoring function along with norm-based scoring with future-offsets to determine the important keys to retain.",
+   "strengths_and_weaknesses": "### Strengths\n\n- Theoretically motivated: the trigonometric series decomposition of attention logits is analytically derived from the RoPE formula under Q/K concentration, and empirically validated via reconstruction correlation across multiple architectures.\n- Consistently outperforms the chosen baselines SnapKV and R-KV across all models and KV budget levels on the chosen tasks.\n- Provides high throughput as a consequence of relaxed KV cache, achieving 2.5x higher throughput and 10.7x KV memory reduction relative to Full Attention at equivalent accuracy on AIME25.\n- Cross-domain robustness: calibration statistics computed on coding data transfer well to reasoning benchmarks, suggesting the learned Q/K centers reflect model-intrinsic structure rather than task-specific patterns.\n\n### Weaknesses\n\n- Relatively few baselines; notably absent are more recent or stronger methods such as LazyEviction and Ada-KV, which are cited in the paper but not included in the comparison.\n- Tasks are focused on math evaluations and graph recursion. Evaluations on diverse tasks like summarization, retrieval, and Q&A would be more appropriate to test the general validity of the scoring function.\n- The method requires offline calibration to compute Q/K centers. While cross-domain transfer is briefly tested, the sensitivity to calibration set size and quality is not analyzed.\n- The scoring function computes importance over a fixed set of future offsets D = {1, 2, 4, …, 2^16}, but the choice of this set is not ablated or justified, leaving it unclear how sensitive performance is to this design decision.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_S1NU",
+   "summary": "The authors observed an aggregation phenomenon of Q K vectors in the pre-RoPE space. Based on this observation and the derived regularity, a method is proposed to predict future critical kv cache, thereby preventing incorrect premature eviction of kv cache. Experiments conducted on mathematical reasoning benchmarks (AIME and Math 500) demonstrate improved throughput and reduced memory usage, with minimal performance loss.",
+   "strengths_and_weaknesses": "Strengths\n\n1. The authors' observation is novel and has the potential to promote subsequent research in this field.\n\n2. The experimental design is well-considered, including a head-aware algorithm and thoughtful ablation experiments.\n\n3. The manuscript is easy to follow, with clear logic and coherent expression.\n\nWeakness\n\n1. Experiments were conducted solely on mathematical reasoning benchmarks; thus, the method's stability in non-reasoning and non-mathematical scenarios remains unconfirmed.\n\n2. There appears to be a typographical error in the citation within the first sentence of the Introduction, which likely resulted in an inaccurate reference.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Was this aggregation phenomenon observed by analyzing samples from the AIME dataset? Does this phenomenon hold true for other types of datasets?",
+   "limitations": "Experiments were only tested on mathematical reasoning benchmarks and small models.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_gCHe",
+   "summary": "This paper studies KV-cache compression for long-output reasoning workloads. The authors argue that existing approaches that operate in the post-RoPE space suffer from instability because only a small number of recent queries are representative. Instead, the paper analyzes the pre-RoPE space and observes a Q/K concentration phenomenon, which induces distance preferences in query-key interactions. Based on this insight, the authors propose TriAttention, a method that estimates key importance using a triangular-series-based distance prior together with Q/K norm signals. Experiments demonstrate that TriAttention maintains accuracy comparable to full attention while achieving up to 2.5× throughput improvement and 10.7× KV memory reduction.",
+   "strengths_and_weaknesses": "Strengths:\n1. Insightful observation and principled method：Identifies pre-RoPE Q/K concentration and distance preferences, deriving a trigonometric scoring function that connects internal geometry to key importance.\n2. Training-free and efficient：TriAttention leverages pre-RoPE statistics without modifying model weights, achieving substantial throughput and KV memory improvements.\n3.  Empirical support：Method outperforms baselines (SnapKV, R-KV) on reasoning benchmarks, with ablations confirming the importance of both trigonometric and norm-based components.\n\nWeaknesses:\n1. Limited evaluation scope and baselines：Experiments focus on math reasoning; other long-context tasks and recent KV compression methods are not evaluated.\n2. Theoretical and methodological approximations：The derivation assumes uniform Q/K centers per head; the role of norm-based scoring and scoring over future distances is only heuristically justified.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Reliability of the trigonometric approximation across heads and attention mechanisms：The method relies on the observation that pre-RoPE Q/K vectors tend to cluster around a stable center. Is the reconstruction quality consistent across different attention heads within the same attention mechanism? Additionally, how does the reconstruction quality vary across different attention mechanisms (e.g., standard multi-head attention vs. MLA)? An analysis of per-head reconstruction behavior would help clarify the robustness of the proposed approximation.\n\n2. Generalization beyond mathematical reasoning tasks: Current experiments primarily focus on mathematical reasoning benchmarks. Have the authors evaluated TriAttention in other long-context scenarios, such as long-document question answering, summarization, or dialogue history tasks? Demonstrating effectiveness beyond mathematical reasoning would strengthen the evidence for the method’s general applicability.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_Ct9M",
+   "summary": "Authors proposed TriAttention， Uses the trigonometric structure of RoPE attention to estimate KV importance, achieving training-free KV cache compression and improving long inference efficiency.",
+   "strengths_and_weaknesses": "#### Strengths\n1. estimates KV importance using the trigonometric expansion of RoPE attention, rather than pure heuristics.\n2. a purely inference-time method, directly applicable to existing LLMs.\n3. only requires simple trigonometric and norm calculations, with minimal extra cost.\n4. stable performance on long-context tasks such as math reasoning and long-chain reasoning.\n\n#### Weaknesses\n\n1. The metric mainly relies on distance and vector norms, which may mistakenly evict semantically critical tokens. Semantic importance is not leveraged. How does it perform on retrieval and dialogue tasks? Because in these tasks, the distance pattern is not obvious.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The metric mainly relies on distance and vector norms, which may mistakenly evict semantically critical tokens. Semantic importance is not leveraged. How does it perform on retrieval and dialogue tasks? Because in these tasks, the distance pattern is not obvious.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

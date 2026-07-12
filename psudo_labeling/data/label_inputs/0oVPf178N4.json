@@ -1,0 +1,62 @@
+{
+ "forum_id": "0oVPf178N4",
+ "title": "Incomplete Multi-View Clustering via Neighborhood-Conditioned Diffusion",
+ "abstract": "Incomplete multi-view clustering (IMVC) aims to uncover shared clustering structures from heterogeneous views with partial observations. \nRecently, existing generative IMVC methods have made significant progress in this field; however, they still remain limited in two aspects.\nOn the one hand, they rely on weak cross-view signals, resulting in unstable latent recovery when facing missing data. On the other hand, they overlook stable cross-view neighborhood structures, leading to weak structural constraint.\nTo address these limitations, we propose neighborhood-conditioned diffusion for incomplete multi-view clustering (IMVC-NCD), which achieves robust latent completion.\nOur method learns compact view-specific latent representations and constructs a unified conditioning vector by aggregating stable local neighborhood structures from available views while encoding missingness states, providing reliable guidance for diffusion-based denoising. With neighborhood-level conditioning, IMVC-NCD produces semantically aligned and view-consistent latent representations that are well suited for clustering, even under high missing-view ratios.\nExtensive experiments on four benchmark datasets demonstrate the effectiveness and robustness of our method compared with state-of-the-art IMVC approaches.\nOur code is available at https://github.com/zgh1115/IMVC-NCD.",
+ "primary_area": "general_machine_learning->clustering",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper introduces neighborhood-conditioned diffusion for incomplete multi-view clustering (IMVC-NCD), which increases the clustering performance under the incomplete multi-view scenario through view-specific latent learning with structure-aware generative recovery. The reviewers generally agreed on the motivation and presentation. The reviewers' concerns about baseline comparisons and computational cost have been addressed in the rebuttal by providing related experiments. However, there remains some doubt on the technical novelty, which concerns the framework that combines existing components (reviewer SQzh). Given that the experiment results are solid, but there are still some concerns about novelty, I recommend this paper as Weak Accept.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_hr8f",
+   "summary": "The authors discovered that, in the case of heterogeneous missing data, local neighborhood relationships remain relatively stable. Based on this observation, they propose the neighborhood-conditioned diffusion (IMVC-NCD) to address the issue of incomplete multi-view clustering. This algorithm effectively integrates view-specific latent learning with structure-aware generative recovery, generating discriminative latent features with stronger clustering separability, which directly enhances the performance of subsequent clustering tasks. This method makes a valuable contribution to the field of incomplete multi-view clustering and provides a new framework supported by reliable experimental validation, with significant research implications.",
+   "strengths_and_weaknesses": "Strength: \n1. The paper is well-structured, with a clear logical flow and distinct sections. The methodology is described in detail and is easy to understand.\n2. The experiments offer an extensive comparison, with beautifully designed charts that effectively support the arguments and enhance the visualization of the results.\n3. The proposed neighborhood-conditioned diffusion framework offers an innovative approach to solving the incomplete multi-view clustering problem, demonstrating exceptional robustness, especially when dealing with severely missing views. This framework is expected to inspire researchers to explore more effective diffusion condition constraints, with significant potential impact and practical value, further advancing the development of this field.\n\nWeaknesses: \n1. Although the paper is generally well-written, the methodology section (Section 3.3) may not be sufficiently clear for readers unfamiliar with diffusion models. It is better to provide additional clarification.\n2. Although the authors' experimental section is comprehensive, it could be further enhanced by adding more generative models for comparison, thereby highlighting the advantages of IMVC-NCD.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to the Weaknesses.",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_wVVE",
+   "summary": "The paper proposed an innovative neighborhood-conditioned diffusion for incomplete multi-view clustering (IMVC-NCD). As a generative model, the quality of the diffusion conditions in diffusion models has a significant impact on the effectiveness of completing missing views. IMVC-NCD is the first method to introduce neighborhood conditions as diffusion constraints within a diffusion-based framework. By leveraging the local structure of neighborhood relationships in the data, it enhances the stability and accuracy of the diffusion process, effectively mitigating the issue of incomplete information caused by missing views in multi-view clustering. This approach not only improves clustering performance but also provides new insights for the field of multi-view learning.",
+   "strengths_and_weaknesses": "Strength: \n(1) The approach is innovative and effectively alleviates the instability in view recovery caused by weak structural constraints. Its premise is clear and forward-thinking.\n(2) The experiments are comprehensive and validate the generalization ability and superiority of the IMVC-NCD from multiple perspectives.\n(3) The paper is logically organized, and I really enjoy reading.\n\nWeaknesses: \n(1) The comparison method DMVG is also a diffusion-based generative method. So, the authors need to explain the implementation of DMVG and analyze the reasons behind the performance advantages of IMVC-NCD.\n(2) It is recommended to provide more experimental details, such as whether end-to-end training was used. This would improve code reusability and the scalability of the experiments.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "The authors have already analyzed the sensitivity of hyperparameters, but it is recommended to conduct more experiments to investigate the impact of hyperparameters under different missing view ratios. This will help to more comprehensively evaluate the model's performance and stability.\nIf the authors address my concerns, I am happy to increase my score.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_SQzh",
+   "summary": "This paper does some research on incomplete multi-view clustering and proposes IMVC-NCD, a framework that combines view-specific latent learning, neighborhood-conditioned construction, and conditional diffusion-based latent completion. The core idea is to use local neighborhood structure from available views as a conditioning signal for recovering missing-view latent representations, followed by clustering on the completed multi-view embeddings. Experiments on four benchmark datasets show improved clustering performance over several prior IMVC baselines under the tested missing-view settings.",
+   "strengths_and_weaknesses": "Strengths:\nThe paper solves a relevant IMVC problem and presents a coherent pipeline. The method in this paper is easy to follow at a high level, and the use of neighborhood-conditioned signals for latent completion is a reasonable design choice. The results are generally strong on the reported benchmarks, and this work also includes ablation and hyperparameter analysis.\n\nWeaknesses:\nThe method appears to combine familiar components—autoencoders, kNN-style neighborhood aggregation, conditional diffusion, and guidance—into a new IMVC pipeline, but this manuscript does not fully establish a strong technical novelty beyond this combination. In addition, the missingness setup of the experiments seems to be based on standard random masking, which does not fully support broader claims about robustness to heterogeneous missingness. The scope of the evaluation is also limited, and the manuscript does not report runtime or memory cost despite using diffusion models.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please clarify how the claimed robustness to heterogeneous missingness is supported beyond the random masking protocol used in the experiments. \n\nPlease also clarify the exact implementation details for the baselines, especially any modified baselines, and provide a cleaner ablation that isolates the effect of neighborhood conditioning from the effect of diffusion itself. \n\nFinally, a comparison of training and inference cost against the strongest baselines would be helpful.",
+   "limitations": "The manuscript should discuss its limitations more explicitly, especially the realism of the missingness setting, the computational overhead of diffusion-based completion, and the limited benchmark diversity. The current impact statement is also very generic and does not meaningfully discuss possible limitations or broader implications.",
+   "overall_recommendation": 2,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_cBsd",
+   "summary": "This paper proposes IMVC-NCD, a diffusion-based framework for incomplete multi-view clustering. The method first learns view-specific latent representations via autoencoders, then constructs neighborhood-conditioned vectors by aggregating cross-view local structures, and finally employs conditional diffusion models to recover missing-view latent representations. The completed multi-view embeddings are fused for clustering. The main contribution is introducing an explicit neighborhood-conditioned diffusion mechanism to improve robustness under heterogeneous missing-view scenarios, supported by empirical gains across several benchmark datasets.",
+   "strengths_and_weaknesses": "## Strengths\n\n* Clear and intuitive idea: explicit neighborhood-conditioned diffusion for IMVC.\n* Strong empirical performance across multiple missing-rate settings.\n* Well-structured pipeline and clear presentation.\n* Ablations indicate each component contributes to performance.\n\n## Weaknesses\n\n* Limited methodological novelty; largely a combination of existing components.\n* Core assumption (neighborhood stability under heterogeneous missingness) lacks theoretical or empirical justification.\n* View-specific representation learning may underutilize cross-view correlations; no comparison with joint multi-view encoders (e.g., MVAE/MMVAE).\n* Missing comparisons with generic multi-view generative baselines (MVAE, MV-GPLVM), making advantages unclear.\n* Computational cost of per-view diffusion models is under-discussed (no runtime or scaling analysis).\n\nplease see details below",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "* The key premise that local neighborhoods remain stable under heterogeneous missingness lacks supporting analysis (math analysis or failure-mode comparison), making it unclear when NCC is reliable.\n\n* The method performs purely view-specific representation learning before cross-view generation, which may underutilize cross-view correlations; a comparison to joint multi-view encoders (e.g., MVAE/MMVAE) or an ablation is needed.\n\n* It is unclear what advantages IMVC-NCD has over generic multi-view generative models (MVAE/MMVAE, MV-GPLVM), which also provide representation learning and missing-view generation at potentially lower cost. Including these baselines would strengthen the empirical claims.\n\n* Computational complexity is under-discussed: training a DDPM per view with (T = 1000) steps is expensive; runtime/memory/scaling comparisons are needed.",
+   "limitations": "Yes; the authors include an impact statement and, given the primarily methodological nature of the work, it is reasonable that no significant negative societal impact is identified.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

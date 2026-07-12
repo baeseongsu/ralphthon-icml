@@ -1,0 +1,26 @@
+{
+  "forum_id": "hQWwTWGAyu",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_3ESy",
+      "weight": "high",
+      "reason": "Specific and substantiated. The central limited-novelty / JiT-overlap concern is independently corroborated by ANUc and fuH8, and the marginal loss ablation, unexplained DINOv3 layer selection, and affine-invariant alignment-fairness questions are concrete and evaluation-relevant."
+    },
+    {
+      "reviewer": "Reviewer_fuH8",
+      "weight": "high",
+      "reason": "Detailed and substantiated. The normalization/alignment critique is corroborated by 3ESy and the 'replace pipeline with DINO' limited-novelty point by ANUc and 3ESy; adds concrete, well-targeted concerns on unquantified compute/memory overhead, synthetic-only training, the time-step-zero heuristic, and fixed resolution."
+    },
+    {
+      "reviewer": "Reviewer_ANUc",
+      "weight": "high",
+      "reason": "Articulates the core consensus criticism (transferring JiT to a new task, limited novelty) clearly and echoed by 3ESy and fuH8; the missing quantitative verification of DINOv3 vs. learnable embeddings and Table 7 clarity are concrete, though the review is comparatively brief."
+    },
+    {
+      "reviewer": "Reviewer_9dSW",
+      "weight": "medium",
+      "reason": "On-target and concrete on missing SOTA baselines (UniDepthV2), limited visual comparisons, and the parameter-count/efficiency gap, which partly aligns with fuH8's compute concern; however, the originality score (4) diverges from the strong cross-reviewer consensus of limited novelty and the review is less substantiated overall."
+    }
+  ],
+  "score_rationale": "All four reviewers gave weak accept (overall 4) and the meta-review confirms acceptance with technical contributions recognized, so overall_recommendation is fixed at 4. Soundness (3) and significance (3) sit at the corroborated center of the reviewers' ranges, and presentation (3) reflects generally clear writing offset by concrete gaps (unclear Table 7, limited qualitative comparisons, an unsupported visual claim). Originality is set to 2 because the most-echoed criticism across the three high-weight reviewers is the close overlap with JiT, with those reviewers clustering at 2-3; confidence is 4 given the strong mutual corroboration of both the strengths and the central novelty/alignment concerns."
+}

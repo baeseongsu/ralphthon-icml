@@ -1,0 +1,21 @@
+{
+  "forum_id": "62GA9BSI5t",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Xqnw",
+      "weight": "high",
+      "reason": "Detailed, technically deep review that correctly identifies the Eq. (12)-(13) exposition problem, the missing 1-NFE baselines (iMF/alpha-Flow), the phase-wrapping/circular-vs-linear recovery issue, and the memorization concern. The latter two are explicitly echoed by the meta-review (\"potential data memorization and the distinction between linear and circular means\"), and its points are specific and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_mnTD",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its two headline critiques, the spectral classifier-free-guidance presentation gap and the request for training/inference algorithm boxes, are directly adopted by the meta-review (\"presentation gaps regarding spectral classifier-free guidance,\" \"adding explicit pseudocode\"). It also independently corroborates the Eq. (12) confusion and the missing iMF baseline comparison."
+    },
+    {
+      "reviewer": "Reviewer_CumU",
+      "weight": "medium",
+      "reason": "Positive and technically grounded, and its main contribution, the omitted frequency-domain GAN literature, is explicitly adopted by the meta-review (\"omitted connections to frequency-domain GANs\"). However, the review is thinner and lower-confidence (3) than the other two, with its other comments (unify assumptions) being light, so it corroborates rather than drives the assessment."
+    }
+  ],
+  "score_rationale": "All three reviews are mutually corroborating and each supplies a critique the meta-review adopts, so I treated Xqnw and mnTD as high weight (deep, specific, and echoed by the meta-review on memorization/phase mechanics and on spectral-guidance/pseudocode gaps respectively) and CumU as medium (positive and correct on the missing frequency-domain-GAN literature, but thinner and lower-confidence). Soundness (3), significance (3), and originality (3) sit in the middle of the reviewers' ranges, reflecting a genuinely novel and well-supported method tempered by Xqnw's unresolved questions about what drives the FIDs and by the frequency-domain precedent CumU raises. Presentation (3) reflects a paper that is readable overall but has corroborated exposition gaps (Eq. 12/13, spectral guidance, missing pseudocode). Overall recommendation (4, weak accept) matches the two reviewers at 4 and the positive-but-conditional meta-review, capturing the pre-rebuttal state where the efficiency and results are compelling but several presentation and comparison concerns remain open."
+}

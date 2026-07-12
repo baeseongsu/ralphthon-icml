@@ -1,0 +1,26 @@
+{
+  "forum_id": "4vztmTrGhd",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_m6Zx",
+      "weight": "high",
+      "reason": "Detailed, specific, and substantiated across both strengths and weaknesses. Its four main concerns (narrow setting, restriction to one/two steps, limited experiments, under-developed higher-level mechanism) are each echoed by the meta-review, which lists m6Zx in all four concern categories."
+    },
+    {
+      "reviewer": "Reviewer_4utP",
+      "weight": "high",
+      "reason": "Raises precise, technically grounded concerns (arbitrary h>256 condition, motivation for the eta_1+eta_2=2h^alpha budget regime, shrinking admissible learning-rate regime across depths, and the need for experiments guiding realistic networks). Corroborated by the meta-review, which cites 4utP for narrow setting, two-step horizon, and insufficient experiments."
+    },
+    {
+      "reviewer": "Reviewer_mafu",
+      "weight": "high",
+      "reason": "Highest confidence (4) and the most careful reading. Contributes a unique and sharp framing point (per-step optimality versus an asymmetric-then-symmetric recipe are distinct), a specific approximation-error question, and a caught typo. Its narrow-setting and experiment concerns align with the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_sLK6",
+      "weight": "medium",
+      "reason": "On-target and echoed by the meta-review across all concern categories, but the review is comparatively generic and templated (repeated boilerplate \"Impact on evaluation\" structure) and contains a couple of imprecise characterizations of the setting (e.g., referring to Gaussian initialization where the analysis uses orthogonal initialization). Its originality score of 4 is an outlier relative to the others."
+    }
+  ],
+  "score_rationale": "The meta-review is positive and lists m6Zx, 4utP, and mafu as raising specific, substantiated concerns (narrow setting, two-step horizon, experiments), so these three anchor the assessment; sLK6 is corroborating but more generic and templated, hence weighted medium. Soundness, significance, and originality sit at 3 (within the reviewers' [2,3], [2,3], and [2,4] ranges), reflecting the majority and the meta-review's view that the restrictive assumptions are largely necessary for an exact analysis. Overall recommendation is set at 4 (weak accept): the two most detailed high-weight reviews both landed at 4, the concerns about scope and empirical breadth are genuine, and 4 remains consistent with the accept-leaning meta-review while honestly representing the initial, pre-rebuttal state. Confidence is 4 given the strong mutual corroboration across all four reviewers on both the strengths and the weaknesses."
+}

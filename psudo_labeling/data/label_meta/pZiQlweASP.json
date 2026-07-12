@@ -1,0 +1,26 @@
+{
+  "forum_id": "pZiQlweASP",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_dALx",
+      "weight": "high",
+      "reason": "Highly specific and substantiated. Its three central concerns, algorithmic/reproducibility ambiguity (masked prototypes under a frozen teacher, under-specified Gaussian-noise anchor construction), the lack of multi-run statistics/confidence intervals, and the missing efficiency (runtime/FLOPs) analysis, are each directly echoed by the meta-review's list of rebuttal additions and remaining issues."
+    },
+    {
+      "reviewer": "Reviewer_DLBB",
+      "weight": "high",
+      "reason": "Specific and well-grounded. The calls for an efficiency analysis, for systematic reporting of the center-drift and a complementary boundary-erosion metric, and its concern about method complexity/generality beyond ResNet map onto the meta-review's efficiency, complementary-metrics, and limited-experimental-scope points."
+    },
+    {
+      "reviewer": "Reviewer_2oka",
+      "weight": "high",
+      "reason": "Concrete and substantiated. It uniquely and specifically raises the multi-confusion limitation of CACE, and its points on label-rate-dependent ablations and on directly validating the noise-suppression/confusion-isolation claims are corroborated by others and echoed by the meta-review (ablation studies, multi-confusion experiments, complementary metrics)."
+    },
+    {
+      "reviewer": "Reviewer_TMhQ",
+      "weight": "medium",
+      "reason": "Points are valid and specific (prototype-vs-sparsified-prototype ablation, quantitative B/K study, direct orthogonality analysis, Eq. 15 sensitivity, replay dependence) and align with the ablation/metric themes the meta-review adopted, but the review is shorter and its concerns are more detail-oriented and largely overlap with the higher-weight reviewers."
+    }
+  ],
+  "score_rationale": "Soundness and presentation are pinned at 3 because all four reviewers unanimously assigned 3 on both. Significance and originality are set to 3: three of the four reviewers (including two high-weight reviewers) gave 3, only dALx gave 2, and the positive meta-review direction (Accept, consistent improvements) supports the higher end of the [2,3] range. The overall recommendation of 4 reflects the unanimous weak-accept across all reviewers and is consistent with the accept decision. Confidence is set to 4 because the four reviews strongly corroborate one another on the same core themes, efficiency, ablation breadth, direct mechanism validation/metrics, statistical significance, reproducibility, and complexity/generality, giving a highly coherent evidence base."
+}

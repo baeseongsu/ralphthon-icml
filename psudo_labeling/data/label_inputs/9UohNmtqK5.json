@@ -1,0 +1,62 @@
+{
+ "forum_id": "9UohNmtqK5",
+ "title": "Beyond Single Embedding: Modeling User Preferences as Distribution in Federated Recommendation",
+ "abstract": "Most federated recommender systems represent each user with a single embedding learned from local interaction data, implicitly assuming that user preferences are fixed and precisely identifiable. In federated settings, however, each client observes only a limited and fragmentary view of user behavior, rendering such point estimates inherently brittle. To address this mismatch, we model user preferences as distributions rather than points, allowing multiple compatible preference representations to coexist. Rather than collapsing evidence into a single embedding, our approach preserves uncertainty and diversity in user representations, providing a richer basis for preference modeling. We instantiate this idea with a diffusion-based generative framework that produces diverse user embeddings and derives recommendation scores by aggregating predictions across them. This distributional formulation yields more stable ranking behavior and improved robustness under ambiguous feedback. Extensive experiments on federated recommendation benchmark datasets demonstrate consistent and significant improvements over baselines. Our code is available.",
+ "primary_area": "general_machine_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper introduces a distributional approach to personalized federated recommendation, effectively addressing the information bottleneck of single-vector representations in complex, non-IID environments. While reviewers initially raised valid questions regarding computational overhead and category sensitivity, the authors provided robust empirical evidence during the rebuttal to demonstrate that the significant performance gains justify the manageable trade-offs. Successfully adapting distributional preference modeling to the strict privacy and communication constraints of federated learning is non-trivial. The authors have delivered a technically sound framework. Overall, this is an advancement for the federated recommendation community. I recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_r8Ti",
+   "summary": "This paper proposes FedDistRec, a federated recommendation framework that represents each user as a distribution over the item-embedding space rather than a single point embedding. The core motivation is that in federated settings, each client observes only sparse, fragmentary interaction data, making single-point user embeddings unable to capture the inherent ambiguity and diversity of user preferences. Experiments on four datasets show consistent improvements over diffusion-, box-embedding-, and federated baselines.",
+   "strengths_and_weaknesses": "**Strength**\n- The paper treat federated user modeling as distributional inference via diffusion, directly addressing preference ambiguity that arises when each client observes only sparse, fragmentary interactions.\n-  Splitting the denoising function into a globally shared predictor and a locally private predictor directly mirrors the generalization/personalization trade-off inherent in federated settings. This decomposition is cleanly integrated into the diffusion framework rather than being an ad-hoc addition, and the adaptive fusion module provides a learnable mechanism for balancing the two views.\n- Broad comparison against three families of baselines (box embeddings, diffusion recommenders, classical FRS) with plug-and-play integration into several federated backbones is presented.\n\n\n**Weakness**\n- The construction of the clean user representation $x_0$ is under-specified. The paper states that $x_0$ is \"derived from the user's interacted items\" using the shared item embedding matrix $E_I$ (Section 4.1), but does not specify the aggregation mechanism.\n- The paper filters users with fewer than 10 interactions (Amazon) or 50 interactions (KuaiSAR), yet the core motivation emphasizes sparse interactions and preference ambiguity. Evaluating performance on genuinely sparse users would more directly validate the claimed benefits of distributional representations. The current filtering undermines the motivating argument.\n-  While the paper cites PFedRec and FedRAP, the design of splitting parameters into global and local components has been explored extensively in PFL (e.g., FedPer, FedRoD, and other decomposition-based methods). A more thorough discussion of how the proposed dual-view denoising relates to and differs from these approaches would better position the contribution.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See weakness.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_QU84",
+   "summary": "This paper studies user personalization modeling in federated recommender systems. Existing methods typically achieve personalization by learning user-specific parameters or leveraging information from similar users. The paper proposes to model user representations as distributions using a diffusion model based on users’ interaction histories. During recommendation, multiple user representations are sampled from the learned distribution and used jointly for prediction. Experimental results show that the proposed approach achieves competitive recommendation performance.",
+   "strengths_and_weaknesses": "**Strengths:**\n\nS1: The paper presents a novel perspective on personalized modeling in federated recommender systems by representing users as distributions. This formulation differs from existing approaches that rely on user-specific parameters or similarity-based information sharing, and provides a more flexible way to capture variations in user preferences.\n\nS2: The proposed framework adopts an intuitive modeling strategy by learning user representation distributions directly from users’ historical interactions. This design aligns with standard recommendation settings and does not require additional auxiliary information, keeping the framework relatively simple and broadly applicable.\n\nS3: The paper is clearly written and well organized, making it easy to follow.\n\n**Weaknesses:**\n\nW1: The paper lacks an in-depth discussion of certain key questions, such as how modeling user representations as distributions differs from existing federated recommendation personalization techniques and why current methods may be insufficient for capturing user-specific preferences.\n\nW2: The framework relies on a diffusion-based generative model, which could introduce non-negligible computational overhead.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. How does modeling user representations as distributions differ from existing federated recommendation personalization techniques, and why are current methods insufficient for capturing user-specific preferences?\n\n2. What is the computational overhead of the proposed method, and how does it compare to existing approaches?\n\n3. The denoising network relies on item category information as input, does the total number of categories have a significant impact on model performance?",
+   "limitations": "Please address the questions listed above.",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_aKnZ",
+   "summary": "This paper introduces FedDistRec, a novel federated recommendation framework that models user representations as distributions instead of conventional fixed user embeddings, thereby achieving a more nuanced capture of user preferences in federated settings. By leveraging the distribution modeling capabilities of diffusion models, FedDistRec demonstrates superior performance across multiple datasets.",
+   "strengths_and_weaknesses": "Strengths:\n1. The motivation of the study is clearly articulated. This paper highlights the limitations of representing users with a single embedding and introduces the idea of modeling user representations as distributions in the federated recommendation setting. This perspective is conceptually meaningful and offers a potentially valuable extension to existing approaches.\n2. The empirical validation is comprehensive. In particular, comparisons with single embedding-based baselines and the analysis of distribution-induced ranking behavior jointly support the central claim of modeling user representations as distributions in the federated recommendation setting, offering a solid empirical foundation for the proposed approach.\n3. The proposed mechanism exhibits practical applicability. It can be readily integrated into existing federated recommendation frameworks with minimal modification.\n\nWeaknesses\n1. The paper references several non-single-user-embedding methods but lacks an in-depth comparative discussion with these approaches, which provides limited insight into the relative advantages and contributions of the proposed method.\n2. Some key aspects require clarification. Specifically, a clear definition of \"interaction diversity\" should be provided in Section 5.5.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 4,
+   "originality": 3,
+   "key_questions_for_authors": "Please address the concerns in the Weaknesses.",
+   "limitations": "N/A",
+   "overall_recommendation": 5,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_PQPw",
+   "summary": "The authors frame user embedding learning as a diffusion-based generative task using a progressive denoising process, preserving uncertainty and diversity in user representations. Experimental results demonstrate the framework’s effectiveness, and analyses of prediction score distributions and user-level ranking violation rates provide insight into its improved discrimination between positive and negative samples.",
+   "strengths_and_weaknesses": "S1: The model incorporates category-level semantics of interacted items into the diffusion process and employs a dual-branch denoising network, combining a shared global predictor with a client-side predictor to balance personalization and generalization efficiently.\nS2: The authors evaluate their method against baselines spanning three categories (box-embedding, diffusion-based, and federated methods) on four datasets of different scales and sparsity levels. The results consistently show the superiority of the proposed approach.\nS3: The paper is well-structured, with a clear presentation that systematically introduces the methodology, making the proposed approach easy to follow and understand. The availability of open-sourced code supports reproducibility.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 4,
+   "key_questions_for_authors": "W1: While papers [1] and [2] also introduce diffusion models into federated recommender systems, they are not included among the diffusion-based baselines for comparison. The omission of these relevant works raises concerns about the comprehensiveness of the experimental evaluation.\nW2: Clarification is needed on whether the prediction head $g_\\omega$ is shared or kept private during federated aggregation.\n\n[1] Federated Recommender System Based on Diffusion Augmentation and Guided Denoising\n[2] FedDiffRec: A Module-wise Training Approach for Diffusion-Based Recommendation in Federated Learning",
+   "limitations": "N.A.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

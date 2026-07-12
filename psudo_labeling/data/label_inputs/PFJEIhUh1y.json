@@ -1,0 +1,52 @@
+{
+ "forum_id": "PFJEIhUh1y",
+ "title": "Efficient Diffusion Models via Time Step Optimization with Consistent Training and Inference Constraints",
+ "abstract": "Diffusion probabilistic models (DPMs)’ sampling process is often inefficient, requiring hundreds to thousands of iterative steps to accurately approximate the diffusion trajectory. This inefficiency limits their practical applicability. Although recent advances in sampling efficiency—such as numerical solvers for diffusion ordinary differential equations (ODEs)—have made progress, significant challenges remain: training-free numerical solvers suffer from the suboptimality of manually designed timestep selection rules and the inherent inconsistency between the forward diffusion process (typically involving thousands of steps) and the reverse denoising process (usually limited to tens of steps).\nSince timestep selection is inherently a discrete problem and cannot be optimized via gradients, we propose an innovative approach—reparameterizing the timestep scheduling through probabilistic masking, thereby enabling gradient-based optimization of sampling timesteps. To circumvent backpropagation, we employ policy gradient methods. Furthermore, to address the inconsistency between forward diffusion (training) and reverse denoising (inference), we extend this framework into a bilevel optimization paradigm: the inner loop performs additional lightweight training on the model at specific timesteps determined by the outer mask to align forward and reverse processes, while the outer loop optimizes the timestep distribution via probabilistic masking and policy gradient based on generation quality.\nUnder mild assumptions, we theoretically analyze the convergence of the proposed algorithm. Extensive experiments across diverse datasets and samplers demonstrate that this framework effectively enhances sampling efficiency and generation quality while maintaining compatibility with various DPM architectures and advanced ODE solvers.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes an optimization scheme for the timestep selection during diffusion inference. While the problem is motivated by few step and low NFE approaches, there is currently no discussion of consistency maps or self-distillation, which strikes me as an oversight. Nevertheless, the theoretical foundations of the approach are clear and well motivated and the empirical results are strong. The reviews all emphasize the results and the approach are sound and well explained.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_Zeod",
+   "summary": "Summary\n\nThis paper studies timestep selection for diffusion model sampling. The authors argue that there is a mismatch between training (which uses thousands of timesteps) and inference (which typically uses far fewer). To address this, they formulate timestep selection as a bilevel optimization problem. The inner loop fine-tunes the model on a subset of timesteps, while the outer loop learns which timesteps to use. To make the discrete selection problem differentiable, they use probabilistic masking and optimize it with policy gradients. Experiments on CIFAR-10, ImageNet, FFHQ, and AFHQv2 with DDIM and iPNDM show consistent improvements over handcrafted schedules and several recent optimization-based methods.",
+   "strengths_and_weaknesses": "Strengths\n\n- The motivation is reasonable. The training–inference mismatch is a real issue, and Table 1 gives good evidence that retraining on selected timesteps can help.\n- The probabilistic masking + policy gradient formulation is a clever way to avoid differentiating through the entire sampling process.\n- Experiments are fairly thorough across multiple datasets and samplers, and improvements over baselines seem consistent, especially at low NFEs.\n- Theoretical convergence results are included, which at least give some intuition about the optimization procedure.\n\nWeaknesses\n\n- The bilevel optimization seems expensive. The paper mentions running many inner-loop updates and evaluating large batches during the outer loop, but it’s hard to tell what the actual computational cost is compared to simply using a handcrafted schedule.\n- The method appears somewhat sensitive to initialization. EDM initialization performs much better than uniform in Table 6, which suggests the approach still relies on a reasonably good starting schedule.\n- The candidate set size has a large effect on performance, but there is no clear guidance on how to choose it.\n- The convergence theory relies on assumptions (e.g., strong convexity) that are unlikely to hold for neural network training, so the theoretical guarantees feel somewhat disconnected from practice.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- How to select the time steps may correspond to the piecewise linear structure of the ODE. It would be helpful to include a toy visualization showing that regions with higher curvature require more evaluation points, while straighter regions require fewer. If the masking mechanism can learn this behavior, it would greatly strengthen the motivation of the paper.\n- Can you report the actual computational cost of the bilevel optimization (e.g., GPU hours)?\n- How robust is the method to initialization? If you start from a uniform grid, does it still converge to a good schedule?\n- Does the learned schedule generalize across different solvers, or do you need to rerun the optimization for each solver?\n- Did you observe any instability or variance issue from the policy gradient estimator during training?",
+   "limitations": "The main limitation seems to be the computational overhead of the bilevel optimization. The method also assumes access to the original training data and a pretrained model for fine-tuning, which may not always be available. It is also unclear how well the learned schedules transfer across different inference setups (e.g., different solvers or guidance scales).",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_5nWL",
+   "summary": "The paper improves the sampling efficiency of diffusion models by learning optimal diffusion time steps. The authors propose probabilistic timestep masking. The time steps are selected through a Bernoulli mask whose parameters are optimized using policy gradient methods. The method introduces a two-step optimization to address the mismatch between training and inference: outer loop for timestep selection, inner loop to fine-tune the diffusion model. Experiments show improvement with extremely small sampling budgets.",
+   "strengths_and_weaknesses": "Strengths\n+ Addresses an important problem: diffusion sampling inefficiency\n+ Extensive empirical evaluation across several datasets and samplers\n+ Introduces learned timestep selection framework\n\nWeaknesses\n- Rather incremental improvements\n- Rather limited evaluation",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "What is the computational cost of bilevel optimization compared to standard timestep tuning?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "My final score remains unchanged as the concerns have been resolved, and I feel assured to keep my positive score."
+  },
+  {
+   "reviewer": "Reviewer_Efj3",
+   "summary": "This paper proposes a novel method for time step selection in diffusion models. The discrete optimization problem over time steps is first reformulated as a continuous optimization problem, enabling gradient-based optimization via policy gradient. A bilevel optimization framework is then introduced to align time step choices between the training and inference stages. Under mild assumptions, theoretical convergence guarantees are established. Numerical experiments demonstrate the effectiveness of the proposed approach.",
+   "strengths_and_weaknesses": "Strengths:\n- A novel method for optimizing the choice of time steps in training and inference stage. \n- Numerical experiments verify the declared contributions. \n- The problem addressed——optimizing time step choices to reduce the number of function evaluations (NFE)——is of significant interest to the diffusion modeling community.\n- The paper is clearly written and easy to follow.\n\nWeaknesses:\n- Numerical experiments:\n  - The additional computational overhead introduced by the time step optimization process is not reported, making it difficult to assess the practical trade-offs of the method.\n- Presentation:\n  - The caption and the content of Table 2 seem to be inconsistent. \n  - The naming of the time scheduler differs between Table 2 and Table 4, which may confuse readers.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please find the questions in ***Strengths and Weakness***.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "This paper proposes a novel method for time step selection in diffusion models. The authors have fully addressed my main concerns in the rebuttal. Therefore, I keep my score of 4."
+  }
+ ]
+}

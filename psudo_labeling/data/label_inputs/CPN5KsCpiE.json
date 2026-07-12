@@ -1,0 +1,62 @@
+{
+ "forum_id": "CPN5KsCpiE",
+ "title": "Experience is the Best Teacher: Motivating Effective Exploration in Reinforcement Learning for LLMs",
+ "abstract": "Reinforcement Learning (RL) with rubric-based rewards has recently shown remarkable progress in enhancing general reasoning capabilities of Large Language Models (LLMs), yet still suffers from ineffective exploration confined to current policy distribution. In fact, RL optimization can be viewed as steering the policy toward an ideal distribution that maximizes the rewards, while effective exploration should align efforts with desired target. Leveraging this insight, we propose HeRL, a ****H***indsight ***e***xperience guided ***R***einforcement ***L***earning*  framework to bootstrap effective exploration by explicitly *telling LLMs the desired behaviors* specified in rewards. Concretely, HeRL treats failed attempts along with their unmet rubrics as hindsight experience, which serves as in-context guidance for the policy to explore desired responses beyond its current distribution. Additionally, we introduce a bonus reward to incentivize responses with greater potential for improvement under such guidance. HeRL facilitates effective learning from desired high-quality samples without repeated trial-and-error from scratch, yielding a more accurate estimation of the expected gradient theoretically. Extensive experiments across various benchmarks demonstrate that HeRL achieves superior performance gains over baselines, and can further benefit from experience guided self-improvement at test time.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper presents HeRL (Hindsight experience guided Reinforcement Learning), a framework that improves reinforcement learning exploration for large language models with rubric rewards. HeRL treats failed attempts with unmet rubrics as in-context guidance to explore desired responses beyond initial context while incorporating an additional reward to incentivize responses that lead to improvement.  Experiments across instruction-following, writing, and medical reasoning tasks show HeRL consistently outperforms baselines like SFT, DPO, and standard RLVR.\n\nThe reviewers all appreciated the problem being important and the algorithm being simple and intuitive. The reviewers believe using rubrics plus textual feedback is a good technique to improve the performance of GRPO.  The concerns were mostly regarding lack of experiments and the rebuttal provided results on new baselines, new jduge models, ablation on different hyperparameters, etc. One reviewer increased the score after rebuttal, hence all reviewers are positive. I agree with the reviewers' consensus and recommend acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_3LSZ",
+   "summary": "This paper presents an in context learning approach towards exploration leveraging rubrics and textual feedback. The paper also uses a bonus rewards incentivizing responses with the greatest chance of improvements. The paper uses three classes of benchmarks to evaluate the efficacy of their proposed framework.",
+   "strengths_and_weaknesses": "Presentation: Generally, I found the experimental section to be harder to follow given the switches between different setups etc, but the rest of the paper felt more easier to understand.\n\nSignificance: This paper considers an important problem but in terms of techniques etc, the significance is mixed. Furthermore, as the authors themselves acknowledge, the applicability of these techniques are conditioned on having rubrics and ways to evaluate generations against these rubrics, both of which limit the scope.\n\nOriginality: The paper's use of rubrics plus textual feedback to guide exploration bears relationship to several works that utilize textual feedback for guiding LLM generations, perhaps not exactly for the purposes of exploration. \n\nSoundness: Relatively sound in terms of experimental results (questions below).",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Can the authors clarify how the quality of a generation satisfying a rubric is verified? How robust is the algorithm to mis-specification of these scores (which in turn influences the rewards)? Are there any ablations that specifically attempt to tease apart the robustness of reward estimation?\n2. Can the authors provide some quantitative treatment as to whether their proposed strategy allows the LLMs to get more diverse generations that help cover the set of rubrics (this is somewhat like pass@k for reasoning, but measured wrt the rubrics in question)?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_WkCD",
+   "summary": "The authors use rubric-based rewarding and find near-success rollouts (ones with the maximum reward) and rewrite the answer for them while conditioning on the rubric to get better answers. They take the final best answer, include that in the GRPO group, and also assign a bonus to the reward of the original answer it came from. The results show that this significantly improves pass@k.",
+   "strengths_and_weaknesses": "Strengths:\n- Insightful ablations that show assigning credit to the original answer is impactful.\n- Improving pass@k is significant for real-world applications.\n- Simple explanations. The trivial proposition 3.1 was unnecessary, though.\n\nWeaknesses:\n- Not providing code. This raises concerns about the reproducibility, especially since the table of results doesn't include std values.\n- The cascade results lack reward-based in-context learning baselines such as [1] or [2].\n\n---\n\n[1] Song et al. Reward Is Enough: LLMs Are In-Context Reinforcement Learners. 2025\n\n[2] Yao et al. Tree of Thoughts: Deliberate Problem Solving with Large Language Models. 2023",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- You fix hindsight_experience=1. Does increasing to 2-3 rewrites per group (with corresponding bonus rewards) improve results, or do diminishing returns kick in quickly?\n- All rubric evaluations use GPT-4o mini. Have you tried weaker judges (e.g., an 8B model)? If the gains disappear with a weaker judge, it suggests the method is benefiting from distillation rather than the rubric structure itself.\n- You show cascaded rewriting helps at test time (Figure 4 right). Did you try iteratively rewriting trajectories during training (rewrite -> re-score -> rewrite again)? If so, what went wrong?\n- You mask the entire prefix H. Did you try computing loss on the source trajectory tokens as well (while still masking the rubric diagnosis)? Curious whether there's useful signal in also training on the original attempt within the hindsight context, or if it just introduces noise.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_tvKt",
+   "summary": "This paper focuses on Reinforcement learning with Rubric rewards, where they propose HeRL (Hindsight experience guided Reinforcement Learning), by treating failed attempts with unmet rubrics as in-context guidance to explore desired responses beyond initial context while incorporating an additional reward to incentivize responses that lead to improvement. Experimental results demonstrate that HeRL outperforms standard baselines.",
+   "strengths_and_weaknesses": "## Strength\n- The methods seem novel, inspired by traditional RL\n- Strong empirical results demonstrate the effectiveness of HeRL across a diverse range of tasks.\n\n## Weaknesses\n- Lack of baseline: While the work mentions other exploration approaches, such as structured exploration and intrinsic rewards, these methods are not included in the experimental comparisons.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "## Questions\n- It seems only one hindsight experience is being used during RLVR training. What is the effect of increasing hindsight experience while decreasing the number of rollouts?\n- What is the computational cost of Hindsight Experience compared to GRPO?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_EY2q",
+   "summary": "This paper presents HeRL, a framework that improves reinforcement learning exploration for large language models by using rubric-based feedback. HeRL identifies near-success trajectories, diagnoses their unmet criteria, and prompts the model to generate a rewritten response. This revision, paired with its rubric feedback, forms a \"hindsight experience\" to train the policy, avoiding inefficient blind trial-and-error. A bonus reward further incentivizes responses demonstrating high improvement potential. Experiments across instruction-following, writing, and medical reasoning tasks show HeRL consistently outperforms baselines like SFT, DPO, and standard RLVR.",
+   "strengths_and_weaknesses": "* **Soundness:** I feel that the paper is generally sound. The method is simple and intuitive, and the experiments show it works well across different domains.\n  * The experiments look solid. The authors tested three different models on several benchmarks, including in-domain and out-of-distribution tasks. So I think the experiments meet the basic bar for being sufficient.\n  * However, I actually think a few more baselines would make the paper much stronger:\n    * First, what if we just collect the revisions and do SFT on those trajectories?\n    * Second, in Table 2, it would be great to see the RLVR baseline evaluated for OOD performance as well.\n    * Third, the result on the right side of Figure 4 is not very informative. Comparing cascade sampling to simple Pass@k does not seem completely fair since Cascade gets more info about the final rubrics. A fairer test may be to give the base model the rubrics too, so both have the same information.\n    * Fourth, in Table 3, it would help to ablate just the BR alone. This means training the model without its revisions, using the revisions only to give a more fine-grained reward than just correctness.\n\n* **Presentation:** The presentation is generally good, but some parts are a bit confusing.\n  * Section 2.2 is described pretty vaguely. I actually don't know exactly how \"guided sampling by hindsight experience\" functions when reading from the beginning to that point. The authors should either explain this setting right there, or maybe move it to the beginning of the experimental section if it takes too many words to explain early on.\n\n\n* **Significance:** I think this paper tackles an important topic. It connects well to the broad community working on RL with rubrics. It offers a nice, additional way to actually utilize rubrics in training.\n\n**Originality:** The work brings a fresh perspective to using rubrics. Instead of just using rubrics to give an outcome reward, this paper shows how they can be used to design an auxiliary task. This is a neat idea.\n\n---\n\nOverall, I tend to give it a weak reject right now because of the experimental concerns I raised above. But I am willing to raise my score if the authors can add (some of) these experiments.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "See above",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

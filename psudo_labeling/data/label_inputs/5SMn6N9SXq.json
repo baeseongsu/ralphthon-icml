@@ -1,0 +1,62 @@
+{
+ "forum_id": "5SMn6N9SXq",
+ "title": "Adaptively Robust Resettable Streaming",
+ "abstract": "We study algorithms in the resettable streaming model, where the value of each key can either be increased or reset to zero. This model is suitable for applications such as active resource monitoring with support for deletions and machine unlearning. We show that all existing sketches for this model are vulnerable to adaptive adversarial attacks that apply even when the sketch size is polynomial in the length of the stream. To overcome these vulnerabilities, we present the first adaptively robust sketches for resettable streams that require only polylogarithmic space complexity in the stream length. Our framework supports (sub) linear statistics including $L_p$ moments for $p\\in[0,1]$ (in particular, Cardinality and Sum) and  Bernstein statistics. We bypass strong impossibility results known for linear and composable sketches by designing dedicated single-stream sketches robustified via Differential Privacy. Unlike standard robustification techniques, which provide limited benefits in this setting and still require polynomial space in the stream length, we leverage the Binary Tree Mechanism for continual observation to protect the sketch's internal randomness. This enables accurate prefix-max error guarantees with polylogarithmic space.",
+ "primary_area": "social_aspects->robustness",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper introduces a technically strong and timely framework for adaptively robust resettable streaming. Reviewers were generally positive after the rebuttal. The main contribution is the first polylog-space sketches for resettable streams that remain robust to adaptive adversaries, achieved via a non-black-box differential-privacy-based design and the binary tree mechanism. Reviewers found this approach elegant. The initial concerns were mainly on novelty relative to prior DP-based robustification work, the motivation for Bernstein statistics, and the strength of the prefix-max error guarantee, but the authors' rebuttal clarified why the new approach is genuinely different, why the broader statistic class is useful, and why stronger guarantees are not feasible in this setting.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_XP1N",
+   "summary": "This paper considers the resettable streaming and shows that existing non-adaptive algorithms are vulnerable to adaptive adversarial attacks, such as the *sample-and-delete* attack. To overcome these vulnerabilities, the authors propose the first adaptively robust sketches for resettable streams. By leveraging the Binary Tree Mechanism from differential privacy, the proposed framework protects the internal randomness of the sketches. This approach successfully circumvents the space complexity limitations of previous defense methods and maintains polylogarithmic space complexity while supporting (sub)linear statistics including $L_0$, $L_1$ (sum), and Bernstein statistics",
+   "strengths_and_weaknesses": "**Soundness**: This paper shows that authors are very familiar with existing literature in streaming algorithms. The theoretical results are presented with rigor and the use of DP look reasonable.\n\n**Presentation**: This paper is clearly written and well-structured with a logical narrative flow that is easy to follow \n\n**Significance**: This paper address a significant problem in the resettable streaming model where existing algorithms fails.  This theoretical framework is applicable to other domains. The scope of impact is well-justified.\n\n**Originality**: The paper considers a very original problem in the resettable streaming problem. The use of Binary Tree Mechanism is very interesting.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "No",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_JdM6",
+   "summary": "The paper explores the setting of  designing space-efficient streaming sketches in the resettable streaming setting -- i.e. the stream is chosen adaptively and supports reset operations. Prior work with polylog space don't consider adaptive inputs. The paper shows that existing sampling-based sketches are vulnerable to adaptive attacks. The paper tackles this challenge and propose an adaptively robust sketch for resettable streams that require polylog space. The solution supports sublinear statistics like cardinality, sum and Bernstein statistics and is measured via prefix-max error.",
+   "strengths_and_weaknesses": "The paper's core technical contribution are sketches for the resettable streaming model that are robust to adaptive inputs. In particular, the solution proposed requires polylog space. I found he central idea of the paper -- using differential privacy to hide the internal randomness of the sketch to be quite elegant. The application of the binary tree mechanism to streaming sketches is also quite novel. \n\nOne note about the presentation of the paper - the text is quite dense and a bit hard to read, the presentation can be improved upon.\n\nA few things that the paper can do some clarification on:\nIs the restriction to sub-linear statistics somehow inherent here? What would need to be done to extend and generalize the techniques to superlinear statistics such as \\ell_2?\n\nAlso, I think adding a discussion on the limitations of prefix-max error would be helpful since it is weaker than the notion of relative error. In particular, some practical use cases where prefix-max works fine and a discussion where we should perhaps desire relative error.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The presented prefix-max error is weaker than relative error. Could the authors provide a discussion on this - in which practical scenarios is this guarantee is sufficient and what are the limitations of this error guarantee? \n\nThe proposed solution currently works for sublinear statistics like  cardinality, sum, and Bernstein functions. Is there a way to extend them to super linear statistics such as \\ell_2?",
+   "limitations": "no the paper does not include a discussion on the limitations",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_rTyh",
+   "summary": "This paper studies the adaptive/robust version of the \"resettable streaming model\" in sketching and streaming algorithms:\n\nAssume there exists a set of keys and values $(x, v_x)$, and at each step one of the two following actions are possible to adjust the value for a given key: either $v_x \\gets v_x + \\Delta$ for some nonnegative $\\Delta$ or $v_x \\gets 0$ and it gets reset.\nThe goal is to maintain some estimate of the aggregated value $F:= \\sum_x f(v_x)$ for some $f$ of interest. In particular in this paper they consider three cases for $f$: 1. $f(v) = 1[v > 0]$, which corresponds to cardinality or $\\ell_0$ norm, 2. $f(v) = v$, which corresponds to the sum or $\\ell_1$ norm, 3. and in general Bernstein functions (which includes the first two cases). For these cases they give algorithms that are able to maintain good approximations of $F$ throughout updates. Specifically, they show that using sketches of size $\\text{poly}(1/\\epsilon, \\log(T_{inc}/\\delta))$ where $T_{inc}$ is the number of increments one can maintain approximates $\\hat{F}$ such that with probability $1-\\delta$ we have for all $t$, $$ |\\hat{F}_t - F_t | \\le \\epsilon \\max_{t'\\le t} F_{t'}$$  when the queries are allowed to be adaptive to the outputted estimates $F_{t'}$. They also give justification as why this is necessary and as opposed to the resettable setting you need to compare against $ \\max_{t'\\le t} F_{t'}$ as opposed to just $F_t$. \n\nTechnically, they use differential privacy together with the binary tree mechanism from continual observation literature to robustify the sketch against adaptive queries.",
+   "strengths_and_weaknesses": "The proofs and techniques all make sense and seem sound and reasonable at a high level. I don't see any immediate issues.\n\nThe presentation is also clear, they have also covered the literature well in the related work discussion. That being said, I would have liked to see some discussion of the techniques to show accuracy for the algorithms in the main body.\n\nThe setting seems natural, simple and theoretically interesting. They have given the first algorithm for it with a sublinear sketch size. They have also motivated some potential applications of this such as active entities or resource usage and removing people's data upon request (and updating aggregated statistics based on their data).\n\nIn terms of originality and novelty of the techniques, my understanding is that robustifying sketches have been previously used in streaming algorithms. It seems to me the main novelty of this work lies in using the binary tree mechanism. See questions below for more details.\n\nOverall I think this is a good paper and I lean towards accepting the paper.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The two first cases $\\ell_0$ and $\\ell_1$ both seem well motivated, however the Bernstein statistic setting seems a bit niche to me. What is the motivation to consider this setting?\n\nIt's currently unclear to me how standard / novel the techniques are. I know differential privacy has been used to help robustify sketches in sketching / streaming settings in the past. Is the main technical novelty of this work in using the binary tree mechanism? Has btm been used in the context of streaming before?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_SW79",
+   "summary": "This paper studies the problem in data streaming about handling with \"resettable\" data, where data entries can be updated or suddenly wiped back to zero. The problem is that current algorithms are sitting ducks for \"adaptive attackers\" who watch the algorithm’s outputs to figure out its internal randomness and then manipulate the stream to cause huge errors.\n\nTechnically, the authors solve this by borrowing concepts from differential privacy, especially some ideas from privacy under continous observation. From a technical perspective, the core strategy involves treating the sequence of updates to the sample size as a private stream and releasing noisy prefix sums through the tree structure. This DP layer effectively masks the specific membership of keys in the sample, ensuring that an attacker cannot learn enough about the internal state to launch targeted reset attacks. The proof leverages the generalization properties of DP to show that the internal randomness remains \"protected\" over the entire stream, allowing the algorithm to provide accurate \"prefix-max\" error guarantees for a variety of sublinear statistics, including cardinality and Bernstein functions",
+   "strengths_and_weaknesses": "This paper presents the first set of streaming algorithms that are adaptively robust in the \"resettable\" model, where data can be cleared or reset. Further, the design is not limited to simple counting; it supports a wide range of statistics including cardinality, sums, and complex Bernstein functions like frequency capping and entropy.\n\nThis paper is another evidence of the generalization/rubostness of differential privacy algorithms, where DP mechanisms are used to \"hide\" the algorithm's internal state from attackers without significantly sacrificing accuracy or performance. I really enjoy seeing papers that use tools from differential privacy or cryptography to solve algorithmic problems, though the results in this paper are not \"super\" surprising given existing papers like [HKM+20] or [BKM+22].\n\n[HKM+20] Adversarially robust streaming algorithms via differential privacy. NeurIPS 2020\n\n[NKM+22] Dynamic algorithms against an adaptive adversary: generic constructions and lower bounds. STOC 2022",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "I have no questions, congrats on the results.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 3
+  }
+ ]
+}

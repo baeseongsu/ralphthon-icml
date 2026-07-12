@@ -1,0 +1,21 @@
+{
+  "forum_id": "uvSU4dNYv3",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_S7Fs",
+      "weight": "high",
+      "reason": "Its two central weaknesses—the mechanistic/causal overclaiming and the absence of a limitations/failure-mode discussion—are exactly the concerns the meta-review foregrounds as the main issues. The review is specific and substantiated, and the observation that probing labels come from the final image while representations come from intermediate timesteps is a concrete, on-target technical point."
+    },
+    {
+      "reviewer": "Reviewer_oX3U",
+      "weight": "high",
+      "reason": "Detailed, technically specific concerns (distribution mismatch over the [t_stop, 1] steering interval and the time-insensitive averaged direction) that are well-argued and grounded in the paper's own diagnostic figure and in related work. High confidence and a thorough strengths assessment that independently corroborates the value of the probing analysis and the experiments/ablations echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_TiFk",
+      "weight": "medium",
+      "reason": "Corroborates the strengths (original idea, convincing analysis, solid experiments) and independently flags the missing limitations discussion, which the meta-review adopts. The data-efficiency question is concrete and useful, but the generalization-to-attributes concern is partly addressed by the paper itself, and the review is briefer and less substantiated than the other two."
+    }
+  ],
+  "score_rationale": "Soundness, significance, and originality are unanimous at 3 across all reviewers and match the meta-review's picture of a technically solid, effective, and fresh method whose mechanism is somewhat overclaimed, so all three are set to 3. Presentation is set to 3 rather than 2: although the high-weight S7Fs rated it 2 over the overclaiming that the meta-review echoes, the other high-weight reviewer (oX3U) and TiFk both rated it 3 and praised the writing, so I reflect the overclaiming as a prominent weakness while keeping the score at the majority value. Overall is set to 5 (accept): among the high-weight reviewers oX3U is at 5 and S7Fs at 4, the medium-weight TiFk is at 5, and the meta-review clearly directs toward acceptance with the main concerns judged addressable. Confidence is 4 given strong mutual corroboration on the strengths and the limitations gap, with only minor divergence on presentation and on attribute generalization."
+}

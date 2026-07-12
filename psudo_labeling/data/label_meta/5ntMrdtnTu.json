@@ -1,0 +1,26 @@
+{
+  "forum_id": "5ntMrdtnTu",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Zbv5",
+      "weight": "high",
+      "reason": "Specific and substantiated. The strengths it identifies (analysis of prediction-dependent losses with data reuse; removal of oracle and sample-splitting assumptions) directly track the paper's core contributions, and its weaknesses (strong assumptions, two-stage restriction, limited practical guidance) are concrete and corroborated by other reviewers. Its significance=2 is a low outlier, but its overall assessment is well aligned."
+    },
+    {
+      "reviewer": "Reviewer_Xo3d",
+      "weight": "high",
+      "reason": "Detailed and technically engaged. Raises concrete soundness/notation questions (n-dependence in the limiting expressions, class-index conditioning) and a well-argued framing critique (misleading 'classical optimization'/AdaBoost motivation). Its readability concerns are corroborated by the meta-review's call for presentation improvements."
+    },
+    {
+      "reviewer": "Reviewer_aDpw",
+      "weight": "high",
+      "reason": "Most confident reviewer with the most specific presentation critique (dense Section 1, inconsistent notation, unexplained proximal operator, undiscussed assumptions), which the meta-review explicitly endorses. Substantive and on-target on all four dimensions."
+    },
+    {
+      "reviewer": "Reviewer_Wi8h",
+      "weight": "medium",
+      "reason": "Brief and somewhat generic, with under-argued skepticism about general-ML significance, but on-target in confirming solid theory and clear presentation and contributing useful questions (non-asymptotic bounds, choice of selection policy, latent-variable clarification)."
+    }
+  ],
+  "score_rationale": "The meta-review anchors an accept decision while singling out presentation as the main item to improve, which elevated the two reviewers giving the most concrete presentation and notation critiques (aDpw, Xo3d) and kept presentation at 3 with those caveats carried heavily in the prose. Soundness (all 3) and originality (all 3) were unanimous. Significance was set to 3, following the three reviewers who valued the active-learning payoff over the single low outlier at 2, consistent with the meta-review's positive framing of that application. Overall was placed at 4 within the [4,5] range: while two high-weight reviewers recommended 5, the aggregate — the most confident high-weight reviewer at 4, real presentation issues validated by the meta-review, and significance/narrowness reservations — supports a considered weak accept."
+}

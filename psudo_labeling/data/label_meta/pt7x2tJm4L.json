@@ -1,0 +1,26 @@
+{
+  "forum_id": "pt7x2tJm4L",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_QLh3",
+      "weight": "high",
+      "reason": "The most thorough and substantiated review. Its four main weaknesses map almost one-to-one onto the meta-review's anchor concerns: heuristic/manual layer selection for SAP (SAP generalizability), post-hoc inference-time focus versus training-time guidance (training-time design), the undiscussed cost/scalability of SVD- and entropy-based metrics (scalability of the proposed metrics), and the missing causal account of the decoupling. Strengths it cites (principled RID/MixIG framework, stochastic-baseline validation, 15 LVLM families) are echoed by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_qfjM",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its central weakness, the ambiguity between analyzing all tokens versus only vision tokens and the resulting mismatch with the SAP intervention, is explicitly named in the meta-review as 'token-scope alignment,' and its cross-modal analysis point is corroborated by QLh3. Its praise for the SAP replacement experiments (with the apt MetaFormer comparison) aligns with the meta-review's assessment of the intervention as compelling."
+    },
+    {
+      "reviewer": "Reviewer_7pD3",
+      "weight": "high",
+      "reason": "Concise but on-target. Both weaknesses, the need for a causal account of why noise substitution sustains/improves performance and the concern that per-model variation in intervened layers/heads may reflect post-hoc selection rather than a universal phenomenon, are directly reflected in the meta-review (deeper causal account, SAP generalizability) and corroborate QLh3. Low self-reported confidence (2), but the points are precise and substantiated."
+    },
+    {
+      "reviewer": "Reviewer_oL2V",
+      "weight": "low",
+      "reason": "Detailed but largely off-base relative to the meta-review and the other three reviewers. Its presentation score of 1 is an outlier contradicted by three reviewers who found the paper clearly written and well organized, and its core thesis, that the manifold/information-theoretic framing is unnecessary decoration and the contribution is not differentiated from prior work, is contradicted by the meta-review's crediting of the framework as a principled basis beyond attribution-based methods. Its one non-contradicted useful theme (positioning versus prior interpretability work) is independently and more cleanly raised by qfjM."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on concerns raised by the three high-weight reviewers (QLh3, qfjM, 7pD3): SAP generalizability, token-scope alignment, metric scalability, and a missing causal account; I therefore held soundness at 3 (good but with real open issues) rather than the top of the [2,4] range, and kept originality at 3, reflecting the framework's genuine step beyond attribution methods as credited by the meta-review. Presentation is 3, following the three reviewers who found the paper clearly written and discounting oL2V's outlier 1, which the meta-review does not echo. Significance is set at 2, the position of the two high-weight reviewers (QLh3, qfjM) who noted the redundancy finding is not fully novel and its generalization is unproven, over 7pD3's 3. Overall recommendation is 4 (weak accept), matching the modal high-weight position (QLh3=4, qfjM=4) and the accept direction of the meta-review, with 7pD3's 5 as the upper anchor; confidence is 4 given the strong mutual corroboration among the high-weight reviewers and their tight alignment with the meta-review."
+}

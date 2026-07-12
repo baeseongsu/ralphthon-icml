@@ -1,0 +1,66 @@
+{
+ "forum_id": "jTtfB7ur5m",
+ "title": "Rethinking Calibration for Early-Exit Neural Networks",
+ "abstract": "Early-exit neural networks (EENNs) accelerate inference by allowing intermediate classifiers to stop computation once predictions are confident enough. \nMost methods rely on confidence thresholds for exiting, and consequently, improving classifier calibration is widely assumed to improve performance. \nIn this work, we challenge this assumption and show that calibration alone is not sufficient for EENNs to exploit adaptive computation. To address this insufficiency, we introduce Early-Exit Failure Prediction (EEFP), which accounts for both prediction correctness and the cost of further computation. We also propose a lightweight, EEFP-motivated procedure to improve the intermediate classifiers, which can directly replace calibration in EENNs.\nExtensive experiments demonstrate that our approach achieves superior cost-accuracy trade-offs compared to calibration, and EEFP more reliably reflects overall EENN performance.\nOur code is available at [https://github.com/gmum/rethinking-calibration-for-eenns](https://github.com/gmum/rethinking-calibration-for-eenns).",
+ "primary_area": "deep_learning->everything_else",
+ "decision": "Accept (regular)",
+ "decision_comment": "This work gives an insightful theoretical argument showing that early exit based on calibration is not ideal and proposes a new method to address this limitation. Reviewers appreciate the novelty and significance of the submission. Additional results included in the rebuttal have led to more positive assessment by the reviewers. I recommend acceptance and trust the authors to include the results from the rebuttal in the camera-ready version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_qAdB",
+   "summary": "This paper proposes Early Exit Failure Prediction (however EEFP), a confidence correction technique meant to replace confidence calibration as the main performance proxy for early-exit networks. The idea is well-motivated and mathematically justified for the early exit scenario, shifting the problem from calibration toward prediction of correctness for classifiers further down the line. The empirical evidence convincingly supports the claims that confidence calibration does not always correlate with early-exit accuracy.",
+   "strengths_and_weaknesses": "Soundness\n\n- Strengths:\n  - The claims are well supported by experimental analysis\n  - Good set of experiments\n  - Well designed analysis of results (appropriate statistical methodology)\n  - The proofs are correct\n- Weaknesses:\n  - The differences in performance are often quite small. It would be helpful if there was an analysis of statistical significance tied to the bold highlighting of best results in Tables\n\nPresentation\n\n- Strengths:\n  - The paper is very well written, clear and easy to follow\n  - There is enough information to reproduce results\n  - Prior literature is well covered and it's clear where this work differs from it\n\nSignificance\n\n- Strengths:\n  - The addressed problem is significant. As models increase in numbers of parameters, early exit has implications on inference time, costs and sustainability\n- Weaknesses:\n  - Intuitively, in-classifier calibration is expected to fail at accounting for how other classifiers would perform, so if that is of interest, as it is in the paper's scenario, one would expect that adding information about previous classifiers' performance and learning to predict how next classifiers will perform would increase accuracy in this scenario.\n\nOriginality\n\n- Strengths:\n  - To the best of my knowledge, this is the first study looking at the implications of calibration in EENN and offering an \"alternative\".",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. I understand that confidence calibration would not contribute to predicting the performance of the next classifiers in an EENN. However, if these classifiers are to be used in an optimal decision making or cost-sensitive task, wouldn't it still be important to guarantee calibration?\n2. If the top-k classes, rather than only the modal class, are used as input, wouldn't it make sense to model multiclass or class-wise calibration, rather than confidence calibration only?\n3. Classifiers at different levels of an EENN could have different levels of refinement (see decomposition of proper scoring rules [1]), likely leading to different calibration maps, which in turn leads to non-trivial EENNs. Does this mean that calibration and EEFP could complementary, rather than EENN being an alternative to calibration?\n\n[1] Silva Filho, T., Song, H., Perello-Nieto, M. et al. Classifier calibration: a survey on how to assess and improve predicted class probabilities. Mach Learn 112, 3211–3260 (2023).",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 5,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_NEef",
+   "summary": "For EENN, confidence calibrated networks do not guarantee the conditionally anytime property. To address this failure, this work proposes EEFP as a metric for exit decisions. A classifier confidence based on the top-k values is proposed, with experiments showing it improves over a classifier which is only calibrated.",
+   "strengths_and_weaknesses": "This paper identifies an issue with calibration when dealing with EENN, and proposes a novel metric to remedy this. However, it is not proven that correcting classifier confidence towards EEFP guarantees satisfying the conditionally anytime property, which was the issue with calibration. The experiments should more directly compare calibration and the new training method proposed (see key questions for details), and as a result it is also empirically unclear the degree to which the new method is better.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Is there a proof that EEFP/your method guarantees the conditionally anytime property?\n\n2. What are the results when directly comparing between top-1 with your method and calibration? I'm worried that using top-5 for your method while calibration is inherently top-1 somewhat confounds the experiments comparing them, since your groups would inherently be much finer.\n\n3. Are your metrics/methods directly applicable to multi-stage classifiers and model cascades as well?",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 2,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_GFbi",
+   "summary": "Paper proposes new score and approach for early-exit neural networks (EENN) decisions based on early-exit failure prediction (EEFP) to overcome the limitations of calibration based techniques that is shown to fail in some cases. EEFP is based on sequential AUROC, and leading to EEFP-motivated confidence correction methods with two-layer MLP networks that could replace conventional calibrators in EENN. EEFP score and novel exit strategy are empirically evaluated on several datasets and baseline models and compared to temperature scaling based calibration with improved performance.",
+   "strengths_and_weaknesses": "Paper is most parts well-organised, topic and challenge are motivated, and issues of previous approaches as well as new approach are empirically validated. Paper introduce novel approach to early-exit detection, given simple yet effective compared to temperature scaling and ECE metric in particular early-exit network architectural setting. It gives interesting discussion about possible issues of previous calibration-based approaches. However, current experimental setup is a bit limited,  using only standard ECE and temperature scaling. The analysis and comparison could benefit from more versatile evaluation against state-of-the-art early-exit systems.\n\nStrengths \n- Simple metric for early exit failure\n- Novel early-exit strategies compared to previous works\n- Some improvements compared to calibration approaches \n\nWeaknesses\n- Limited calibration approaches beyond temperature scaling studied\n- Limited empirical evaluation and comparison to other early exit systems (with different datasets)\n- Illustration of early-exit classifier architecture would clarify and support the presentation",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- How proposed approach would compare to state-of-the-art early exit systems (presented in the section 6)?\n- How robust proposed method is in general (e.g., running tests multiple times) and statistical significance of the improvements?\n- How robust the proposed approach is to distributional shifts / OOD?\n- There are several typos in the text; should be check to improve the general impression",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Paper presents a novel finding and contribution to early-exit neural networks. Authors have addressed my main concerns in the rebuttal, including the additional evaluations, supporting the work. I have raised my score accordingly."
+  },
+  {
+   "reviewer": "Reviewer_FUbk",
+   "summary": "The paper \"Rethinking Calibration for Early-Exit Neural Networks\" proposes to _not_ use confidence calibration to decide when to early-exit neural networks, but proposes to use failure prediction via an additional (small) model as correction.  The first part of the paper presents a theoretical outline of why confidence calibration does not work well for early-exit models. The main insight is that a model is either trivial (and then no early exits are necessary) or confidence calibration increases the excess risk for certain parts of the input space, making the model actually weaker. In these cases, one should exit much earlier, but confidence calibration demands further execution, reinforcing wrong predictions. The authors propose to solve this issue by using failure prediction, which basically trains a small classifier to correct confidence based on a holdout set. The experiments show this approach is favorable.",
+   "strengths_and_weaknesses": "Strength:\n- Well-written paper. I especially liked the first half that focused on the more theoretical aspects of calibration\n- Intuitive correction to the raised issue of calibration via a small correction model\n\nWeaknesses:\n- Training a small corrector model based on a holdout set feels like the \"cheap solution\" to a mathematical issue. I expected a few more mathematical insights that would lead to a more principled way to calibrate networks. \n- Experimental evaluation is limited\n\nDetailed review:\n\nOverall I like the paper, and its style fits ICML. It is well-written and easy to follow. The subject is definitely of interest to the ICML community. I especially enjoyed the first half of the paper. As a minor proposal, I think one can strengthen Proposition 3.7 slightly by replacing the \"$\\ge$\" with a true \"$>$\". I believe this is doable if we assume $P(Y \\not= y|x) > 0$ and we take care of ties when two classes have the same probability (Double-check this; I just did it in my head). \nThe second half of the paper is its weak-point. I believe the failure prediction / correction model is a straightforward way to correct the issue, but not a true solution in a mathematical sense. While we, of course, can train a correction model, there is no formal guarantee that this will perform better. I hoped for a more principled solution here. Moreover, there now seems to be a natural overlap with \na) Decision Trees: These are natural early-exit models that \"explicitly focuses on partioning [...] samples\", similar to failure prediction. \nb) MoE/Routing/Cascading/Decision Lists: All these models rely on an additional model to judge if we should execute a model, similar to the built-in correction proposed in this paper.\nThis makes the experimental evaluation comparably weak as it mainly compares calibration with failure prediction and not other early exit and/or calibration methods. Overall, the paper is an interesting read and ICML-worthy, although I can see if someone might argue against it.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1) What is the impact of fine-tuning the small MLPs on a holdout set? Effectively, your method sees a bit more data, which might explain the performance improvement. Did you consider this?\n2) What is the impact of adding a small MLP to the predictive performance and to the FLOPs? I can see some plots showing the plots, but I don't think they show the performance penalty by adding small MLPs, or did I miss it?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": null
+  }
+ ]
+}

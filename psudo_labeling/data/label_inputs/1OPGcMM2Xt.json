@@ -1,0 +1,62 @@
+{
+ "forum_id": "1OPGcMM2Xt",
+ "title": "Compute Where it Counts: Self Optimizing Language Models",
+ "abstract": "Efficient LLM inference research has largely focused on reducing the cost of each decoding step (e.g., using quantization, pruning, or sparse attention), typically applying a uniform computation budget to every generated token. In practice, token difficulty varies widely, so static compression can over-compute on easy steps and under-compute on hard ones. We study \\emph{dynamic budget allocation} for autoregressive decoding: learning how much computation to spend \\emph{per token} from within a single model.\n\nSelf-Optimizing Language Models (SOL) pair a frozen LLM with a lightweight policy network that reads the LLM hidden state and selects a discrete \\emph{efficiency action} at each decode step. Actions can jointly control (i) token-level attention sparsity, (ii) structured activation pruning in the MLP, and (iii) activation quantization bit-width, while leaving the base model weights unchanged.\nWe train the policy with group-relative policy optimization on teacher-forced episodes: the token sequence is fixed, while we sample multiple compute schedules (i.e., “counterfactual” schedules that vary only the efficiency actions for the same token path) and compare their likelihoods under the same supervision. Our reward trades off language‑model quality against soft penalties that encourage episode‑average budget usage to match a requested target. Across model variants and compute regimes, SOL improves quality at matched budget over static allocation and strong random schedule search, offering a complementary axis for inference‑efficiency optimization. SOL discovers a better quality-efficiency pareto-front across all our experiments and improves MMLU accuracy by up to 7.3\\% over uniform budget allocation strategies. \\href{https://github.com/akhauriyash/SOL}",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper introduces a method for dynamic per-token compute allocation in language model decoding, where a small policy network selects, at each generation step, the levels of attention sparsity, MLP activation pruning, and activation quantization applied to a frozen base model.\n\nThere was consensus among reviewers that this is an interesting and important contribution, with all four recommending acceptance. In the revised version, the authors are encouraged to carefully address all comments raised by the reviewers by incorporating the additional arguments and results they provided during the rebuttal. The most consistent concern is that the main efficiency measure, the net keep rate, is only a proxy for practically relevant quantities such as latency, throughput, or memory usage. The authors should incorporate the end-to-end speed-up measurements and overhead numbers from the rebuttal, along with the downstream results on HumanEval and IFEval. On the presentation side, the paper would benefit from an explicit definition of the net keep rate, and more informative and comprehensive figure captions. The authors should also consider revising the title, since \"self-optimizing\" does not convey that the goal is inference efficiency rather than task performance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_ms4V",
+   "summary": "The paper addresses the problem of assigning a per-token budget along the axes of token-level attention sparsity, activation pruning, and quantization, using an RL-based formulation.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The paper focuses on an important problem.\n\n**Weaknesses:**\n\n1.\tThe paper was somewhat hard to read, as several details seemed to be missing.\n\n2.\tThe graphs in the paper were generally hard to interpret.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "**Questions:**\n\n1.\tCould the authors explain what the net keep rate refers to? I do not recall seeing it clearly defined in the paper.\n\n2.\tCould the authors explain how the graphs should be read? The captions do not seem sufficiently informative, and I found it difficult to interpret what each figure is showing. \n\n3.\tCould the authors report standard deviations for the main results?\n\n4.\tCould the authors clarify which figure supports the claim that SOL achieves 7.3% higher accuracy than uniform budget allocation strategies?\n\n5.\tIf I understand correctly, the method first generates a sequence of T tokens, each with its own quantization, attention sparsity, and related settings, and then regenerates these T tokens without those modifications. If that understanding is correct, could the authors clarify how this procedure leads to efficiency gains?\n\n6.\tCould the authors clarify what is meant by the hidden state of the LLM? Also, when attention sparsity, quantization, and related mechanisms are defined, are they applied uniformly across all transformer layers? If so, would a per-layer formulation be more appropriate?\n\n**Note:** I am currently leaning toward a lower score, but I would be open to revising my assessment depending on the rebuttal.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_aoV7",
+   "summary": "The paper introduces a method for dynamic allocation of inference-time compute in LLMs for each token generation. This method involves training a policy network to select, in each step, the amount of attention sparsity, MLP activation pruning, and activation quantization bit-width to use. The base LLM remains frozen. The authors evaluate the method on llama 3.1 and 3.2, with the model size ranging from 1B to 8B. They compare the method against static baselines and report improved perplexity-efficiency Pareto frontiers, and gains on downstream benchmarks.",
+   "strengths_and_weaknesses": "**Strengths:**\n1. The problem statement is well-motivated. \n2. The methodology is well-thought-out, with a thorough discussion on and remediation of delayed effects of efficiency actions (KV Pollution). \n\n**Weaknesses:**\n1. The proxy for efficiency in the paper is “net keep-rate”. It does not directly correspond to latency, throughput, or memory usage. It is unclear what real-world gains would be realized by this approach given:\n    - Memory allocation appears unchanged (since it must account for the worst case scenario, which is when we decide to take none of the efficiency actions). This is a disadvantage compared to some of the static methods that would guarantee reduced memory usage.\n    - We must now run an extra forward pass once every T=16 steps. \n    - Per-token quantization perhaps complicates kernel design.\n2. The method introduces three target budget parameters, three penalty weights, and a tolerance band parameter. However, it is unclear how to choose these parameters, and how robust is the performance to these choices.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. Net keep-rate is a simple average of the individual keep-rates for sparsity, pruning, and quantization. This assumes equal contribution to compute cost. Is this assumption justified? \n2. How sensitive are results to the penalty weights and tolerance band? \n3. Have you considered applying the method to MoE architectures? It would be helpful to understand how the improvements translate to these newer models.  \n4. Could you report results on more downstream benchmarks like IFEval and HumanEval?",
+   "limitations": "A more explicit discussion of real-world deployment challenges would strengthen this section.",
+   "overall_recommendation": 5,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_4B27",
+   "summary": "This paper studies how to allocate inference-time computation more effectively during autoregressive generation. The main idea is that some tokens are easy to predict, while others are more sensitive to approximation. Furthermore, it becomes more complicated that approximation errors at a given step can be preserved in the KV cache and can influence later predictions. To address this, the paper introduces a controller that can select the compute budget for each token by adjusting attention sparsity, activation pruning, and quantization. The experiments are comprehensive, and the results show consistent gains over fixed allocation under same budget. Overall, the paper is well motivated, easy to follow, and empirically convincing.",
+   "strengths_and_weaknesses": "Strengths:\n1. The studied problem is important.\n2. The motivation is straightforward and sound, Figure 7 is insightful. \n3. Extensive ablations are performed to understand the effects of action space, horizon length, budget control, and different scheduling strategies.\n\nWeaknesses:\n1. While the controller is lightweight and the paper argues that periodic KV refresh has limited overhead due to higher prefill throughput, the paper does not provide a thorough quantitative analysis of the additional system cost, such latency, or FLOPs overhead introduced by the controller and refresh steps.\n2. The paper does not report the cost of training the controller, such as GPU hours.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Please see weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_XsE9",
+   "summary": "This works proposes an approach for dynamic budget allocation (token pruning, structured sparsity, activation quantization) via learning a small policy network. The policy network operates on episodes of fixed length = T and is trained to allocate an optimal configuration for a desired compression ratio. After the end of the episode, the cache is refreshed via dense forward pass. The introduced approach is validated on a compression of several language models from Llama family.",
+   "strengths_and_weaknesses": "Strengths\n\n- The idea to learn a policy network to produce an optimal compressed configuration is sound and appears to be novel in the literature in the provided formulation.\n- Policy-produced configuration seem to consistently outperform fixed precision / dropping rate configurations.\n\nWeaknesses\n- The search space seems to be limited in some directions. For instance, typically one is interested in quantization into 4 bits and below.\n- The name of the paper is confusing. One would think that the language model is optimizing itself, whereas a separate network is trained.\n- The submission code is not provided.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- I would be illustrative to show some representative configurations found by the policy - i.e. the values for Quest/TEAL sparsity / precision. \nCan one achieve practical speed-ups using the mixed-precision policy. What is the overhead of invoking policy network?\n- It would be insightful to illustrate the chosen actions on a short sequence to see which tokens are treated as important/unimportant.",
+   "limitations": "-",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

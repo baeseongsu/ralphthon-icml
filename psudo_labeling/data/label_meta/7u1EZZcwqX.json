@@ -1,0 +1,26 @@
+{
+  "forum_id": "7u1EZZcwqX",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_SzcA",
+      "weight": "high",
+      "reason": "Most expert and specific review, with the highest confidence and overall recommendation. The critique that the method is motivated by Boltzmann-distributed data but evaluated only on energy-minimized conformers is insightful, the saturated-benchmark / limited-practical-significance concern is corroborated by other reviewers, and the originality point about close precedents (RL-for-diffusion post-training, MLFF guidance) is well argued and consistent with the paper's own related work."
+    },
+    {
+      "reviewer": "Reviewer_CGkP",
+      "weight": "high",
+      "reason": "Specific and higher-confidence (4). Its central concern about the preference model being queried on noisy, potentially out-of-distribution intermediate reverse states corroborates jndb, and its ablation request to disentangle post-training gains from simply integrating a stronger MLIP (backbone/preference-model swaps) aligns with the meta-review's framing and with pDWa."
+    },
+    {
+      "reviewer": "Reviewer_jndb",
+      "weight": "high",
+      "reason": "Detailed and technically substantiated. Its central weakness — reward shaping relying on unstable, high-variance plug-in clean-geometry estimates at high noise — is corroborated by CGkP, and its theoretical observations (absolute-continuity restriction to the pretrained manifold, and error scaling with force-field bias times inverse temperature) are specific and on-point."
+    },
+    {
+      "reviewer": "Reviewer_pDWa",
+      "weight": "medium",
+      "reason": "Correctly flags the saturated-benchmark concern and the backbone/MLFF-sensitivity ablation, both corroborated elsewhere. However, the presentation score of 1 is an outlier contradicted by the well-written assessment from other reviewers and not echoed by the meta-review, and the summary slightly misreads the method as applying guidance during sampling when the key claim is that no oracle is queried at inference."
+    }
+  ],
+  "score_rationale": "The three high-weight reviewers (jndb, CGkP, SzcA) converge on solid but not groundbreaking execution, so soundness and presentation are set to 3, matching the majority and the meta-review's positive-but-modest tone; the outlier presentation score of 1 is discounted as contradicted by the 'well-written' assessment. Significance is set to 3, following the two highest-confidence reviewers and the meta-review's acknowledgment of the contributions, while the review prose still foregrounds the saturated-benchmark and Boltzmann-data critiques. Originality is set to 2, reflecting the well-substantiated point from the highest-recommendation reviewer (SzcA), echoed by jndb, that RL-for-diffusion and MLFF-guidance both have close precedents. Overall recommendation is 4 (weak accept), the modal score explicitly endorsed by the meta-review's note that three reviewers leaned toward weak acceptance, with confidence 4 given how well the core concerns mutually corroborate."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "Smoegnco1C",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_Q3uv",
+      "weight": "high",
+      "reason": "Most detailed and specific review, with substantiated per-dimension analysis (theory-to-practice gap on the 1-Lipschitz constraint, deferred practical details undermining the 'simple and easy to tune' claim, bounded significance, compositional novelty over RND/RED, and baseline-fairness concerns for RED*/DiffAIL). Directly aligns with the meta-review's 'technically sound, well-written, reasonably novel' framing; highest confidence (5)."
+    },
+    {
+      "reviewer": "Reviewer_rSj4",
+      "weight": "high",
+      "reason": "Specific and substantiated, praising the clear structure and sound theoretical grounding while raising concrete concerns about the added tuning burden of the distributional loss and evaluation confined to 'toy' environments (suggesting Adroit/ManiSkill). Corroborates Q3uv on tuning complexity and scope, aligns with the accept decision, and is well-calibrated (confidence 4)."
+    },
+    {
+      "reviewer": "Reviewer_GZq5",
+      "weight": "medium",
+      "reason": "On-target but brief. Its two concrete contributions -- missing recent OT-based low-data baselines (ROT, MAAD) and the question of how far the potential deviates from 1-Lipschitz -- are specific and corroborate Q3uv, but the review offers little supporting detail overall (confidence 3)."
+    },
+    {
+      "reviewer": "Reviewer_wDca",
+      "weight": "medium",
+      "reason": "Contributes a valuable, corroborating baseline-fairness point (GAIL-DAC curves appearing weaker than in the original DAC paper at matched demonstrations, plus a request for explicit GAIL/DAC comparison). However, its notably harsh soundness/presentation/originality scores (2/2/2) are contradicted by the meta-review's 'technically sound, well-written, reasonably novel' verdict, and several questions are low-value (typo, figure-reference wording)."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as technically sound, well-written, and reasonably novel, matching the two high-weight reviewers (Q3uv, rSj4), so soundness=3, presentation=4 (strong consensus on structure/readability, discounting wDca's outlier 2), significance=3 (unanimous, bounded to simulated MuJoCo with SAC experts), and originality=3 (compositional over RND/RED; wDca's 2 is contradicted by the meta-review). Overall recommendation=5 follows the two most detailed, highest-confidence reviewers who both scored 5 and the clear accept decision, staying within the reviewers' [4,5] range. Confidence=4 reflects strong mutual corroboration across reviewers on the theory-practice gap, tuning burden, missing baselines, and limited evaluation scope, with the only real divergence being wDca's harsher scores."
+}

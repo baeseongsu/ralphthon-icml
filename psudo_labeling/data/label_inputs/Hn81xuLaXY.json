@@ -1,0 +1,62 @@
+{
+ "forum_id": "Hn81xuLaXY",
+ "title": "Efficient Reasoning with Hidden Thinking",
+ "abstract": "Chain-of-Thought (CoT) reasoning has become a powerful framework for improving complex problem-solving capabilities in Multimodal Large Language Models (MLLMs). However, the verbose nature of textual reasoning introduces significant inefficiencies. In this work, we propose**Heima** (as hidden llama), an effective CoT compression framework that condenses lengthy CoTs into a small set of abstract thinking tokens, preserving essential reasoning while removing redundancy. We then conduct a theoretical analysis from an information-theoretic perspective, quantifying the information gap induced by compression, showing that reasoning capability is preserved when non-trivial mutual information is retained. To further explore and quantify this information gap, we design the adaptive interpreter that maps thinking tokens back to variable-length textual sequences, thereby reconstructing the reasoning process. Experiments across diverse reasoning benchmarks demonstrate that Heima improves reasoning efficiency, while maintaining or even achieving better zero-shot accuracy. Moreover, the interpreter reconstructs coherent reasoning progresses from compressed thinking tokens, revealing that the information gap is minimal and validating the effectiveness of the proposed framework. This work paves the way for scalable latent reasoning models and advances our understanding of efficient reasoning processes in large models. Code: https://github.com/shawnricecake/Heima",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a method for compressing CoT into a small number of discrete \"thinking tokens\", which enables efficient implicit CoT reasoning in multimodal LLMs. The approach achieves reductions in token usage while maintaining competitive accuracy across multiple benchmarks and model families. Reviewers generally agree that the problem is important and the empirical results are strong. In particular, the method is validated on modern multimodal LLMs (7B-11B scale), and the efficiency-accuracy tradeoff is compelling. The use of discrete thinking tokens, which preserves compatibility with standard autoregressive inference pipelines, provides a practical instantiation of implicit CoT, in contrast to prior continuous-state approaches.\n\nWhile there are concerns regarding the level of novelty relative to recent implicit CoT works and the necessity of the theoretical analysis, the rebuttal clarifies these and strengthens the empirical evidence by adding experiments on Qwen-based models. The remaining limitations (e.g., potential representational bottlenecks and performance drops on more complex tasks) are acknowledged.\n\nOverall, this paper presents an interesting approach to efficient implicit CoT reasoning in multimodal models, and reviewers mostly lean towards acceptance (1 accept, 2 weak accepts, and 1 reject), therefore I recommend weak acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_nVXS",
+   "summary": "This paper proposes a novel method named Heima, which aims to reduce the number of inference tokens in multimodal tasks by compressing the reasoning process into a latent space.\nHowever, the paper has several major issues: the theoretical analysis is too broad, there is a lack of comparative discussion with related works, the baseline models selected for experiments are weak, and it only reports the reduction in token count while ignoring other important efficiency metrics.",
+   "strengths_and_weaknesses": "**Strengths**\n1.  The paper investigates an interesting question, and the empirical study also demonstrates that inference tokens are significantly reduced.\n\n**Weaknesses**\n1.  The theoretical analysis seems unnecessary and appears to explain not only Heima but also the broader scope of reasoning in latent space.\n2.  A comparative discussion with related work is lacking, such as with Coconut and Cocomix. Although Heima is applied in a multimodal context, this is not the core innovative point.\n3.  The baseline models used are too weak; at the very least, models like Qwen-VL and InternVL should have been included.\n4.  In addition to reasoning tokens, other efficiency metrics, such as training cost and inference latency, are not reported.",
+   "soundness": 1,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 1,
+   "key_questions_for_authors": "See weaknesses",
+   "limitations": "No discussion on the limitations in the paper. I think it is necessary to add some.",
+   "overall_recommendation": 2,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_5wGV",
+   "summary": "Research to shorten CoT in AI. As an idea, we prepared a token dedicated to CoT, and during CoT, we achieved compression by using only that token. In other words, the idea is to tune each token to have the value of a few tokens in the CoT before compression. This is no longer a simulation of human thought processes, but a thought divided into storage-levels for temporarily writing out processes as notes in reasoning.",
+   "strengths_and_weaknesses": "Strengths:\n- Soundness: How to compress CoT, and the amount of information that can be compressed, and it is likable by estimating information theoretically.\n- Originality: The idea is very interesting. I think that reasoning is not a language, it is very suggestive in the Copernican-like turn.\n\nWeakness:\n- (Cont. Soundness) On the other hand, the size of the Heima model itself could not be read in the text. In other words, if the model size is large enough, even if the CoT is short, the performance should be achieved, and it is not possible to determine whether the CoT is really compressed or not.\n- Significance: In order to compress information, it is unfortunate that the information to be compressed is required, which means that this compression method has become a domain-specific method. In particular, it is not included in the training data like extrapolation, but it is easy to predict that the performance will fall due to the lack of learning of CoT tokens in a place that should have been reached if you infer carefully.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "-  The size of the Heima model itself could not be read in the text. In other words, if the model size is large enough, even if the CoT is short, the performance should be achieved, and it is not possible to determine whether the CoT is really compressed or not.\n\n- For example, in arithmetic tasks, there is a concern that numerical tokens that are not always included in the training data will appear in the thought process. Although it is not limited to arithmetic,\nOf course, it does not appear in the training data, so I think that there is no corresponding CoT token. Is it correct that this language model is missing from CoT?",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_brSC",
+   "summary": "This paper proposes a framework for efficient reasoning in large language models by replacing natural-language chain-of-thought (CoT) with a sequence of learned “thinking tokens”. Instead of generating full reasoning steps in text, the model generates special CoT tokens which are then fed back into the model autoregressively. The authors argue that the reasoning information is stored in the hidden states corresponding to these tokens, allowing the model to perform multi-step reasoning while reducing the token cost of explicit chain-of-thought. An additional interpreter model is trained to reconstruct natural language explanations from the hidden representations of the thinking tokens.",
+   "strengths_and_weaknesses": "Strenghts:\n\nThe goal of reducing the cost of chain-of-thought reasoning is important, and the paper is clearly written. Using an auxiliary LLM interpreter to decode the hidden states back into text is an interesting sanity check.\n\nWeaknesses:\n\nI have several concerns regarding the conceptual novelty, the interpretation of the thinking tokens, and whether the method truly captures reasoning rather than simply providing additional latent compute steps.\n1. Novelty and the Discretization Bottleneck: This paper is very similar to the COCONUT paper (Hao et al., 2024), but adds a restrictive constraint on top of the design. By forcing the model to explicitly predict a newly added discrete CoT token for each stage, the architecture forces the hidden state to pass through the LM head and project to a specific token ID. This creates a representational bottleneck compared to purely continuous latent approaches (like COCONUT) that bypass the unembedding matrix entirely to utilize the full continuous space.\n\n2. Potential Ambiguity Across Reasoning Steps: Considering the bottleneck in the design mentioned in the previous point, the framework assigns a shared, unique special token CoT{(k)} across different samples for the k-th stage. This introduces a serious risk of representational ambiguity. Consider step k in two different problems: in a simple example, this step might correspond to the final conclusion, while in a highly complex problem, it might still be in the early middle of the reasoning process. Forcing both scenarios to map to the exact same discrete CoT{(k)} token constrains the model from distinguishing the different functional roles of these steps across varying complexities.\n\n3. Number of reasoning tokens per CoT: The framework appears brittle when adapting to variable reasoning lengths. In Figure 5 (left), the authors present an ablation study demonstrating that using a single thinking token to encode a CoT stage achieves the best performance, and adding more thinking tokens degrades accuracy. Unusually, adding more thinking tokens makes the accuracy drop. Normally, giving an LLM more tokens allows it to scale its test-time compute to solve harder problems.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "1. Could you clarify why numbers are bolded in Table 1 when they don't represent the highest performance?\n\n2. Given the 3.1% overall accuracy drop and 7.3% drop on MathVista shown in Table 1, did you run any statistical tests to prove this counts as \"comparable\" performance?",
+   "limitations": "No",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_n63E",
+   "summary": "This paper proposes Heima, a multi-modal model applying efficient latent reasoning on visual tasks. Heima is trained on llava-cot and expresses comparable performance to MLLM baslines, yet requires much fewer CoT tokens.",
+   "strengths_and_weaknesses": "Strength: Comprehensive evaluation against multiple baselines and on multiple benchmarks demonstrate the efficiency of Heima, supporting the main contribution.\n\nWeakness:\n1. The overall presentation is obsecure, probably due to the complexity of the proposed architecture.\n2. There's a lot of missing references/discussion to latent reasoning papers (Coconut, CODI, Colar, SimCoT, etc.)\n3. The proposed framework cascading multiple modules, where errors could happen at any stage and accumulate.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Is the progressive training/distillation process similar to Coconut?",
+   "limitations": "Please refer to Weakness.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

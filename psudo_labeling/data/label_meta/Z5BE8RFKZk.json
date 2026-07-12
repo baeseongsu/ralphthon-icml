@@ -1,0 +1,21 @@
+{
+  "forum_id": "Z5BE8RFKZk",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_UZTZ",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its praise for the clear writing and the information-theoretically grounded metric, and its circularity concern, are echoed by the meta-review, and its questions on constraint verification and the CoT log-probability confound are concrete and corroborated by another reviewer."
+    },
+    {
+      "reviewer": "Reviewer_iu1F",
+      "weight": "high",
+      "reason": "Its characterization of the method as concise, easy to implement, and generalizable across models and datasets is adopted almost verbatim in the meta-review, and it raises a substantive, specific weakness about whether the metric can identify a minimal sufficient explanation given the trade-off between explanation restrictiveness and input-distribution freedom."
+    },
+    {
+      "reviewer": "Reviewer_7NHV",
+      "weight": "medium",
+      "reason": "The most detailed review, and its circularity and constraint-preservation concerns are corroborated by UZTZ and named in the meta-review. However, its overall 'incremental' verdict and low soundness/significance/originality scores (2/2/2) and recommendation of 3 run counter to the meta-review's positive direction and the accept decision, which indicates the central concerns were addressed, so its negative scoring pull is down-weighted."
+    }
+  ],
+  "score_rationale": "The two more positive reviewers (UZTZ, iu1F) are treated as high weight because their strengths — clear writing, a principled information-theoretic metric, and an easy-to-implement, generalizable method — are adopted almost verbatim in the meta-review, and their overall recommendations (4) align with the accept decision. The third reviewer's detailed circularity and constraint-verification concerns are corroborated and feed the weaknesses, but its overall pessimism (incremental framing, dimension scores of 2, recommendation of 3) is down-weighted to medium because the meta-review indicates these concerns were addressed in rebuttal. Dimension scores therefore sit at the top of the human range (3/3/3/3) with an overall of 4, matching the two high-weight reviewers and the meta-review's positive direction. Confidence is 4 given the strong mutual corroboration on both the main strengths and the central circularity and constraint concerns."
+}

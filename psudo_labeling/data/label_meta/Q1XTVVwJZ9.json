@@ -1,0 +1,26 @@
+{
+  "forum_id": "Q1XTVVwJZ9",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_LuTB",
+      "weight": "high",
+      "reason": "Most detailed and specific review; strongly echoes the meta-review (sound theoretical motivation via Proposition 4.1, novel architecture, experiments supporting effectiveness). Identifies concrete, substantiated gaps (pose-noise robustness, inference latency, ODE stiffness, filter-atom count). Confidence 5."
+    },
+    {
+      "reviewer": "Reviewer_7qBD",
+      "weight": "high",
+      "reason": "Specific and constructive; echoes the meta-review on technical soundness and the novelty of the NODE-based design. Weaknesses are actionable and substantiated (single-class validation, need for video evidence, applicability coupling to Splatter Image, motivational figure)."
+    },
+    {
+      "reviewer": "Reviewer_BPno",
+      "weight": "high",
+      "reason": "Concrete, substantiated weaknesses (missing 3DGS baselines Gamba/Triplane-GS, missing GSO/Objaverse-LVIS, same-GPU efficiency, convolutional-only limitation, per-dataset activations). Echoes the meta-review on detailed mathematical reasoning and informative ablations. Confidence 5."
+    },
+    {
+      "reviewer": "Reviewer_XUe5",
+      "weight": "medium",
+      "reason": "Valid, corroborated concerns on marginal/inconsistent quantitative gains, shorter ablation training schedules, and the need for statistical significance testing. However, its downgrading of originality and significance is contradicted by the meta-review's explicit emphasis on the novelty of the NODE design and the effectiveness shown by experiments, so those particular judgments were down-weighted."
+    }
+  ],
+  "score_rationale": "The meta-review anchors strongly positive on soundness, the novelty of the NODE-based filter design, the mathematical justification, and empirical effectiveness, so I positioned soundness/significance/originality at 3 following the two most detailed high-weight reviews (LuTB, 7qBD) and the meta-review direction, despite two reviewers assigning 2 partly on empirical-substantiation grounds. Presentation is set to 3 (the majority view), with the single 2 reflecting fixable formatting issues rather than a structural problem. Overall recommendation is 4, the mode across reviewers and consistent with the weak-accept consensus and the accept decision; XUe5's novelty/significance concerns were retained only where corroborated (marginal gains, ablation training length, significance testing) and down-weighted where contradicted by the meta-review. Confidence is 4 given strong cross-review corroboration on both the strengths (continuous NODE inductive bias, view consistency) and the weaknesses (marginal real-data gains, pose reliance, limited applicability)."
+}

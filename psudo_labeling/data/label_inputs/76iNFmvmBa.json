@@ -1,0 +1,62 @@
+{
+ "forum_id": "76iNFmvmBa",
+ "title": "Inference-Time Conformal Reasoning with Valid Factuality Control for Large Language Models",
+ "abstract": "Large language models (LLMs) increasingly perform multi-step reasoning, where intermediate claims form implicit directed acyclic graphs whose node correctness is structurally conditioned on their ancestors. This makes factuality uncertainty structural, rather than a trivial accumulation of node-wise errors, and necessitates inference-time uncertainty quantification over the reasoning structure. While conformal prediction (CP) offers flexible user-specified factuality control, existing work remains post-hoc and cannot intervene during generation. To fill the gap between CP’s flexibility and its post-hoc limitation, we propose an *Inference-Time Conformal Reasoning (ITCR)* framework that integrates CP directly into reasoning graph generation. ITCR learns a structure-level factuality uncertainty function that aggregates claim-level factuality signals over reasoning graphs without complex modeling assumptions. We then design the non-conformity score based on graph-level factuality uncertainty and calibrate the conformal threshold to decide when to stop generation. We theoretically show such generation is nested, yielding valid coverage guarantees for factuality control. Experiments over multiple datasets and coverage objectives demonstrate empirically valid coverage. In downstream reasoning tasks, inference-time calibrated graphs yield more accurate generation than post-hoc pruned graphs.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This papers's take is that reasoning is structured, so uncertainty should be assessed over the whole reasoning graph, not just individual steps. It introduces inference-time conformal reasoning, which uses conformal prediction during generation to estimate graph-level factuality uncertainty and decide when to stop reasoning, providing theoretical coverage guarantees and producing more accurate results than post-hoc pruning.. This is a sound paper. The reviewers have pointed out some suggestions for improvements - please consider them for the next version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_93z2",
+   "summary": "The paper argues that factual errors in LLM reasoning are structural: in multi-step reasoning, later claims depend on earlier ones, so uncertainty should be assessed over the whole reasoning graph, not just individual steps. It introduces inference-time conformal reasoning, which uses conformal prediction during generation to estimate graph-level factuality uncertainty and decide when to stop reasoning, providing theoretical coverage guarantees and producing more accurate results than post-hoc pruning.",
+   "strengths_and_weaknesses": "The paper is well-presented and organized, and it seems to be sound.\n\nThe paper is following the natural question whether we can move from post-hoc calibration to inference-time conformal control of factuality in LLM reasoning while retaining coverage guarantees. As such, it is perhaps not very original, but the experimental results over several reasoning benchmarks and LLM architectures indicate that ITCR maintains empirically valid coverage and yields an average reasoning accuracy gain of 19.96%. it would be good to see the approach on further benchmarks.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "No questions.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_cK9s",
+   "summary": "The paper proposes an inference-time conformal method for controlling uncertainty over multi-step LLM reasoning. Instead of treating reasoning steps independently, it represents them as dependency-aware subgraphs and calibrates a stopping rule so the returned partial reasoning graph satisfies coverage goals such as \"no false\" or \"no missed\" steps.",
+   "strengths_and_weaknesses": "**Strengths**:\n\n- The paper studies an important problem: controlling uncertainty over intermediate reasoning rather than only final answers. This is a meaningful direction for multi-step reasoning, where early mistakes can propagate to later steps.\n- The paper treats reasoning as dependency-aware subgraphs and applies conformal calibration at inference time, which is a sensible extension beyond claim-level uncertainty control.\n- The technical presentation is fairly clear. The paper states the monotonicity requirement, defines the score construction explicitly, and provides conformal guarantees under its assumptions.\n\n**Weaknesses**:\n\n- Although the paper is framed as inference-time control over \"reasoning graphs,\" the practical setup depends on heavily engineered prompting that forces the model into a rigid stepwise subclaim format. Modern LLMs are not naturally trained to reason in this way, so part of the observed behavior may reflect instruction-following under an unusual setup rather than the proposed conformal control itself. A stronger evaluation would compare against standard plain prompting on the same verifiable reasoning benchmarks.\n- The empirical comparison is fairly narrow. In the main evaluation, the paper appears to compare primarily against a single external baseline, CPL, while the remaining comparisons are largely internal heuristic variants such as MAX/SUM/AVG aggregation. Since the paper is motivated against prior structured or post-hoc control approaches, stronger matched comparisons to those alternatives would be important.\n- The paper's efficiency claims are structural rather than computational. Efficiency is measured using retained or removed reasoning nodes under coverage constraints, but the actual pipeline requires rigid prompting, repeated sampling for frequency scores, and a separate graph-construction stage. As a result, the paper does not convincingly establish end-to-end inference efficiency in runtime or token cost.",
+   "soundness": 2,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "n/a",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_tVAp",
+   "summary": "The manuscript proposes inference-time conformal reasoning (ITCR), integrating CP into directed acyclic graph reasoning genration for structural factuality control. The porposed method outperforms post-hoc baselines.",
+   "strengths_and_weaknesses": "+ nice motivation\n+ strong empirical validity\n+ downstream gains are also adequate\n\n- experimental validation only limited to subset of reasoning benchmarks\n- I think efficiency analysis is incomplete. Latency, tokens, runtime... analysis can be beneficial.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "see weaknesses",
+   "limitations": "no",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_iG7C",
+   "summary": "This paper studies how to control factual errors during multi-step LLM reasoning, where intermediate steps depend on earlier steps and can be viewed as a directed acyclic graph (DAG) of claims rather than a flat list. The key observation is that in this setting, factuality is structural: if an early claim is wrong, many later claims that rely on it become unreliable, so uncertainty should be tracked over subgraphs, not just per-step scores. The authors propose Inference-Time Conformal Reasoning (ITCR), which integrates conformal prediction (CP) into the generation process itself instead of applying CP after the model finishes reasoning (post-hoc pruning). ITCR repeatedly expands a reasoning subgraph and uses a calibrated stopping rule: it stops generation once a graph-level “non-conformity” score exceeds a conformal threshold, and outputs the last accepted ancestor-closed subgraph.",
+   "strengths_and_weaknesses": "Strengths: Inference-time reliability control is a real practical gap: post-hoc pruning can waste compute and can produce invalid structures after pruning (ancestor closure repair). An inference-time stopping policy directly targets this issue. There is a clear formalization of structured reasoning as ancestor-closed subgraphs of a DAG and explicit definition of two coverage objectives (no-false and no-miss). Introducing and formalizing the no-miss objective as a recall-oriented complement to no-false is a useful perspective for structured reasoning where strict precision can cause degenerate abstention.\n\nWeaknesses: \nThe approach relies on standard CP machinery plus a learned aggregator and a monotonicity penalty. The novelty is mainly in the integration and the nested-stopping framing, rather than a fundamentally new conformal method. The reported evaluation is limited to reasoning benchmarks with claim annotations and to settings where a reasoning graph and node-level factuality signals are available. The broader impact depends on how easily these prerequisites transfer to typical open-ended assistant settings.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. How does ITCR behave under distribution shift between calibration and test (e.g., different domains, different prompting, different model checkpoints)? Since conformal validity relies on exchangeability, it would help to see stress tests or guidance for recalibration frequency.\n\n2. No-miss objective allows “limited uncertainty when necessary.” In practice, how many incorrect nodes does the no-miss output tend to include, and how should users interpret that trade-off?\n\n3.How are node-level factuality uncertainty scores obtained at inference time?\n\nAddressing these points thoroughly would help my opinion of how robust the paper is.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "0AdFs0O8xv",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_TJR1",
+      "weight": "high",
+      "reason": "Directly quoted and adopted by the meta-review as the anchor concern (Proposition 5.4 versus Table 2 polygon failure). The review is the most specific and substantiated, detailing the theory-practice gap, the missing characterization of the Prop 4.2/5.4 boundary, the unaddressed instability, and the missing dataset-to-proposition mapping."
+    },
+    {
+      "reviewer": "Reviewer_gikF",
+      "weight": "high",
+      "reason": "Substantiated and specific; independently corroborates both the theory strengths and the central empirical concern (high variance, failure of theoretical polygon models) that the meta-review foregrounds, and raises directly relevant optimization probes (dimension, hard negatives) and the abstractness of the balancedness conditions."
+    },
+    {
+      "reviewer": "Reviewer_WNA9",
+      "weight": "medium",
+      "reason": "Corroborates the instability/theory-practice concern and adds on-target points about the dense polygon construction lacking visual aids and novelty building on prior regular-rule-base and octagon work, but is somewhat more generic and less deeply substantiated than the high-weight reviews."
+    },
+    {
+      "reviewer": "Reviewer_pmrf",
+      "weight": "medium",
+      "reason": "Substantive and correct on the theory, which the meta-review agrees is strong, but its very high scores (soundness 4, significance 4, overall 6) treat the empirical instability, the meta-review's decisive concern, as unproblematic, making it an optimistic outlier that the meta-review's direction does not support."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on the theory being strong while the empirical instability of the polygon model is the decisive concern, matching the high-weight reviews (TJR1, directly quoted, and gikF). I therefore kept soundness and significance at 3 rather than TJR1's 2, since three reviewers confirm the proofs are correct, but did not adopt pmrf's 4 given the unresolved theory-practice gap; presentation and originality were unanimous at 3. Overall recommendation is set to 4 (weak accept), consistent with the meta-review's explicit 'weak acceptance' direction and with gikF/WNA9, discounting pmrf's optimistic 6 and TJR1's 3. Confidence is 4 because the reviews are highly mutually corroborating on both the theoretical strength and the central empirical weakness."
+}

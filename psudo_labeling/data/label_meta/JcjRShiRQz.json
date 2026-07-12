@@ -1,0 +1,21 @@
+{
+  "forum_id": "JcjRShiRQz",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_mnzb",
+      "weight": "high",
+      "reason": "By far the most detailed and substantiated review, covering all four dimensions with specific, technically grounded observations (RAD's Chan-Vese-inspired area invariance, R.Acc/F.Acc decomposition, positioning vs. prior one-sided methods). Raises the two most corroborated concerns — single-inpainting-model dependence and the missing bilateral-vs-unilateral pruning ablation — plus the CNN-only evaluation and threshold-selection gap, all of which recur across the other reviews."
+    },
+    {
+      "reviewer": "Reviewer_ChBG",
+      "weight": "high",
+      "reason": "Specific and well-reasoned. Its central concern that the spurious-correlation claim is insufficiently substantiated is echoed by 2pUk and touched by mnzb, and its questions on inpainting-method consistency, boundary artifacts, and architecture generalization are independently corroborated. Scored significance/originality one point higher than the others but with clear justification."
+    },
+    {
+      "reviewer": "Reviewer_2pUk",
+      "weight": "medium",
+      "reason": "On-target and corroborates the key concerns (retained-channel validity, one-sided vs. two-sided pruning and random-masking ablations, inpainting-model stability), but the review is brief and its author questions duplicate the weakness list verbatim, adding less unique substantiated analysis than the two higher-weight reviews it overlaps with."
+    }
+  ],
+  "score_rationale": "The three reviewers were highly consistent — soundness and presentation were 3 across the board and all recommended 4 — so those values are effectively pinned by the reviewer range. For significance and originality (range 3-4) I followed the two-of-three consensus at 3, anchored by the highest-effort reviewer (mnzb), who documented that the individual components are established techniques and that evaluation is CNN-only, treating ChBG's 4s as the well-justified minority. The generic meta-review (all concerns addressed, unanimous accept) supports a weak-accept at 4 without any basis to move beyond the reviewers' unanimous overall recommendation. Confidence 4 reflects strong cross-reviewer corroboration of the core concerns (inpainting-model dependence, missing pruning ablations, spurious-correlation substantiation, architecture generalization)."
+}

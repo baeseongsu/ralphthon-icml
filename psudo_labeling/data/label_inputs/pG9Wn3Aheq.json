@@ -1,0 +1,66 @@
+{
+ "forum_id": "pG9Wn3Aheq",
+ "title": "CoEvol-NO: State and Coordinate Co-Evolution with an Error-Driven Predictor-Corrector Paradigm for Neural Operator Transformer",
+ "abstract": "Despite the fast progress in neural operator learning, long-sequence modeling still is a standing challenge whereby latent states have been introduced with techniques well derived.  Diverging from existing methods that treat latent states as transient variables or decoupled representations, CoEvol-NO introduces a persistent state to establish a co-evolutionary framework, where the latent state and mesh sequence are updated jointly and bidirectionally. Inspired by classical numerical methods, we model the layer-wise state evolution as a Predictor-Corrector (PC) process. Specifically, a \"Predictor'' generates a tentative target, followed by a \"Corrector'' that refines the persistent state via an {error-driven update mechanism}. Furthermore, our theoretical analysis reveals that the widely used \\textit{direct substitution} and \\textit{residual update} paradigms are essentially {first-order approximations} of this error-driven correction under different loss assumptions. We theoretically prove that CoEvol-NO achieves strict linear time complexity. Extensive experiments on five standard benchmarks and two large-scale industrial design tasks demonstrate that CoEvol-NO consistently achieves state-of-the-art (SOTA) performance.",
+ "primary_area": "applications",
+ "decision": "Accept (spotlight)",
+ "decision_comment": "This paper proposes adding a predictor-corrector mechanism in hidden layers in neural operators. This paper also is one of the highest scorers in my batch (but with certain low confidence reviews) so I gave it a second look, and I find it quite interesting. The latent states are evolved according to the gradient flow of a \"loss\", and the premise is that there exists a fixed point for cross attention.\nThe ablation is conducted to try to observe the converging behavior in the latent space, which quite deviates from the common template'ish end-to-end benchmark comparisons, and that is pretty nice. The authors also promotes many further studies without reservation (which is quite rare nowadays) in the appendices on some interesting phenomena observation (implicit regularization for example). All things considered, I recommend acceptance.\n\nBTW1: I would suggest that the authors revise the paper according to some reviewers' suggestions on readability, moving some figures with minuscule captions to the appendix.\n\nBTW2: I would also like to mention that the methodologies show quite a similarity to a posteriori error control in reduced-order modeling (observable states rather than latent states in this paper, though). I suggest the authors check it out and add appropriate ones into the references.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_t62K",
+   "summary": "The paper introduces CoEvol-NO, a neural operator framework that jointly models the evolution of latent states and mesh coordinates to better capture both geometric complexity and long-term physical dynamics. It employs a Predictor-Corrector mechanism where a predicted target guides an error-driven refinement step, effectively framing layer-wise updates. The authors show that common update rules such as residual connections can be interpreted as first-order approximations of this correction scheme, while also providing theoretical grounding for the approach. Experiments across multiple benchmarks and industrial tasks demonstrate that CoEvol-NO achieves strong performance with linear time complexity and improved stability.",
+   "strengths_and_weaknesses": "-Soundness- \n* The paper has a strong motivation of improving trade-offs between geometric sensitivity and dynamic memory. The PC method also aligns well with classical numerical methods. \n* For higher resolution meshes where N is large, although complexity analysis is provided, no empirical runtime and memory scaling comparisons between the proposed method and other baseline works are presented. \n* Lacking intermediate ground truth, the authors employ self-supervised PC framework to govern the evolution of S. Here, why is d(S_t, s^*) <= d(S_t-1, S^*) refinement condition given as an objective function? While training, is there a guarantee or certain flag to identify the training has reached a convergence? \n* Why is f_t defined as a Cross-Attention module? Any particular reason behind this?  \n\n-Presentation- \n* The paper is well organized and easy to follow. In section 2.2, some related works are written in a bold text but they can be corrected into a plain text for better consistency. \n\n-Significance-\n* This work showed good scalability for higher-resolution meshes. Also, the proposed method shows SOTA performance across diverse benchmark datasets. \n\n-Originality-\n* The paper has proposed a novel method for bidirectionally co-evolving latent states and mesh.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "* Was there any loss divergence during training when either predictor or corrector behaved poorly? Under what conditions did they converge well? \n* Could similar performance gains be achieved with unidirectional updates instead of bidirectional?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "The authors have addressed most of my concerns with a strong rebuttal. I lean towards accepting the paper."
+  },
+  {
+   "reviewer": "Reviewer_z1Ky",
+   "summary": "This paper proposes a co-evolutionary neural operator transformer that jointly evolves latent states and mesh coordinates bidirectionally. The core mechanism is a Predictor-Corrector paradigm where the predictor uses cross-attention and the corrector applies exact gradient descent on an implicit objective during the forward pass. The authors prove O(N) time complexity and achieves state-of-the-art results on standard PDE benchmarks and industrial tasks.",
+   "strengths_and_weaknesses": "Strength: This paper does not use standard overfitting prevention such as dropout / weight decay to achieves strong generalization including OOD. \n\nWeaknesses: The reliance on implicit regularization is a strength of the architecture but also a gap in the analysis. \"We evaluate the models on unseen Reynolds numbers and Angles of Attack (AoA).\" It might be beneficial to provide whether these unseen Reynolds are inside the interval of training numbers or outside the training number.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "It is beneficial to answer whether current method is sensitive to architecture of backbone or it's fine to use general universal approximation architecture to do the task.",
+   "limitations": "This paper presents a number of physics benchmarks whose significance and evaluation criteria may not be immediately clear to the broader machine learning community. It would therefore be helpful to provide some explanation of why these benchmarks are important and what makes them meaningful evaluation tasks.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_fF7Q",
+   "summary": "This paper proposes CoEvol-NO, a neural operator transformer architecture for learning solution operators of partial differential equations on large meshes. The authors introduce a co-evolution framework to jointly update latent states and mesh representations across network layers. They use a predictor–corrector mechanism to update the latent state through a prediction step and error-driven correction. The model maintains linear complexity. Experiments on several PDE benchmarks and industrial datasets show improved performance compared with existing neural operator baselines.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper identifies an interesting limitation of existing neural operator transformers, namely the trade-off between evolving latent physical states and preserving mesh geometry information. The proposed co-evolution mechanism provides a reasonable architectural solution to this issue.\n2. The paper introduces the predictor–corrector paradigm from numerical analysis into neural operator. This could inspire further work combining numerical solvers with deep learning architectures.\n3. The experiments include both standard academic benchmarks and industrial datasets, demonstrating the method may scale to realistic simulation settings. The ablation study helps clarify the contribution of the proposed components.\n\nWeaknesses:\n\nThe axis labels and tick marks in Figure 3 are quite small and difficult to read. Increasing the font size would improve readability and clarity.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See the above weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 1,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_95Zq",
+   "summary": "This paper proposes a neural operator framework based on state and coordinate co-evolution. Inspired by the classical Predictor-Corrector (PC) paradigm for ODEs, the authors formulate the layer-wise co-evolution of latent states S and mesh coordinates X as a predict-then-correct process. The authors provide a gradient approximation of the PC update for the coordinate stream to maintain linear complexity in mesh resolution. They also show that standard update rule residual connection is first-order gradient approximations of their exact gradient correction under dot-product loss assumptions. Experiments on five standard PDE benchmarks and two industrial tasks demonstrate the effectiveness of the method.",
+   "strengths_and_weaknesses": "**Strengths:**\n\n1. The paper provides a clean motivation for solving neural operators from the perspective of state-coordinate co-evolution.  The proposed Co-Evolution paradigm is reasonable and clear.\n\n2. The proposed Predictor-Corrector mechanism on neural operator layers is promosing. The theoretical insight that residual connections and direct substitution are first-order special cases of the exact gradient correction is a useful unifying result. The linear complexity analysis is also well-presented.\n\n3.  The experiments cover diverse PDE types plus two industrial tasks. Results are consistently strong.\n\n**Weakness:**\n1. In the coordinate update, the authors use a first-order gradient approximation. However, there is no experimental comparison showing the performance gap and computational cost between the exact gradient and the approximation for the X update. \n\n2. Since the authors claim linear complexity in mesh dimensions, it would be valuable to report actual running time and GPU memory consumption compared to baselines.\n\n3. The text and captions in Figure 3 are very small and hard to read. Additionally, in the left panel of Figure 3, the label \"PC-former\" appears to refer to the proposed method. It would be clearer to use \"CoEvol-NO\" or a similar label consistent with the paper title to avoid confusion.\n\n4.  The method involves multiple interleaved steps (predictor cross-attention, corrector gradient step,  coordinate update). A full algorithm block showing the step-by-step procedure would significantly improve clarity and reproducibility.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Compared to  apprixomation graduate of  state X update,  what is the performance difference, and how much additional time/memory does the exact gradient require?\n\n2. What is the training time and memory for CoEvol-NO relative to the main baselines?\n\n3. Increase readibility in Figure 3.",
+   "limitations": "The authors did not explicitly discuss limitations.  It is better to discuss limitations, such as applicability or theoritical assumptions.",
+   "overall_recommendation": 5,
+   "confidence": 2,
+   "final_justification": "The authors' rebuttal and revised version resolved most of my concerns. Overall, I think this is a good paper and have raised my score from 4 to 5."
+  }
+ ]
+}

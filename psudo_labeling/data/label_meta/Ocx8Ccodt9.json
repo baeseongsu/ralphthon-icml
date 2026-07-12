@@ -1,0 +1,26 @@
+{
+  "forum_id": "Ocx8Ccodt9",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_yMgg",
+      "weight": "high",
+      "reason": "The most detailed and highest-confidence review. Its assessment of the theory (rigorous but motivational rather than guaranteed), the missing general-robustness/invariant-learning baselines, the initialization sensitivity, and the computational overhead is specific and substantiated; the cost concern is directly echoed by the meta-review, and the positive stance aligns with the meta-review's count of three positive reviewers."
+    },
+    {
+      "reviewer": "Reviewer_pmwH",
+      "weight": "high",
+      "reason": "Thorough, constructive, and specific. Its points on per-component compute-cost breakdown, discrete-vs-continuous correlation, limited encoders/synthetic images, adversarial convergence, and concrete presentation fixes are well grounded; the compute-cost emphasis is corroborated by the meta-review, and its positive stance matches the acceptance direction."
+    },
+    {
+      "reviewer": "Reviewer_cMGy",
+      "weight": "high",
+      "reason": "On-target and substantiated: identifies the importance/novelty of the hidden-correlation problem and raises the scalability-beyond-two-attributes and training-cost concerns. The training-cost point is explicitly echoed by the meta-review, and the positive stance is consistent with the acceptance."
+    },
+    {
+      "reviewer": "Reviewer_RWbM",
+      "weight": "medium",
+      "reason": "The review is specific rather than vague, and its concern about strong structural assumptions (discrete, clusterable modes) and the ambiguity of assigning within-attribute variation to a specific attribute's representation is partly corroborated by other reviewers' continuous-mode and generality concerns. However, its overall negative direction is contradicted by the meta-review, which counts three positive reviewers and accepts the paper, so it does not anchor the scores."
+    }
+  ],
+  "score_rationale": "The meta-review anchors the paper as an accept with interesting ideas and significant empirical gains, explicitly noting three positive reviewers and flagging training cost as the main item to address; I therefore weighted the three positive assessments (cMGy, yMgg, pmwH) most heavily and set soundness/presentation/significance/originality to 3, consistent with their unanimous ratings and within the reviewers' [2,3] range. The single lower assessment offered a specific and partly corroborated concern about discrete-mode structural assumptions, which I retained in the prose, but its overall negative direction is contradicted by the meta-review, so it received medium weight and did not pull the dimension scores down. Overall recommendation is set to 5 (accept), reflecting the two strongest-aligned positive reviews and the acceptance direction rather than the lone 6 or the 3. Confidence is 4 because the strengths (empirical gains, novel problem framing, thorough ablations) and the principal weaknesses (compute cost, discrete-mode assumption, scalability, theoretical rigor) are mutually corroborated across reviewers and by the meta-review."
+}

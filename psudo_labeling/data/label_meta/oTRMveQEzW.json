@@ -1,0 +1,26 @@
+{
+  "forum_id": "oTRMveQEzW",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_MRRo",
+      "weight": "high",
+      "reason": "Detailed and specific: articulates the conceptual framework, the theorems and self-consistency contract, the diagnostic metrics and the ablations precisely, and raises a concrete, unique weakness (masking-mechanism complexity and hyperparameters) plus the missing-failure-cases point that is echoed elsewhere. Most positive (overall 5) and well substantiated."
+    },
+    {
+      "reviewer": "Reviewer_wwnT",
+      "weight": "high",
+      "reason": "Most technically substantiated critique: a specific NFE-accounting/fairness concern on Table 4, the 'enhanced scheduler of FlowEdit' framing of the novelty, the generality limitation to the flow/FlowEdit paradigm, and a concrete list of missing flow-based baselines. Specific and load-bearing, though it also recognizes the paper's core insights."
+    },
+    {
+      "reviewer": "Reviewer_HYNL",
+      "weight": "medium",
+      "reason": "Solid and constructive; independently corroborates the narrow-evaluation and missing-SOTA-comparison themes and the heuristic (non-adaptive) effective-window concern, but with less technical depth than MRRo/wwnT."
+    },
+    {
+      "reviewer": "Reviewer_mHWa",
+      "weight": "medium",
+      "reason": "Corroborates the single-benchmark and missing-comparison concerns and asks useful cross-benchmark/transfer questions; however its central significance argument (that Qwen-Image-Edit/Kontext already solve the coupling problem) compares a training-free inference-time method against large trained systems, a somewhat off-target premise, so it is weighted medium rather than high."
+    }
+  ],
+  "score_rationale": "The meta-review is generic ('all reviewers positive, accept') and adopts no specific points, so I anchored on cross-reviewer corroboration and specificity. Soundness is fixed at 3 (unanimous). Presentation (votes 4/4/3/3) sits at 3 because, alongside universally praised clarity, the high-weight technical reviewer's NFE-accounting ambiguity is a genuine reporting gap a careful reviewer would weigh. Significance is set to 2 (within the 2-3 range) because the most corroborated weakness across all four reviews is the narrow evaluation and missing comparisons, which limits demonstrated impact. Originality is 3, centering the high-weight split (MRRo 4 'novel reframing' vs wwnT 2 'enhanced FlowEdit scheduler') with the two medium reviewers at 3. Overall recommendation is 4, the clear mode and consistent with the positive/accept direction; confidence 4 reflects strong mutual corroboration on the main strengths and weaknesses despite spread on originality and significance."
+}

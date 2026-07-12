@@ -1,0 +1,26 @@
+{
+  "forum_id": "JrVfxa6aLL",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_awom",
+      "weight": "high",
+      "reason": "Balanced and specific. Its concerns about small per-cell sample size, max–min effect reporting, cross-model heterogeneity, and the 87% AST classifier map directly onto the meta-review's 'issues with execution' and are corroborated by other reviewers, while it also credits the framing and artifacts; overall 4 matches the accept outcome."
+    },
+    {
+      "reviewer": "Reviewer_561e",
+      "weight": "high",
+      "reason": "Specific, substantiated methodological critique (what distribution is actually estimated, greedy decoding versus the Section 2.1 formalism) plus the 'results weak and scattered / no clear high-level takeaway' observation, which the meta-review adopts almost verbatim. Its overall score of 2 is more negative than the outcome, but the substance is high quality and echoed by the anchor."
+    },
+    {
+      "reviewer": "Reviewer_BjMR",
+      "weight": "high",
+      "reason": "Thorough and specific. Its weaknesses (measurement noise, limited generalization, speculative unvalidated mechanisms, diagnostic-not-prescriptive) are corroborated by others and align with the meta-review, and its accept direction matches the outcome. Its one off note is the 'high statistical power / rigor' framing, which runs counter to the sample-size concerns raised by the meta-review and three reviewers, so I down-weighted that particular claim."
+    },
+    {
+      "reviewer": "Reviewer_Zkux",
+      "weight": "low",
+      "reason": "Provides some valid, corroborated statistical-soundness points (low power, weak correlations, AST limitations), but these are redundant with awom. Its defining judgments—significance 1, originality 1, and the claim that the work is not distinct from existing prompt-sensitivity literature—are directly contradicted by the meta-review ('not systematically documented before') and by the other three reviewers (all originality 3), so it should minimally shape the distilled review."
+    }
+  ],
+  "score_rationale": "I anchored on the meta-review, which frames the phenomenon as novel and not previously documented (supporting originality 3 and significance 3, and overriding Reviewer_Zkux's contradicted originality/significance of 1) while flagging execution and unclear-takeaway problems (supporting soundness 2). The high-weight reviewers awom and 561e both rated soundness 2 and raised specific, corroborated concerns about statistical power, extremal effect reporting, the greedy-decoding interpretation, and the 87% AST classifier, which I adopted; 561e's and the meta-review's 'no clear takeaway' point further tempered significance. Overall recommendation of 4 (weak accept) reflects the meta-review's clear accept direction and the two weak-accept high-weight reviews (awom, BjMR), sitting at the top of the reviewers' [2,4] range. Confidence 3 reflects strong corroboration on the measurement and takeaway concerns but some divergence, notably BjMR's 'high statistical power' framing versus the sample-size worries of the others."
+}

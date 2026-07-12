@@ -1,0 +1,26 @@
+{
+  "forum_id": "o3gN27ITWV",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_58Zn",
+      "weight": "high",
+      "reason": "Thorough and structured across all four dimensions. Its concerns about the contiguous-semantic-chunk assumption and OOD generalization, the appendix-buried mechanism details, and the decoding-mask fairness are specific, substantiated, and corroborated by the other detailed reviewers; they align with the meta-review's statement that the main initial concerns were addressed."
+    },
+    {
+      "reviewer": "Reviewer_435e",
+      "weight": "high",
+      "reason": "Detailed and specific with multiple corroborated concerns (critical details relegated to appendix, missing hyperparameter ablations, undocumented boundary-predictor training cost/per-backbone requirement, streaming incompatibility from future-token dependence, and batched-throughput cap from sequential processing). Its presentation score of 1 is a harsh outlier versus the other reviewers, and its 'lacking RULER' point appears factually off since RULER is in fact evaluated, so those specific items were downweighted while the substance was retained."
+    },
+    {
+      "reviewer": "Reviewer_bT3j",
+      "weight": "high",
+      "reason": "Well-substantiated. Concerns about hyperparameter sensitivity, the missing oracle dense Top-K comparison, kernel-level versus end-to-end speedup plus predictor/routing overhead, and decoding fairness are specific and reinforce the other detailed reviews. Its overall score of 5 aligns with the meta-review's confident acceptance."
+    },
+    {
+      "reviewer": "Reviewer_d9x3",
+      "weight": "medium",
+      "reason": "Its positive observations are specific and corroborated (identifies online variable-length chunking as the key novelty versus fixed-chunk methods like SeerAttention, and the strong speedups and comprehensive experiments the meta-review echoes as 'solid'), but it raises no weaknesses, questions, or limitations, so despite a strong-accept score its critical value is limited and it was treated as supporting rather than decisive."
+    }
+  ],
+  "score_rationale": "The meta-review anchors a clear accept (spotlight) and names all four reviewers as viewing the empirical evaluation as solid, so I weighted the three detailed, mutually corroborating reviews (58Zn, 435e, bT3j) most heavily and treated d9x3's uncritical strong accept as supporting but thin. Significance and originality were unanimous at 3. Soundness sits at 3 because two high-weight reviewers flagged substantive but addressable concerns (semantic-chunk assumption, decoding fairness, missing oracle baseline) while the meta-review viewed the methodology as sound. Presentation is 3 rather than 4 because the appendix-buried-details flaw is independently raised by three reviewers, but the lone presentation-1 score is an unsupported outlier; overall is 5, matching bT3j and the meta-review's confident acceptance while staying within the reviewers' [4,6] range."
+}

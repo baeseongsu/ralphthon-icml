@@ -1,0 +1,21 @@
+{
+  "forum_id": "6dI31vzkqT",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_kucm",
+      "weight": "high",
+      "reason": "Specific and substantiated: gives an itemized list of undefined notation (b_{n,K}, ran, sliced F-hat, H_r-Holder), proof typos (Lemma B.3, Theorem 2.5), and notation shadowing. The meta-review explicitly singles out kucm's notational problems as crucial to improve readability, directly adopting this line of critique."
+    },
+    {
+      "reviewer": "Reviewer_ey8t",
+      "weight": "high",
+      "reason": "Substantive and concrete on empirical validation: the Table 4 KL-vs-Jensen recall anomaly, proposed pathological-case stress tests, the training-objective-vs-evaluation framing concern, and relation to precision-recall-as-f-divergence literature. The meta-review explicitly calls out ey8t's weaknesses, especially the empirical validation, so its points are adopted."
+    },
+    {
+      "reviewer": "Reviewer_T2EX",
+      "weight": "high",
+      "reason": "Detailed and on-target: notational forward-referencing, hyperparameter (K, L) selection guidance, and computational-cost comparison. The meta-review explicitly instructs the authors to address all three of T2EX's questions, especially Q2 (guidance). Substantive points fully adopted; however the numeric overall score of 3 is inconsistent with its largely positive written assessment and the accept decision, so the recommendation number is down-weighted while the content is retained."
+    }
+  ],
+  "score_rationale": "All three reviewers are weighted high: each is specific and substantiated, and the meta-review explicitly adopts all three lines of critique (kucm's notation/readability, ey8t's empirical validation, T2EX's three questions and especially K/L guidance). Soundness is unanimous at 3; presentation is set to 2 because two of three reviewers scored it 2 and the meta-review singles out notation/readability as crucial to fix; significance and originality are set to 3, following the two-to-one majority and the not-yet-established practical impact. Overall recommendation is 5 (accept): the meta-review is clearly positive and two reviewers gave 5-6, while T2EX's 3 is down-weighted because its written assessment is largely favorable and its concerns are presentation/practical rather than fundamental. Confidence is 4 given the strong mutual corroboration of the qualitative evidence and its alignment with the meta-review, despite the spread in bottom-line scores."
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "KJq0iScNM6",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_rWjA",
+      "weight": "high",
+      "reason": "Specific, substantiated critique (accuracy-only evaluation lacking imbalance-aware metrics, no mean/std or significance tests, dataset-specific initialization for Val5/Val7, non-uniform superiority of CPBCC) that is directly adopted by the meta-review's rebuttal summary."
+    },
+    {
+      "reviewer": "Reviewer_Tgs5",
+      "weight": "high",
+      "reason": "Concrete points on prototype-count sensitivity, unanalyzed design choices, the 'decorative' theoretical analysis, and small gains on several datasets align with the meta-review's flagged concerns about sensitivity to design choices and the interpretive theory; adds a reasonable computational-cost point."
+    },
+    {
+      "reviewer": "Reviewer_VL1S",
+      "weight": "high",
+      "reason": "Most detailed and well-grounded review; its critique of the interpretive Theorem 4.1, accuracy-only evaluation, initialization dependence, prototype sensitivity, and CPBCC-vs-PTBCC inconsistency is strongly corroborated by both the other high-weight reviewers and the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_gar1",
+      "weight": "low",
+      "reason": "Outlier whose core objections (model 'too complicated'/unjustified, hard notation, 'datasets too small') are contradicted by the meta-review, which calls the method technically sound and well motivated and praises the ten-dataset evaluation; extreme presentation=1 and significance=1 scores are shared by no other reviewer, and no questions were offered. Only the added-baselines point has partial corroboration."
+    }
+  ],
+  "score_rationale": "The three mutually corroborating high-weight reviewers (rWjA, Tgs5, VL1S) converged on soundness/presentation/significance/originality = 3 and overall = 4, and their concerns (imbalance-aware metrics, variance reporting, initialization, prototype sensitivity, interpretive theory) are precisely the ones the meta-review adopts, so I anchored every dimension at 3 and the recommendation at 4 (weak accept), consistent with the Accept decision. Reviewer_gar1's much lower scores (presentation 1, significance 1, overall 2) were treated as low-weight outliers because the meta-review affirms the method is technically sound and well motivated and commends the evaluation, directly contradicting gar1's central objections, so they were not allowed to pull the scores down. Confidence is 4 because the high-weight evidence is coherent and cross-validated across reviewers and the meta-review, not because of averaging."
+}

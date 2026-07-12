@@ -1,0 +1,26 @@
+{
+  "forum_id": "u0LjAArXHi",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_6Bek",
+      "weight": "high",
+      "reason": "Specific and substantiated. Its framing of the ASR/lineage prior as the well-motivated core matches the meta-review's positive novelty framing, and its concrete asks (a sensitivity analysis of prior construction, the observation that the enzyme case is not truly zero-shot, and that the ProtBFN comparison is uncontrolled given an ~8x larger corpus) are corroborated by other reviewers and align with the meta-review's generalization concern."
+    },
+    {
+      "reviewer": "Reviewer_84Mh",
+      "weight": "high",
+      "reason": "Specific and actionable. Its three main points -- generalization to families unseen in training, the uncompetitive inference speed, and missing competitive baselines (ESM3, DPLM/DPLM2) -- are echoed by the meta-review (computational overhead and generalization were the two adopted concerns) and corroborated by FMCV and 6Bek."
+    },
+    {
+      "reviewer": "Reviewer_eYYd",
+      "weight": "high",
+      "reason": "Most confident review (confidence 4) and specific; the concern that gains may stem from richer priors/data rather than the method is well corroborated by 6Bek's uncontrolled-comparison point and is reflected in the written attribution critique. Its 'limited methodological novelty' claim runs counter to the meta-review's novelty framing and the other reviewers' originality ratings, so that specific point is downweighted in the prose."
+    },
+    {
+      "reviewer": "Reviewer_FMCV",
+      "weight": "medium",
+      "reason": "Its MSA-quality and ASR computational-overhead point is explicitly echoed by the meta-review, and the family-aware limitation and ASR-robustness question are on target and relevant. However, confidence is low (2) and the soundness rating of 2 is an outlier not fully substantiated, so it is weighted below the corroborating high-confidence reviewers."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on novelty of the ASR-prior approach as a strength and identifies computational overhead and generalization as the two real concerns, which are exactly the points raised by the high-weight reviewers (6Bek, 84Mh) and corroborated by eYYd and FMCV; this convergence gives confidence 4. Soundness (3) and originality (3) sit at the weighted center of the human scores: FMCV's soundness=2 and 6Bek's originality=4 are outliers against a majority of 3s, and the meta-review's positive novelty framing keeps originality from dropping below 3 without pushing it to 4 given the combination-of-known-components concern. Presentation and significance were unanimous at 3. Overall recommendation is set to 4 (weak accept), the mode among reviewers and appropriate for a positive but pre-rebuttal assessment with open concerns about prior sensitivity, generalization/zero-shot overclaim, controlled comparison, and missing baselines, staying within the [4,5] reviewer range."
+}

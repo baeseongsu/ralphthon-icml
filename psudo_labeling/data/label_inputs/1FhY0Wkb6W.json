@@ -1,0 +1,62 @@
+{
+ "forum_id": "1FhY0Wkb6W",
+ "title": "Object-level Semantic and Spatial Distillation for Open Vocabulary Detection",
+ "abstract": "Recent Open-vocabulary Object Detection (OVD) approaches adapt CLIP through region-level distillation to improve semantic alignment for novel categories. However, the distilled regional features are often used for both classification and localization, enhancing semantic consistency at the expense of spatial fidelity. To resolve this, we propose Object-level Semantic and Spatial Distillation (OSSD), a two-stage framework that explicitly decouples semantic and spatial feature learning. OSSD first distills object-level semantics from CLIP’s global [CLS] embeddings to enhance region discrimination, and then injects fine-grained spatial and structural priors via spatial distillation from a detector trained only on COCO base categories. Furthermore, we propose a Location Quality Estimation Head (LQEH) that predicts class-agnostic localization quality, complementing objectness confidence to improve the novel-object perception. Extensive experiments show that our method achieves 49.2 AP50 on the OV-COCO benchmark. exceeding the best previous result by 3.6\\%, On the OV-LVIS benchmark, our method reaches 40.5 mAP on novel categories, outperforming previous state-of-the-art methods.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper received overall positive reviews. All reviewers initially recommended weak accept. They generally regard the proposed framework novel and solid, the writing clear, the improvement over existing baselines strong, and the ablation study convincing. There are also some concerns about the framework design, outdated baselines, computational overhead, etc.  The rebuttal was persuasive. After the rebuttal, Reviewer oYQS further increased the rating from weak accept to accept. The AC checked the paper, rebuttal, and review comments, and recommends accepting the paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_SDPd",
+   "summary": "This paper proposes a distillation learning model framework for Open-Vocabulary Object Detection, utilizing both semantic and spatial distillation methods. The proposed head design based on Hungarian matching, along with the two distillation methods, significantly outperforms existing SOTA methods on datasets such as OV-COCO.",
+   "strengths_and_weaknesses": "Soundness: The paper is relatively reliable, with rich arguments and sufficient details. The theoretical explanations are fairly clear.\n\nPresentation: The presentation is good, with a simple and clear method structure, accurate formulas, and clear, mobile figures. The overall model is easy to reproduce.\n\nSignificance: The significance is moderate. The main issue lies in the fairness of the comparisons. The paper uses three modules, with the Spatial Distillation part utilizing the additional DINOv2 model. Although the Semantic Distillation outperforms the 2023 CLIPSelf method with the same backbone, it is not significantly outstanding.\n\nOriginality: The originality is high. Although the problem insights are similar to previous methods, different solutions are adopted, and the three sub-modules have certain innovations.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. In Table 3, it is suggested to add the experimental results for Semantic Distillation + LQEH.\n2. In Table 2, it is suggested to include the results for pure OSSD (without using Spatial Distillation), as the current comparison may be unfair.\n3. In Table 1, it would be beneficial to compare the ViT framework with recent works.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_Ckvv",
+   "summary": "This paper proposes Object-level Semantic and Spatial Distillation (OSSD) to decouple the learning processes of semantic and spatial features. The model first distills object-level semantic features from the CLIP model and then distills spatial features from a pre-trained base-category detector. In addition, the paper introduces a Localization Quality Estimation Head (LQEH) module. The proposed method achieves significant performance improvements on the OV-COCO and OV-LVIS benchmarks.",
+   "strengths_and_weaknesses": "Strengths:\n1、The method achieves significant performance improvements, outperforming many existing baseline approaches.\n2、The authors provide in-depth analyses of the proposed modules. Table 3 (ablation study), Table 4 (attention sensitivity analysis), and Table 5 (IoU supervision function) help explain the specific contribution of each design choice to the final performance.\n\nWeaknesses:\n1、 The proposed framework appears quite cumbersome. It involves multiple stages: training an RPN, semantic distillation using a frozen CLIP teacher, spatial distillation using another pre-trained detector as a teacher, and an S2S adapter. \n2、Most of the baseline models used for comparison are from 2023 or early 2024. The authors should consider comparing their method with more recent and representative research works.\n3、The concept of decoupling localization and classification, as well as multi-stage distillation, is relatively conventional in the OVD community. While the specific combination here is effective, the conceptual leap from existing distillation-based methods feels somewhat limited.",
+   "soundness": 4,
+   "presentation": 4,
+   "significance": 4,
+   "originality": 1,
+   "key_questions_for_authors": "Please provide a more detailed analysis of the computational overhead. For reference, this could include the FLOPs, training time, and memory consumption introduced by the multiple teacher models and the two-stage distillation process.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_oYQS",
+   "summary": "The submission proposes OSSD, a two-stage framework for open-vocabulary detection, which decouples semantic and spatial learning to avoid hurting localization when strengthening semantics. Stage 1 performs object-level semantic distillation: proposals from an RPN are cropped and encoded by a frozen CLIP to obtain [CLS] embeddings, while the student pools patch features via RoIAlign and aligns them with the teacher using a cosine loss. The last CLIP attention layer is modified to value–value attention (without residuals) to reduce global bias and improve local coherence. Stage 2 conducts spatial distillation from a detector encoder trained only on COCO base classes (or from DINOv2): the CLIP backbone is frozen and a lightweight S2S adapter is trained to match teacher–student patch correlation matrices, injecting boundary- and shape-aware priors. A class-agnostic Location Quality Estimation Head (LQEH) predict localization quality using a transformed IoU target with focal weighting, improving proposal ranking for novel objects.",
+   "strengths_and_weaknesses": "Strengths\n\n1. Clear problem decomposition: decouples semantic and spatial learning to resolve the recognition–localization trade-off in OVD.\n\n2. Solid technical design: object-level semantic distillation with CLIP [CLS] targets. Spatial distillation via patch–patch correlation matching. Lightweight S2S adapter avoids interference between stages.\n\n3. Thoughtful CLIP modification: replacing the last attention with value–value attention to curb global bias and enhance local coherence.\n\n4. Class-agnostic localization head (LQEH): improves ranking of novel objects, by predicting localization quality with a stabilized IoU target and focal weighting.\n\n5. Strong and consistent empirical results: SOTA on OV-COCO and OV-LVIS across backbones; gains persist with different spatial teachers (DETR encoder, DINOv2).\n\nWeaknesses\n\n1. Computational overhead not quantified: two-stage training, teacher encoders, and correlation-matrix losses likely increase cost. Missing FLOPs/memory/wall-clock reporting and inference latency analysis.\n\n2. Limited exploration of attention modification scope: only the last layer without residuals is studied. Broader ablations (layer depth, partial residuals) and effects on text–image alignment could strengthen claims.\n\n3. Dependence on base-supervised components: RPN proposals and base-trained spatial teachers may embed dataset biases. Robustness under heavy domain shifts (tiny objects, dense scenes, long-tail) is underexplored.\n\n4. LQEH comparison breadth:Lacks direct head-to-head with alternative quality-aware heads (e.g., GFL/Varifocal/Rank-DETR) or combinations with them.\n\n5. External dat or /teacher variability: while different teachers are tried, the method’s behavior with weaker or noisy teachers and on non-COCO bases is not systematically analyzed.\n\n6. Failure case analysis is light: more diagnostics on missed/false positives for novel categories would help guide deployment and further improvements.\n\n7. Lacking discussion with 3D open-vocabulary detection [1,2] in the related work: what's the differences between the designs and will the proposed idea have potential to be applied in 3D domain?\n\n\n[1] Yang Cao, Yihan Zeng, Hang Xu, and Dan Xu. Coda: Collaborative novel box discovery and cross-modal alignment for open-vocabulary 3D object detection. In NeurIPS, 2023.\n\n[2] Pengkun Jiao, Na Zhao, Jingjing Chen, and Yu-Gang Jiang. Unlocking Textual and Visual Wisdom: Open-Vocabulary 3D Object Detection Enhanced by Comprehensive Guidance from Text and Image. In ECCV, 2024.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. How does the two-stage distillation scale in compute and memory, and what are the training or inference latency trade-offs, compared to single-stage or no-distillation baselines?\n\n2. How robust is the proposd approach under distribution shifts (tiny/occluded/dense objects, non-COCO bases), and how much do RPN and spatial teacher biases affect novel-category performance?\n\n3. What is the impact of the attention modification scope (last-layer value–value, residual removal) on text–image alignment and detection accuracy, and would alternative configurations perform better?",
+   "limitations": "None. I have presented the limitation in the 'weakness' part.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_DRKT",
+   "summary": "This paper presents an elegant idea for open-vocabulary object detection by distilling rich semantic knowledge from pre-trained CLIP and spatial priors from a pre-trained detector. It achieves highly impressive results on both OV-COCO and OV-LVIS.",
+   "strengths_and_weaknesses": "Strengths\n1. The motivation of the proposed method is theoretically sound from the perspective of object detection.\n2. The experimental results are highly impressive and the proposed method is supposed to benefit the research community of open-vocabulary object detection.\n3. The paper is well organized and clearly presented, making it easy to follow and understand.\n\nWeaknesses\n1. The performance of the proposed method largely relies on the strong prior knowledge embedded in the pre-trained models. The authors are strongly encouraged to further discuss the originality and novelty of the proposed distillation pipeline, especially in comparison with existing methods that also leverage pre-trained models.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Despite the experimental results shown in Table 4, the Value-Value Attention defined in Eq. 3 lacks sufficient theoretical validation.\nThe authors should further clarify how the method avoids global semantic bias.\n2. There are several recent state-of-the-art methods that also rely on pre-trained models and achieve stronger performance on OV-COCO, such as VLDet (Enhancing Open-Vocabulary Object Detection through Multi-Level Fine-Grained Visual-Language Alignment) and C3-OWD ( C3-OWD: A Curriculum Cross-modal Contrastive Learning Framework for Open-World Detection).  Though a like-for-like numerical comparison may not be feasible, the authors are strongly encouraged to provide a discussion and analysis of these related works.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

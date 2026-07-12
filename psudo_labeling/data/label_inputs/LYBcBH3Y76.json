@@ -1,0 +1,62 @@
+{
+ "forum_id": "LYBcBH3Y76",
+ "title": "Seeing is Solving: Unlocking Efficient Multimodal RL via View Alignment",
+ "abstract": "Although Reinforcement Learning Fine-Tuning (RLFT) applied to Vision-Language Models (VLMs) substantially enhances multimodal reasoning capabilities, their prohibitive training cost limits broad adoption. Surprisingly, most existing methods simply port Large Language Model (LLM) RLFT techniques to VLMs, while ignoring a intrinsic property of multimodal models: their dynamic text–vision alignment. We ask a new question: Can this intrinsic alignment be turned into a training signal that makes VLM RLFT more efficient? We analyze how a VLM plans to attend, actually attends, and ideally should attend during reasoning, and derive two lightweight metrics from these patterns. Predictive View Accuracy (PVA) estimates sample difficulty, and Reasoning View Accuracy (RVA) reflects the quality of chain-of-thought (CoT) reasoning. These alignment signals enable automated data curriculum and dense reasoning supervision. We introduce FOCUS-RL, a plug-and-play framework that can be seamlessly integrated into any VLM and dramatically boosts RLFT training efficiency. FOCUS-RL achieves 2.5 x – 4 x faster convergence over vanilla GRPO and consistent accuracy gains (+4.4 on average) across six different benchmarks and multiple VLM families.",
+ "primary_area": "deep_learning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper introduces FOCUS-RL, a framework that leverages internal text-vision alignment via PVA and RVA metrics to significantly boost VLM-RLFT efficiency. While reviewers initially highlighted concerns regarding the dependence on reference CoT data, the lack of causal evidence for visual grounding, and limited task diversity, the authors provided a robust rebuttal. By adding text-only supervision baselines, testing sensitivity to CoT quality, and providing new results on image captioning, the authors successfully demonstrated that FOCUS-RL provides unique multimodal advantages and broad generalizability. Given that the rebuttal fully satisfied all reviewers and confirmed significant empirical gains including 2.5x-4x faster convergence, this paper is recommended for acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_evKt",
+   "summary": "This paper proposes FOCUS-RL, a reinforcement learning fine-tuning framework for vision-language models that explicitly exploits text-vision alignment during reasoning. The method defines three internal “views” derived from token-image interactions: planned view, reasoned view, and guided view. Based on these, the paper introduces PVA to estimate sample difficulty and drive curriculum learning, and RVA to score CoT quality and provide denser process-level rewards during RL. Experiments on several VLMs report both better final accuracy and substantially faster convergence.",
+   "strengths_and_weaknesses": "Strengths\n------------\n1. Clear multimodal motivation.\nThe paper identifies two genuine VLM-RLFT pain points and argues that existing solutions are largely inherited from LLM RL rather than tailored to multimodal reasoning. This motivation is well presented and technically relevant.\n\n2. Conceptually neat formulation.\nThe planned/reasoned/guided view decomposition is intuitive, and PVA/RVA are simple, lightweight metrics that connect alignment behavior to curriculum learning and process supervision in a clean way.\n\n3. Good empirical coverage.\nThe method is evaluated on multiple benchmarks and several base models, and the paper reports both final accuracy gains and convergence speedups.\n\nWeaknesses\n---------------\n1. Limited evidence that view alignment causally improves reasoning.\nThe paper shows correlation between PVA and answer quality and visual examples linking RVA to better CoT, but the evidence is still largely correlational. The work would be stronger with stronger causal validation or more controlled ablations isolating whether the gains come from improved visual grounding versus simply adding another dense reward.\n\n2. Evaluation could be narrow.\nMost experiments are on a family of math/logic-oriented benchmarks. It remains unclear how well the method transfers to broader multimodal tasks, noisier supervision, or settings without high-quality reference CoT.\n\n3. Dependence on reference CoT could be a practical limitation.\nThe policy-learning part requires ground-truth CoT to construct guided views. This may limit scalability in domains where answers are available but reliable reference reasoning traces are not.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "My key questions focus on the effectivness of the proposed paradigm. Please refer to the weakness section.",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_AYCi",
+   "summary": "This paper introduces PVA and RVA, two metrics that are used to improve multimodal RL training. The fundamental object underlying both of these metrics is the concept of a view, which is defined as a vector of cosine similarities between the hidden states of the final text token and the image tokens. This has been validated in prior work as an interpretable structure that measures the model’s visual attention. We assume we have access to a ground truth CoT and compute the view of the model after it, this is called the guided view. PVA attempts to capture the model’s perceived difficulty of a question and is defined by the similarity between the planned view, the model's view after getting the question, and the guided view. RVA is the similarity between the reasoned view, the model’s view after outputting its CoT, and the guided view, and it is used as a form of process supervision on the model’s response. PVA is used to rank samples for curriculum learning and RVA is used as process supervision during RL, which when combined boosts performance by 2.6% over the baseline.",
+   "strengths_and_weaknesses": "**Strengths**\n\nThe topic area is very interesting. The paper is overall well written and easy to follow. The method is simple yet novel and I like that they ran experiments demonstrating it holds on other models. The figures are well-made and make it easy to understand the paper.\n\n**Weaknesses**\n\nA limitation is that ground truth CoT sequences are required. This is a limitation that is not really acknowledged as such in the paper and the authors should do so. The problem is that the purpose of regular RL is that we want the model’s reasoning traces to emerge organically, but we are putting a bias on them in this work. Furthermore, the reasoning traces that are used as supervision are themselves generated by a model, so they may be suboptimal.\n\nRelated to the above, I think there should be a text-only process supervision baseline. The paper claims that their method works because of multimodal alignment, but the effect of adding process supervision is not tested. If text-only supervision on the CoT traces works just as well, then there is no point to using their method. If this ablation is provided and FOCUS-RL maintains superior results, then I would raise my score.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "“In practice, due to token continuity, v_reason is usually close to v_plan”. What does this mean? Do you show this empirically? If they are similar then why do we need both?\n\n\nFigure 4, does “correct CoT” mean that these are CoT in cases where the answers are correct or that they are themselves are correct as reasoning traces, i.e. is the reasoning trace judged as being consistent with the answer?",
+   "limitations": "As I mentioned, it should be acknowledged that requiring ground truth CoT is a limitation.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_xQTc",
+   "summary": "The paper studies reinforcement learning for VLMs and introduces text-vision alignment into the RL pipeline, improving the data selection and reward design of the traditional GRPO algorithm to encourage stronger attention to visual elements during VLM training. The authors propose two new metrics, PVA and RVA, which are used for training data ranking and as an additional reward signal, respectively. The motivation is intuitively reasonable, and the experimental results also demonstrate a certain level of effectiveness.",
+   "strengths_and_weaknesses": "This paper improves the effectiveness and efficiency of reinforcement learning for VLMs by introducing two text-vision alignment based metrics, PVA and RVA, for data selection and reward design, respectively.\n\n**Strengths:**\n\n- The paper addresses a clear and well-motivated problem: how to leverage the inherent visual alignment behavior of VLMs to improve RLFT efficiency. The paper is easy to follow and generally clearly written.\n\n- Experimentally, the proposed method shows consistent performance gains over standard GRPO.\n\n**Weaknesses:**\n\n- The method relies on ground-truth CoT, which limits its applicability. The quality of the CoT may also affect the final performance, and collecting such CoT data can be cumbersome and costly.\n\n- The evidence supporting the effectiveness of PVA and RVA is reasonable, but not yet fully convincing. For example, the reported correlation between PVA and correctness is 0.63, which indicates a meaningful relationship, but is still not particularly strong.\n\n- The final accuracy improvement over vanilla GRPO is relatively modest.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- Has the paper evaluated the sensitivity of the proposed method to the quality of the CoT? Also, in scenarios where CoT annotations are unavailable, would the method face significant limitations?\n\n- There are some issues with writing errors. One obvious example is that the abstract states the method is evaluated on six different benchmarks, while the later introduction mentions across seven reasoning benchmarks; however, the table actually lists six benchmarks. This inconsistency may negatively affect the reader’s impression of the paper.\n\n- The baselines used in the paper are relatively dated. It would be helpful to know whether the proposed method remains effective when compared against stronger and more recent baselines.\n\n- The effectiveness of PVA and RVA still requires further clarification. In particular, the reported correlation between PVA and correctness is 0.63, which suggests some relationship, but is not especially strong.",
+   "limitations": "yes",
+   "overall_recommendation": 3,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_RYkL",
+   "summary": "This paper studies the visual reasoning limitations of multimodal large language models and argues that current models often fail to utilize visual information throughout the reasoning process. The authors propose a framework that enables iterative visual-grounded reasoning, allowing the model to repeatedly access visual features during multi-step reasoning. By maintaining visual grounding across reasoning steps, the method improves performance on complex visual reasoning tasks and demonstrates that sustained visual perception is critical for accurate multimodal reasoning.",
+   "strengths_and_weaknesses": "### Strengths\n1. The motivation is clear. The two mentioned challenges are proper. \n2. Good writing and presentation, the figure is nice, but the font size is kind of small.\n\n\n\n### Weaknesses\n1. The observation that visual info is getting lost during the reasoning chain is an uncountable new insight. And the idea of revisiting the visual info during the reasoning chain is also a famous topic.\n2. The evaluated benchmarks mainly focus on math reasoning benchmarks; the authors can consider adding some more benchmarks in other fields.\n3. There are some more methods that target sparse reward in visual reasoning (mentioned in Sec. 2), which should be discussed.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "see the weaknesses",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

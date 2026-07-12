@@ -1,0 +1,162 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "reviewarena",
+  "dataset_size": 5155885598,
+  "description": "",
+  "download_size": 2728439622,
+  "features": {
+    "forum_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "conference": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "year": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "track": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "venue_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "paper_number": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "title": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "abstract": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "authors": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "keywords": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "tldr": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "primary_area": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "venue": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "decision": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "decision_comment": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "author_rebuttal": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "num_reviews": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "reviews_json": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "markdown": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "markdown_chars": {
+      "dtype": "int64",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 7884325220,
+  "splits": {
+    "neurips": {
+      "name": "neurips",
+      "num_bytes": 2023219070,
+      "num_examples": 18453,
+      "shard_lengths": [
+        7339,
+        4646,
+        3690,
+        2778
+      ],
+      "dataset_name": "reviewarena"
+    },
+    "iclr": {
+      "name": "iclr",
+      "num_bytes": 2043229614,
+      "num_examples": 22532,
+      "shard_lengths": [
+        6711,
+        6711,
+        5706,
+        3404
+      ],
+      "dataset_name": "reviewarena"
+    },
+    "icml": {
+      "name": "icml",
+      "num_bytes": 387959147,
+      "num_examples": 3257,
+      "dataset_name": "reviewarena"
+    },
+    "tmlr": {
+      "name": "tmlr",
+      "num_bytes": 400636402,
+      "num_examples": 3748,
+      "dataset_name": "reviewarena"
+    },
+    "emnlp": {
+      "name": "emnlp",
+      "num_bytes": 175865130,
+      "num_examples": 2009,
+      "dataset_name": "reviewarena"
+    },
+    "corl": {
+      "name": "corl",
+      "num_bytes": 55416282,
+      "num_examples": 813,
+      "dataset_name": "reviewarena"
+    },
+    "colm": {
+      "name": "colm",
+      "num_bytes": 69559953,
+      "num_examples": 717,
+      "dataset_name": "reviewarena"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

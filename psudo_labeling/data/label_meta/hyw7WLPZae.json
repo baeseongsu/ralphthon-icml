@@ -1,0 +1,26 @@
+{
+  "forum_id": "hyw7WLPZae",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_GfZA",
+      "weight": "high",
+      "reason": "Specific and substantiated. The gripper/discrete-action DCT limitation and the missing latency/control-frequency analysis are adopted almost verbatim by the meta-review, and the long-horizon (K=64) robustness point is independently corroborated by other reviewers. Constructive, evaluation-relevant questions."
+    },
+    {
+      "reviewer": "Reviewer_h8k6",
+      "weight": "high",
+      "reason": "Most rigorous review. Its attribution-control point (compute-matched two-stage time-domain baseline) is the sharpest soundness gap, and its DCT-localization/generality concern is directly echoed by the meta-review ('may not be beneficial across the board... requiring care in its use'). The causal-framing critique is corroborated by vyfN. Lowest scores reflect genuine, well-argued soundness/significance gaps."
+    },
+    {
+      "reviewer": "Reviewer_vyfN",
+      "weight": "medium",
+      "reason": "Clean, well-motivated summary that flags the latency/time-cost issue (adopted by the meta-review) and the causal-framing weakness (corroborated by h8k6). Tempered by low self-reported confidence (2) and by some asks (VQ-VAE comparison, dynamic scenes) that are not reflected in the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_DCsM",
+      "weight": "medium",
+      "reason": "Correctly notes the clear writing, the chunk-length-robustness claim being under-demonstrated downstream, and the synthetic nature of the noise study, and asks useful specific questions (K sweep, open-loop vs receding horizon). However, its central 'limited novelty / DCT is standard' and low-significance framing is not adopted by the meta-review, which calls the method principled and validates it against spectral baselines."
+    }
+  ],
+  "score_rationale": "High-weight reviewers GfZA and h8k6 anchor the review: their gripper/DCT-generality and time-cost concerns are adopted by the meta-review, and h8k6's attribution-control point is the sharpest soundness gap, so soundness sits at 3 (not 4) but not lower, since the meta-review is satisfied that the spectral baselines partly isolate the effect. Presentation (3), significance (3), and originality (3) follow the majority and the meta-review's positive, principled-method framing, declining to adopt DCsM's minority low-novelty/low-significance view that the meta-review contradicts. Overall recommendation is 4 (weak accept), matching the three reviewers at 4 and the Accept decision while acknowledging the unresolved attribution and cost questions; confidence is 4 given strong cross-reviewer corroboration on the main strengths and weaknesses."
+}

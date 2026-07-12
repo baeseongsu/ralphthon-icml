@@ -1,0 +1,52 @@
+{
+ "forum_id": "IjrmQgIvHU",
+ "title": "Identifiable Markov Switching Models with Instantaneous Effects and Exponential Families",
+ "abstract": "Temporal systems often exhibit non-stationary behaviour, such as seasonal climate variation or glucose fluctuations in patients with type-1 diabetes. \nOne way to model non-stationarity is through discrete latent *regimes*, *i.e.*, stationary segments of time. \nSuch systems induce a *Markov Switching Model* (MSM), a class of Hidden Markov Models with autoregressive dependencies among latent regimes and observed variables. \nIdentifying latent regimes is challenging in the presence of frequent regime switches and nonlinear and non-Gaussian dynamics, particularly when there are *instantaneous effects* between the variables, *e.g.*, due to slow rates of measurements.\nIn this work, we establish the identifiability of both latent regimes and regime-dependent causal structures under temporal regime dependencies, nonlinear lagged and instantaneous effects, and independent noise from the exponential family.\nOur identifiability theory subsumes non-temporal mixtures of causal models. \nFurthermore, we introduce $\\texttt{FlowMSM}$, a regime detection framework that can be paired with any stationary causal discovery method to recover regime-dependent causal structures. \nExperiments on synthetic benchmarks and a financial economics dataset demonstrate the effectiveness of our approach to detect latent regimes and discover causal structures from non-stationary time series.",
+ "primary_area": "general_machine_learning->causality",
+ "decision": "Accept (regular)",
+ "decision_comment": "Reviewers aknowledged the importance of the addressed problem, the soundness and novelty of the theory, the relevance and quality of the experiments. While some weaknesses have been pointed out and discussed, notably regarding the clarity of main text and inference details, they not justify rejection. I recommend acceptance and encourage the authors to use the reviewers's suggestions to improve the manuscript for the camera ready version.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_qtR9",
+   "summary": "The paper studies non-stationary time series with discrete latent regimes, modeling them with Markov switching models. The authors establish identifiability of latent regimes and regime-dependent causal structures under nonlinear lagged and instantaneous effects, and independent noise from the exponential family. The authors develop a regime detection framework that can be paired with any stationary causal discovery method to recover regime-dependent causal structures. The method is validated on synthetic and real-world financial economics data.",
+   "strengths_and_weaknesses": "Strengths:\n- The paper is overall well written and easy to follow. The notations are clearly defined and the assumptions are stated clearly with explanation before introducing the result.\n- Non-stationarity is common in real-world applications. The work helps make causal discovery more practical and applicable in realistic real-world scenarios.\n-  The theoretical result appears to be sound and rigorous (although I did not carefully check all proof details), and the approach is reasonable.\n\nWeaknesses:\n- The exogenous noise is assumed to belong to exponential family, which might limit the applicability of the method/result.\n- The experiment on real-world financial data is interesting but the explanation is rather brief. Providing a more detailed explanation of the results/insights would help clarify the practical implications of the method.\n- Providing empirical studies on more real-world dataset, both for regime detection and causal discovery, would strengthen the experiment part.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- What is the running time of the method?\n- Could the authors discuss the challenges of extending their result beyond the exponential family, and whether such an extension might be feasible in future work?",
+   "limitations": "A discussion of limitation was not found",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "Most of my concerns have been addressed and I maintain my positive score."
+  },
+  {
+   "reviewer": "Reviewer_vFiC",
+   "summary": "This paper studies the identifiability of the Markov Switching Model (MSM), a class of hidden Markov models. The authors establish identifiability of both the latent regimes and the regime-dependent causal structures under temporal regime dependencies. Based on this result, they propose the FlowMSM framework, which can be combined with causal discovery methods to recover temporal causal structures. Experimental results on both simulated and real-world datasets demonstrate the effectiveness of the proposed approach.",
+   "strengths_and_weaknesses": "##Strengths\n\n1. The paper is generally well written and clearly organized.\n\n2. The authors provide a good review of the related literature.\n\n3. The identifiability results look sound and extend the identification results of existing models (e.g.,  finite-state HMMs, LSNMs). Specifically, the LSNMs assume that there are no latent confounders, while the author's approach relaxes this assumption by introducing the identifiability of the mixture model.\n\n##Weakness:\n\n1. The contribution is primarily theoretical. However, the computational efficiency of the proposed estimation procedure and its practical scalability are not sufficiently discussed.\n\n2. The identifiability results rely on several strong assumptions (e.g., Assumption 3.4). It would be helpful to discuss how realistic these assumptions are in practical applications.\n\n3. The paper does not clearly explain the relationship between the theoretical identifiability results and the consistency of the proposed estimation procedure. In particular, it would be useful to clarify whether the estimator is guaranteed to be consistent under the stated assumptions.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See Weakness.",
+   "limitations": "NAN",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": null
+  },
+  {
+   "reviewer": "Reviewer_Y5aq",
+   "summary": "This paper introduces a model for nonstationary temporal processes based on a latent variable with a Markov-switching dynamics. The authors prove their model to be identifiable under several conditions. They introduce a inference procedure called FlowMSM that allows to recover the latent states. They validate their method on synthetic datasets generated under different scenarios. Finally, they provide an illustration on a financial dataset.",
+   "strengths_and_weaknesses": "**Strengths**:\n    • The authors propose a flexible framework to model non-stationary processes, that can be used in many applications.\n    • The identifiable result is, to the best of my knowledge, novel and quite general. I think it is a valuable contribution for the interpretability of such switching-Markov models.\n    • The authors provide a code that can be used to reproduce the results.\n\n**Weaknesses**:\n    • The choice of the number of hidden classes K appears as a critical point in the inference method. While the authors state in the main document « Importantly, we presume no knowledge of the number of regimes K », the numerical studies displayed in the appendix show that overfitting this parameter has a strong impact on the quality of the results. \n    • The organization of the paper is quite unusual and sometimes not easy to follow. In particular, a large amount of space is dedicated to the introduction of the assumptions for establishing the identifiability result, leaving very little space for the inference procedure. Most of the necessary details to understand the inference method are postponed to appendices, and should at least be referred to clearly in the main document to facilitate the reading.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "• The authors mention that the hyperparameter K « can be optimised in a hold-out validation set » but it seems that in practice, it is not estimated but fixed and that a sensitivity analysis is provided. Is this correct? Would it be possible to estimate it for instance with a standard penalized likelihood criterion?\n    • How has the value of K be chosen in the real-world dataset? Has it been set to 2 or is it estimated? In particular, the results of  FlowMSM appear easier to interpret but the number of hidden states is smaller than for competitors, leading to less dynamics changes. \n    • Since the overfitting of the parameter appears as a critical point, I think this at least be stated in the main text instead of being only in Appendix E.5.",
+   "limitations": "The limitations mentioned are quite vague and could be discussed in more details.",
+   "overall_recommendation": 5,
+   "confidence": 3,
+   "final_justification": "I think that the identifiability theory for Markov-switching models developed by the authors is a valuable contribution. I had some concerns regarding the empirical validation, but they have been addressed during the rebuttal.\nTherefore I increased my score from 4 to 5."
+  }
+ ]
+}

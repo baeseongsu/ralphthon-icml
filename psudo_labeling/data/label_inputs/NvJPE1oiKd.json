@@ -1,0 +1,62 @@
+{
+ "forum_id": "NvJPE1oiKd",
+ "title": "Computationally-efficient Graph Modeling with Refined Graph Random Features",
+ "abstract": "We propose *refined GRFs* (GRFs++), a new class of *Graph Random Features* (GRFs) for efficient and accurate computations involving kernels defined on the nodes of a graph. GRFs++ resolve some of the long-standing limitations of regular GRFs, including difficulty modeling relationships between more distant nodes. They reduce dependence on sampling long graph random walks via a novel *walk-stitching* technique, concatenating several shorter walks without breaking unbiasedness. By applying these techniques, GRFs++ inherit the approximation quality provided by longer walks but with greater efficiency, trading sequential inefficient sampling of a long walk for parallel computation of short walks and matrix-matrix multiplication. Furthermore, GRFs++ extend the simplistic GRFs walk termination mechanism (Bernoulli schemes with fixed halting probabilities) to a broader class of strategies, applying general distributions on the walks' lengths. \nThis improves approximation accuracy of graph kernels, without incurring extra computational cost. We provide empirical evaluations to showcase our claims and complement our results with theoretical analysis.",
+ "primary_area": "probabilistic_methods->monte_carlo_and_sampling_methods",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper introduces GRF++, an enhanced Graph Random Features method that improves the modeling of long-range node relationships by replacing long random walks with stitched shorter walks and allowing more flexible walk lengths. This results in both higher accuracy and more efficient, parallelizable computation. The approach is easy to understand and supported by strong theoretical guarantees, including proofs of unbiasedness and analysis of error behavior. Empirical results consistently show that GRF++ outperforms standard GRF in terms of approximation error and downstream task performance. The paper is clearly written, well-structured, and provides thorough comparisons with existing methods. Overall, it demonstrates high technical quality and good originality, although its broader impact on the field is considered questionable by some of the reviewers, despite meaningful improvements to the GRF framework.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_GiaN",
+   "summary": "The paper introduces GRF++, a new graph kernel approximation technique. GRF++ improves on GRF by introducing techniques to stitch together multiple random walks, effectively allowing more parallelism in its implementation. The theoretical and experimental results seem strong both in terms of error and runtime performance.",
+   "strengths_and_weaknesses": "Strengths\n* Easy to understand technique with strong theoretical guarantees\n* The proposed technique improves both accuracy and runtime\n\nWeaknesses\n* The paper tends to be dense sometimes for a non-theoretical ML reader",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "The high-level approach proposed in this paper is plausible. The problem setting is well-explained. Stitching multiple walks seems intuitive, but making sure it is unbiased is important, and the authors have proven it is the case. The experimental results are also strong. Overall, I believe it is a well-executed piece of work.\n\nHowever, as a non-expert, I found the mathematical sections hard to parse. A good paper would first mention the intuition and then go into the proofs, and this makes it easy for a non-expert reader. I found that this was missing from the paper, and hence some of the theoretical results were hard to grasp. Please improve this part. Algorithm 1 is well-presented, with Algorithm 2 providing refinements. However, I got confused about the options. What are these exactly? Please explain or provide a structure to understand these properly.\n\nThe evaluation results are good. I think it is better to move the ImageNet results to the main body. The claim that GRF++ is always better is unfounded. After reviewing the results in the appendix, it appears that GRF++ is only better in some cases. Please explain. \n\nOverall, I think the idea is neat and well-executed. However, as a non-expert in this area, I found it hard to read.",
+   "limitations": "I did not see limitations specifically discussed.",
+   "overall_recommendation": 4,
+   "confidence": 1
+  },
+  {
+   "reviewer": "Reviewer_xH6a",
+   "summary": "The paper introduces GRFs++, a refinement of the Graph Random Features (GRF) framework (Reid et al., 2024b) for approximating kernels between nodes in a graph. The method aims to address limitations of standard GRFs, especially their difficulty in modeling relationships between distant nodes and the reliance on long sequential random walks. GRFs++ introduces a walk-stitching mechanism that constructs longer random walks by concatenating shorter ones, allowing parallel computation and reducing sequential sampling costs. The paper provides a theoretical analysis showing that the proposed estimator remains unbiased. The proposed approach is evaluated on synthetic and real graphs for downstream tasks such as graph classification and node clustering.",
+   "strengths_and_weaknesses": "**Strengths**\n- The paper is generally structured and presented well.\n- The paper provides theoretical analysis supporting the unbiasedness of the estimator and investigates error behavior\n- Experimental evaluations show that GRFs++ achieve lower error and better downstream performance than GRF\n\n**Weakness**\n- The method is an extension of the previously proposed g-GRF framework (Reid et al., 2024b) so provides relatively limited novelty by mainly modifying the walk generation and termination strategy.\n- Although the method is implied as applicable to a broad family of kernels, experiments focus primarily on diffusion kernels\n- The evaluation is mostly limited to graphs with a small number of nodes, making it unclear if the proposed method would provide significant advantages on large-scale graphs where kernel computation becomes expensive.\n- Although the proposed approach consistently improves upon the GRF baseline, it remains uncompetitive against state-of-the-art specialized kernels",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "- Theoretical results suggest that increasing the stitching degree improves approximation quality. In practice, how should this parameter be chosen? Are there any computational trade-offs for its large values?\n- The method is presented as applicable to a broad class of graph kernels but the experiments focus primarily on diffusion kernels. Could the authors demonstrate the approach on additional kernel families?\n- Most experiments are conducted on relatively small graphs. How does the method scale to graphs with significantly larger numbers of nodes?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_P3iu",
+   "summary": "The article introduces a new variant of Graph Random Features (GRF), which are randomwalk-based methods for approximating graph kernels. The main idea is to replace long random walks with compositions of shorter ones. The authors achieve this through a walk stitching process that multiplies matrices of shorter walks. They show that this technique preserves unbiasedness of the kernel estimate. Furthermore, the authors propose a new termination strategy for walks, that allows arbitrary walk length distributions beyond the standard Bernoulli scheme. In an experimental evaluation, the authors investigate the kernel approximation capabilities and test their approach on various downstream tasks.",
+   "strengths_and_weaknesses": "Strong points:\n- The overall technical quality of the paper is high\n- The walk stitching is well motivated and the authors provide a clean formulation \n- The authors show empirical improvements over ordinary GRF across several experiments\n- The authors provide very solid theoretical justification\n\nWeak points:\n\n- The paper is not always easy to follow. Some more high level explanation would help to better grasp the overall idea before going into further detail. For instance, I'd recommend maybe introducing (an expanded version of) figure 1 earlier in the paper. \n- I find the statement that sampling (long) random walk is computationally too expensive a bit too strong. I believe sampling random walks should not be a computational bottleneck as it is cheap on cpus and sampling several random walks is perfectly parallelizable.\n- The downstream task gains are in some cases rather unconvincing due to only small improvements\n- Concerning significance: While theoretically interesting and sound, the work feels a  bit incremental. With GRFs arguably being a niche method, I believe the overall impact may be somewhat limited.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "- It would be interesting to see a more rigorous comparison between GRF and GRF++. E.g. when does the overhead of the matrix multiplication favour the ordinary approach with l=1? Also, is there a reason, why GRF is not listed in table 2?",
+   "limitations": "I did not find a particular discussion on weaknesses or limitations.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_xJXj",
+   "summary": "This paper proposes refined graph random features to improve the GRF in both computational efficiency and modeling capability between distant nodes. They provide a theoretical guarantee to show their methods unbiasedly estimate long walks with shorter walks. They perform empirical evaluations on several datasets, including MUTAG, CIFAR10, and others, and demonstrate that the GRF++ is both efficient and competitive with existing methods.",
+   "strengths_and_weaknesses": "Soundness.\n\nGood. The author provides both theoretical guarantees and the empirical evidence to show GRF++ is useful, efficient and better .\n \nPresentation:\n\nGood. The algorithm is presented clearly, implementation options are well described, and the comparisons with baselines are comprehensive.\n\nSignificance:\nFair. The method improves the GRF framework through several refinements. However, it is unclear how impactful these improvements are for the broader field of graph representation learning.\n\n\nOriginality:\nGood. The approach appears novel in both theoretical analysis and experiments.\n\n\nWeakness:\n\n1 The performance seems not guaranteed to be improved in both GRF and GRF++. For example, in figure 4, several baselines are better than the GRF and GRF++. This raises the question of whether the diffusion kernel approximation necessarily benefits from the GRF++ refinement.\n\n\n2 While the paper provides theoretical guarantees regarding unbiased estimation, the theoretical contribution seems somewhat limited. In particular, the analysis does not address convergence speed or computational complexity benefits.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1 Why in Figure 4 the GRF++ method seems worse in comparison with most of the baselines?\n\n2 In Figures 2 and 3, performance seems to consistently improve as the degree parameter increases. Is there a trade-off between computational complexity and performance when increasing this parameter? Additionally, is there a practical limit beyond which increasing the degree no longer improves performance?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

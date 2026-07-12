@@ -1,0 +1,66 @@
+{
+ "forum_id": "RZ6TONXE3A",
+ "title": "Align Forward, Adapt Backward: Closing the Discretization Gap in Logic Gate Networks",
+ "abstract": "In neural network models, soft mixtures of fixed candidate components (e.g., logic gates and sub-networks) are often used during training for stable optimization, while hard selection is typically used at inference. This raises questions about training-inference mismatch. We analyze this gap by separating forward-pass computation (hard selection vs. soft mixture) from stochasticity (with vs. without Gumbel noise). Using logic gate networks as a testbed, we observe distinct behaviors across four methods: Hard-ST achieves zero selection gap by construction; Gumbel-ST achieves near-zero gap when training succeeds but suffers accuracy collapse at low temperatures; Soft-Mix achieves small gap only at low temperature via weight concentration; and Soft-Gumbel exhibits large gaps despite Gumbel noise, confirming that noise alone does not reduce the gap. We propose CAGE (Confidence-Adaptive Gradient Estimation) to maintain gradient flow while preserving forward alignment. On logic gate networks, Hard-ST and Gumbel-ST with CAGE both achieve over 98\\% accuracy on MNIST and ${\\sim}58\\%$ on CIFAR-10; Hard-ST with CAGE further maintains zero selection gap across all temperatures by construction, while Gumbel-ST without CAGE suffers a ${\\sim}47$-point accuracy collapse.",
+ "primary_area": "applications->everything_else",
+ "decision": "Accept (regular)",
+ "decision_comment": "The paper posits that the training–inference gap in discrete selection models is driven largely by the forward-pass mismatch, and proposes CAGE, a confidence-adaptive temperature scheme in the backward pass to mitigate this gap and prevent failure modes. During the initial review process there were several concerns raised including limited experimental scope, some theoretical/clarity issues, some questions about generalization to other domains. The rebuttal addressed most of the concerns (with few lingering concerns on scope) and the overall consensus points to positive view of the paper because of its clear theoretical insight that is well-translated to a practical method. I recommend acceptance for this reason.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_t6nP",
+   "summary": "Differences in the forward pass between training and inference are responsible for gaps in performance. Theoretical results highlight the role of the forward selection mechanism, and a new method CAGE is suggested to maintain the benefits of a discrete forward selection while allowing for temperature on the gradients to control exploration versus exploitation. Experiments support the claim that the forward selection mechanism is responsible for the selection gap.",
+   "strengths_and_weaknesses": "This paper provides a novel explanation for a phenomena in discrete selection trained with gradients. Connections are made to several related areas, providing a unifying explanation for observations made across them. The new insights lead to a potential improvement in the methodology of these related areas, in the form of CAGE.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 4,
+   "key_questions_for_authors": "1. In Section 3.1, how should I interpret the computation gap when it comes to something like mixture-of-experts?\n\n2. Could you clarify how Section 6.3 explans the training failure, and why it is not a gap issue? I don't understand how deployment can benefit from learned structure, when the training prevents learning (paraphrasing the explanation given in Section 6.2).",
+   "limitations": "yes",
+   "overall_recommendation": 5,
+   "confidence": 2,
+   "final_justification": "My concerns have been addressed, so I will maintain my rating."
+  },
+  {
+   "reviewer": "Reviewer_CYC4",
+   "summary": "This paper investigates the training-inference gap in differentiable logic-gate networks and makes the claim that the forward pass is the main issue rather than the backwards gradient pass. The authors decompose this gap into a selection gap and a computation gap, and in particular, the forward pass leads to the former. A method called CAGE is proposed to mitigate this.",
+   "strengths_and_weaknesses": "Strengths:\n- The decomposition of the training-inference gap is very useful conceptually (and backed up by experimental evidence).\n- Different straight-through estimators are considered and analyzed for their advantages and shortcomings.\n\nWeaknesses:\n- Essentially all of the evidence lies in the logic-gate networks; is it possible to extend to broader settings?\n- CAGE demonstrates gains in Tables 1 and 2, but I wonder how much of it comes from the confidence-adaptive rule vs. from avoiding low temperatures? An ablation would be useful here.\n- I do believe the theoretical analyses are handwavy at times. For instance, in the proof of proposition 8 in the appendix, there are some unjustified approximations that are taken to be equalities directly in the main proposition statement. I would recommend the authors to take a closer look at those.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "My concerns have ben addressed; I will keep my rating of weak accept, though with higher confidence."
+  },
+  {
+   "reviewer": "Reviewer_Vo9j",
+   "summary": "This paper studies the training-inference gap in discrete selection mechanisms, a problem that arises when models use soft mixtures during training but switch to hard selection at test time. The authors decompose this gap into two components: a method-dependent \"selection gap\" and an input-dependent \"computation gap.\" They argue that the selection gap is eliminated when the forward pass uses hard selection during training—a property they term \"forward alignment.\" Through a 2x2 factorial design (mixture vs. hard forward × deterministic vs. Gumbel noise), they compare several methods including Soft-Mix, Soft-Gumbel, Hard-ST, and Gumbel-ST. They identify a failure mode where Gumbel-ST collapses at low temperatures, and propose CAGE, an adaptive temperature scheduling algorithm that adjusts the backward temperature based on selection confidence. Experiments on logic gate networks with MNIST, MNIST-Binary, and CIFAR-10 show that Hard-ST achieves zero selection gap and that CAGE improves robustness.",
+   "strengths_and_weaknesses": "**Soundness**: The paper's core theoretical claims—that forward alignment eliminates selection gap and that temperature can be decoupled—are logically sound and clearly presented. The 2x2 factorial design is a thoughtful way to isolate the effect of forward structure from backward noise. The experiments are carefully controlled, especially the use of MNIST-Binary to zero out computation gap. However, the experimental validation is confined entirely to logic gate networks, which limits my confidence in the generality of the claims. The paper frames its contributions broadly (implications for NAS, MoE, VQ-VAE), but provides no evidence beyond one architecture family. This is a significant gap between the scope of the claims and the evidence provided.  \n\n**Presentation**: The paper is generally well-written and structured. The narrative flows logically from problem statement to theoretical decomposition to empirical validation. The figures and tables are clear and support the arguments.\n\n**Significance**: The problem the paper addresses is real and relevant. The observation that Gumbel-ST fails catastrophically at low temperatures is practically useful and might save researchers from wasted experiments. The CAGE algorithm is simple and appears effective within the tested domain. However, the narrow experimental scope significantly limits the paper's broader impact. I came away unsure whether these findings would hold in, say, a mixture-of-experts language model or a differentiable architecture search setting. Until that's shown, the significance remains confined to the logic gate network community, which is a relatively specialized niche.\n\n**Originality**: The paper offers several novel insights. The decomposition of the training-inference gap into selection and computation components is a useful framing. The emphasis on \"forward alignment\" as the key factor—rather than Gumbel noise or Hessian regularization—runs counter to some prior beliefs and is well-supported by the factorial experiments. The discovery of Gumbel-ST's low-temperature failure is new to my knowledge, and CAGE is a clean solution. The originality lies more in reframing and diagnosing existing methods than in proposing radically new algorithms, which is perfectly fine—diagnostic work is valuable. But again, the narrow experimental domain means the originality is demonstrated only in one context.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. The experiments are limited to logic gate networks. Could you provide even a small-scale experiment in another domain—e.g., a toy MoE on a synthetic task, or a simplified NAS setup on CIFAR-10—to demonstrate that the core claims (forward alignment eliminates selection gap, Gumbel-ST fails at low temperature) hold more broadly? Without such evidence, it's hard to assess how much the community outside logic gate networks should take away from this work.  \n\n2. You compare against standard Gumbel-ST and Hard-ST, but there have been several recent improvements to straight-through estimators (e.g., ReinMax). How does CAGE compare to these more advanced baselines? Is CAGE complementary, or does it offer similar benefits? A brief discussion or small experiment would help position the work relative to the current state of the art in gradient estimation.",
+   "limitations": "The authors discuss limitations to some extent, e.g., noting that computation gap is input-dependent and irreducible. However, they do not adequately address the most salient limitation: the experiments are confined to one architecture family. A more upfront discussion of this point—acknowledging that generalizability to other domains (NAS, MoE, VQ-VAE) remains untested—would strengthen the paper's honesty and help readers calibrate their expectations.",
+   "overall_recommendation": 4,
+   "confidence": 2,
+   "final_justification": "The authors' rebuttal partially addresses my core concern: they provide preliminary cross-domain evidence, but the strength and breadth of the evidence are still insufficient for me to be fully convinced that their claims would hold equally well in NAS, real-world MoE, or VQ-VAE. Given that the paper's theory is relatively clear, I am raising my score to Weak Accept."
+  },
+  {
+   "reviewer": "Reviewer_QLi7",
+   "summary": "This paper proposes CAGE (Confidence-Adaptive Gate Exploration) to address the selection gap during training and deployment in discrete selection scenarios. By adaptively adjusting the backpropagation temperature, CAGE minimizes selection gaps while maintaining convergence performance. The authors analyze the motivation behind their method from a theoretical perspective and validate it experimentally on MNIST, MNIST-Binary, and CIFAR-10 datasets.",
+   "strengths_and_weaknesses": "Strengths:\n1. Theoretical analysis progressively shifts the focus of key factors in the hard selection method to the backpropagation temperature.\n2. The proposed method does not require complex engineering to be implemented.\n3. The experiment confirmed that forward alignment eliminates selection gaps and validated the effectiveness of the proposed method.\n\nWeaknesses:\n1. This paper relies on background and theoretical analysis, yet it lacks comprehensive definitions of symbols and methods such as Gumbel-ST and the selection gap $\\Delta h_{sel}$.\n2. The proposed method produces a higher temperature gradient distribution when confidence is low and promotes convergence at a lower temperature when confidence is high. However, models usually have low confidence levels during the early stages of training. Prioritizing convergence at this stage may yield better results. The author should analyze this from theoretical and experimental perspectives, then compare it with the proposed solution.\n3. Is the proposed method sensitive to the upper and lower bounds of the temperature hyperparameters?\n4. The experiment was conducted solely on the Tiny dataset, which was insufficient for fully demonstrating the effectiveness of the proposed method. The authors are encouraged to conduct experimental validation on more challenging tasks and datasets.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "Please see the weaknesses.",
+   "limitations": "Because the proposed method has only been validated through experimentation on small datasets, its scalability is limited.",
+   "overall_recommendation": 4,
+   "confidence": 3,
+   "final_justification": "Although the author's response did not fully address my concerns, I am willing to maintain the original positive rating."
+  }
+ ]
+}

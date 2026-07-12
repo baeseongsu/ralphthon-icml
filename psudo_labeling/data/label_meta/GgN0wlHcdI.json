@@ -1,0 +1,26 @@
+{
+  "forum_id": "GgN0wlHcdI",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_CD6R",
+      "weight": "high",
+      "reason": "Its presentation and formatting critiques (out-of-order figure sequencing, hyperparameter clutter with no when-to-use-which guidance) map directly onto the weakness the meta-review foregrounds, and its characterization of the theory as a neat, original synthesis of established components matches the meta-review's 'nice connection.' Specific and substantiated throughout."
+    },
+    {
+      "reviewer": "Reviewer_kwwB",
+      "weight": "high",
+      "reason": "Specific and substantiated across all three recurring themes: the theory-vs-proxy gap (guarantees assume i.i.d. scalar samples), the applicability caveat (mean reward not consistently improved), and concrete presentation issues (Risk/Tradeoff bookkeeping, missing Algorithm 1 LCB branch). Aligns with the meta-review's presentation concern and is corroborated by the other reviewers."
+    },
+    {
+      "reviewer": "Reviewer_621m",
+      "weight": "high",
+      "reason": "Sharp, well-targeted weaknesses (the i.i.d.-scalar vs. perturbation-proxy gap and the Tradeoff-metric-by-construction observation) that are corroborated by others and consistent with the accept decision. Low self-reported confidence (2) tempers the vote slightly but does not undermine the on-target, substantiated content."
+    },
+    {
+      "reviewer": "Reviewer_V6uu",
+      "weight": "medium",
+      "reason": "The reward-hacking failure mode of style-preserving perturbations is a specific, well-argued point corroborated in spirit by the shared proxy-vs-i.i.d. concern. However, its weak-reject recommendation and harsher soundness/presentation scores (2/2) run against the meta-review's accept direction and the consensus that strengths outweigh weaknesses, so it is down-weighted."
+    }
+  ],
+  "score_rationale": "The meta-review frames the paper as solving an important problem with a neat, well-connected solution whose main shortcomings are presentation and formatting, so I anchored soundness, significance, and originality at 3 (the high-weight consensus) and kept presentation at 3 despite the flagged formatting issues, since they are described as fixable and the narrative is otherwise clear. Overall recommendation is set to 4 (weak accept), matching the two high-weight reviewers at weak accept, the third high-weight reviewer's accept, and the accept decision, while not going higher because the theory-vs-proxy gap and presentation issues are real; V6uu's weak reject was down-weighted as running against the meta-review's direction. Confidence is 4 because the reviews are highly coherent, clustering on the same two weakness themes — the theory-vs-proxy gap and presentation/bookkeeping — that the meta-review independently corroborates."
+}

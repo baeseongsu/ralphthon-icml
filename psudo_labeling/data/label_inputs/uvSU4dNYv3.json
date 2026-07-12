@@ -1,0 +1,49 @@
+{
+ "forum_id": "uvSU4dNYv3",
+ "title": "Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers",
+ "abstract": "Multimodal Diffusion Transformers (MM-DiTs) have achieved remarkable progress in text-to-image generation, yet they frequently suffer from concept omission, where specified objects or attributes fail to emerge in the generated image. By performing linear probing on text tokens, we demonstrate that text embeddings can distinguish a characteristic `omission signal' representing the absence of target concepts. Leveraging this insight, we propose Omission Signal Intervention (OSI), which amplifies the omission signal to actively catalyze the generation of missing concepts. Comprehensive experiments on FLUX.1-Dev and SD3.5-Medium demonstrate that OSI significantly alleviates concept omission even in extreme scenarios.",
+ "primary_area": "applications->computer_vision",
+ "decision": "Accept (regular)",
+ "decision_comment": "All three reviewers maintained positive recommendations for this paper. The reviewers consistently highlighted several strengths, including the thorough analysis of the problem, the effectiveness of the proposed method, and the convincing experimental results.\n\nThe main concerns centered on some overly strong claims in the presentation and the need for a clearer discussion of the method’s limitations. In the rebuttal, the authors addressed these issues to a satisfactory extent. Therefore, I am happy to recommend acceptance of this paper.\n\nThat said, the reviewers’ support for acceptance is contingent on the authors following through on their commitment to revise the relevant claims and discussion in the final version. I strongly encourage the authors to make these revisions carefully to ensure that the final paper reflects the scope and limitations of the work.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_S7Fs",
+   "summary": "This paper studies concept omission in MM-DiT text-to-image models, including both object omission and attribute neglect. The main claim is that text token representations inside MM-DiT already contain an omission signal that reflects whether a target concept has appeared in the generated image. The authors diagnose this by applying linear probes to text-token key vectors across layers, heads, and timesteps, and show that some middle-layer heads can distinguish concept presence from absence with high accuracy. Based on this observation, they propose Omission Signal Intervention (OSI), which extracts an omission direction from the probing dataset and adds it to the concept token representation during inference, with intervention limited to selected heads and early denoising steps. Experiments on FLUX.1-Dev and SD3.5-Medium show improved performance on object omission and T2I benchmarks compared with recent baselines.",
+   "strengths_and_weaknesses": "#### Strength\n1. The paper studies a clear problem. Concept omission is a common failure mode in modern MM-DiT text-to-image models, the paper focuses on a concrete setting propose solution.\n2. The paper shows clear pipeline, which first use probing to show that text token contain omission-related information, then turns this analysis into a simple inference-time intervention solution.\n3. The empirical results are reasonably strong on the targeted benchmarks. On object omission, the method improves over the base model and recent baselines, especially in harder multi-object settings.\n\n#### Weakness\n1. My main concern is that the paper’s mechanism claim is somewhat stronger than the evidence. The probe shows that omission-related information is linearly decodable from text-token representations, but this does not fully establish that the learned direction is the causal mechanism behind concept realization. The current results are consistent with the interpretation, but they do not rule out the possibility that OSI mainly acts as a useful steering direction rather than specifically amplifying a specific token signal.\n2. The label construction for probing is not fully clean. Presence labels are assigned from the final generated image, while the internal representations come from intermediate timesteps. The authors try to address this by excluding early and late timesteps, which is reasonable, but this also highlights that the supervision is only approximately aligned with the intermediate representations.\n3. Although the results demonstrate an average improvement in experience, as a training-free method, it is necessary to conduct a complete discussion of the ability boundaries and failure modes of this method.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please see the Weakness",
+   "limitations": "The authors did not mention the limitations of the proposed method. The author should verify the capability boundary and failure mode of the proposed method by showing performance changes by task or giving more visualizations.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_oX3U",
+   "summary": "This paper considers the problem of concept omission in Diffusion Models, particularly in MM-DiT architecture applied by popular FLUX.1-dev and SD3.5-Medium model. Through the lens of attention probing, the authors figured out the keys of text tokens capture essential information for concept emergence. Based on this insight, the authors introduce Omission Signal Intervention(OSI) to inject intentional hallucinations to emphasize the target concept during the diffusion process. Extensive experiments and ablations demonstrates that OSI effectively mitigates the concept omission in popular diffusion models.",
+   "strengths_and_weaknesses": "## Strength\n1. The analysis of concept omission in diffusion models (diagnosing) is convincing and effective, the probing results insightful.\n2. The proposed method is effective, surpassing all the baselines, with generalization to attribute omissions which is more difficult.\n3. Solid experiments and ablations are carried out, with thorough study on hyperparameters and distinctive attributes of different models, such as SD3's CLIP text encoder.\n4. The overall presentation is clean and easy to understand.\n\n## Weakness\n1. Possible distribution mismatch in OSI. The paper states the steering interval being $[t_{stop}, 1]$, yet the dataset used in OSI ($D_{l,h}^{train}$) does not contain samples of early timesteps as mentioned in paragraph 'Filtering Noise Pairs' in sec 3.1. Will there be a mismatch? What will happen if the interval is modified to $[t_{stop}, t_{early}]$ where $t_{early}$ denotes the final early timestep?\n\n2. Time-insensitive steering direction. Wide belief in the community (FreeControl[1], TACA[2], Lu et al.[3]) is that features within denoising network evolve as time progresses. Also, Fig. 2 demonstrates the correlation of text features to existance/absence is near-chance in early timesteps. The paper averages text features within all intermediate timesteps as steering direction for all time steps in $[t_{stop}, 1]$, contrary to common practice and findings in omission probing. This strategy needs further evidence such as comparison with time-dependent steering.\n\nDespite these counter-intuitive designs, the overall performance achieved state-of-the-art, so I would recommend Weak Accept.\n\n[1] FreeControl: Training-Free Spatial Control of Any Text-to-Image Diffusion Model with Any Condition\n\n[2] Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers\n\n[3] When Are Concepts Erased From Diffusion Models?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Same as weaknesses, i.e.:\n1. Why is the intervention interval set to $[t_{stop}, 1]$ even if the curated dataset contains no sample for early timesteps?\n2. Why is the steering direction time-insensitive?",
+   "limitations": "Yes.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_TiFk",
+   "summary": "The paper analyzes concept omission from the perspective of text embeddings in diffusion models by employing linear probing. It finds that text tokens in MM-DiT capture omission-related information through joint interaction with image tokens, and introduces an intervention that amplifies the omission signal to boost the generation of the target concept.",
+   "strengths_and_weaknesses": "__Strengths__\n\nThe analysis that shows that the model contains an internal awareness of missing concepts during the generation process is convincing, and the idea to use it for generation intervention is compelling and original. The paper is well-written, and the ablation section and experiments provide useful empirical evidence for the steering success\n\n\n__Weaknesses__\n\n- The paper focuses on the analysis of object omission, and it is not clear if the same approach can generalize to more abstract concepts or object properties (color/texture). \n\n- It is not clear how many examples are needed to be curated for good steering. How does the performance scale when the direction is computed with more/less examples?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weaknesses",
+   "limitations": "The paper doesn't discuss limitations in the main paper. Acknowledging and presenting limitations can improve the paper.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "forum_id": "1Je3o7cf1N",
+ "title": "Less Is More in Federated Continual Learning: RieSelect for Conflict-Aware Layer Selection in LLMs",
+ "abstract": "Federated continual learning (FCL) of large language models on edge devices is constrained by a communication--stability--plasticity trilemma. We reveal a less-is-more phenomenon: beyond a moderate layer upload ratio, stability loss offsets saturated plasticity gains, so overall continual performance no longer improves. Moreover, layer-wise conflict is heavy-tailed and concentrates in a few layers; denser uplink increasingly includes these layers, which disproportionately drives forgetting and motivates selective sparse communication. Therefore, we introduce RieSelect, which treats stability as staying within a Fisher-metric safe basin around historical solutions. Under this safe-basin constraint, we derive a layer-wise conflict score and a closed-form certified safe step size for finite local updates, and formulate selective uplink as a knapsack-based utility--risk selection, balancing plasticity gains against stability risks. Extensive experiments show that, under a per-round uplink budget, RieSelect achieves the best performance across task orders. Beyond this matched-budget setting, under standard communication protocols, RieSelect improves average accuracy by 18.99–28.14 points while reducing total uplink by 53–115$\\times$.",
+ "primary_area": "general_machine_learning->transfer_multitask_and_metalearning",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper addresses the challenges of Federated Continual Learning (FCL) for LLMs deployed on edge devices by identifying a \"less-is-more\" phenomenon where dense parameter uploads exacerbate gradient conflicts and forgetting. The main concerns of the reviewers (e.g., tdvk, fqiM, and jpaf) are limited diversity in LLM architecture, robustness under stronger heterogeneity, local storage overhead, and generalization to larger LLMs. All the reviewers pointed out that their concerns have been addressed in the rebuttal. Therefore, I am recommending acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_tdvk",
+   "summary": "In this paper the author tried to solve the core issue of federated continual learning in llm i.e. communication-stability-plasticity trilemma. Introduced an approach RieSelect  and discovered a phenomenon “less is more” where sending too much data back to the server degrades the performance because some high-conflict layers forget old learned knowledge.\n\nThis approach is divided into three steps: identify, adjust, select.\nIn the first step conflict score is calculated by using the fisher metric layers within the safe score are capped with light basin, others are capped by closed form certificate to stay within the safe basin (Riemannian), capping is done in second step then in third step primary purpose is to select layer which has to be updated in server with constrained budget is formulated as 0-1 knapsack problem.\n\nSeveral metrics are calculated in edge based on that knapsack is applied like gain,how much forget,conflict penalty,cost etc. \n\nGot 115x data uplink reduction for llama7b and 53x for T5-large compared to SOTA (PiLORA, hydraLORA). Accuracy increased by 18.99 points and  28.14 on LLAMA AND T5 large, consistent good performance across different tasks.",
+   "strengths_and_weaknesses": "Originality: Idea moves beyond simple gradient projection to isolation heavy strategies\nGood Results: 18.99 and 28.14 points improvement over SOTA and significant uplink reduce 53x,115x times\n\n\nWeakness:\nLimited diversity in llm architecture",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Q1. Does the value of the safe basin radius vary when shifting different task domains?\nQ2. Is there any impact or increase in the computation complexity at the client side in your approach? Please quantify.\nQ3. Will this approach work for deep learning architectures? Smaller LLMs? A discussion on generalization for different model types/categories will be useful.",
+   "limitations": "Limitation section missing. Kindly write.",
+   "overall_recommendation": 4,
+   "confidence": 5
+  },
+  {
+   "reviewer": "Reviewer_fqiM",
+   "summary": "This paper addresses the \"communication-stability-plasticity trilemma\" in Federated Continual Learning (FCL) for LLMs by identifying a \"less-is-more\" phenomenon where dense parameter uploads exacerbate gradient conflicts and forgetting. The authors propose RieSelect, a three-stage framework that uses Fisher-based conflict detection to identify high-risk layers, applies a Riemannian safe-basin constraint with a closed-form certified safe step size to rectify updates, and employs a 0-1 knapsack formulation to select high-utility, low-risk layers for transmission under a strict uplink budget. Experiments show RieSelect achieves the best average accuracy across task orders.",
+   "strengths_and_weaknesses": "Strength:\n\n1. The motivation is good. The discovery that cross-task conflict is heavy-tailed and concentrated in a few layers provides a strong motivation for selective sparse communication.\n2. The use of Riemannian geometry and curvature comparison theorems to derive a certified safe step size moves beyond simple heuristic pruning.\n3. The experiment results show RieSelect demonstrates massive reductions in uplink traffic  while significantly improving accuracy over state-of-the-art baselines.\n4. The method is replay-free and operates under a fixed per-round budget, making it ideal for privacy-sensitive edge deployments.\n\nWeaknesses:\n\n1. The experiment results show RieSelect demonstrates massive reductions in uplink traffic, but there’s no report how many lora upload to the server for each client. That is how to calculate the uplink traffic for RieSelect?\n2. In Eq.10, authors give the adaptive learning rate for RieSelect, can authors show the result of learning rate in each client on each task? And how to calculate $\\eta_{safe}$ in real experiment?\n3. In experiments, authors use $\\alpha=10$ for Dirichlet split, which represents mild heterogeneity even IID. How does RieSelect perform when $\\alpha$ is decreased to 0.5 or 0.1? Specifically, does the estimation error of the replay-free Fisher matrix at the edge significantly degrade the safe basin calculation?\n4. Table 1 and Table 6 report positive BWT for RieSelect in multiple orders and all the other methods are negative. Does this indicate true Forward Transfer where task A helps task B, or is it simply because the model learns so little from new tasks (due to step-size capping) that the performance on old tasks remains static?",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "See weakness.",
+   "limitations": "To achieve replay-free continual learning, RieSelect requires each client to locally maintain and update two sets of auxiliary Fisher statistics, $\\bar{F}$ and $\\bar{z}$. Since these tensors have the same dimensionality as the trainable LoRA parameters, they effectively double the local storage and memory footprint required for the adaptation process.",
+   "overall_recommendation": 5,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_jpaf",
+   "summary": "This paper addresses the challenges of Federated Continual Learning (FCL) for LLMs deployed on edge devices. It reveals an insightful \"less-is-more\" phenomenon, demonstrating that cross-task conflicts are highly concentrated in a small subset of layers, and subsequently proposes the RieSelect algorithm. Specifically, RieSelect constructs a Riemannian safe basin using the Fisher Information Matrix to constrain parameter updates. It mitigates catastrophic forgetting by identifying high-conflict layers and applying a closed-form certified safe step size.",
+   "strengths_and_weaknesses": "Strengths\n1. Contrary to the conventional wisdom that more communication or parameter updates yield better learning performance, the authors empirically demonstrate that excessive parameter uploading introduces updates from high-conflict layers, which severely disrupt previously acquired knowledge.\n2. The introduction of Riemannian geometry and the Fisher Information metric provides a rigorous and elegant mathematical formulation for addressing the catastrophic forgetting problem in continual learning.\n\nWeaknesses\n1. The models evaluated in the paper are somewhat outdated and relatively small in scale. Consequently, it remains unclear whether RieSelect can maintain its efficacy and scalability when applied to modern LLM architectures with significantly larger parameter counts.\n2. RieSelect conducts conflict assessment and selection at the layer level. However, within a single layer of an LLM, conflicts might be driven by only a small fraction of the weights. Filtering or constraining updates at the macro layer level could inadvertently discard non-conflicting parameter updates that are highly beneficial for learning new tasks.\n3. The paper lacks experiments under highly heterogeneous (extreme Non-IID) data distributions, such as Dirichlet distributions with $\\alpha=0.1$ or $\\alpha=1$. In scenarios with severe data skewness, the locally computed Fisher Information Matrices and gradient conflict directions on clients could deviate significantly, potentially compromising the robustness and effectiveness of the RieSelect algorithm.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "See the weaknesses.",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  }
+ ]
+}

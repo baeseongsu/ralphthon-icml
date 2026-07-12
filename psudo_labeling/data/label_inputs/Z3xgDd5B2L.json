@@ -1,0 +1,62 @@
+{
+ "forum_id": "Z3xgDd5B2L",
+ "title": "SimGFM: Simplifying Discrete Flow Matching for Graph Generation",
+ "abstract": "Discrete Flow Matching (DFM) presents a promising approach for graph generation; however, existing adaptations often introduce substantial complexity by incorporating task-specific heuristics, compromising the continuity equation and significantly expanding the hyperparameter space. Moreover, their sampling efficiency remains limited, as the required number of steps is often comparable to diffusion models, diminishing DFM’s practical advantages. To address these limitations, we propose SimGFM, a simplified graph DFM for graph generation. Leveraging characteristic patterns in graph-generation trajectories, SimGFM relies only on the scheduler and rate matrix, eliminating heavy heuristics and hyperparameter tuning, and achieves large step reductions while preserving SOTA results. SimGFM achieves strong empirical results: on QM9, it matches prior models requiring 500–1000 steps with only 10 steps, and on most datasets, its performance at 50 steps matches or surpasses these baselines, demonstrating both efficiency and competitiveness. Our source code is available at https://github.com/LUOyk1999/SimGFM.",
+ "primary_area": "deep_learning->graph_neural_networks",
+ "decision": "Accept (regular)",
+ "decision_comment": "Reviewers agreed that the paper has a clear motivation, a well-structured presentation, and strong empirical gains in graph generation efficiency. They also raised concerns about the paper's novelty and experimental completeness: the method was seen as largely combining existing DFM ingredients, some step-count and hyperparameter reporting was initially unclear, and the ablation study needed to better quantify the roles of the scheduler, $k$ and ESP. The rebuttal addressed these points with matched-step runtime/memory results, detailed $k$-sensitivity analysis, and additional explanation of the endpoint behavior and ESP, which substantially strengthened the paper’s technical soundness. Therefore, I tend to accept this paper.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_VcGC",
+   "summary": "This paper proposes SimGFM, a simplified discrete flow matching (DFM) framework for graph generation. The authors argue that existing graph DFM methods introduce excessive complexity through task-specific heuristics that violate the continuity equation and expand the hyperparameter space. SimGFM makes three design choices: (1) adopting the vf-denoiser formulation for an implementation-friendly rate matrix, (2) employing a polynomial endpoint-focused scheduler motivated by the observation that valid graph structures emerge near t→1, and (3) introducing Endpoint Safety Projection (ESP) to handle numerical invalidity in the tail window.",
+   "strengths_and_weaknesses": "**Strengths**\n1. The paper shows clear evidence (through graphs and experiments) that focusing on the final steps of the generation process makes sense—especially when using uniform denoising. This gives a solid reason for their design choices.\n2. The method achieves results that are just as good as existing methods, but in far fewer steps.\n3. The authors test their method on many different types of graphs—molecules, social networks, grids, etc.—and include conditional generation too. They also run ablation studies and report error margins, making the results more comprehensive.\n\n**Weaknesses**\n1. The core ideas (like the denoiser formula, the time scheduler, and the ESP trick) are borrowed from recent papers. The main contribution is putting them together, not inventing something fundamentally new.\n2. Some experimental details are missing or inconsistent: 1) It’s hard to compare methods fairly because step counts aren’t always matched. 2) The key parameter k isn’t clearly reported for each experiment, making replication tricky. 3) In one case (on Planar at 200 steps (Table 1)), the method gets perfect validity but poor diversity (low “Ratio”), which isn’t explained.\n3. Ablation studies are expected to be further enriched. The authors only compare their scheduler against a basic baseline (k=1), so it’s unclear how sensitive performance is to k. They also don’t explore how choices like the starting noise distribution affect results, even though these vary across datasets.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "Please see weaknesses.",
+   "limitations": "Please see weaknesses.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_8V6U",
+   "summary": "The paper proposes SimGFM, a discrete flow matching model for graph generation, and positions it within two existing DFM formulations: Campbell et al.’s formulation and Gat et al.’s VF-denoiser formulation. Different from earlier DFM-based graph generation methods that rely on the former, the proposed method is developed under the latter, which is presented as a simpler and more flexible alternative.",
+   "strengths_and_weaknesses": "**Strengths**\n\n1. The paper has a clear practical motivation. Reducing sampling steps for graph generation is worthwhile, and the paper focuses on a real pain point in current graph diffusion/flow methods.\n\n**Weaknesses**\n\n1. The proposed method seems to be combined from existing ingredients, including the VF-denoiser, a polynomial scheduler closely related to prior time-distortion approaches, and an endpoint switch to posterior sampling. These components are individually reasonable, but the overall contribution may be incremental.\n\n2. Using sampling steps as an efficiency proxy is insufficient, since fewer steps do not necessarily mean faster or cheaper. The paper should report runtime and memory usage, ideally with baseline comparisons.\n\n3. The *low tuning burden* claim feels overstated. SimGFM still relies on several hyperparameters (e.g., scheduler order $k$, ESP cutoff), and the ablations are too limited, especially lacking a real sensitivity analysis over $k$.\n\n4. ESP drops the flow-matching updates in the last $k$ steps and samples directly from $p_{1|t}^{\\theta}(\\cdot|G_{t})$. While this avoids the negative-probability issue in Theorem 3.1, it introduces an abrupt endpoint “jump.” It would be helpful to quantify its impact by reporting FCD with/without ESP.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "**Q1.** Why are the 10-step or 20-step results omitted for Guacamol and MOSES in Table 3? Does the low-step efficiency degrade as graph size and complexity increase?\n\n**Q2.** Given that ESP directly samples the one-shot prediction in the last $k$ steps, does this sudden transition cause any issues with sample diversity or out-of-distribution generation compared to continuous flow updates?\n\n**Q3.** How do you weight the node and edge components of the cross-entropy loss during training?",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 2
+  },
+  {
+   "reviewer": "Reviewer_TfNh",
+   "summary": "The authors proposed a Discrete Flow Matching (DFM) framework for graph generation designed to overcome the high complexity and slow sampling speeds of existing models. The proposed method leverages the DFM theory and drastically reduces the required steps, which includes the use of an rate matrix based on the vf-denoiser, a polynomial scheduler that allocates more computational budget and denser updates near the endpoint  formulation, and the use of ESP to act as a safeguard by replacing the standard update.",
+   "strengths_and_weaknesses": "Strength:\n- The authors introduces Discrete Flow Matching (DFM) based approach for graph generation, which some insightful observations. The result significantly increases the efficiency of graph generation. \n\n- The overall technical proposal is basically sound and clear. For example, the authors also provide a solid mathematical basis (Theorem 3.1) identifying exactly when Euler discretization causes negative probability masses, justifying the need for a safeguard. The paper effectively communicates its core motivation through clear, empirical trajectory-level observations.\n\n- In terms of significance, this is a great improvement on the efficiency by leveraging the merits of flow matching, and it can achieve significant improvement over existing methods while maintains reasonable accuracy. This is also justifies the novelty of the work from the interdisciplinary area of flow matching and graph generalization. \n\nWeakness:\n- There is some technical vagueness, despite the overall presentation is clear and easy to follow. For example, there is some discussion on the Endpoint Safety Projection (ESP, but its theoretical grounding is slightly unclear. The authors argue that replacing the standard DFM update with direct posterior sampling is a \"reasonable endpoint approximation”, but not very convincing. A bit more details or insights may help. \n\n- Diffusion model or Flow matching are well know for generation, although the graph generation is a new topic. The framework is essentially a synthesis of existing techniques rather than a fundamentally new generative paradigm. The core velocity-field formulation is directly adopted from the previously established vf-denoiser. The authors should clarify the true novelty contributions.\n\n- In Section 4.4 and Appendix F.5 (Table 8) the authors said that even with a mild identity scheduler, the update enters a boundary regime where the stay coefficient becomes small and the discretized kernel may require projection to preserve nonnegativity. This is a bit vague and triggers concern on the stability. The author should provide a bit more details. \n\n- The authors did not discuss the impact of the space where the velocity field is built. For example, it is known for many graph based work, the hyperbolic space helps represent structural relationships and some hierarchy relationship over a graph. The authors should look into that and propose some discussion. \n\n- In Tables 2 and 3, several experimental results achieved a large range, such as the Unique, varying from 2.0 to 100. The authors should present some insights on that, if it is related to how strong the baseline is or any parameter tuning.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 2,
+   "key_questions_for_authors": "n/a",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_1abu",
+   "summary": "The paper proposes SimGFM, a simplified discrete flow matching framework for graph generation. SimGFM shows improved performance with fewer steps on QM9 and good performance on several commonly used benchmarks.",
+   "strengths_and_weaknesses": "### Strengths\n- The paper is well written and easy to follow.\n- The motivation is clear, the approach is technically sound, and the experiments are thorough.\n\n### Weaknesses\nProbably not a weakness specific to SimGFM, but in general, graph flow matching models do not perform as well as SMILES-based models. For example, LSTM achieves 91.3 in terms FCD on GuacaMol from the original GuacaMol paper. I recommend the authors explicitly add the state-of-the-art models on both GuacaMol and MOSES benchmarks and properly discuss the advantages and limitations of SimGFM within this broader context.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- Is the proposed framework applicable to other discrete data beyond graphs, such as biological sequences or texts?",
+   "limitations": "The limitations of this work are not systematically discussed. I think the authors should at least discuss the limitations of the synthetic datasets and evaluation metrics, which have commonly known issues [1,2].\n\n[1]: O'Bray, Leslie, et al. Evaluation Metrics for Graph Generative Models: Problems, Pitfalls, and Practical Solutions. ICLR 2022.\n\n[2]: Krimmel, Markus, et al. PolyGraph Discrepancy: a classifier-based metric for graph generation. ICLR 2026.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

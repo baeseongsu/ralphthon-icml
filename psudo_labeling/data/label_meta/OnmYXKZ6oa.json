@@ -1,0 +1,26 @@
+{
+  "forum_id": "OnmYXKZ6oa",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_QeWr",
+      "weight": "high",
+      "reason": "Most thorough and substantiated review. Verified Proposition 3.1, credited the LNO control study and the geometric-shortcut finding, and flagged the narrow-scope caveat (steady-state, 2D Cartesian) and the geometry-aware baseline question. Its praise and its caveats are exactly what the meta-review adopts."
+    },
+    {
+      "reviewer": "Reviewer_ndjS",
+      "weight": "high",
+      "reason": "Specific and substantiated. The two central points, the missing Geo-FNO comparison and the concern that 'geometric forgetting' is a generic information-processing/DPI property, are both echoed by the meta-review and corroborated by other reviewers; the review is careful and overall positive."
+    },
+    {
+      "reviewer": "Reviewer_HLG3",
+      "weight": "high",
+      "reason": "Detailed and specific. Its narrow-scope and geometry-aware-baseline concerns (GeoFNO/GNO/GINO) are adopted by the meta-review, and its points on missing standard deviations, unexamined hyperparameters, and the omitted role of skip connections are valid. The soundness score of 1 is a harsh outlier relative to the other reviewers and the meta-review, driven by reproducibility gaps rather than identified errors."
+    },
+    {
+      "reviewer": "Reviewer_nJuC",
+      "weight": "medium",
+      "reason": "The theoretical-overreach critique (generic information decay vs a geometry-specific phenomenon; DPI shows only non-increase) and the skip-connection baseline are on-target and echoed, and the meta-review calls this a 'valid philosophical disagreement.' However, the overall Reject recommendation runs against the meta-review's Accept and against the reviewer's own concession that the empirical results are solid and potentially useful, so the stance is only partly on-target."
+    }
+  ],
+  "score_rationale": "I anchored on the meta-review, which affirms a robust core technical contribution and exceptionally clear practical utility while treating the main remaining objection as one of theoretical framing rather than technical or empirical error. QeWr and ndjS (high weight, most substantiated and positive) drove the presentation and my read of soundness (3) and the empirical significance, while HLG3 (high weight, detailed) and nJuC (medium; a valid framing critique but a Reject stance the decision does not support) pulled significance, originality, and the overall down to reflect the narrow initial scope, missing geometry-aware baselines, and the DPI-as-generic-decay concern. Soundness stays at 3 because three of four reviewers and the meta-review agree the analysis is correct, making HLG3's 1 an outlier tied to reproducibility gaps rather than errors. The overall of 4 positions this as a weak accept for the initial submission: leaning accept on the strength of the consistent empirical gains and the LNO control, but held back by scope and framing concerns that were live before any revision."
+}

@@ -1,0 +1,21 @@
+{
+  "forum_id": "QNYVYUa3aa",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_9kMC",
+      "weight": "high",
+      "reason": "Specific, substantiated critique whose central points -- the unclear distinction from FedMR/DFLMR, the missing hyperparameter sensitivity analysis, and the unjustified worst-case layer-similarity definition in Eq (7) -- are directly echoed by the meta-review as the concerns the rebuttal addressed. Also raises concrete theory issues (Assumption 5.4 feasibility, blow-up of the Theorem 5.8 bound, Figure 1 provenance)."
+    },
+    {
+      "reviewer": "Reviewer_yDmK",
+      "weight": "high",
+      "reason": "Detailed and accurate account of the method with concrete, well-targeted weaknesses; the unquantified overhead and threshold-sensitivity concerns are adopted by the meta-review, and the topology and consensus points are specific and technically sound rather than generic."
+    },
+    {
+      "reviewer": "Reviewer_bSov",
+      "weight": "medium",
+      "reason": "Positive and correct but comparatively thin. Its main substantive request -- generality beyond vision backbones and image classification -- is echoed by the meta-review, but the review offers less depth and substantiation than the other two and its highest recommendation is paired with the lowest confidence."
+    }
+  ],
+  "score_rationale": "Weights follow the meta-review: 9kMC and yDmK are high because their specific concerns (distinction from prior layer-exchange work, sensitivity, layer-similarity justification, overhead, topology/consensus) are precisely the points the meta-review says the rebuttal resolved; bSov is medium since its echoed generality point is valid but the review is thinner. Dimension scores sit at the top of the reviewers' [2,3] ranges (soundness/presentation/significance/originality = 3), reflecting the two high-weight reviewers' 3s plus the meta-review's positive, 'technically meaningful' framing, while still acknowledging 9kMC's substantive theory concerns. Overall recommendation is set to 4, matching both high-weight reviewers' weak-accept within the [4,5] range and consistent with an accept decision whose concerns proved largely addressable."
+}

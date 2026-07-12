@@ -1,0 +1,66 @@
+{
+ "forum_id": "Jpxfof0EaS",
+ "title": "Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models",
+ "abstract": "Knowledge distillation improves large language model (LLM) reasoning by compressing the knowledge of a teacher LLM to train smaller LLMs. On-policy distillation advances this approach by having the student sample its own trajectories while a teacher LLM provides dense token-level supervision, addressing the distribution mismatch between training and inference in off-policy distillation methods. However, on-policy distillation typically requires a separate, often larger, teacher LLM and does not explicitly leverage ground-truth solutions available in reasoning datasets. Inspired by the intuition that a sufficiently capable LLM can rationalize external privileged reasoning traces and teach its weaker self, we introduce On-Policy Self-Distillation (OPSD), a learning algorithm where a single LLM acts as both teacher and student with different contexts. The teacher policy conditions on privileged information  while the student policy sees only the question; training minimizes the per-token divergence between these distributions over the student's own rollouts. We demonstrate the efficacy of our method on multiple mathematical reasoning benchmarks, achieving superior token efficiency compared to reinforcement learning methods and better performance over off-policy distillation methods.",
+ "primary_area": "deep_learning->large_language_models",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes On-Policy Self-Distillation (OPSD), a highly efficient post-training framework for LLMs. Instead of relying on a separate, larger teacher model or sparse reward RL (like GRPO), OPSD uses a single model as both teacher and student. By conditioning the teacher policy on privileged information and the student policy on the standard prompt, the model provides dense, token-level KL-divergence supervision to its own on-policy rollouts. This yields competitive mathematical reasoning capabilities with a fraction of the generated tokens required by standard RL.\n\nStrengths:\n\nExceptional token and resource efficiency: By providing dense per-token feedback, OPSD achieves comparable or superior performance to GRPO while using roughly 8x fewer generated tokens during training. It also eliminates the need to host a separate, massive teacher model.\n\nElegant paradigm: The framework seamlessly blends on-policy distribution matching with self-improvement, avoiding the exposure bias of offline SFT and the sparse-reward bottleneck of RLVR.\n\nThorough rebuttal: The authors provided excellent responses to reviewer questions, notably proving that OPSD remains effective even when the teacher only sees the final answer (rather than a full CoT trace) and clearly justifying why short rollouts work for OPSD but fail for GRPO.\n\nWeaknesses:\n\nMemory Cost: Full-vocabulary logit distillation is memory-intensive, though the authors rightly argue this is mitigated by the short generation lengths (1k-2k tokens) needed for OPSD.\n\nScope and Marginal Gains: The evaluations are confined strictly to mathematical reasoning, and the absolute performance gains over standard GRPO, while achieved much faster, are somewhat modest.\n\nThe idea of using privileged context to turn a model into its own dense-reward teacher is both intuitive and empirically validated. The reviewers recognized the novelty and efficiency of the approach, and the authors successfully defended their design choices (such as rollout lengths and prompt structures) during the rebuttal. Given its high relevance to the current LLM post-training landscape, this paper is a solid accept for ICML.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_v4ui",
+   "summary": "The paper introduces On-Policy Self-Distillation, a post-training framework designed to improve the reasoning capabilities of LLMs without relying on a separate, larger teacher model. The teacher uses privileged information like ground-truth solutions to provide dense token-level supervision. The authors demonstrate that OPSD outperforms SFT and achieves comparable or superior mathematical reasoning performance to GRPO on benchmarks like AIME and HMMT, while requiring significantly fewer generated tokens during training.",
+   "strengths_and_weaknesses": "**Strengths**\n\n- Achieves significantly higher token efficiency than traditional RL methods like GRPO by providing dense feedback instead of sparse rewards.\n- Eliminates the need for a separate larger teacher model or complex PRM training, making the setup more resource-efficient\n- Reduces exposure bias by training on the student's own generated trajectories, ensuring better distribution alignment.\n\n**Weakness**\n\n- Since the teacher and student share parameters, the teacher's capability is bounded by the model's inherent reasoning limits even with privileged context\n- Evaluation is primarily focused on mathematical reasoning, leaving the generalizability to other complex domains like coding or creative writing unproven.\n- The method relies heavily on high-quality CoT reasoning traces in the training set to serve as effective privileged information.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "- How does the performance of OPSD change if the privileged context provided to the teacher is shortened or less detailed?\n- Is there a specific model scale threshold below which the teacher fails to provide meaningful rationalization for the student?\n- How does OPSD compare directly with SFT on the same privileged CoT traces in terms of final reasoning accuracy?",
+   "limitations": "Yes",
+   "overall_recommendation": 5,
+   "confidence": 4,
+   "final_justification": "My concerns have been addressed and I maintain my positive score."
+  },
+  {
+   "reviewer": "Reviewer_GXYv",
+   "summary": "The paper focuses on post-training. It proposes a new method OPSD, which combines OPD and self-improvement. Unlike the previous OPD, which typically relies on a stronger teacher model, it employs a self-teaching strategy, which means it takes itself as a teacher model by adding groundtruth into the prompt to predict the next token. The key advantage is that it can enhance the sampling efficiency and the signal is dense, which in some sense is a prm reward.",
+   "strengths_and_weaknesses": "Strengths:\n1. The paper is well-organized.\n2.  The topic is very good.\n3. Combining OPD and self-improvement is pretty interesting.\n\nWeakness:\n1. See the questions.",
+   "soundness": 3,
+   "presentation": 2,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "1. Baseline Comparison: When we use GRPO to train the model, we do not need the Cot. However, when we use OPSD, we need to know the Cot. Do you have the experiments if we only know $y^*$ by using OPSD?\n2. While the authors say OPSD can improve the sampling cost, OPSD needs memory costs since you need to store the full vocabulary distribution. Later I found you use Sampled-token distillation, now my question is, do you compare this in your Table 2?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal addresses my concerns. I maintain my score."
+  },
+  {
+   "reviewer": "Reviewer_ebs6",
+   "summary": "This paper introduces On-Policy Self-Distillation, a learning paradigm where the teacher leverages privileged information (such as the reference solution) and provides learning signal to the student version of the same model via reverse KL. The authors demonstrate that OPSD achieves comparable performance to GRPO while being more efficient in terms of training sample and token efficiency.",
+   "strengths_and_weaknesses": "### Strengths\n1. This paper is well written and easy to follow.\n2. The method and experiments are straightforward and shows positive results.\n\n\n### Weaknesses\n1. The experiments and discussions are not comprehensive enough. Additional details that I would like to know are listed in the Questions below.\n2. Lack comparison to On-Policy Distill from a more powerful model (e.g. OPD from the model generating reference solutions for OPSD).\n3. The improvements in accuracy seemed marginal according to Table 2.",
+   "soundness": 3,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. Can you show any actual teacher generated reasoning traces after seeing the reference answer? My concern is that teachers may tend to leak answers before even completing the reasoning process, which could affect the student's distilled behavior.\n2. Could you evaluate whether teacher model comprehends the reference solution, e.g. via masking the final answer part in reference CoT and measuring the teacher's accuracy given this partial reference?\n3. Why use a very short generation length (<=4k) for OPSD? Can you provide results for 16k runs? Could you also report generation lengths for GRPO and OPSD on benchmarks in Table 2?\n4. Can you provide results for OPSD with teacher being updated along the student? Why would this configuration cause instability?\n5. Since OPSD relies on reference solutions with CoT, which are generated by more powerful LLMs or curated by other means, is OPSD implicitly OPD from a more powerful model? Would this limit the potential compared to GRPO at larger scales?",
+   "limitations": "yes",
+   "overall_recommendation": 4,
+   "confidence": 4,
+   "final_justification": "The rebuttal addressed my main concerns, but the experiments in this paper still lacks transparency and persuasiveness. In particular:\n- The very short generation length is abnormal for Qwen3 thinking models (with thinking mode on), both in training setup and in evaluation generation length.\n- The observed improvements are marginal according to Table 2.\n- The distillation is based on full vocabulary logits, which is expensive. Without full vocabulary logits, improvement diminishes.\n\nWith these weaknesses, I decide not to increase my score."
+  },
+  {
+   "reviewer": "Reviewer_U4bM",
+   "summary": "The paper introduces a new on-policy distillation framework, On-Policy Self-Distillation (OPSD), in which the teacher and student are identical models with differently conditioned prompts (with and without answer). The method doesn’t require a stronger teacher model and does not explicitly rely on grounding-truth reasoning. The paper reports that the model improves the reasoning performance over other baselines (e.g., SFT and GRPO-trained models), on various math reasoning dataset. Importantly, they claim that the model achieves comparable performance with GRPO with much fewer generated tokens.",
+   "strengths_and_weaknesses": "**Strengths**\\\n[S1] OPSD achieves comparable performance with other baselines while using fewer generated tokens in training time.\n\n[S2] The method is straightforward and easy to understand.\n\n---\n\n**Weaknesses** \\\n[W1] The performance gain between GRPO and OPSD is quite small, which makes statistical reporting particularly important.\n\n[W2] The context length used in the experiments appears too small for OPSD. While Qwen3-4B is native reasoning model which shows very long reasoning length (more than 32K), the reported reasoning length in Figure 4 is less than 4096 tokens for OPSD. \n\n[W3] Also, for the same reason, the token-efficiency comparison between OPSD and GRPO in the right Figure 3 is unfair, because GRPO generates longer tokens during training (16K) while OPSD is capped in much shorter generation (2K). The paper should provide a comparison under a controlled setting. For example, by matching the generation length during training and inference.\n\n[W4] As the paper has shown in Figure 3, the performance of both OPSD and GRPO does not appear to have been saturated, which suggests that the models need to be trained more.\n\n[W5] The paper lacks sufficient component analysis. For instance, the suggested prompts are heuristically made by authors which should be verified through additional experiments.",
+   "soundness": 2,
+   "presentation": 4,
+   "significance": 3,
+   "originality": 2,
+   "key_questions_for_authors": "Please address [W1]–[W5].",
+   "limitations": "I recommend to add limitations which I discussed through [W1]-[W5].",
+   "overall_recommendation": 3,
+   "confidence": 3,
+   "final_justification": "The added experiments resolve several of my concerns and make the motivation clearer.\n\n**Strength**\n- The paper presents a simple but interesting idea.\n- The additional results in the rebuttal are encouraging and strengthen the empirical case.\n- Overall, the method appears potentially impactful.\n\n**Remaining concerns**\n-  The comparison between GRPO and OPSD can still be unfair in terms of generation length.\n-  The training curves in the main paper appear not fully saturated, so it would be helpful to report the post-saturation performance mentioned in the rebuttal as well.\n\nOverall, I find the paper reasonably sound but still with some evaluation gaps, and I have increased my score to borderline."
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "forum_id": "X8jXqDDaOT",
+ "title": "Lookahead Path Likelihood Optimization for Diffusion LLMs",
+ "abstract": "Diffusion Large Language Models (dLLMs) support arbitrary-order generation, yet their inference performance critically depends on the unmasking order. Existing strategies rely on heuristics that greedily optimize local confidence, offering limited guidance for identifying unmasking paths that are globally consistent and accurate. To bridge this gap, we introduce path log-likelihood (Path LL), a trajectory-conditioned objective that strongly correlates with downstream accuracy and enables principled selection of unmasking paths. To optimize Path LL at inference time, we propose POKE, an efficient value estimator that predicts the expected future Path LL of a partial decoding trajectory. We then integrate this lookahead signal into POKE-SMC, a Sequential Monte Carlo-based search framework for dynamically identifying optimal unmasking paths. Extensive experiments across 6 reasoning tasks show that POKE-SMC consistently improves accuracy, achieving 2\\%--3\\% average gains over strong decoding-time scaling baselines at comparable inference overhead on LLaDA models and advancing the accuracy--compute Pareto frontier.",
+ "primary_area": "deep_learning->generative_models_and_autoencoders",
+ "decision": "Accept (regular)",
+ "decision_comment": "This paper proposes a principled framework for optimizing the unmasking order in Diffusion Large Language Models (dLLMs). It introduces Path LL (a trajectory aware objective that seems to correlate well with accuracy), POKE (an efficient value function estimator for future Path LL), and POKE-SMC (a Sequential Monte Carlo search approach). The reviewers agreed that optimizing generation order is an important challenge for dLLMs and found the conceptual introduction of Path LL to be well motivated. Initially, concerns were raised regarding whether Path LL might reward **wrong but confident** trajectories, the tightness of the POKE estimator's bounds, and the limited evaluation to only the LLaDA architecture. In the rebuttal, the authors provided a comprehensive rate analysis to show Path LL is a reasonable proxy, conducted large-scale experiments, and demonstrated generalization to another family of models: Dream-Instruct-7B. These additions satisfied the reviewers; Reviewer CB8o increased their score from a weak reject to a weak accept during the ac-reviewers discussion phase. Given the unanimous agreement among reviewers and the technical soundness of the results (including the newly added ones), the paper is recommended for acceptance.",
+ "reviews": [
+  {
+   "reviewer": "Reviewer_CB8o",
+   "summary": "The paper addresses the problem of optimizing the unmasking order during inference in dLLMs by proposing a path LL as a trajectory-aware objective that better correlates with downstream accuracy.",
+   "strengths_and_weaknesses": "I note two major strengths for this paper:\n1. This motivation is clearly shown in Fig.1 that no single heuristic unmasking order dominates across tasks.\n2. The paper is well-written, and the proposed method is evaluated on six diverse benchmarks.",
+   "soundness": 2,
+   "presentation": 3,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "1. My key concern is that a high path LL means the model is confident in this trajectory path. This includes two things: (a) the final sequence is genuinely good; (b) the model is overconfident about an **easy-but-wrong** completion. This paper does not seem to clarify this, which makes the good performance of POKE more like an engineering result.\n\n2. Also, according to Lemma 5.2, the paper replaces the expected sum of total correlation with the sum of marginal entropy. This might be loose when tokens are highly correlated (high entropy), which makes POKE a poor discriminator between trajectories. The paper does not analyze the tightness of this bound empirically. Fig. 2 shows POKE tracks the oracle well, but only on a single GSM8K example; a more systematic analysis of the estimation gap across tasks would strengthen the paper.\n\n3. The paper mentions MCTS but does not seriously compare against tree-search-based approaches. Given that MCTS has been successfully applied to LLM decoding, a discussion (or experiment) of why SMC is preferred over MCTS for dLLMs would be valuable. Are there fundamental structural reasons or primarily an engineering choice?\n\n4. I’m not very familiar with the baselines in Fig. 3. Can the authors provide more explanations on each baseline and why POKE can achieve better latency over them?",
+   "limitations": "See questions.",
+   "overall_recommendation": 4,
+   "confidence": 3
+  },
+  {
+   "reviewer": "Reviewer_FP6X",
+   "summary": "This paper works on optimizing the decoding path of dLLMs by optimizing the path likelihood, an objective that involves a combination of product likelihood and a total correlation term. To efficiently estimate the objective at inference time, the author propose POKE which leverages dLLM's marginal entropy as an optimistic estimator to total correlation. Then, POKE is used to guide a Sequential Monte Carlo search algorithm for dLLM inference. Experiments on different dLLM inference tasks indicate the performance improvement of the proposed method.",
+   "strengths_and_weaknesses": "**Strengths**:\n* This paper works on improving the unmasking order of dLLMs and it is definitely a very important problem in this field.\n* This paper provides sounded information-theoretic analysis on the optimistic estimator, providing deepened understanding of the path selection problem in dLLMs.\n* The experimental evaluation of the proposed method is very comprehensive and the experiment results indicate improvement due to the proposed method.\n\n**Weaknesses**:\n\nSee questions.",
+   "soundness": 3,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "* In experiments, only 1-2 tokens are unmasked per step. I'm curious about applying your method to unmasking more tokens per step as fast sampling is one of the most promising advantage of dLLMs. Will its advantage over uniform/confidence become more significant?\n* Your current motivation is based on the principle of admissibility in search, and optimism \"prevents the search from prematurely pruning trajectories that, despite low local scores, retain high global potential\". Can you provide more background on the connection between optimism and search algorithms? And would there be other theoretical motivation/justification for using optimism?\n* I find it not easy to understand the SMC part in the paper. Although you cited the SMC paper but it would help if you provide an overview of SMC in the main text. What's the reason/motivation for using SMC? Are there other search algorithms than SMC which you can plug POKE into?",
+   "limitations": "Yes",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_R7KR",
+   "summary": "A method about inference-time decoding for diffusion LLMs, where generation quality depends strongly on the unmasking order. The paper argues that commonly used heuristic orders are inconsistent across tasks, and proposes Path LL as a trajectory-conditioned objective that better correlates with downstream accuracy than ELBO- or entropy-based proxies. To optimize this objective at inference time, the authors introduce POKE, a lookahead value estimator for the expected future Path LL of a partial decoding state, decomposed into a product log-likelihood and a total-correlation correction term. They then integrate this estimator into a Sequential Monte Carlo decoding framework, resulting in POKE-SMC, which dynamically reallocates computation toward promising trajectories. Experiments on two LLaDA models across six reasoning-oriented benchmarks show consistent gains over heuristic baselines and entropy-guided inference-scaling baselines, with favorable accuracy-compute tradeoffs under matched budgets. :)",
+   "strengths_and_weaknesses": "## Strengths\n\n- The introduction of Path LL is a meaningful conceptual contribution.\n- The method is coherent and reasonably well motivated!\n- Results are consistently positive.\n\n## Weaknesses\n- My main concern is about how fully the paper validates its central proxy. While the paper gives evidence that Path LL correlates better with accuracy than ELBO or path entropy, the most direct correlation analysis appears concentrated on GSM8K-style settings, with supporting evidence moved to the appendix. I would have liked a broader and more systematic validation that the ranking quality of Path LL generalizes across tasks and decoding regimes, especially since the paper’s main claim is fundamentally about Path LL being the “right” optimization target.\n- A second concern is that POKE is presented as an optimistic estimator derived from an upper bound on cumulative total correlation. That makes intuitive sense for search, but the paper does not sufficiently quantify how loose this bound is in practice, nor how often the estimator misranks candidate partial trajectories relative to oracle final Path LL. The qualitative and small-scale fidelity plots are encouraging, but I would have preferred a more explicit large-scale ranking-fidelity analysis. Relatedly, the value function is defined under uniformly random future unmasking orders, whereas the actual search procedure uses a proposal policy based on PC-sampler scores plus top-k categorical sampling and periodic SMC resampling. The paper does not fully justify why value estimates under this rollout distribution should be especially well aligned with the actual search dynamics.\n\nOverall, this is a good paper, and I am open to improving my score.",
+   "soundness": 4,
+   "presentation": 3,
+   "significance": 3,
+   "originality": 3,
+   "key_questions_for_authors": "1. POKE defines the state value under uniformly random future unmasking orders, while the actual decoding process uses a non-uniform proposal policy derived from PC-sampler scores and top-k sampling. Can the authors clarify why this mismatch is acceptable, and whether a rollout distribution closer to the actual proposal policy was considered? A stronger justification here would increase my confidence in the estimator design.\n2. The current empirical evaluation is limited to two 8B-scale LLaDA-family models. Do the authors have any preliminary evidence, or at least a more concrete argument, that the same Path-LL-guided search framework should transfer to other dLLM families or stronger models? This would affect my view of the method’s broader significance.",
+   "limitations": "The paper does acknowledge important technical limitations, including that the evaluation is currently restricted to 8B-scale LLaDA-family models and that the resampling strategy is relatively simple.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  },
+  {
+   "reviewer": "Reviewer_z8qw",
+   "summary": "This work proposes to estimate the future path Log-Likelihood to improve the decoding of dLLMs. It adopts the Monte Carlo-based search to implement the exploration and estimation. It looks effective based on the experimental results in this work.",
+   "strengths_and_weaknesses": "## Strength:\n\n1. The insight that including the KL-divergence in path selection for dLLM is valuable.\n\n2. This work explores optimization beyond AR models, which should be encouraged in the existing environment.\n\n## Weakness:\n\n1. The performance improvement over best-of-N is marginal (around 1%), and this trivial improvement comes at the cost of slower generation speed.\n\n2. The evaluation is limited to the LLaDA architecture and should be extended to include Dream or more models.\n\n3. The value function defined in Equation (11) is heuristic, and its validity has not been verified in the experiments.\n\n4. The paper is hard to follow due to heavy notation. Lemma 5.2 has little contribution to the main purpose of this work.",
+   "soundness": 2,
+   "presentation": 1,
+   "significance": 2,
+   "originality": 3,
+   "key_questions_for_authors": "Please refer to the weakness.",
+   "limitations": "Yes.",
+   "overall_recommendation": 4,
+   "confidence": 4
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+  "forum_id": "yUEFOa32CG",
+  "reviewer_stances": [
+    {
+      "reviewer": "Reviewer_PZzv",
+      "weight": "high",
+      "reason": "Most thorough and specific review. Its concerns — confusing forward-backward terminology and unclear definitions, missing appendix cross-references, incomplete/miscredited related work (Jones et al., Csiszarik et al.), and no code release — are precisely the clarity and novelty issues the meta-review foregrounds, and its probing questions on how IRI data relates to forward/backward compatibility are substantiated."
+    },
+    {
+      "reviewer": "Reviewer_3pc3",
+      "weight": "high",
+      "reason": "Directly echoed by the meta-review: density/acronym overload (Sec 2) and limited novelty versus Smith et al. and Nanda et al. are named almost verbatim. The Figure 1 preimage-domain critique is specific and correct. Its soundness=2 is a touch harsh relative to the meta-review's 'technically sound' verdict, but its presentation and originality points are well corroborated."
+    },
+    {
+      "reviewer": "Reviewer_aNLT",
+      "weight": "high",
+      "reason": "Substantive and on-target: unclear main contribution, clarity/jargon problems, insufficiently sharpened novelty over Smith et al., incomplete related work, and narrow experimental scope all map onto the meta-review's stated concerns, backed by concrete citations. The overall rec of 3 is the outlier low, but the underlying substance is adopted by the meta-review."
+    },
+    {
+      "reviewer": "Reviewer_oB7g",
+      "weight": "medium",
+      "reason": "Partly on-target: its calls to state the contribution as new, reference the appendix, and expand experiments align with the meta-review, and the FuLA-vs-SLM question is a useful scientific point others did not raise. However, it judged the writing 'clear and well-structured,' which runs against the consensus and meta-review emphasis on dense presentation, and it engages less with the novelty concern."
+    }
+  ],
+  "score_rationale": "The meta-review anchors on two adopted concerns — dense/acronym-heavy presentation with unclear definitions, and limited-but-non-trivial novelty versus Smith et al. and Nanda et al. — while affirming that the empirics are technically sound and the contribution useful; this fixes presentation at 2 (three reviewers scored 2) and keeps soundness and significance at 3. Originality sits at 3, following the three high/medium reviewers who scored 3 and the meta-review's 'non-trivial' verdict, with the incremental worry captured in the weaknesses prose rather than the number. Overall recommendation is set to 4 (weak accept): the high-weight reviewers span 3-5 and the meta-review direction is clearly acceptance, so a single synthesized reviewer lands at weak accept, reflecting real reservations without contradicting the accept outcome. Confidence is 4 given strong mutual corroboration across reviewers on clarity, novelty, soundness, and significance."
+}
