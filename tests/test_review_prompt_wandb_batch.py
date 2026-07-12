@@ -777,6 +777,63 @@ class WandbBatchTest(unittest.TestCase):
                 self.assertEqual(fake.init_calls, [])
                 self.assertFalse(output.exists())
 
+    def test_rejects_boundary_sensitive_category_marker_variants_before_init(
+        self,
+    ) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking_marker_variants")
+        markers = (
+            "source_url",
+            "source url",
+            "source-url",
+            "original_title",
+            "original title",
+            "original-title",
+            "reference_id",
+            "reference id",
+            "reference-id",
+        )
+
+        for marker in markers:
+            with self.subTest(marker=marker), tempfile.TemporaryDirectory() as parent:
+                bundles = publish_bundles()
+                bundles[0]["generated_review"]["summary"] = (  # type: ignore[index]
+                    f"The private {marker} value is present."
+                )
+                fake = FakeWandb()
+                output = Path(parent) / "wandb"
+                with self.assertRaisesRegex(ValueError, "privacy scan"):
+                    self.call_batch(
+                        tracking,
+                        fake,
+                        str(output),
+                        publish_bundles=bundles,
+                        forbidden_terms=[],
+                    )
+                self.assertEqual(fake.settings_calls, [])
+                self.assertEqual(fake.init_calls, [])
+                self.assertFalse(output.exists())
+
+    def test_boundary_sensitive_category_scan_does_not_reject_originality(
+        self,
+    ) -> None:
+        tracking = load_module(TRACKING, "review_prompt_tracking_originality")
+        bundles = publish_bundles()
+        bundles[0]["generated_review"]["summary"] = (  # type: ignore[index]
+            "The originality assessment is supported by concrete evidence."
+        )
+        fake = FakeWandb()
+
+        with tempfile.TemporaryDirectory() as directory:
+            self.call_batch(
+                tracking,
+                fake,
+                directory,
+                publish_bundles=bundles,
+                forbidden_terms=[],
+            )
+
+        self.assertEqual(len(fake.init_calls), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

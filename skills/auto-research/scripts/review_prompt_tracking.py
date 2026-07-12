@@ -165,6 +165,14 @@ SENSITIVE_WANDB_MARKERS = (
     "authorization",
     "bearer ",
 )
+SENSITIVE_WANDB_CATEGORY_MARKER_PATTERN = re.compile(
+    r"(?<![a-z0-9])"
+    r"(?:source|original|reference)"
+    r"(?:[_\s-]+)"
+    r"(?:id|url|uri|title|path|file|filename|stem|forum|authors?|method|"
+    r"scores?|labels?|review|text)"
+    r"(?![a-z0-9])"
+)
 
 
 @contextmanager
@@ -547,6 +555,9 @@ def _run_batch_privacy_scan(
         separators=(",", ":"),
     ).casefold()
     sensitive = any(marker in serialized for marker in SENSITIVE_WANDB_MARKERS)
+    sensitive = sensitive or (
+        SENSITIVE_WANDB_CATEGORY_MARKER_PATTERN.search(serialized) is not None
+    )
     sensitive = sensitive or "/users/" in serialized
     sensitive = sensitive or "\\\\users\\\\" in serialized
     sensitive = sensitive or any(term in serialized for term in terms)
