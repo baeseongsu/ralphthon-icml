@@ -2,14 +2,18 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import stat
 import sys
+import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "skills" / "auto-research" / "scripts"
 SCORING = SCRIPTS / "review_prompt_scoring.py"
+DATASET = SCRIPTS / "review_prompt_dataset.py"
 ASSETS = ROOT / "skills" / "auto-research" / "assets" / "review-optimization"
 REVIEW_SCHEMA = ASSETS / "generated-review.schema.json"
 JUDGE_SCHEMA = ASSETS / "judge.schema.json"
@@ -99,6 +103,57 @@ def paper_record(
             "judge": judge_attempts,
         },
         "failure": None,
+    }
+
+
+def pseudo_label(forum_id: str, *, recommendation: int = 4) -> dict[str, object]:
+    return {
+        "forum_id": forum_id,
+        "summary": "A reference summary grounded in the paper.",
+        "strengths_and_weaknesses": "Specific strengths and bounded weaknesses.",
+        "soundness": 3,
+        "presentation": 3,
+        "significance": 3,
+        "originality": 3,
+        "key_questions_for_authors": "What evidence supports the central claim?",
+        "limitations": "The reference review identifies one limitation.",
+        "overall_recommendation": recommendation,
+        "confidence": 4,
+    }
+
+
+def dataset_row(index: int, *, recommendation: int) -> dict[str, object]:
+    source_id = f"source-{index:02d}"
+    label = pseudo_label(source_id, recommendation=recommendation)
+    scores = {
+        field: label[field]
+        for field in (
+            "soundness",
+            "presentation",
+            "significance",
+            "originality",
+            "overall_recommendation",
+            "confidence",
+        )
+    }
+    scores["soundness"] = 2 + index % 3
+    scores["presentation"] = 2 + (index + 1) % 3
+    scores["significance"] = 2 + (index + 2) % 3
+    scores["originality"] = 2 + (index // 2) % 3
+    return {
+        "source_id": source_id,
+        "status": "valid",
+        "reasons": [],
+        "label_path": f"/labels/{source_id}.json",
+        "pdf_path": f"/pdfs/{source_id}.pdf",
+        "label_sha256": f"label-{index:064d}"[-64:],
+        "pdf_sha256": f"pdf-{index:064d}"[-64:],
+        "paper_text_sha256": f"text-{index:064d}"[-64:],
+        "pdf_bytes": 2048 + index,
+        "paper_text_chars": 2000 + index,
+        "title": f"Synthetic Paper {index}",
+        "authors": f"Author {index}",
+        "scores": scores,
     }
 
 
@@ -248,6 +303,173 @@ class BatchScoringTest(unittest.TestCase):
         self.assertEqual(result["usage"]["reviewer"]["input_tokens"], 200)
         self.assertEqual(result["attempts"]["total"], 5)
         self.assertEqual(result["attempts"]["retries"], 1)
+
+
+class DatasetContractTest(unittest.TestCase):
+    def test_balanced_selector_is_order_independent_and_uses_exact_quotas(self) -> None:
+        dataset = load_module(DATASET, "review_prompt_dataset_selector_test")
+        rows = [
+            dataset_row(index, recommendation=4 if index < 8 else 5)
+            for index in range(10)
+        ]
+
+        selected = dataset.select_balanced(rows, count=5, seed=20260713)
+        reversed_selected = dataset.select_balanced(
+            list(reversed(rows)),
+            count=5,
+            seed=20260713,
+        )
+
+        self.assertEqual(
+            [row["source_id"] for row in selected],
+            [row["source_id"] for row in reversed_selected],
+        )
+        self.assertEqual(
+            Counter(row["scores"]["overall_recommendation"] for row in selected),
+            {4: 4, 5: 1},
+        )
+
+        tie_rows = [
+            dataset_row(index, recommendation=4 if index < 3 else 5)
+            for index in range(4)
+        ]
+        tie_selected = dataset.select_balanced(tie_rows, count=2, seed=7)
+        self.assertEqual(
+            Counter(row["scores"]["overall_recommendation"] for row in tie_selected),
+            {4: 2},
+        )
+
+    def test_preflight_classifies_blank_pdf_metadata_explicitly(self) -> None:
+        dataset = load_module(DATASET, "review_prompt_dataset_preflight_test")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            labels = root / "labels"
+            pdfs = root / "pdfs"
+            labels.mkdir()
+            pdfs.mkdir()
+            ids = ("valid001", "blanktitle", "nometa001")
+            for source_id in ids:
+                (labels / f"{source_id}.json").write_text(
+                    json.dumps(pseudo_label(source_id), sort_keys=True),
+                    encoding="utf-8",
+                )
+                (pdfs / f"{source_id}.pdf").write_bytes(
+                    b"%PDF-1.7\nsynthetic public paper"
+                )
+
+            pdfinfo = root / "pdfinfo"
+            pdfinfo.write_text(
+                """#!/usr/bin/env python3
+import pathlib
+import sys
+
+stem = pathlib.Path(sys.argv[-1]).stem
+metadata = {
+    "valid001": "Title: Valid Synthetic Paper\\nAuthor: Anonymous Authors",
+    "blanktitle": "Title:    \\nAuthor: Anonymous Authors",
+    "nometa001": "Pages: 12",
+}
+print(metadata[stem])
+""",
+                encoding="utf-8",
+            )
+            pdfinfo.chmod(0o755)
+            pdftotext = root / "pdftotext"
+            pdftotext.write_text(
+                """#!/usr/bin/env python3
+print("PDF-derived paper text " * 100)
+""",
+                encoding="utf-8",
+            )
+            pdftotext.chmod(0o755)
+
+            pool = dataset.preflight_pool(
+                labels_dir=labels,
+                pdfs_dir=pdfs,
+                pdfinfo_bin=str(pdfinfo),
+                pdftotext_bin=str(pdftotext),
+                minimum_text_chars=1000,
+            )
+
+        by_id = {row["source_id"]: row for row in pool}
+        self.assertEqual(by_id["valid001"]["status"], "valid")
+        self.assertEqual(
+            by_id["blanktitle"]["reasons"],
+            ["missing_title_metadata"],
+        )
+        self.assertEqual(
+            by_id["nometa001"]["reasons"],
+            ["missing_title_metadata", "missing_author_metadata"],
+        )
+
+    def test_freeze_dataset_seals_holdout_and_never_leaks_it_to_development(self) -> None:
+        dataset = load_module(DATASET, "review_prompt_dataset_freeze_test")
+        rows = [
+            dataset_row(index, recommendation=4 if index < 8 else 5)
+            for index in range(10)
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = dataset.freeze_dataset(
+                rows,
+                output_root=root / "first",
+                development_count=8,
+                holdout_count=2,
+                sample_count=4,
+                split_seed=20260712,
+                sample_seed=20260713,
+                permission_provenance="user-attested-public-icml",
+            )
+            second = dataset.freeze_dataset(
+                list(reversed(rows)),
+                output_root=root / "second",
+                development_count=8,
+                holdout_count=2,
+                sample_count=4,
+                split_seed=20260712,
+                sample_seed=20260713,
+                permission_provenance="user-attested-public-icml",
+            )
+
+            holdout_path = Path(first["holdout_manifest_path"])
+            development_path = Path(first["development_manifest_path"])
+            sample_path = Path(first["sample_manifest_path"])
+            holdout = json.loads(holdout_path.read_text(encoding="utf-8"))
+            development_text = development_path.read_text(encoding="utf-8")
+            sample_text = sample_path.read_text(encoding="utf-8")
+            development = json.loads(development_text)
+            sample = json.loads(sample_text)
+            second_sample = json.loads(
+                Path(second["sample_manifest_path"]).read_text(encoding="utf-8")
+            )
+
+            self.assertEqual(stat.S_IMODE(holdout_path.stat().st_mode), 0o600)
+            self.assertEqual(len(holdout["entries"]), 2)
+            self.assertEqual(len(development["entries"]), 8)
+            self.assertEqual(len(sample["entries"]), 4)
+            self.assertTrue(
+                all(entry["split"] == "development" for entry in sample["entries"])
+            )
+            for entry in holdout["entries"]:
+                self.assertNotIn(entry["source_id"], development_text)
+                self.assertNotIn(entry["source_id"], sample_text)
+                self.assertNotIn(entry["label_sha256"], development_text)
+                self.assertNotIn(entry["label_sha256"], sample_text)
+            self.assertNotIn("holdout_score_marginals", development_text)
+            self.assertNotIn("holdout_score_marginals", sample_text)
+            self.assertEqual(
+                development["holdout"],
+                {
+                    "count": 2,
+                    "sealed_manifest_sha256": holdout["manifest_sha256"],
+                },
+            )
+            self.assertEqual(
+                [entry["source_id"] for entry in sample["entries"]],
+                [entry["source_id"] for entry in second_sample["entries"]],
+            )
+            self.assertEqual(sample["manifest_sha256"], second_sample["manifest_sha256"])
+            self.assertTrue(dataset.verify_manifest_file(sample_path))
 
 
 if __name__ == "__main__":
