@@ -22,6 +22,7 @@ Ralphthon의 autoresearch loop를 이용해 ICML-style Review Agent의 prompt를
 4. **Dataset split을 고정한다.** Optimization loop는 development split만 사용하며, final holdout은 마지막 평가 전까지 보지 않는다.
 5. **모든 iteration을 versioning한다.** Prompt hash, Git SHA, model configuration, dataset split hash, output hash, metric, 비용, reflection을 기록한다.
 6. **W&B를 관찰 계층으로 사용한다.** Candidate별 run을 생성해 objective 구성요소, 비용, latency, failure를 비교한다.
+7. **익명화된 generated review를 W&B에 기록한다.** Smoke부터 모든 generated review와 Judge 결과를 비교 가능하게 남기되 PDF 원문, raw human review, 식별정보는 업로드하지 않는다.
 
 ## 3. 범위와 비범위
 
@@ -98,7 +99,7 @@ Human reviewer가 남긴 아래 score를 weak supervision으로 사용한다.
 - Overall Recommendation
 - Confidence는 prediction target보다는 calibration 및 uncertainty 분석에 우선 사용한다.
 
-한 paper에 여러 human review가 있는 경우 reviewer별 label을 모두 보존한다. v0의 대표 target은 dimension별 median으로 두고, 개별 reviewer score 분포에 대한 distance도 보조 metric으로 기록한다. 이 방식은 존재하지 않는 meta-review를 임의의 ground truth로 만들지 않는다.
+한 paper에 여러 human review가 있고 별도의 신뢰 가능한 pseudo-label이 없는 경우 reviewer별 label을 모두 보존하고 dimension별 arithmetic mean을 대표 target으로 사용한다. Smoke의 primary agreement는 이 mean에 대한 score-range-normalized MAE로 계산한다. 개별 reviewer score 분포에 대한 distance도 보조 metric으로 기록해 disagreement를 숨기지 않는다. 이 방식은 존재하지 않는 meta-review를 임의의 ground truth로 만들지 않는다.
 
 ### 5.3 Judge LLM
 
@@ -275,7 +276,7 @@ W&B는 한 candidate당 한 run을 사용한다.
 
 ### Privacy 기본값
 
-W&B에는 aggregate metric과 pseudonymous ID만 기록한다. PDF, raw human review, full generated review, prompt에 포함된 private data는 업로드하지 않는다. Local artifact를 online W&B에 sync하려면 entity, project visibility, retention, allowlist, 정확한 artifact 경로를 확인하고 별도 승인을 받는다.
+W&B에는 aggregate metric, pseudonymous paper ID, 모든 익명화된 generated review, Judge rubric score와 rationale을 기록한다. PDF, raw human review, 원래 paper/reviewer identifier, prompt에 포함된 private data는 업로드하지 않는다. Local artifact를 online W&B에 sync하려면 entity, project visibility, retention, allowlist, 정확한 artifact 경로를 확인하고 별도 승인을 받는다.
 
 ## 12. Failure handling
 
