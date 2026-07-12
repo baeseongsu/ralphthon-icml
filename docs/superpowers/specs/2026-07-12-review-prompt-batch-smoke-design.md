@@ -31,9 +31,9 @@ The repository currently contains 175 pseudo-label JSON files, including referen
 | Reviewer | PDF-derived text, P0 or P1, generated-review schema | pseudo-label prose, reference scores, aggregate score distributions, Judge prompt/output |
 | Judge | PDF-derived text, generated review, reference prose, frozen Judge rubric/schema | numeric reference scores, candidate identity, candidate prompt |
 | Local evaluator | generated review, Judge result, numeric reference targets | no new model input |
-| W&B | pseudonymous paper ID, sanitized generated review/Judge result, aggregate predicted/reference distributions, allowlisted metrics/config | PDF/text, raw reference prose, original forum ID, per-paper reference labels, secrets |
+| W&B | pseudonymous paper ID, known-identifier-redacted generated review/Judge result, aggregate predicted/reference distributions, allowlisted metrics/config | PDF/text, raw reference prose, original forum ID, per-paper reference labels, secrets |
 
-The Judge prompt, Judge model, Reviewer model, output schemas, objective weights, regression thresholds, and frozen sample remain unchanged between P0 and P1.
+Before the campaign is frozen, generated-review schema v2 and Judge schema v2 change all ordinal score fields from JSON Schema `number` to `integer`, and runtime validators enforce the same discrete values. The resulting schema hashes, Judge prompt, Judge model, Reviewer model, objective weights, regression thresholds, and frozen sample remain unchanged between P0 and P1.
 
 ## 3. Dataset Preflight and Split
 
@@ -62,13 +62,22 @@ Split the 173 valid papers into:
 - development: 138 papers
 - holdout: 35 papers
 
-Use split seed `20260712`. Allocate the holdout proportionally by `overall_recommendation` with the largest-remainder method. Within each recommendation stratum, add one paper at a time: choose the remaining paper that minimizes the summed L1 error between the selected subset's score marginals and the valid pool's marginals across soundness, presentation, significance, originality, overall recommendation, and confidence. Break equal-error ties by the lexical order of SHA-256(`seed || paper_id`). Persist the selected IDs, source hashes, algorithm version, and resulting marginal distributions in the manifest.
+Use split seed `20260712`. The deterministic selector is defined exactly as follows:
+
+1. Sort source rows by UTF-8 forum ID.
+2. Allocate the requested subset size across `overall_recommendation` values by largest remainder: take each exact proportional quota's floor, assign remaining slots by descending fractional remainder, and break equal remainders by ascending numeric recommendation value.
+3. Start with an empty selected set. At each step, consider every unselected row whose recommendation quota is not full.
+4. For each eligible row, form `trial = selected + row`. Compute `L1(trial)` as the sum, over the six score dimensions and every allowed integer category, of `abs(trial_category_count / len(trial) - source_category_count / len(source))`.
+5. Choose the row with the smallest tuple `(L1(trial), SHA256(seed_decimal_utf8 || NUL || paper_id_utf8), paper_id_utf8)`, using lowercase hexadecimal SHA-256 lexical order.
+6. Repeat until all quotas are filled. Order the final IDs by the same `(SHA256, paper_id)` tuple.
+
+Run this selector against the valid pool to choose the 35-paper holdout. The split builder persists full holdout IDs, hashes, labels, and marginals only in `.review-prompt-smoke/<campaign>/sealed/holdout-manifest.json` with file mode `0600`. The development manifest and all optimizer-visible/W&B artifacts contain only the holdout count and sealed-manifest SHA-256, never holdout IDs or label marginals.
 
 The batch runner refuses entries whose split is not `development`. Holdout scores and generated outputs are not evaluated during this Goal.
 
 ### 3.3 Frozen N=15 sample
 
-Select 15 papers from development using sample seed `20260713`, largest-remainder recommendation allocation, and the same deterministic greedy marginal-distribution matching rule. Order the final sample by SHA-256(`sample_seed || paper_id`), then freeze the ordered IDs and sample-manifest SHA-256 before model inference. P0 and P1 must use the exact same ordered sample and configuration.
+Select 15 papers from development using sample seed `20260713` and the exact selector above with `source=development` and requested size 15. Freeze the ordered IDs and sample-manifest SHA-256 before model inference. P0 and P1 must use the exact same ordered sample and configuration.
 
 The sampler optimizes representativeness; it must not select examples based on model outputs or candidate performance. The frozen recommendation allocation is 12 score-4 papers and 3 score-5 papers.
 
@@ -130,10 +139,9 @@ Run papers sequentially by default (`workers=1`) so the first smoke measures a s
 2. executes one candidate across all 15 papers;
 3. preserves per-paper local evidence;
 4. aggregates metrics and distributions;
-5. creates one W&B offline run for the candidate;
-6. emits a candidate summary and append-only ledger record.
+5. emits a candidate summary, W&B publish bundle, and append-only ledger record.
 
-P0 completes before P1 starts. The same batch configuration is passed to both.
+P0 completes before P1 starts. The same batch configuration is passed to both. After the campaign controller writes the keep/discard decision and, for a kept P1, creates the verification commit, the publisher creates one W&B offline run per candidate. Its config records `source_git_sha` for every candidate and `kept_git_sha` only for a kept candidate, so the online run can be traced to the pushed prompt without rewriting closed offline records.
 
 ## 6. Metrics and Selection
 
@@ -160,9 +168,11 @@ Confidence is recorded as a diagnostic prediction but is not included in HumanAg
 
 P1 is kept only when CompositeScore improves over P0 and the existing component and dimension regression gates pass. Otherwise it is discarded. No candidate becomes the next parent after a discard.
 
+After a candidate receives `keep`, run the complete verification suite and create a dedicated Git commit containing the kept prompt plus a sanitized decision summary with hashes and aggregate metrics; push that commit to the campaign branch. Record the resulting commit SHA in local provenance and the W&B run summary before online verification. A `discard` or `crash` candidate is preserved in local/W&B evidence but its prompt is not committed or pushed. Each later successful autoresearch candidate follows the same one-keep/one-commit policy.
+
 ### 6.3 Score distributions
 
-Predicted review scores are strict integers. Record counts and frequencies for:
+Generated-review schema v2, Judge schema v2, and their runtime validators require strict integer ordinal scores. Record counts and frequencies for:
 
 - soundness, presentation, significance, originality: 1-4;
 - overall recommendation: 1-6;
@@ -190,9 +200,9 @@ Use one run per candidate:
 - job type: `review-prompt-candidate`
 - run name: candidate ID
 
-Create offline runs first. Before sync, scan the exact offline payload for forum IDs, filenames, titles, method/title stems, authors, raw-reference field markers, and unexpected files. Sync only the two approved candidate directories. After sync, verify both runs via the authenticated W&B API and verify that the project is not anonymously readable.
+Create offline runs first. Before sync, scan the exact offline payload for forum IDs, filenames, exact titles, derived method/title stems, authors, raw-reference field markers, and unexpected files. Sync only the two approved candidate directories. After sync, verify both runs via the authenticated W&B API. Separately send an unauthenticated GraphQL POST to `https://api.wandb.ai/graphql`, with no cookie or `Authorization` header, querying `project(name: "review-prompt-smoke", entityName: "seongsubae")`; the privacy gate passes only when `data.project` is null/false and neither run payload is returned.
 
-The project stores no source PDF, extracted paper text, raw pseudo-label JSON, reference prose, individual reference scores, environment secrets, source identifiers, or console logs.
+The project stores no source PDF, extracted paper text, raw pseudo-label JSON, reference prose, individual reference scores, environment secrets, explicit known source identifiers, or console logs. Generated scientific review prose can remain re-identifiable from its substantive content even after exact identifier redaction; the system does not claim irreversible anonymization. This residual risk is accepted only because the destination project is private, access-controlled, and explicitly approved. User-facing documentation calls the rows `pseudonymized`, not anonymous.
 
 ## 8. Local Evidence
 
@@ -232,11 +242,11 @@ Stop and report rather than weakening the Goal when:
 - a required PDF/label pair or user-attested permission provenance is missing;
 - the frozen manifest or candidate configurations differ;
 - Reviewer/Judge label-blindness cannot be proven;
-- privacy scan finds source identifiers or reference data;
+- privacy scan finds any forbidden explicit identifier or reference data;
 - either candidate fails to complete all 15 papers after bounded retries;
 - W&B sync targets a different entity/project or is anonymously readable.
 
-Complete only after P0 and P1 each finish 15/15, all tests and privacy gates pass, both private W&B runs are API-readable with the required rows/distributions, and the final report states the decision, score-distribution changes, wall-clock/throughput, limitations, and whether increasing N is operationally justified.
+Complete only after P0 and P1 each finish 15/15, all tests and privacy gates pass, both private W&B runs are API-readable with the required pseudonymized rows/distributions, the unauthenticated GraphQL check cannot read the project, and the final report states the decision, score-distribution changes, wall-clock/throughput, residual re-identification limitation, and whether increasing N is operationally justified. If P1 is kept, its verification commit must also be present on the remote campaign branch.
 
 ## 11. Non-goals
 
