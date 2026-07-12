@@ -71,13 +71,22 @@ class DeploymentManifestContractTest(unittest.TestCase):
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         prompt = SKILL_ROOT / manifest["prompt_path"]
         schema = SKILL_ROOT / manifest["output_schema_path"]
+        deployed_lines = prompt.read_text(encoding="utf-8").splitlines()
+        source_lines = SOURCE_P2.read_text(encoding="utf-8").splitlines()
 
         self.assertEqual(manifest["candidate_id"], "p2")
         self.assertEqual(manifest["status"], "keep")
         self.assertEqual(manifest["model"], "gpt-5.4")
         self.assertEqual(manifest["prompt_sha256"], sha256_file(prompt))
+        self.assertEqual(manifest["source_prompt_sha256"], sha256_file(SOURCE_P2))
+        self.assertEqual(
+            manifest["packaging_change"],
+            "title-only: remove experimental Smoke Baseline label",
+        )
         self.assertEqual(manifest["output_schema_sha256"], sha256_file(schema))
-        self.assertEqual(prompt.read_bytes(), SOURCE_P2.read_bytes())
+        self.assertEqual(deployed_lines[0], "# ICML 2026 Review Agent")
+        self.assertNotIn("Smoke Baseline", deployed_lines[0])
+        self.assertEqual(deployed_lines[1:], source_lines[1:])
 
 
 class ReviewerOnlyDeploymentTest(unittest.TestCase):
@@ -95,6 +104,11 @@ class ReviewerOnlyDeploymentTest(unittest.TestCase):
         self.assertEqual(
             self.deploy.sha256_file(deployment.prompt_path),
             deployment.prompt_sha256,
+        )
+        self.assertEqual(deployment.source_prompt_sha256, sha256_file(SOURCE_P2))
+        self.assertEqual(
+            deployment.packaging_change,
+            "title-only: remove experimental Smoke Baseline label",
         )
 
     def test_manifest_loader_rejects_manifest_outside_repository(self) -> None:
@@ -150,6 +164,13 @@ class ReviewerOnlyDeploymentTest(unittest.TestCase):
             self.assertEqual(review, valid_review())
             self.assertEqual(provenance["candidate_id"], "p2")
             self.assertEqual(provenance["review_sha256"], result["review_sha256"])
+            self.assertEqual(
+                provenance["source_prompt_sha256"], sha256_file(SOURCE_P2)
+            )
+            self.assertEqual(
+                provenance["packaging_change"],
+                "title-only: remove experimental Smoke Baseline label",
+            )
             self.assertEqual(provenance["reviewer_usage"]["input_tokens"], 100)
             self.assertNotIn("paper evidence", json.dumps(provenance).lower())
             self.assertNotIn("judge", json.dumps(provenance).lower())

@@ -39,6 +39,8 @@ MANIFEST_FIELDS = frozenset(
         "selection_scope",
         "prompt_path",
         "prompt_sha256",
+        "source_prompt_sha256",
+        "packaging_change",
         "output_schema_path",
         "output_schema_sha256",
         "warning",
@@ -63,6 +65,8 @@ class Deployment:
     selection_scope: str
     prompt_path: Path
     prompt_sha256: str
+    source_prompt_sha256: str
+    packaging_change: str
     schema_path: Path
     schema_sha256: str
     manifest_path: Path
@@ -132,6 +136,13 @@ def load_deployment(root: Path, manifest_path: Path) -> Deployment:
     prompt_sha256 = _expected_sha256(
         manifest.get("prompt_sha256"), "deployment prompt_sha256"
     )
+    source_prompt_sha256 = _expected_sha256(
+        manifest.get("source_prompt_sha256"),
+        "deployment source_prompt_sha256",
+    )
+    packaging_change = manifest.get("packaging_change")
+    if not isinstance(packaging_change, str) or not packaging_change:
+        raise ValueError("deployment packaging_change must be nonempty")
     schema_sha256 = _expected_sha256(
         manifest.get("output_schema_sha256"), "deployment output_schema_sha256"
     )
@@ -149,6 +160,8 @@ def load_deployment(root: Path, manifest_path: Path) -> Deployment:
         selection_scope=selection_scope,
         prompt_path=prompt_path,
         prompt_sha256=prompt_sha256,
+        source_prompt_sha256=source_prompt_sha256,
+        packaging_change=packaging_change,
         schema_path=schema_path,
         schema_sha256=schema_sha256,
         manifest_path=resolved_manifest,
@@ -285,6 +298,8 @@ def run(
             "pdf_sha256": sha256_file(args.paper_pdf),
             "deployment_manifest_sha256": deployment.manifest_sha256,
             "prompt_sha256": deployment.prompt_sha256,
+            "source_prompt_sha256": deployment.source_prompt_sha256,
+            "packaging_change": deployment.packaging_change,
             "output_schema_sha256": deployment.schema_sha256,
             "review_sha256": review_sha256,
             "reviewer_usage": reviewer_usage,
