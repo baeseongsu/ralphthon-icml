@@ -21,35 +21,13 @@
 
 ```mermaid
 flowchart TD
-    A["P0: ICML baseline review template"] --> B["Freeze the development set<br/>N=5"]
-    B --> C["Reviewer inference"]
-    C --> D["Reference-score agreement"]
-    C --> E["Reference-based Judge evaluation"]
-    D --> F["Aggregate metrics and score distributions"]
-    E --> F
-    F --> G{"Baseline / composite + regression decision"}
-
-    G -->|"P0 baseline"| H["Set P0 as the initial parent"]
-    G -->|"Keep"| I["Promote candidate to parent<br/>Verify · commit · push"]
-    G -->|"Discard"| J["Keep the current parent<br/>Preserve the failure"]
-
-    H --> K["Update cumulative experience memory"]
-    I --> K
-    J --> K
-    F --> L["Allowlisted aggregate metrics"]
-    H --> M["Current kept parent prompt"]
-    I --> M
-    J --> M
-
-    K --> N["Reflection meta-prompt"]
-    L --> N
-    M --> N
-    N --> O["Rewrite all seven Review sections"]
-    O --> P["Bounded compiler<br/>Replace Review sections only"]
-    P --> Q["Next candidate<br/>P1, P2, P3, ..."]
-    Q --> C
-
-    G -->|"Stop after P4"| R["Final deployment winner: P2"]
+    A["P0: ICML baseline review template"] --> B["Evaluate on the frozen N=5 set"]
+    B --> C["Score distributions and composite<br/>Human agreement + Judge quality"]
+    C --> D["Update experience memory<br/>Promote a keep · preserve a discard"]
+    D --> E["Reflect and optimize the review prompt"]
+    E --> F["Next candidate<br/>P1, P2, P3, ..."]
+    F --> B
+    D -->|"Stop after P4"| G["Deployment winner: P2"]
 ```
 
 ## 고정된 실험 경계
