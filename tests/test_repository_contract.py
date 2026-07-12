@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_SKILLS = {
     "hello-ralphthon-icml",
     "auto-research",
+    "reviewer-agent",
     "wandb-onboarding",
     "vessl-cloud-onboarding",
     "world-model-ideation",
@@ -256,6 +257,30 @@ class RepositoryContractTest(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertIn(marker, skill)
 
+    def test_reviewer_agent_exposes_p2_reviewer_only_deployment(self) -> None:
+        skill = (ROOT / "skills" / "reviewer-agent" / "SKILL.md").read_text()
+        readme = (ROOT / "README.md").read_text()
+        runner = (
+            ROOT
+            / "skills"
+            / "reviewer-agent"
+            / "scripts"
+            / "run_review.py"
+        )
+
+        self.assertTrue(runner.is_file())
+        for marker in (
+            "Reviewer Agent",
+            "run_review.py",
+            "review.json",
+            "review.md",
+            "provenance.json",
+            "No human-review JSON, numeric label, Judge, or W&B",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, skill)
+        self.assertIn("reviewer-agent", readme)
+
     def test_readme_documents_full_catalog_and_privacy_boundary(self) -> None:
         text = (ROOT / "README.md").read_text()
 
@@ -279,7 +304,7 @@ class RepositoryContractTest(unittest.TestCase):
 
     def test_official_cookbook_integration_docs_and_metadata(self) -> None:
         manifest = json.loads((ROOT / ".codex-plugin" / "plugin.json").read_text())
-        self.assertEqual(manifest["version"], "0.5.0")
+        self.assertEqual(manifest["version"], "0.6.0")
         manifest_text = json.dumps(manifest, ensure_ascii=False)
         for phrase in ("VESSL Cloud Cookbook", "A100", "W&B", "autoresearch"):
             with self.subTest(manifest_phrase=phrase):

@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "summary",
+    "strengths",
+    "weaknesses",
+    "questions",
+    "limitations",
+    "ethical_concerns",
+    "evidence_trace",
+    "scores",
+    "score_rationales"
+  ],
+  "properties": {
+    "summary": {"type": "string"},
+    "strengths": {"type": "array", "items": {"type": "string"}},
+    "weaknesses": {"type": "array", "items": {"type": "string"}},
+    "questions": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "string"},
+    "ethical_concerns": {"type": "string"},
+    "evidence_trace": {"type": "array", "items": {"type": "string"}},
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "soundness",
+        "presentation",
+        "significance",
+        "originality",
+        "overall_recommendation",
+        "confidence"
+      ],
+      "properties": {
+        "soundness": {"type": "integer", "minimum": 1, "maximum": 4},
+        "presentation": {"type": "integer", "minimum": 1, "maximum": 4},
+        "significance": {"type": "integer", "minimum": 1, "maximum": 4},
+        "originality": {"type": "integer", "minimum": 1, "maximum": 4},
+        "overall_recommendation": {"type": "integer", "minimum": 1, "maximum": 6},
+        "confidence": {"type": "integer", "minimum": 1, "maximum": 5}
+      }
+    },
+    "score_rationales": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "soundness",
+        "presentation",
+        "significance",
+        "originality",
+        "overall_recommendation",
+        "confidence"
+      ],
+      "properties": {
+        "soundness": {"type": "string"},
+        "presentation": {"type": "string"},
+        "significance": {"type": "string"},
+        "originality": {"type": "string"},
+        "overall_recommendation": {"type": "string"},
+        "confidence": {"type": "string"}
+      }
+    }
+  }
+}

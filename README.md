@@ -2,7 +2,7 @@
 
 Codex plugin and skill repository for `Ralphthon @ICML "Auto Research" supported by Codex`.
 
-The plugin exposes five core event workflows and three W&B companion workflows as Agent Skills.
+The plugin exposes six core event workflows and three W&B companion workflows as Agent Skills.
 
 ## Included
 
@@ -10,6 +10,7 @@ The plugin exposes five core event workflows and three W&B companion workflows a
 | --- | --- |
 | `hello-ralphthon-icml` | Welcome attendees and prepare QR/POP orientation copy. |
 | `auto-research` | Build general Track 1 research, run the pinned official VESSL autoresearch recipe on A100 with local-first W&B tracking, or package a no-compute Track 2 Review Agent and result. |
+| `reviewer-agent` | Run the optimized P2 ICML Reviewer on one local PDF without labels, Judge evaluation, or W&B. |
 | `wandb-onboarding` | Guide W&B Cloud signup, private API-key login, and an offline-first synthetic run. |
 | `vessl-cloud-onboarding` | Verify current VESSL Cloud and `vesslctl` setup before optional billable compute. |
 | `world-model-ideation` | Convert a world-model concept into a falsifiable experiment and Track path. |
@@ -36,6 +37,7 @@ Ask naturally or name a skill:
 ```text
 Create a Ralphthon @ICML attendee welcome pack.
 Use auto-research to freeze a research spec for Track 1 and Track 2.
+Use reviewer-agent to review a local paper PDF with the optimized P2 prompt.
 Use wandb-onboarding to verify a synthetic W&B run offline before upload.
 Use vessl-cloud-onboarding to check VESSL Cloud pricing without creating compute.
 Use world-model-ideation to compare three falsifiable world-model questions.

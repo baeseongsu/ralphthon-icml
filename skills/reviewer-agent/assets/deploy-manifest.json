@@ -1,0 +1,13 @@
+{
+  "schema_version": "reviewer-agent-deploy-v1",
+  "candidate_id": "p2",
+  "status": "keep",
+  "model": "gpt-5.4",
+  "campaign_id": "n5-001",
+  "selection_scope": "fixed-development-n5-smoke",
+  "prompt_path": "assets/reviewer-prompt.md",
+  "prompt_sha256": "sha256:3c25dd6f5759f02e1fcc316439ae66d3912c525237fcc9d24c2f9e89e95dd46f",
+  "output_schema_path": "assets/generated-review.schema.json",
+  "output_schema_sha256": "sha256:a0a83c5e2b9562948de6c30332b53f1c5bbf0b46d07cf2edc4f7895f682886ba",
+  "warning": "P2 was selected on a fixed N=5 development smoke; it is the campaign deployment winner, not a universal reviewer-quality claim."
+}

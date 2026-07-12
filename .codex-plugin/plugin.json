@@ -1,7 +1,7 @@
 {
   "name": "ralphthon-icml",
-  "version": "0.5.0",
-  "description": "Ralphthon @ICML onboarding, the official VESSL Cloud Cookbook autoresearch recipe on A100, local-first W&B observability, and world-model ideation skills for Codex",
+  "version": "0.6.0",
+  "description": "Ralphthon @ICML onboarding, Reviewer Agent, the official VESSL Cloud Cookbook autoresearch recipe on A100, local-first W&B observability, and world-model ideation skills for Codex",
   "author": {
     "name": "Team Attention",
     "url": "https://github.com/team-attention"
@@ -14,6 +14,9 @@
     "icml",
     "codex",
     "auto-research",
+    "reviewer-agent",
+    "peer-review",
+    "pdf-review",
     "karpathy",
     "a100",
     "vessl-cloud-cookbook",
@@ -36,7 +39,7 @@
   "interface": {
     "displayName": "Ralphthon @ICML",
     "shortDescription": "Run official VESSL autoresearch safely on A100.",
-    "longDescription": "Codex workflows for Ralphthon @ICML: attendee orientation, research and the pinned official VESSL autoresearch recipe on A100, local-first W&B experiment tracking, Weave tracing, platform onboarding, and testable world-model ideation.",
+    "longDescription": "Codex workflows for Ralphthon @ICML: attendee orientation, an optimized Reviewer Agent, research and the pinned official VESSL Cloud Cookbook autoresearch recipe on A100, local-first W&B tracking, platform onboarding, and testable world-model ideation.",
     "developerName": "Team Attention",
     "category": "Productivity",
     "capabilities": [
@@ -48,6 +51,7 @@
     "defaultPrompt": [
       "Create a Ralphthon @ICML attendee welcome pack",
       "Use auto-research for general Track 1, the pinned official VESSL cookbook on an approved A100 with local W&B tracking, or a Track 2 Review Agent plus result",
+      "Use reviewer-agent to run the optimized P2 ICML reviewer on a local PDF without labels or Judge evaluation",
       "Guide me through W&B onboarding with an offline-first run",
       "Set up VESSL Cloud and review compute cost before creating a workspace",
       "Turn a world-model idea into a falsifiable experiment",

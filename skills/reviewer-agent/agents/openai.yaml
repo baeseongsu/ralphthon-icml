@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reviewer Agent"
+  short_description: "Run the optimized P2 reviewer on a local PDF"
+  default_prompt: "Use $reviewer-agent to review this local PDF with the pinned P2 prompt and return JSON, Markdown, and provenance."
