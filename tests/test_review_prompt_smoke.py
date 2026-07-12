@@ -257,6 +257,8 @@ class ReviewPromptSmokeTest(unittest.TestCase):
                     "codex-smoke",
                     "--candidate-id",
                     "baseline",
+                    "--paper-id",
+                    "paper-frozen-001",
                     "--reviewer-model",
                     "fake-reviewer",
                     "--judge-model",
@@ -340,7 +342,7 @@ class ReviewPromptSmokeTest(unittest.TestCase):
             publish_bundle = json.loads(
                 (output / "publish-bundle.json").read_text(encoding="utf-8")
             )
-            self.assertEqual(publish_bundle["paper_id"].split("-")[0], "paper")
+            self.assertEqual(publish_bundle["paper_id"], "paper-frozen-001")
             self.assertNotIn(
                 "RAW HUMAN REVIEW SENTINEL",
                 json.dumps(publish_bundle),

@@ -450,9 +450,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     auth_preflight_seconds = time.perf_counter() - auth_started
     reviewer_prompt_text = args.reviewer_prompt.read_text(encoding="utf-8")
     judge_prompt_text = args.judge_prompt.read_text(encoding="utf-8")
-    paper_id = "paper-" + hashlib.sha256(
-        (str(human_review["forum_id"]) + sha256_file(args.paper_pdf)).encode("utf-8")
-    ).hexdigest()[:16]
+    requested_paper_id = getattr(args, "paper_id", None)
+    if requested_paper_id is not None:
+        paper_id = str(requested_paper_id).strip()
+        if PAPER_ID_PATTERN.fullmatch(paper_id) is None:
+            raise ValueError("paper_id must be a pseudonymous paper-* identifier")
+    else:
+        paper_id = "paper-" + hashlib.sha256(
+            (str(human_review["forum_id"]) + sha256_file(args.paper_pdf)).encode(
+                "utf-8"
+            )
+        ).hexdigest()[:16]
     max_attempts = getattr(args, "max_attempts", 2)
 
     provenance: dict[str, Any] = {
@@ -627,6 +635,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--campaign-id", required=True)
     parser.add_argument("--candidate-id", required=True)
+    parser.add_argument("--paper-id")
     parser.add_argument("--parent-candidate-id", default="none")
     parser.add_argument("--reviewer-model", required=True)
     parser.add_argument("--judge-model", required=True)
