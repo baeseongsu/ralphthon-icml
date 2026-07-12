@@ -141,9 +141,69 @@ We will next evaluate the frozen P2 prompt once on a larger sealed holdout, repo
 \onecolumn
 
 \section{Label-Construction Prompt}
-We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. The exact prompt supplied to each labeling agent is reproduced below; \texttt{\$\{id\}} is replaced with the paper forum identifier at runtime.
+We use the version-2 consolidation prompt with Claude Opus 4.8, assigning one labeling agent to each paper and running up to ten agents in parallel. For self-contained presentation, the prompt below specifies the complete semantic task while omitting orchestration-specific file paths and tool commands. The model receives the paper metadata, initial reviews, and meta-review as structured input.
 
-\lstinputlisting{pseudo_labeling_prompt_excerpt.txt}
+\begin{lstlisting}
+You are an expert ICML reviewer. Consolidate the supplied initial
+human reviews of one paper into a single pseudo-label review, written
+as if one careful reviewer had assessed the paper directly.
+
+INPUT
+You receive the paper's forum identifier, title, abstract, primary
+area, decision, program-chair meta-review, and each reviewer's initial
+review. Each initial review may contain a summary, strengths and
+weaknesses, four quality scores (1--4), an overall recommendation
+(1--6), confidence (1--5), questions, and limitations. Do not use
+rebuttal text, post-rebuttal discussion, or final score changes.
+
+INTERNAL CONSOLIDATION
+Use the meta-review as an anchor for assessing review quality. Assign
+each reviewer an internal weight:
+- high: specific, substantiated points adopted by the meta-review or
+  independently corroborated by another review;
+- medium: partially relevant or supported points;
+- low: vague, generic, cursory, unsupported, or clearly contradicted
+  by the meta-review.
+Use high-weight evidence most strongly, retain useful medium-weight
+evidence, and omit low-weight or off-base claims. Do not introduce a
+criticism that is absent from the human reviews. Record the weights
+and a concise justification as audit metadata, but never mention them
+in the consolidated review.
+
+WRITE ONE REVIEW
+Write professional, specific prose in English and in the voice of one
+reviewer. Never mention other reviewers, reviewer weights, the
+meta-review, area chair, rebuttal, discussion, score changes, or the
+acceptance decision.
+
+Produce:
+- summary: one paragraph describing the work and contributions in
+  your own words;
+- strengths_and_weaknesses: a substantive assessment of soundness,
+  presentation, significance, and originality;
+- soundness, presentation, significance, originality: integers 1--4;
+- key_questions_for_authors: three to five evaluation-relevant,
+  deduplicated questions;
+- limitations: "Yes" when adequately discussed, otherwise one to
+  three constructive sentences;
+- overall_recommendation: an integer 1--6;
+- confidence: an integer 1--5.
+
+For each quality dimension and overall recommendation, remain within
+the minimum and maximum scores assigned by the human reviewers. Place
+the consolidated score within that interval according to the evidence
+quality and the meta-review's direction. Set confidence according to
+the coherence and corroboration of the evidence, rather than by simply
+averaging reviewer confidence.
+
+Return two JSON objects. The review object must contain exactly:
+forum_id, summary, strengths_and_weaknesses, soundness, presentation,
+significance, originality, key_questions_for_authors, limitations,
+overall_recommendation, and confidence. The audit object must contain
+exactly: forum_id, reviewer_stances, and score_rationale. Keep all
+reviewer-weight judgments and score-construction explanations in the
+audit object; do not include them in the review object.
+\end{lstlisting}
 
 \section{Output Schema}
 The review output is stored separately from labeling metadata. Each record contains \texttt{forum\_id} plus ten review fields: \texttt{summary}, \texttt{strengths\_and\_weaknesses}, four quality scores, \texttt{key\_questions\_for\_authors}, \texttt{limitations}, \texttt{overall\_recommendation}, and \texttt{confidence}. The quality scores use the ICML 1--4 scale, overall recommendation uses 1--6, and confidence uses 1--5. A separate audit record stores \texttt{reviewer\_stances} and \texttt{score\_rationale}; these are not included in the review target.
